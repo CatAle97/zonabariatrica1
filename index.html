@@ -1,0 +1,3395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zona Bariátrica — Suplementos Especializados</title>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DB7VQ9PWM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3DB7VQ9PWM');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #2563EB;
+  --blue-light: #EFF6FF;
+  --blue-dark: #1E40AF;
+  --mint: #00D68F;
+  --green-wa: #25D366;
+  --dark: #1E3A8A;
+  --dark-2: #1B2D6B;
+  --text: #111827;
+  --text-muted: #6B7280;
+  --text-light: #9CA3AF;
+  --bg: #F5F7FA;
+  --surface: #FFFFFF;
+  --border: #E5E7EB;
+  --border-light: #F3F4F6;
+  --r: 14px;
+  --r-sm: 8px;
+  --r-pill: 999px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.09), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+  /* legacy aliases */
+  --azul: #2563EB;
+  --mint-dark: #00D68F;
+  --verde-wa: #25D366;
+  --borde: #E5E7EB;
+  --gris-bg: #F5F7FA;
+  --crema: #F5F7FA;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+button, input, select, a { font-family: 'Plus Jakarta Sans', sans-serif; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+
+/* TOP BAR */
+.topbar {
+  background: var(--dark); color: rgba(255,255,255,0.55); font-size: 11.5px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 32px; flex-wrap: wrap; gap: 4px; letter-spacing: 0.2px;
+}
+
+/* OVERLAY + SIDE MENU */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; }
+.overlay.open { display: block; }
+.sidemenu {
+  position: fixed; top: 0; left: -320px; width: 300px; height: 100%;
+  background: var(--surface); z-index: 300;
+  transition: left 0.25s cubic-bezier(0.4,0,0.2,1); overflow-y: auto;
+}
+.sidemenu.open { left: 0; }
+.sidemenu-header {
+  background: var(--dark); color: white; padding: 18px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 2px solid var(--blue);
+}
+.sidemenu-header h2 { font-size: 14px; font-weight: 600; letter-spacing: 0.3px; }
+.close-btn { background: none; border: none; color: rgba(255,255,255,0.65); font-size: 20px; cursor: pointer; }
+.sidemenu-nav a {
+  display: block; padding: 13px 16px; font-size: 14px; font-weight: 500; color: var(--text);
+  text-decoration: none; border-bottom: 1px solid var(--border-light);
+  transition: background 0.1s, color 0.1s;
+}
+.sidemenu-nav a:hover { background: var(--blue-light); color: var(--blue); }
+.sidemenu-section { padding: 14px 16px 0; }
+.sidemenu-section h3 {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 12px; letter-spacing: 1.5px;
+}
+.etapa-disclaimer {
+  background: #FFFBEB; border-left: 3px solid #F59E0B;
+  padding: 10px 16px; font-size: 11px; color: #92400E; line-height: 1.5;
+}
+.etapa-item { border: 1.5px solid var(--border); border-radius: var(--r-sm); margin-bottom: 8px; overflow: hidden; }
+.etapa-toggle {
+  background: var(--bg); border: none; width: 100%; text-align: left;
+  padding: 11px 13px; font-size: 12.5px; font-weight: 600; color: var(--text);
+  cursor: pointer; display: flex; justify-content: space-between;
+  transition: background 0.1s;
+}
+.etapa-toggle:hover { background: var(--blue-light); color: var(--blue); }
+.etapa-body { display: none; padding: 12px 13px; font-size: 12px; line-height: 1.6; color: var(--text-muted); }
+.etapa-body.open { display: block; }
+.etapa-body strong { color: var(--blue); display: block; margin: 8px 0 2px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+.etapa-body strong:first-child { margin-top: 0; }
+
+/* HEADER */
+header {
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.header-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; gap: 14px; padding: 12px 32px;
+}
+.hamburger {
+  background: none; border: none; color: var(--text); font-size: 20px;
+  cursor: pointer; display: none; padding: 6px; flex-shrink: 0;
+  border-radius: var(--r-sm); transition: background 0.15s;
+}
+.hamburger:hover { background: var(--bg); }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; cursor: pointer; }
+.logo-zb {
+  background: var(--blue); color: white; font-size: 15px; font-weight: 800;
+  width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; letter-spacing: -0.5px; flex-shrink: 0;
+}
+.logo-name { font-size: 13.5px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.logo-tagline { font-size: 9.5px; color: var(--text-muted); letter-spacing: 0.2px; }
+.main-nav { display: flex; gap: 2px; flex: 1; margin-left: 10px; }
+.nav-link {
+  padding: 7px 14px; font-size: 13.5px; color: var(--text-muted);
+  border-radius: var(--r-pill); font-weight: 500; white-space: nowrap;
+  border: none; background: none; cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-link:hover { color: var(--blue); background: var(--blue-light); }
+.nav-link.active { color: var(--blue); background: var(--blue-light); font-weight: 600; }
+.nav-suplementos, .nav-suplementos.active { color: var(--text-muted) !important; background: none !important; font-weight: 500; }
+.nav-suplementos:hover { color: var(--blue) !important; background: var(--blue-light) !important; }
+.nav-ofertas { background: var(--blue); color: #fff !important; font-weight: 700; letter-spacing: 0.5px; }
+.nav-ofertas:hover { background: var(--blue-dark); color: #fff !important; }
+
+/* MEGA MENU */
+.nav-mega-wrap { position: relative; }
+.mega-menu {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.14);
+  z-index: 500;
+  padding: 20px 24px 24px;
+  width: 560px;
+  display: flex;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+.nav-mega-wrap:hover .mega-menu {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.mega-cols { display: flex; gap: 0; width: 100%; }
+.mega-col { flex: 1; padding: 0 16px; border-right: 1px solid var(--border-light); }
+.mega-col:first-child { padding-left: 0; }
+.mega-col:last-child { border-right: none; padding-right: 0; }
+.mega-col-title {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-muted); margin-bottom: 10px; padding-bottom: 8px;
+  border-bottom: 1.5px solid var(--blue-light);
+}
+.mega-col-title-link { cursor: pointer; }
+.mega-col-title-link:hover { color: var(--blue); }
+
+/* LANGUAGE SELECTOR */
+.lang-wrap { position: relative; }
+.lang-btn { background: none; border: 1.5px solid var(--border); border-radius: var(--r-pill); padding: 5px 11px; font-size: 12px; font-weight: 700; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; gap: 5px; transition: border-color 0.15s, color 0.15s; letter-spacing: 0.3px; }
+.lang-btn:hover { border-color: var(--blue); color: var(--blue); }
+.lang-menu { display: none; position: absolute; top: calc(100% + 6px); right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); box-shadow: 0 8px 28px rgba(0,0,0,0.13); z-index: 600; min-width: 148px; overflow: hidden; }
+.lang-menu.open { display: block; }
+.lang-option { display: flex; align-items: center; gap: 8px; padding: 9px 14px; font-size: 13px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; color: var(--text); transition: background 0.1s; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; }
+.lang-option:hover { background: var(--blue-light); color: var(--blue); }
+.lang-option.active { font-weight: 700; color: var(--blue); }
+.mega-item {
+  display: block; padding: 6px 0; font-size: 13px; font-weight: 500;
+  color: var(--text); cursor: pointer; border: none; background: none;
+  text-align: left; width: 100%; border-radius: 6px;
+  transition: color 0.12s;
+  text-decoration: none;
+}
+.mega-item:hover { color: var(--blue); }
+.mega-col-marcas .mega-item {
+  font-weight: 600; font-size: 12.5px;
+  padding: 7px 10px; margin-bottom: 4px;
+  background: var(--blue-light); border-radius: 8px; color: var(--blue);
+}
+.mega-col-marcas .mega-item:hover { background: #dbeafe; }
+.header-actions { flex-shrink: 0; }
+.wa-header {
+  background: transparent; border: none; padding: 0;
+  text-decoration: none; display: inline-flex; align-items: center;
+}
+.wa-bar {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--green-wa); color: #fff;
+  text-decoration: none; border-radius: var(--r-pill);
+  padding: 7px 16px; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.4px; white-space: nowrap;
+  transition: background 0.15s;
+}
+.wa-bar:hover { background: #1ebe5d; }
+
+/* PROMO SLIDER */
+.promo-slider { background: var(--dark); position: relative; overflow: hidden; }
+.slide {
+  display: none; align-items: center; justify-content: space-between;
+  padding: 24px 80px 36px; gap: 24px; color: white; min-height: 140px;
+}
+.slide.active { display: flex; }
+.slide-left { flex: 1; }
+.slide-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--mint); margin-bottom: 8px;
+}
+.slide-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.slide-sub { font-size: 13px; color: rgba(255,255,255,0.75); }
+.slide-right { text-align: right; flex-shrink: 0; }
+.slide-ahorro { font-size: 11px; color: var(--mint); margin-bottom: 4px; }
+.slide-price { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+.slide-btn {
+  background: white; color: var(--blue); border: none; border-radius: var(--r-sm);
+  padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer;
+  transition: filter 0.15s;
+}
+.slide-btn:hover { filter: brightness(0.95); }
+.slider-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.1); backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.15); color: white;
+  font-size: 20px; padding: 8px 14px; cursor: pointer; border-radius: var(--r-sm);
+  transition: background 0.15s;
+}
+.slider-arrow:hover { background: rgba(255,255,255,0.2); }
+.slider-arrow.prev { left: 8px; }
+.slider-arrow.next { right: 8px; }
+.slider-dots {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 6px;
+}
+.slider-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.35); cursor: pointer; border: none; padding: 0;
+  transition: background 0.2s, width 0.2s;
+}
+.slider-dot.active { background: white; width: 20px; border-radius: 4px; }
+.slide.slide-img { padding: 0; min-height: 0; display: none; }
+.slide.slide-img.active { display: block; }
+.slide.slide-img img { width: 100%; height: 220px; object-fit: cover; display: block; }
+
+/* CATEGORIAS */
+.categorias-section { background: var(--surface); padding: 32px; border-bottom: 1px solid var(--border); }
+.sec-h { max-width: 1280px; margin: 0 auto 20px; }
+.sec-h h2 { font-size: 20px; font-weight: 700; color: var(--text); }
+.categorias-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+  max-width: 1280px; margin: 0 auto;
+}
+.cat-card {
+  border: 1.5px solid var(--border); border-radius: var(--r); overflow: hidden;
+  cursor: pointer; background: var(--surface);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.cat-card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.cat-img { width: 100%; height: 120px; object-fit: cover; background: var(--blue-light); display: block; }
+.cat-info { padding: 12px 14px; }
+.cat-nombre { font-size: 14px; font-weight: 600; color: var(--text); }
+.cat-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; }
+
+/* TRUST */
+.trust-section { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 32px; }
+.trust-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  max-width: 1280px; margin: 0 auto;
+}
+.trust-item { display: flex; align-items: center; gap: 12px; }
+.trust-icon { font-size: 22px; flex-shrink: 0; }
+.trust-txt strong { display: block; font-size: 12.5px; font-weight: 600; color: var(--text); }
+.trust-txt span { font-size: 11px; color: var(--text-muted); }
+
+/* PRODUCTOS SECTION */
+.productos-section { padding: 28px 0 40px; }
+.productos-header {
+  max-width: 1280px; margin: 0 auto; padding: 0 32px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.productos-header-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 0; }
+.productos-header h2 { font-size: 20px; font-weight: 700; color: var(--text); }
+#subfiltros { margin-top: 12px; }
+.subfiltros { display: flex; flex-direction: column; gap: 8px; }
+.subfiltros-fila { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.subfiltros-label {
+  font-size: 11px; color: var(--text-muted); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
+}
+.sub-btn {
+  padding: 5px 14px; font-size: 12px; font-weight: 500;
+  border: 1.5px solid var(--border); border-radius: var(--r-pill);
+  background: var(--surface); color: var(--text-muted);
+  cursor: pointer; transition: all 0.15s;
+}
+.sub-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.sub-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+.seccion-titulo {
+  padding: 20px 32px 8px; font-size: 10.5px; font-weight: 700;
+  text-transform: uppercase; color: var(--text-light); letter-spacing: 1.5px;
+  max-width: 1280px; margin: 0 auto;
+}
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 18px; padding: 8px 32px 12px; max-width: 1280px; margin: 0 auto;
+}
+
+/* CAROUSEL */
+.carousel-wrap { position: relative; padding: 0 44px 20px; max-width: 1280px; margin: 0 auto; }
+.carousel {
+  display: flex; gap: 14px; overflow-x: auto;
+  -ms-overflow-style: none; scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar { display: none; }
+.carousel .card { flex-shrink: 0; width: 234px; }
+.carousel-btn {
+  position: absolute; top: 42%; transform: translateY(-50%);
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--surface); border: 1.5px solid var(--border);
+  font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-md); z-index: 5; transition: all 0.15s; color: var(--text);
+}
+.carousel-btn:hover { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
+.carousel-btn.prev { left: 0; }
+.carousel-btn.next { right: 4px; }
+
+/* CARDS */
+.card {
+  background: var(--surface); border-radius: var(--r); border: 1.5px solid var(--border);
+  overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.card.pack { border-color: var(--border); }
+.card.oferta { background: #FFF0F0; border: 2px solid #DC2626; }
+.card.oferta:hover { border-color: #b91c1c; }
+.card.oferta .precio { color: #DC2626; }
+.badge-oferta {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  color: white; background: #DC2626; padding: 3px 9px;
+  border-radius: var(--r-pill); display: inline-block; width: fit-content; letter-spacing: 0.3px;
+}
+.card-img { width: 100%; height: 240px; object-fit: contain; background: #fff; display: block; padding: 8px; }
+.card-body { padding: 14px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.badge-pack {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  color: white; background: #16a34a; padding: 3px 9px;
+  border-radius: var(--r-pill); display: inline-block; width: fit-content; letter-spacing: 0.3px;
+}
+.badge-recomendado {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  color: white; background: #ea580c; padding: 3px 9px;
+  border-radius: var(--r-pill); display: inline-block; width: fit-content; letter-spacing: 0.3px;
+}
+.marca {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  color: white; background: var(--blue); padding: 3px 9px;
+  border-radius: var(--r-pill); display: inline-block; width: fit-content; letter-spacing: 0.3px;
+}
+.marca.lvl { background: var(--dark); }
+.nombre { font-size: 13.5px; font-weight: 600; line-height: 1.35; flex: 1; color: var(--text); }
+.precio-area { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.precio { font-size: 22px; font-weight: 700; color: var(--blue); }
+.precio-normal { font-size: 12px; color: var(--text-light); text-decoration: line-through; }
+.card-btns { display: flex; gap: 6px; margin-top: auto; }
+.btn-ver-sm {
+  background: var(--surface); color: var(--blue); border: 1.5px solid var(--blue);
+  border-radius: var(--r-sm); padding: 8px 12px; font-size: 12px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-ver-sm:hover { background: var(--blue-light); }
+.btn-agregar {
+  flex: 1; background: var(--blue); color: white; border: none;
+  border-radius: var(--r-sm); padding: 8px; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-agregar:hover { background: var(--blue-dark); }
+
+/* CART BUTTON */
+.cart-btn {
+  position: relative; background: none; border: 1.5px solid var(--blue);
+  border-radius: var(--r-sm); padding: 7px 12px; font-size: 16px; cursor: pointer; color: var(--blue);
+  transition: background 0.15s;
+}
+.cart-btn:hover { background: var(--blue-light); }
+.cart-count {
+  position: absolute; top: -7px; right: -7px;
+  background: #EF4444; color: white; font-size: 10px; font-weight: 700;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: none; align-items: center; justify-content: center;
+}
+
+/* CART PANEL */
+.cart-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 500; }
+.cart-overlay.open { display: block; }
+.cart-panel {
+  position: fixed; top: 0; right: -390px; width: 370px; height: 100%;
+  background: var(--surface); z-index: 600;
+  transition: right 0.25s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column; box-shadow: var(--shadow-lg);
+}
+.cart-panel.open { right: 0; }
+.cart-header {
+  background: var(--dark); color: white; padding: 16px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 2px solid var(--blue); flex-shrink: 0;
+}
+.cart-header h3 { font-size: 15px; font-weight: 600; }
+.cart-close { background: none; border: none; color: rgba(255,255,255,0.65); font-size: 20px; cursor: pointer; }
+.cart-empty { padding: 40px 24px; text-align: center; color: var(--text-muted); font-size: 13px; line-height: 2; }
+.cart-items { flex: 1; overflow-y: auto; padding: 0 14px; }
+.cart-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 0; border-bottom: 1px solid var(--border-light);
+}
+.cart-item-img { width: 56px; height: 56px; object-fit: cover; border-radius: var(--r-sm); background: var(--bg); flex-shrink: 0; }
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-nombre { font-size: 12.5px; font-weight: 600; line-height: 1.3; color: var(--text); }
+.cart-item-notas { font-size: 10.5px; color: var(--blue); font-weight: 600; margin-top: 2px; }
+.cart-item-precio { font-size: 13.5px; color: var(--blue); font-weight: 700; margin-top: 3px; display:flex; align-items:center; gap:6px; }
+.cart-precio-tachado { font-size: 11px; color: var(--text-light); font-weight: 400; text-decoration: line-through; }
+.cart-item-ahorro { font-size: 11px; color: #16a34a; font-weight: 600; margin-top: 2px; }
+.cart-item-qty { display: flex; align-items: center; gap: 8px; margin-top: 7px; }
+.qty-btn {
+  width: 28px; height: 28px; border: 1.5px solid var(--border); background: var(--bg);
+  border-radius: var(--r-sm); font-size: 14px; cursor: pointer; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.1s, background 0.1s;
+}
+.qty-btn:hover { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+.qty-num { font-size: 13px; font-weight: 700; min-width: 22px; text-align: center; }
+.cart-item-remove { background: none; border: none; color: var(--text-light); font-size: 16px; cursor: pointer; padding: 0 2px; }
+.cart-footer { border-top: 1.5px solid var(--border); padding: 16px 18px; background: var(--bg); flex-shrink: 0; }
+.cart-subtotal { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+.cart-subtotal-val { font-size: 22px; color: var(--blue); font-weight: 700; }
+.btn-checkout {
+  width: 100%; background: var(--blue); color: white; border: none;
+  border-radius: var(--r-sm); padding: 13px; font-size: 14.5px; font-weight: 700; cursor: pointer;
+  transition: filter 0.15s;
+}
+.btn-checkout:hover { filter: brightness(1.05); }
+.cart-nota { font-size: 11px; color: var(--text-light); text-align: center; margin-top: 8px; }
+
+/* CHECKOUT */
+.checkout-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 700; overflow-y: auto; padding: 20px;
+}
+.checkout-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.checkout-modal { background: var(--surface); border-radius: var(--r); width: 100%; max-width: 500px; margin: auto; overflow: hidden; }
+.checkout-modal-header {
+  background: var(--dark); color: white; padding: 16px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 2px solid var(--blue);
+}
+.checkout-modal-header h3 { font-size: 15px; font-weight: 600; }
+.checkout-close { background: none; border: none; color: rgba(255,255,255,0.65); font-size: 20px; cursor: pointer; }
+.checkout-body { padding: 18px; }
+.checkout-resumen {
+  background: var(--bg); border-radius: var(--r-sm); padding: 12px 14px; margin-bottom: 16px;
+  font-size: 12px; color: var(--text-muted); line-height: 1.9; border-left: 3px solid var(--mint);
+}
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; }
+.form-group input, .form-group select {
+  width: 100%; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  padding: 10px 12px; font-size: 13px; color: var(--text); background: var(--surface);
+}
+.form-group input:focus, .form-group select:focus { outline: none; border-color: var(--blue); }
+.delivery-box {
+  background: var(--blue-light); border-radius: var(--r-sm); padding: 10px 12px;
+  font-size: 12px; color: #1D4ED8; margin: 10px 0; display: none;
+  border-left: 3px solid var(--blue);
+}
+.checkout-total-box { border-top: 1.5px solid var(--border); padding-top: 14px; margin-top: 14px; }
+.checkout-total-line { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; color: var(--text-muted); }
+.checkout-total-line.grand { font-size: 18px; font-weight: 700; color: var(--blue); border-top: 1.5px solid var(--border); padding-top: 10px; margin-top: 5px; }
+.btn-wa-checkout {
+  display: block; width: 100%; background: var(--green-wa); color: white;
+  border: none; border-radius: var(--r-sm); padding: 14px; font-size: 15px;
+  font-weight: 700; cursor: pointer; margin-top: 16px;
+}
+.modal-cart-btn {
+  display: block; width: 100%; background: var(--surface); color: var(--blue);
+  border: 2px solid var(--blue); border-radius: var(--r-sm); padding: 12px;
+  font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 8px;
+  transition: background 0.15s;
+}
+.modal-cart-btn:hover { background: var(--blue-light); }
+
+/* SABOR SELECTOR */
+.sabor-section { padding: 12px 0 4px; }
+.sabor-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; }
+.sabor-grupo { margin-bottom: 10px; }
+.sabor-grupo-label { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+.sabor-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.sabor-pill {
+  padding: 5px 14px; border: 1.5px solid var(--border); border-radius: var(--r-pill);
+  font-size: 12px; font-weight: 600; cursor: pointer; background: var(--surface);
+  color: var(--text); transition: all 0.15s; font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.sabor-pill.active { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+
+/* MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 400; overflow-y: auto; padding: 20px;
+}
+.modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.modal { background: var(--surface); border-radius: var(--r); width: 100%; max-width: 520px; margin: auto; overflow: hidden; }
+.modal-header {
+  background: var(--dark); color: white; padding: 16px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 2px solid var(--blue);
+}
+.modal-header h3 { font-size: 14.5px; flex: 1; margin-right: 8px; font-weight: 600; }
+.modal-close { background: none; border: none; color: rgba(255,255,255,0.65); font-size: 20px; cursor: pointer; }
+.modal-img-wrap {
+  width: 100%; height: 320px; overflow: hidden; background: #fff;
+  position: relative; cursor: grab; user-select: none;
+}
+.modal-img-wrap.grabbing { cursor: grabbing; }
+.modal-img {
+  width: 100%; height: 100%; object-fit: contain; display: block; padding: 12px;
+  transform-origin: center center; will-change: transform; pointer-events: none;
+}
+.zoom-controls {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 14px; background: var(--bg); border-bottom: 1px solid var(--border);
+}
+.zoom-lbl { font-size: 13px; color: var(--text-muted); }
+.zoom-controls input[type=range] {
+  flex: 1; accent-color: var(--blue); cursor: pointer; height: 4px;
+}
+.zoom-reset-btn {
+  font-size: 11px; font-weight: 600; color: var(--blue); background: none;
+  border: 1px solid var(--border); border-radius: var(--r-pill); padding: 3px 10px;
+  cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; white-space: nowrap;
+}
+.modal-body { padding: 18px; }
+.modal-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.modal-nombre { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.modal-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
+.modal-incluye {
+  font-size: 12.5px; color: var(--text); background: var(--bg);
+  border-radius: var(--r-sm); padding: 10px 13px; margin-bottom: 12px;
+  line-height: 1.6; border-left: 3px solid var(--mint);
+}
+.modal-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+.modal-tag { font-size: 11.5px; background: var(--bg); color: var(--text-muted); border-radius: var(--r-pill); padding: 4px 11px; border: 1px solid var(--border); }
+.modal-precio-area { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.modal-precio { font-size: 28px; font-weight: 700; color: var(--blue); }
+.modal-precio-normal { font-size: 15px; color: var(--text-light); text-decoration: line-through; }
+.modal-ahorro { font-size: 12px; color: #16a34a; font-weight: 600; }
+.tn-toggle {
+  width: 100%; background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  padding: 11px 14px; font-size: 13px; font-weight: 600; text-align: left;
+  cursor: pointer; display: flex; justify-content: space-between; margin-bottom: 4px;
+  color: var(--text); transition: background 0.1s, border-color 0.1s;
+}
+.tn-toggle:hover { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
+.tn-body { display: none; border: 1.5px solid var(--border); border-radius: var(--r-sm); overflow: hidden; margin-bottom: 14px; }
+.tn-body.open { display: block; }
+.tn-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.tn-table thead tr { background: var(--dark); color: white; }
+.tn-table thead td { padding: 8px 10px; font-weight: 600; }
+.tn-table tbody tr td { padding: 5px 10px; border-bottom: 1px solid var(--border-light); }
+.tn-table tbody tr:last-child td { border-bottom: none; }
+.tn-table .subhdr td { background: var(--blue-light); font-weight: 600; font-size: 11px; color: var(--blue); }
+.tn-note { font-size: 11px; color: var(--text-muted); padding: 8px 10px; background: var(--bg); border-top: 1px solid var(--border); font-style: italic; }
+.modo-uso {
+  font-size: 12.5px; color: var(--text-muted); background: var(--bg);
+  border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  padding: 12px 14px; margin-bottom: 16px; line-height: 1.5;
+}
+.modo-uso strong { color: var(--text); display: block; margin-bottom: 5px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+.modal-wa {
+  display: block; background: var(--green-wa); color: white; text-align: center;
+  padding: 13px; border-radius: var(--r-sm); text-decoration: none;
+  font-size: 14.5px; font-weight: 700; transition: filter 0.15s;
+}
+.modal-wa:hover { filter: brightness(1.05); }
+
+/* PAGOS */
+.pagos { background: var(--surface); border-top: 1px solid var(--border); padding: 18px 32px; text-align: center; }
+.pagos h3 { font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: var(--text-light); letter-spacing: 1.5px; margin-bottom: 12px; }
+.pagos-lista { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.pago-item { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--r-pill); padding: 7px 18px; font-size: 12.5px; font-weight: 600; color: var(--text-muted); }
+
+/* FOOTER */
+footer {
+  background: var(--dark); color: rgba(255,255,255,0.55);
+  font-size: 13px; line-height: 1.7;
+  border-top: 3px solid var(--blue);
+}
+.footer-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px; padding: 36px 32px;
+  align-items: start;
+}
+.footer-col-title {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--mint); margin-bottom: 12px;
+}
+.footer-brand-name { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.footer-tagline { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+.footer-contact-line { color: rgba(255,255,255,0.85); font-size: 13px; }
+.footer-contact-line strong { color: #fff; font-weight: 700; }
+.footer-envios-badge {
+  display: flex; flex-direction: row; align-items: center; gap: 14px;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--r); padding: 14px 16px; margin-bottom: 12px;
+}
+.footer-envios-badge .ev-title { font-size: 13px; font-weight: 700; color: #fff; }
+.footer-envios-badge .ev-sub { font-size: 11px; color: rgba(255,255,255,0.5); }
+.footer-shalom {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; color: rgba(255,255,255,0.45);
+}
+.footer-shalom img { height: 22px; width: auto; object-fit: contain; border-radius: 4px; background: #fff; padding: 2px 6px; }
+.footer-redes { display: flex; gap: 10px; margin-top: 4px; }
+.footer-redes a { text-decoration: none; display: inline-block; transition: opacity 0.15s; }
+.footer-redes a:hover { opacity: 0.7; }
+.footer-redes img { width: 32px; height: 32px; object-fit: contain; filter: brightness(0) invert(1); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  text-align: center; padding: 14px 32px;
+  font-size: 11px; color: rgba(255,255,255,0.3);
+}
+@media (max-width: 700px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 24px; padding: 28px 20px; }
+}
+
+/* BUSCADOR */
+.search-bar { border-top: 1px solid var(--border); padding: 10px 32px; background: var(--surface); }
+.search-inner { max-width: 1280px; margin: 0 auto; position: relative; }
+.search-input {
+  width: 100%; padding: 10px 40px 10px 18px;
+  border: 1.5px solid var(--border); border-radius: var(--r-pill);
+  font-size: 14px; background: var(--bg); outline: none; color: var(--text);
+  transition: border-color 0.15s, background 0.15s;
+}
+.search-input:focus { border-color: var(--blue); background: var(--surface); }
+.search-input::placeholder { color: var(--text-light); }
+.search-clear {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; color: var(--text-light);
+  font-size: 14px; display: none; line-height: 1;
+}
+.search-sugerencias {
+  position: absolute; top: calc(100% + 5px); left: 0; right: 0; z-index: 150;
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r);
+  box-shadow: var(--shadow-lg); display: none;
+  max-height: 240px; overflow-y: auto; overflow-x: hidden;
+}
+.sug-item {
+  padding: 10px 16px; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--border-light); font-size: 13.5px;
+  transition: background 0.1s;
+}
+.sug-item:last-child { border-bottom: none; }
+.sug-item:hover { background: var(--blue-light); color: var(--blue); }
+.sug-tipo { font-size: 11px; color: var(--text-light); }
+
+/* CARDS PEQUEÑAS — OTROS PRODUCTOS */
+.grid-sug {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; padding: 10px 32px 18px; max-width: 1280px; margin: 0 auto;
+}
+.card-mini {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--r); overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.card-mini:hover { border-color: var(--blue); box-shadow: var(--shadow-sm); }
+.card-mini-img {
+  width: 100%; height: 100px; object-fit: cover;
+  display: block; cursor: pointer; background: var(--bg);
+}
+.card-mini-body { padding: 10px 12px; }
+.card-mini-nombre {
+  font-size: 12px; font-weight: 600; line-height: 1.3;
+  margin-bottom: 4px; cursor: pointer; color: var(--text);
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.card-mini-precio { font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 7px; }
+.card-mini-btn {
+  width: 100%; background: var(--blue); color: white;
+  border: none; border-radius: var(--r-sm); padding: 7px 8px;
+  font-size: 11.5px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.card-mini-btn:hover { background: var(--blue-dark); }
+
+/* CONFIRMACIÓN COTIZACIÓN */
+.cot-confirm {
+  display: none; position: fixed; inset: 0; z-index: 1200;
+  background: rgba(0,0,0,0.5); align-items: center; justify-content: center;
+}
+.cot-confirm.open { display: flex; }
+.cot-confirm-box {
+  background: var(--surface); border-radius: var(--r); padding: 40px 36px;
+  text-align: center; max-width: 340px; width: 90%; box-shadow: var(--shadow-lg);
+}
+.cot-confirm-icon { font-size: 50px; margin-bottom: 14px; }
+.cot-confirm-box h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+.cot-confirm-box p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 22px; line-height: 1.6; }
+.cot-confirm-btn {
+  background: var(--green-wa); color: white; border: none; border-radius: var(--r-sm);
+  padding: 13px 26px; font-size: 14px; font-weight: 700; cursor: pointer; width: 100%;
+  transition: filter 0.15s;
+}
+.cot-confirm-btn:hover { filter: brightness(1.05); }
+
+@keyframes badge-pulsar {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.55); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+.float-cot-badge.pulsar { animation: badge-pulsar 0.4s ease forwards; }
+
+/* BOTÓN FLOTANTE COTIZADOR */
+.float-cot {
+  position: fixed; bottom: 20px; right: 20px; z-index: 999;
+  background: transparent; border: none; border-radius: 0;
+  width: 76px; cursor: pointer; padding: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.28));
+  transition: transform 0.2s;
+}
+.float-cot:hover { transform: translateY(-3px); }
+.float-cot img { width: 68px; height: 68px; object-fit: contain; }
+.float-cot-label {
+  font-size: 11px; font-weight: 700; color: var(--blue);
+  background: white; border: 1.5px solid var(--blue);
+  border-radius: var(--r-pill); padding: 2px 10px; white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+.float-cot-badge {
+  position: absolute; top: 0; right: 0;
+  background: #EF4444; color: white; border-radius: var(--r-pill);
+  min-width: 20px; height: 20px; font-size: 11px; font-weight: 700;
+  display: none; align-items: center; justify-content: center; padding: 0 5px;
+}
+.float-cot-badge.visible { display: flex; }
+.float-tooltip {
+  position: absolute; bottom: 90px; right: 0;
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r);
+  padding: 8px 13px; font-size: 12px; font-weight: 600; color: var(--text);
+  white-space: nowrap; box-shadow: var(--shadow-md);
+  opacity: 0; pointer-events: none; transition: opacity 0.2s;
+}
+.float-tooltip::after {
+  content: ''; position: absolute; bottom: -7px; right: 20px;
+  border: 6px solid transparent; border-top-color: var(--surface);
+}
+.float-tooltip::before {
+  content: ''; position: absolute; bottom: -9px; right: 19px;
+  border: 7px solid transparent; border-top-color: var(--border);
+}
+.float-tooltip.show { opacity: 1; }
+
+/* RECOMENDADOS */
+.recom-section { background: var(--bg); padding: 36px 0 32px; border-bottom: 1px solid var(--border); }
+.recom-inner { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+.recom-header { margin-bottom: 20px; }
+.recom-header h2 { font-size: 20px; font-weight: 700; color: var(--text); }
+.recom-sub { font-size: 12.5px; color: var(--text-muted); margin-top: 4px; }
+.recom-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.recom-card {
+  background: var(--surface); border-radius: var(--r); border: 1.5px solid var(--border);
+  overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.recom-card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.recom-img { width: 100%; height: 170px; object-fit: contain; background: #fff; display: block; padding: 8px; }
+.recom-body { padding: 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.recom-nombre { font-size: 13px; font-weight: 600; line-height: 1.35; color: var(--text); }
+.recom-porque { font-size: 11.5px; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.recom-precio { font-size: 20px; font-weight: 700; color: var(--blue); }
+.recom-btn {
+  width: 100%; background: var(--blue); color: white; border: none;
+  border-radius: var(--r-sm); padding: 9px; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.recom-btn:hover { background: var(--blue-dark); }
+
+/* SCORE SYSTEM — POTENCIA BARIÁTRICA */
+.sc-wrap { display: flex; align-items: center; gap: 7px; }
+.sc-wrap-sm { display: flex; align-items: center; gap: 4px; padding: 2px 0; }
+.sc-stars { display: flex; gap: 1px; }
+.sc-star { font-size: 15px; line-height: 1; color: #FBBF24; }
+.sc-star.empty { color: #E5E7EB; }
+.sc-stars-sm .sc-star { font-size: 11px; }
+.sc-val    { font-size: 15px; font-weight: 800; color: var(--text-muted); }
+.sc-val-sm { font-size: 11px; font-weight: 700; color: var(--text-muted); }
+.sc-pill {
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+  padding: 2px 8px; border-radius: var(--r-pill);
+}
+.sc-elite   .sc-pill { background: #dcfce7; color: #16a34a; }
+.sc-premium .sc-pill { background: var(--blue-light); color: var(--blue); }
+.sc-solido  .sc-pill { background: #fff7ed; color: #ea580c; }
+.sc-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .recom-grid { grid-template-columns: repeat(2,1fr); }
+  .topbar { display: none; }
+  .hamburger { display: block; }
+  .main-nav { display: none; }
+  .header-inner { padding: 10px 16px; }
+  .search-bar { padding: 8px 16px; }
+  .slide { padding: 20px 50px 36px; }
+  .slide-title { font-size: 18px; }
+  .slide-price { font-size: 26px; }
+  .categorias-grid { grid-template-columns: repeat(3, 1fr); }
+  .trust-grid { grid-template-columns: repeat(2, 1fr); }
+  .categorias-section { padding: 24px 16px; }
+  .trust-section { padding: 14px 16px; }
+}
+@media (max-width: 500px) {
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 6px 12px 8px; }
+  .grid-sug { padding: 8px 12px 16px; }
+  .card-img { height: 160px; }
+  .categorias-section { padding: 20px 12px; }
+  .trust-section { padding: 14px 12px; }
+  .productos-header { padding: 0 12px 16px; }
+  .seccion-titulo { padding: 16px 12px 6px; }
+  .pagos { padding: 16px; }
+  .recom-inner { padding: 0 12px; }
+  .recom-grid { grid-template-columns: repeat(1,1fr); gap: 12px; }
+}
+
+/* MODAL ENVÍO */
+.envio-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45); z-index: 1100;
+}
+.envio-overlay.open { display: block; }
+.envio-modal {
+  display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 90%; max-width: 480px; background: var(--surface);
+  border-radius: 16px; z-index: 1101;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+}
+.envio-modal.open { display: block; }
+.envio-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 20px 14px; border-bottom: 1px solid var(--border);
+}
+.envio-titulo { font-size: 15px; font-weight: 700; color: var(--text); }
+.envio-close {
+  background: none; border: none; font-size: 16px; color: var(--text-light);
+  cursor: pointer; padding: 4px 8px; border-radius: var(--r-sm);
+}
+.envio-body { padding: 16px 20px 0; }
+.envio-filas { display: flex; flex-direction: column; gap: 0; }
+.envio-fila {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 11px 14px; border-radius: var(--r-sm); margin-bottom: 6px;
+  background: var(--bg); border: 1px solid var(--border-light);
+}
+.envio-fila-provincias { border-style: dashed; }
+.envio-hora { font-size: 12px; color: var(--text-muted); font-weight: 500; flex: 1; }
+.envio-resultado { font-size: 12.5px; color: var(--text); font-weight: 500; text-align: right; flex: 1; }
+.envio-resultado strong { color: var(--blue); }
+.envio-nota { font-size: 11px; color: var(--text-light); display: block; }
+.envio-fila.activo { background: #EFF6FF; border-color: var(--blue); }
+.envio-fila.activo .envio-hora { color: var(--blue); font-weight: 700; }
+.envio-horario {
+  margin-top: 12px; padding: 10px 14px; background: #FFFBEB;
+  border: 1px solid #FDE68A; border-radius: var(--r-sm);
+  font-size: 12px; color: #92400E; line-height: 1.5;
+}
+.envio-footer {
+  padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 8px;
+}
+.envio-btn-send {
+  width: 100%; padding: 13px; background: var(--green-wa); color: #fff;
+  border: none; border-radius: var(--r-sm); font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.envio-btn-back {
+  width: 100%; padding: 11px; background: var(--surface); color: var(--text-muted);
+  border: 1.5px solid var(--border); border-radius: var(--r-sm); font-size: 13px;
+  font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.envio-btn-send:hover { opacity: 0.92; }
+.envio-btn-back:hover { background: var(--bg); }
+/* paso 1: opciones */
+.envio-opciones { display: flex; gap: 12px; }
+.envio-opcion {
+  flex: 1; padding: 20px 12px; border: 2px solid var(--border);
+  border-radius: var(--r); background: var(--bg); cursor: pointer;
+  text-align: center; font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: border-color 0.15s, background 0.15s;
+}
+.envio-opcion:hover { border-color: var(--blue); background: #EFF6FF; }
+.envio-opcion-icono { font-size: 28px; margin-bottom: 8px; }
+.envio-opcion-nombre { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.envio-opcion-sub { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+/* paso 2: detalles */
+.envio-cambiar {
+  background: none; border: none; color: var(--blue); font-size: 12.5px;
+  font-weight: 600; cursor: pointer; padding: 0 0 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.envio-destino-tag {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  margin-bottom: 12px; padding: 8px 12px;
+  background: #EFF6FF; border-radius: var(--r-sm);
+  border: 1px solid #BFDBFE;
+}
+.envio-prov-info {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 16px;
+  font-size: 13.5px; color: var(--text); line-height: 1.6;
+}
+.envio-prov-info p { margin: 0 0 8px; }
+.envio-prov-info p:last-child { margin: 0; }
+.envio-prov-dias { color: var(--text-muted); font-size: 13px; }
+
+/* BARIBLOG */
+.blog-section { padding: 40px 32px 56px; display: none; }
+.blog-header { text-align: center; margin-bottom: 32px; }
+.blog-titulo { font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 8px; font-family: 'Plus Jakarta Sans', sans-serif; }
+.blog-subtitulo { font-size: 15px; color: var(--text-muted); }
+.blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 960px; margin: 0 auto; }
+.blog-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; }
+.blog-card-img { height: 148px; display: flex; align-items: center; justify-content: center; font-size: 52px; }
+.blog-card-body { padding: 16px 18px 20px; display: flex; flex-direction: column; flex: 1; }
+.blog-card-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--blue); margin-bottom: 8px; }
+.blog-card-titulo { font-size: 14.5px; font-weight: 700; color: var(--text); line-height: 1.45; margin-bottom: 10px; }
+.blog-card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; flex: 1; }
+.blog-card-btn { align-self: flex-start; font-size: 12.5px; font-weight: 700; color: var(--blue); background: none; border: 1.5px solid var(--blue); border-radius: var(--r-pill); padding: 6px 14px; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.15s, color 0.15s; }
+.blog-card-btn:hover { background: var(--blue); color: #fff; }
+.blog-card-fecha { font-size: 11px; color: var(--text-light); margin-bottom: 6px; }
+.blog-card-prox {
+  background: var(--bg); border: 1.5px dashed var(--border);
+  border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; opacity: 0.65;
+}
+.blog-card-prox-img { height: 148px; display: flex; align-items: center; justify-content: center; font-size: 40px; background: var(--bg); }
+.blog-card-prox-body { padding: 16px 18px 20px; }
+.blog-card-prox-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); background: var(--border); padding: 3px 9px; border-radius: var(--r-pill); display: inline-block; margin-bottom: 10px; }
+.blog-card-prox-titulo { font-size: 13.5px; font-weight: 600; color: var(--text-muted); line-height: 1.45; }
+
+/* MODAL ARTÍCULO BLOG */
+.ba-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+  z-index: 800; overflow-y: auto; padding: 20px;
+}
+.ba-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.ba-modal {
+  background: var(--surface); border-radius: var(--r); width: 100%; max-width: 660px;
+  margin: auto; overflow: hidden; box-shadow: var(--shadow-lg);
+}
+.ba-header {
+  background: var(--dark); color: white; padding: 16px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 2px solid var(--blue);
+}
+.ba-header-label { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 500; }
+.ba-close { background: none; border: none; color: rgba(255,255,255,0.65); font-size: 20px; cursor: pointer; }
+.ba-cover {
+  width: 100%; height: 170px;
+  background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 55%, #00D68F 100%);
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px;
+}
+.ba-cover-icon { font-size: 54px; }
+.ba-cover-sub { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.82); }
+.ba-body { padding: 24px 28px 32px; }
+.ba-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+.ba-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); background: var(--blue-light); padding: 3px 10px; border-radius: var(--r-pill); }
+.ba-fecha { font-size: 11.5px; color: var(--text-light); }
+.ba-titulo { font-size: 20px; font-weight: 800; color: var(--text); line-height: 1.35; margin-bottom: 12px; }
+.ba-intro { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+.ba-h2 { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); margin: 20px 0 10px; }
+.ba-p { font-size: 13.5px; color: var(--text); line-height: 1.75; margin-bottom: 12px; }
+.ba-mito { background: var(--bg); border-radius: var(--r-sm); padding: 10px 14px; margin-bottom: 7px; font-size: 13px; line-height: 1.55; color: var(--text); border-left: 3px solid #FCA5A5; }
+.ba-verdad { background: #f0fdf4; border-radius: var(--r-sm); padding: 10px 14px; margin-bottom: 12px; font-size: 13px; line-height: 1.55; color: var(--text); border-left: 3px solid var(--mint); }
+.ba-lista { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-direction: column; gap: 6px; }
+.ba-lista li { font-size: 13px; color: var(--text); padding: 8px 14px; background: var(--bg); border-radius: var(--r-sm); border-left: 3px solid var(--blue); }
+.ba-check li { border-left-color: var(--mint); background: #f0fdf4; }
+.ba-disclaimer { background: #FFFBEB; border-left: 3px solid #F59E0B; border-radius: var(--r-sm); padding: 12px 14px; margin: 16px 0; font-size: 12.5px; color: #92400E; line-height: 1.6; }
+.ba-cta { background: var(--dark); border-radius: var(--r); padding: 20px 24px; text-align: center; margin-top: 22px; }
+.ba-cta h4 { font-size: 14px; font-weight: 700; color: white; margin-bottom: 6px; }
+.ba-cta p { font-size: 12px; color: rgba(255,255,255,0.65); margin-bottom: 14px; }
+.ba-cta-btn { display: inline-flex; align-items: center; gap: 7px; background: var(--green-wa); color: white; border: none; border-radius: var(--r-sm); padding: 11px 20px; font-size: 13.5px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; text-decoration: none; transition: filter 0.15s; }
+.ba-cta-btn:hover { filter: brightness(1.08); }
+@media (max-width: 768px) {
+  .blog-section { padding: 28px 16px 40px; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .blog-titulo { font-size: 22px; }
+  .ba-body { padding: 18px 16px 24px; }
+  .ba-titulo { font-size: 17px; }
+  .ba-cover { height: 140px; }
+}
+
+/* VISTA TOGGLE */
+.vista-toggle { display: flex; gap: 3px; }
+.vista-btn {
+  width: 30px; height: 30px;
+  border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  background: var(--surface); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); transition: all 0.15s; flex-shrink: 0;
+}
+.vista-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.vista-btn.active { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.vista-btn-mob { display: none; }
+
+/* DESKTOP — vista grande: grids Y carruseles en 2 columnas */
+#contenido.v-dt-grande .grid { grid-template-columns: repeat(2, 1fr); }
+#contenido.v-dt-grande .card-img { height: 300px; }
+#contenido.v-dt-grande .nombre { font-size: 15px; }
+#contenido.v-dt-grande .precio { font-size: 25px; }
+#contenido.v-dt-grande .carousel { flex-wrap: wrap; overflow-x: hidden !important; gap: 16px; }
+#contenido.v-dt-grande .carousel .card { width: calc(50% - 8px) !important; }
+#contenido.v-dt-grande .carousel-btn { display: none; }
+#contenido.v-dt-grande .carousel-wrap { padding: 0 32px 20px; }
+
+/* ===== RESPONSIVE MÓVIL — Zona Bariátrica ===== */
+
+/* TELÉFONOS GRANDES / TABLETAS PEQUEÑAS — 600px */
+@media (max-width: 600px) {
+  /* BANNER — colapsar y ocultar precio */
+  .slide { flex-direction: column; padding: 20px 20px 44px; text-align: center; gap: 4px; min-height: unset; }
+  .slide-right { display: none; }
+  .slide-title { font-size: 17px; }
+  .slide-sub { font-size: 12px; }
+  .slider-arrow { padding: 6px 10px; font-size: 16px; }
+
+  /* CATEGORÍAS — 2 columnas */
+  .categorias-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+  /* VISTA TOGGLE — en celular mostrar botones móvil, ocultar escritorio */
+  .vista-btn-desk { display: none !important; }
+  .vista-btn-mob  { display: flex !important; }
+
+  /* COTIZADOR PANEL — ancho completo */
+  .cart-panel { width: 100%; right: -100%; }
+
+  /* MÓVIL — vista 2 columnas: grids Y carruseles */
+  #contenido.v-mob-2col .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px; }
+  #contenido.v-mob-2col .card-img { height: 130px; }
+  #contenido.v-mob-2col .nombre { font-size: 11.5px; }
+  #contenido.v-mob-2col .precio { font-size: 17px; }
+  #contenido.v-mob-2col .card-body { padding: 10px; gap: 5px; }
+  #contenido.v-mob-2col .btn-ver-sm { display: none; }
+  #contenido.v-mob-2col .precio-normal { display: none; }
+  #contenido.v-mob-2col .carousel { flex-wrap: wrap; overflow-x: hidden !important; gap: 8px; }
+  #contenido.v-mob-2col .carousel .card { width: calc(50% - 4px) !important; }
+  #contenido.v-mob-2col .carousel-btn { display: none; }
+  #contenido.v-mob-2col .carousel-wrap { padding: 0 12px; }
+
+  /* MODALES — bottom sheet (emergen desde abajo) */
+  .modal-overlay, .modal-overlay.open { padding: 0; align-items: flex-end; }
+  .modal {
+    max-width: 100%; border-radius: 18px 18px 0 0; margin: 0;
+    max-height: 92vh; display: flex; flex-direction: column; overflow: hidden;
+  }
+  .modal-header { flex-shrink: 0; }
+  .modal-img-wrap { height: 200px; flex-shrink: 0; }
+  .zoom-controls { flex-shrink: 0; }
+  .modal-body { overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1; min-height: 0; }
+  .checkout-overlay, .checkout-overlay.open { padding: 0; align-items: flex-end; }
+  .checkout-modal {
+    max-width: 100%; border-radius: 18px 18px 0 0;
+    max-height: 92vh; display: flex; flex-direction: column; overflow: hidden;
+  }
+  .checkout-body { overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1; }
+  .ba-overlay, .ba-overlay.open { padding: 0; align-items: flex-end; }
+  .ba-modal {
+    max-width: 100%; border-radius: 18px 18px 0 0;
+    max-height: 92vh; display: flex; flex-direction: column; overflow: hidden;
+  }
+  .ba-body { overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1; }
+}
+
+/* TELÉFONOS — 480px */
+@media (max-width: 480px) {
+  /* HEADER — compacto */
+  .logo-tagline { display: none; }
+  .logo-name { font-size: 12.5px; }
+  .logo-zb { width: 34px; height: 34px; font-size: 13px; border-radius: 8px; }
+  .wa-bar { font-size: 0; letter-spacing: 0; padding: 8px; border-radius: 50%; width: 36px; height: 36px; justify-content: center; flex-shrink: 0; gap: 0; }
+  .lang-btn { padding: 5px 9px; font-size: 11px; }
+
+  /* BANNER */
+  .slide { padding: 16px 16px 40px; }
+  .slide-title { font-size: 15px; }
+  .slide-badge { font-size: 9px; }
+  .slider-arrow { display: none; }
+
+  /* PRODUCTOS — 1 columna por defecto */
+  .grid { grid-template-columns: 1fr; gap: 12px; padding: 6px 12px 8px; }
+  .card-img { height: 200px; }
+
+  /* CAROUSEL — cartas más anchas */
+  .carousel .card { width: calc(100vw - 88px); }
+  .carousel-wrap { padding: 0 38px 20px; }
+
+  /* GRID SUGERENCIAS — 2 columnas */
+  .grid-sug { grid-template-columns: repeat(2, 1fr); padding: 8px 12px 16px; }
+
+  /* BOTONES — área táctil cómoda (mínimo 44px) */
+  .btn-agregar { padding: 12px 8px; font-size: 13px; min-height: 44px; }
+  .btn-ver-sm { padding: 12px; min-height: 44px; }
+  .blog-card-btn { padding: 10px 16px; font-size: 13px; min-height: 44px; }
+  .sub-btn { padding: 8px 14px; font-size: 12.5px; min-height: 38px; }
+  .recom-btn { padding: 12px; min-height: 44px; }
+  .ba-cta-btn { width: 100%; justify-content: center; padding: 13px 20px; font-size: 14px; }
+
+  /* CATEGORÍAS */
+  .cat-img { height: 80px; }
+  .cat-nombre { font-size: 12.5px; }
+  .cat-info { padding: 8px 10px; }
+
+  /* TRUST — 1 columna */
+  .trust-grid { grid-template-columns: 1fr; }
+
+  /* MODAL PRODUCTO */
+  .modal-body { padding: 14px; }
+  .modal-nombre { font-size: 16px; }
+  .modal-precio { font-size: 24px; }
+
+  /* CHECKOUT */
+  .checkout-body { padding: 14px; }
+  .form-group input, .form-group select { font-size: 14px; padding: 12px; }
+  .btn-wa-checkout { padding: 15px; font-size: 15px; min-height: 50px; }
+
+  /* CART / COTIZADOR */
+  .cart-header h3 { font-size: 13px; }
+  .btn-checkout { padding: 14px; min-height: 50px; }
+
+  /* BARIBLOG MODAL */
+  .ba-cover { height: 120px; }
+  .ba-body { padding: 16px 14px 24px; }
+  .ba-titulo { font-size: 16px; }
+
+  /* BOTÓN FLOTANTE COTIZADOR */
+  .float-cot { bottom: 12px; right: 12px; width: 64px; }
+  .float-cot img { width: 58px; height: 58px; }
+  .float-cot-label { font-size: 10px; padding: 2px 8px; }
+
+  /* PAGOS */
+  .pago-item { padding: 6px 12px; font-size: 11.5px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span data-i18n="topbar1">Envíos a todo el Perú · Lima y provincias</span>
+  <span data-i18n="topbar2">Bienestar en cada etapa de tu vida bariátrica</span>
+  <span data-i18n="topbar3">WhatsApp: +51 961 841 069</span>
+</div>
+
+<!-- OVERLAY + SIDE MENU -->
+<div class="overlay" id="overlay" onclick="cerrarMenu()"></div>
+<div class="sidemenu" id="sidemenu">
+  <div class="sidemenu-header">
+    <h2>ZB Zona Bariátrica</h2>
+    <button class="close-btn" onclick="cerrarMenu()">&#x2715;</button>
+  </div>
+  <nav class="sidemenu-nav">
+    <a href="#" onclick="irInicio();cerrarMenu();return false;">Inicio</a>
+    <a href="#" onclick="filtrar('todos');cerrarMenu();scrollCategorias();return false;">Suplementos</a>
+    <a href="#" onclick="filtrar('pack');cerrarMenu();scrollProductos();return false;">Ofertas</a>
+    <a href="#" onclick="filtrar('proteina');cerrarMenu();scrollProductos();return false;">Proteínas</a>
+    <a href="#" onclick="filtrar('vitaminas');cerrarMenu();scrollProductos();return false;">Vitaminas &amp; Minerales</a>
+    <a href="#" onclick="filtrar('colageno');cerrarMenu();scrollProductos();return false;">Colágeno &amp; Fibra</a>
+  </nav>
+  <div class="etapa-disclaimer">
+    &#9888; Esta información es orientativa. Consulta siempre con tu médico o nutricionista antes de comenzar cualquier suplementación.
+  </div>
+  <div class="sidemenu-section">
+    <h3>Etapas Post-Operatorias</h3>
+    <div class="etapa-item">
+      <button class="etapa-toggle" onclick="toggleEtapa(this)">Fase 1 &mdash; Hospitalaria (Días 0&ndash;7) <span>+</span></button>
+      <div class="etapa-body">
+        <strong>Alimentación</strong>Solo líquidos claros a tolerancia: agua, caldos colados, gelatinas sin azúcar.
+        <strong>Efectos habituales</strong>Náuseas, vómitos ocasionales, riesgo de deshidratación.
+        <strong>Suplementos habituales</strong>Líquidos de rehidratación. Multivitamínico oral solo cuando se toleran líquidos por vía oral.
+      </div>
+    </div>
+    <div class="etapa-item">
+      <button class="etapa-toggle" onclick="toggleEtapa(this)">Fase 2 &mdash; Líquida Especializada (1&ndash;4 semanas) <span>+</span></button>
+      <div class="etapa-body">
+        <strong>Alimentación</strong>Líquidos completos y batidos proteicos en porciones pequeñas y frecuentes. Evitar azúcares simples.
+        <strong>Efectos habituales</strong>Saciedad muy temprana, cambios en el gusto, riesgo de vómitos si se come muy rápido.
+        <strong>Suplementos habituales</strong>Multivitamínico diario, proteína en polvo o líquida. Calcio y vitamina D según indicación médica.
+      </div>
+    </div>
+    <div class="etapa-item">
+      <button class="etapa-toggle" onclick="toggleEtapa(this)">Fase 3 &mdash; Purés y Blandos (4&ndash;12 semanas) <span>+</span></button>
+      <div class="etapa-body">
+        <strong>Alimentación</strong>Alimentos en textura puré y luego blandos. Priorizar proteína en cada toma.
+        <strong>Efectos habituales</strong>Pérdida de peso rápida, posible pérdida de cabello temporal, alteraciones intestinales.
+        <strong>Suplementos habituales</strong>Continuidad del multivitamínico. Evaluación de hierro, B12, calcio y vitamina D según análisis.
+      </div>
+    </div>
+    <div class="etapa-item">
+      <button class="etapa-toggle" onclick="toggleEtapa(this)">Fase 4 &mdash; Consolidación (3&ndash;6 meses) <span>+</span></button>
+      <div class="etapa-body">
+        <strong>Alimentación</strong>Incorporación progresiva de sólidos en porciones pequeñas. Priorizar proteínas magras y verduras.
+        <strong>Efectos habituales</strong>Estabilización del apetito, mejora de tolerancia. Vigilar fatiga o pérdida de cabello persistente.
+        <strong>Suplementos habituales</strong>Multivitamínico de mantenimiento. Hierro, B12, calcio y vitamina D según análisis.
+      </div>
+    </div>
+    <div class="etapa-item">
+      <button class="etapa-toggle" onclick="toggleEtapa(this)">Fase 5 &mdash; Largo Plazo (&gt;6 meses) <span>+</span></button>
+      <div class="etapa-body">
+        <strong>Alimentación</strong>Dieta adaptada: comidas pequeñas y frecuentes, énfasis en proteína, evitar bebidas calóricas.
+        <strong>Efectos a largo plazo</strong>Riesgo crónico de déficit de micronutrientes. Análisis periódicos al menos una vez al año.
+        <strong>Suplementos habituales</strong>Multivitamínico de por vida. Calcio, vitamina D, B12 e hierro según tipo de cirugía.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COTIZADOR -->
+<div class="cart-overlay" id="cartOverlay" onclick="cerrarCarrito()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>&#128203; <span data-i18n="cart_title">Mi Cotización</span></h3>
+    <button class="cart-close" onclick="cerrarCarrito()">&#x2715;</button>
+  </div>
+  <div style="background:#FFFBEB;border-bottom:1px solid #FDE68A;padding:10px 18px;font-size:12px;color:#92400E;line-height:1.55;font-weight:500">
+    Agrega los productos que te interesan y envíanos tu cotización por WhatsApp. Nuestro equipo te contacta para coordinar el pago y la entrega.
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" data-i18n="cart_empty">Tu cotización está vacía.<br>Agrega productos para comenzar.</div>
+  </div>
+  <div id="cartAhorro" style="display:none;background:#f0fdf4;border-top:1px solid #bbf7d0;padding:10px 18px;font-size:12.5px;color:#15803d;font-weight:500;line-height:1.5"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-subtotal">
+      <span data-i18n="cart_total">Total estimado</span>
+      <span class="cart-subtotal-val" id="cartSubtotal">S/ 0</span>
+    </div>
+    <button class="btn-checkout" onclick="abrirModalEnvio()" style="background:var(--blue);display:flex;align-items:center;justify-content:center;gap:8px">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.529 5.858L.057 23.5l5.805-1.48A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.368l-.36-.214-3.444.878.908-3.334-.235-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
+      <span data-i18n="cart_enviar_btn">REALIZAR MI PEDIDO</span>
+    </button>
+    <div class="cart-nota">El pago y delivery se coordinan por WhatsApp</div>
+  </div>
+</div>
+
+<!-- COTIZADOR FLOTANTE -->
+<button class="float-cot" id="floatCot" onclick="abrirCarrito()" title="Ver mi cotización">
+  <span class="float-cot-badge" id="floatBadge">0</span>
+  <img src="img/cotizador.jpg" alt="Cotizador">
+  <span class="float-cot-label">Cotizar</span>
+  <div class="float-tooltip" id="floatTooltip"></div>
+</button>
+
+<!-- CONFIRMACIÓN -->
+<div class="cot-confirm" id="cotConfirm">
+  <div class="cot-confirm-box">
+    <div class="cot-confirm-icon">✅</div>
+    <h3>¡Cotización enviada!</h3>
+    <p>Tu lista fue enviada por WhatsApp. Nuestro equipo te contacta pronto para coordinar el pago y la entrega.</p>
+    <button class="cot-confirm-btn" onclick="cerrarConfirm()">Entendido</button>
+  </div>
+</div>
+
+<!-- MODAL DATOS CLIENTE -->
+<div class="cot-confirm" id="modalDatosCliente">
+  <div class="cot-confirm-box" style="max-width:400px;text-align:left;">
+    <div class="cot-confirm-icon" style="text-align:center;">📋</div>
+    <h3 style="text-align:center;margin-bottom:6px;">Completa tus datos</h3>
+    <p style="text-align:center;margin-bottom:20px;">Para coordinar tu entrega necesitamos estos datos.</p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Nombre completo *</label>
+        <input id="clienteNombre" type="text" placeholder="Tu nombre y apellido" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">DNI *</label>
+        <input id="clienteDNI" type="text" placeholder="12345678" maxlength="8" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Dirección *</label>
+        <input id="clienteDireccion" type="text" placeholder="Calle, número, referencia" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Distrito / Ciudad *</label>
+        <input id="clienteDistrito" type="text" placeholder="Ej: Miraflores, Trujillo..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
+      </div>
+    </div>
+    <button class="cot-confirm-btn" onclick="enviarConDatos()" style="margin-top:20px;">ENVIAR PEDIDO POR WHATSAPP</button>
+    <button onclick="cerrarDatosCliente()" style="width:100%;margin-top:8px;background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;padding:6px;">Cancelar</button>
+  </div>
+</div>
+
+<!-- MODAL ENVÍO -->
+<div class="envio-overlay" id="envioOverlay" onclick="cerrarModalEnvio()"></div>
+<div class="envio-modal" id="envioModal">
+
+  <div class="envio-header">
+    <div class="envio-titulo" id="envioTitulo" data-i18n="envio_titulo">¿Dónde te enviamos tu pedido?</div>
+    <button class="envio-close" onclick="cerrarModalEnvio()">&#x2715;</button>
+  </div>
+
+  <!-- PASO 1: elegir destino -->
+  <div id="envioStep1" class="envio-body">
+    <div class="envio-opciones">
+      <button class="envio-opcion" onclick="elegirDestino('lima')">
+        <div class="envio-opcion-icono">🏙️</div>
+        <div class="envio-opcion-nombre">Lima</div>
+        <div class="envio-opcion-sub">Costo según distrito</div>
+      </button>
+      <button class="envio-opcion" onclick="elegirDestino('provincias')">
+        <div class="envio-opcion-icono">📦</div>
+        <div class="envio-opcion-nombre">Provincias</div>
+        <div class="envio-opcion-sub">Vía Shalom</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- PASO 2A: Lima -->
+  <div id="envioStep2Lima" class="envio-body" style="display:none">
+    <button class="envio-cambiar" onclick="volverStep1()" data-i18n="envio_cambiar">← Cambiar destino</button>
+    <div class="envio-destino-tag">📍 Lima — Costo de envío según distrito</div>
+    <div class="envio-filas">
+      <div class="envio-fila" id="envioFila0">
+        <div class="envio-hora">Pedidos antes de las 12:00 PM</div>
+        <div class="envio-resultado">Entrega <strong>HOY</strong> 3:00 PM – 8:00 PM</div>
+      </div>
+      <div class="envio-fila" id="envioFila1">
+        <div class="envio-hora">Pedidos 12:00 PM – 8:00 PM</div>
+        <div class="envio-resultado">Entrega <strong>MAÑANA</strong> 10:00 AM – 1:00 PM</div>
+      </div>
+      <div class="envio-fila" id="envioFila2">
+        <div class="envio-hora">Pedidos después de las 8:00 PM</div>
+        <div class="envio-resultado">Entrega <strong>MAÑANA</strong> 3:00 PM – 8:00 PM</div>
+      </div>
+    </div>
+    <div class="envio-horario">Horario de atención: <strong>Lunes a Sábado 9:00 AM – 8:00 PM</strong></div>
+  </div>
+
+  <!-- PASO 2B: Provincias -->
+  <div id="envioStep2Prov" class="envio-body" style="display:none">
+    <button class="envio-cambiar" onclick="volverStep1()" data-i18n="envio_cambiar">← Cambiar destino</button>
+    <div class="envio-destino-tag">📦 Provincias</div>
+    <div class="envio-prov-info">
+      <p>El costo de envío vía <strong>Shalom</strong> lo coordinaremos por WhatsApp según tu ciudad.</p>
+      <p class="envio-prov-dias">⏱ Tiempo estimado: <strong>2 a 5 días hábiles</strong></p>
+    </div>
+  </div>
+
+  <div class="envio-footer">
+    <button class="envio-btn-send" id="envioBtnSend" onclick="confirmarEnvio()" style="display:none" data-i18n="envio_btn_send">REALIZAR MI PEDIDO</button>
+    <button class="envio-btn-back" onclick="cerrarModalEnvio()" data-i18n="envio_btn_back">Seguir comprando</button>
+  </div>
+
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <button class="hamburger" onclick="abrirMenu()">&#9776;</button>
+    <div class="logo" onclick="filtrar('todos');window.scrollTo({top:0,behavior:'smooth'})">
+      <div class="logo-zb">ZB</div>
+      <div>
+        <div class="logo-name">ZONA BARIÁTRICA</div>
+        <div class="logo-tagline">Confianza y Acompañamiento Integral</div>
+      </div>
+    </div>
+    <nav class="main-nav">
+      <div class="nav-mega-wrap">
+        <button class="nav-link nav-suplementos" data-filter="suplementos" onclick="filtrar('todos');scrollProductos()" data-i18n="nav_suplementos">Suplementos</button>
+        <div class="mega-menu" id="megaMenu">
+          <div class="mega-cols">
+            <div class="mega-col">
+              <div class="mega-col-title mega-col-title-link" onclick="megaFiltrar('proteina',null)" data-i18n="mega_proteinas">Proteínas</div>
+              <button class="mega-item" onclick="megaFiltrar('proteina','polvo')" data-i18n="mega_polvo">Polvo</button>
+              <button class="mega-item" onclick="megaFiltrar('proteina','liquida')" data-i18n="mega_liquida">Líquida</button>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-title mega-col-title-link" onclick="megaFiltrar('vitaminas',null)" data-i18n="mega_vitaminas">Vitaminas & Minerales</div>
+              <button class="mega-item" onclick="megaFiltrar('vitaminas','biotina')" data-i18n="mega_biotina">Biotina</button>
+              <button class="mega-item" onclick="megaFiltrar('vitaminas','hierro')" data-i18n="mega_hierro">Hierro + Vit. C</button>
+              <button class="mega-item" onclick="megaFiltrar('vitaminas','multivit')" data-i18n="mega_multivit">Multivitamínico</button>
+              <button class="mega-item" onclick="megaFiltrar('vitaminas','b12')" data-i18n="mega_b12">B12 + Ác. Fólico</button>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-title mega-col-title-link" onclick="megaFiltrar('colageno',null)" data-i18n="mega_colageno">Colágeno & Fibra</div>
+              <button class="mega-item" onclick="megaFiltrar('colageno','colageno')" data-i18n="mega_colageno_sub">Colágeno</button>
+              <button class="mega-item" onclick="megaFiltrar('colageno','fibra')" data-i18n="mega_fibra">Fibra</button>
+              <hr style="border:none;border-top:1px solid var(--border-light);margin:10px 0">
+              <div class="mega-col-title mega-col-title-link" style="margin-bottom:8px" onclick="megaFiltrar('pack',null)" data-i18n="mega_packs">Packs</div>
+              <button class="mega-item" onclick="filtrarMarca('bn');cerrarMegaMenu()" data-i18n="mega_packs_bn">Packs Bari &amp; Nut.</button>
+              <button class="mega-item" onclick="filtrarMarca('lvl');cerrarMegaMenu()" data-i18n="mega_packs_lvl">Packs LVL Drink</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="nav-link nav-ofertas" data-filter="oferta" onclick="filtrar('oferta');scrollProductos()">OFERTAS</button>
+      <button class="nav-link" id="navBlog" onclick="mostrarBlog()">BariBlog</button>
+    </nav>
+    <div class="header-actions" style="display:flex;gap:8px;align-items:center">
+      <a class="wa-bar" href="https://wa.me/51961841069" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        CHATEA CON NOSOTROS
+      </a>
+      <div class="lang-wrap">
+        <button class="lang-btn" onclick="toggleLangMenu(event)">🌐 <span id="langLabel">ES</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button class="lang-option active" onclick="cambiarIdioma('es')">🇪🇸 Español</button>
+          <button class="lang-option" onclick="cambiarIdioma('en')">🇬🇧 English</button>
+          <button class="lang-option" onclick="cambiarIdioma('de')">🇩🇪 Deutsch</button>
+          <button class="lang-option" onclick="cambiarIdioma('it')">🇮🇹 Italiano</button>
+          <button class="lang-option" onclick="cambiarIdioma('pt')">🇧🇷 Português</button>
+          <button class="lang-option" onclick="cambiarIdioma('fr')">🇫🇷 Français</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="search-bar">
+    <div class="search-inner">
+      <input type="text" id="searchInput" class="search-input"
+             placeholder="Buscar producto... (ej: proteína, biotina, colágeno, pack)"
+             oninput="buscar(this.value)" autocomplete="off">
+      <button class="search-clear" id="searchClear" onclick="limpiarBusqueda()">&#x2715;</button>
+      <div class="search-sugerencias" id="searchSugerencias"></div>
+    </div>
+  </div>
+</header>
+
+<!-- PROMO SLIDER -->
+<section class="promo-slider">
+  <div class="slide slide-img active">
+    <img src="img/slide-envios.png" alt="Envíos a todo el Perú">
+  </div>
+  <div class="slide slide-img">
+    <img src="img/slide-proteina-liquida.png" alt="Proteína líquida post cirugía bariátrica">
+  </div>
+
+  <button class="slider-arrow prev" onclick="sliderMove(-1)">&#8249;</button>
+  <button class="slider-arrow next" onclick="sliderMove(1)">&#8250;</button>
+  <div class="slider-dots" id="sliderDots"></div>
+</section>
+
+
+
+<!-- RECOMENDADOS -->
+<section class="recom-section" id="recomSectionStatic" style="display:none">
+  <div class="recom-inner">
+    <div class="recom-header">
+      <h2>Productos Recomendados</h2>
+      <div class="recom-sub">Seleccionados para cada etapa de tu proceso bariátrico</div>
+    </div>
+    <div class="recom-grid" id="recomGrid"></div>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="productos-section" id="productos-section">
+  <div class="productos-header">
+    <div class="productos-header-top">
+      <h2 id="productos-titulo">Tienda</h2>
+      <div class="vista-toggle" id="vistaToggle">
+        <button class="vista-btn vista-btn-desk active" id="vBtnNormal" onclick="setVistaDt('normal')" title="Vista normal">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><rect x="0" y="0" width="5.5" height="5.5" rx="1"/><rect x="7.5" y="0" width="5.5" height="5.5" rx="1"/><rect x="0" y="7.5" width="5.5" height="5.5" rx="1"/><rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1"/></svg>
+        </button>
+        <button class="vista-btn vista-btn-desk" id="vBtnGrande" onclick="setVistaDt('grande')" title="Imágenes grandes">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><rect x="0" y="0" width="13" height="5.5" rx="1"/><rect x="0" y="7.5" width="13" height="5.5" rx="1"/></svg>
+        </button>
+        <button class="vista-btn vista-btn-mob active" id="vBtnMob1" onclick="setVistaMob('1col')" title="1 columna">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><rect x="0" y="0" width="13" height="3.5" rx="1"/><rect x="0" y="4.75" width="13" height="3.5" rx="1"/><rect x="0" y="9.5" width="13" height="3.5" rx="1"/></svg>
+        </button>
+        <button class="vista-btn vista-btn-mob" id="vBtnMob2" onclick="setVistaMob('2col')" title="2 columnas">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><rect x="0" y="0" width="5.5" height="5.5" rx="1"/><rect x="7.5" y="0" width="5.5" height="5.5" rx="1"/><rect x="0" y="7.5" width="5.5" height="5.5" rx="1"/><rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1"/></svg>
+        </button>
+      </div>
+      <select id="ordenSelect" onchange="aplicarOrden()" style="margin-left:auto;font-size:13px;padding:6px 12px;border:1.5px solid var(--border);border-radius:var(--r-pill);background:var(--surface);cursor:pointer;color:var(--text-muted);font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;outline:none">
+        <option value="">Ordenar por</option>
+        <option value="asc">Precio: menor a mayor</option>
+        <option value="desc">Precio: mayor a menor</option>
+      </select>
+    </div>
+    <div class="subfiltros" id="subfiltros" style="display:none"></div>
+  </div>
+  <div id="contenido"></div>
+</section>
+
+<!-- BARIBLOG -->
+<section class="blog-section" id="blog-section">
+  <div class="blog-header">
+    <h2 class="blog-titulo">BariBlog</h2>
+    <p class="blog-subtitulo">Todo lo que necesitas saber sobre tu vida bariátrica</p>
+  </div>
+  <div class="blog-grid">
+
+    <!-- ARTÍCULO REAL -->
+    <div class="blog-card">
+      <div class="blog-card-img" style="background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 55%, #00D68F 100%); flex-direction:column; gap:6px;">
+        <div style="font-size:52px;">💊</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.85);">Suplementación</div>
+      </div>
+      <div class="blog-card-body">
+        <div class="blog-card-fecha">Mayo 2026</div>
+        <div class="blog-card-tag">Suplementación</div>
+        <div class="blog-card-titulo">Suplementos de por vida: mitos y verdades que debes conocer después de tu cirugía</div>
+        <div class="blog-card-desc">Salir del quirófano es solo el inicio. Desde ese momento, los suplementos se convierten en parte de tu nueva vida. Pero hay mucha información confusa por ahí — hoy te contamos la verdad.</div>
+        <button class="blog-card-btn" onclick="abrirArticulo()">Leer artículo completo →</button>
+      </div>
+    </div>
+
+    <!-- PRÓXIMAMENTE 1 -->
+    <div class="blog-card-prox">
+      <div class="blog-card-prox-img">🥤</div>
+      <div class="blog-card-prox-body">
+        <div class="blog-card-prox-badge">Próximamente</div>
+        <div class="blog-card-prox-titulo">Proteína líquida vs proteína en polvo: ¿cuál es mejor para bariátricos?</div>
+      </div>
+    </div>
+
+    <!-- PRÓXIMAMENTE 2 -->
+    <div class="blog-card-prox">
+      <div class="blog-card-prox-img">📍</div>
+      <div class="blog-card-prox-body">
+        <div class="blog-card-prox-badge">Próximamente</div>
+        <div class="blog-card-prox-titulo">¿Dónde comprar suplementos bariátricos en Perú? Guía completa</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL ARTÍCULO BLOG -->
+<div class="ba-overlay" id="baOverlay" onclick="cerrarArticuloFondo(event)">
+  <div class="ba-modal">
+    <div class="ba-header">
+      <span class="ba-header-label">BariBlog · Suplementación</span>
+      <button class="ba-close" onclick="cerrarArticulo()">&#x2715;</button>
+    </div>
+    <div class="ba-cover">
+      <div class="ba-cover-icon">💊</div>
+      <div class="ba-cover-sub">Suplementación bariátrica</div>
+    </div>
+    <div class="ba-body">
+      <div class="ba-meta">
+        <span class="ba-tag">Suplementación</span>
+        <span class="ba-fecha">Mayo 2026</span>
+      </div>
+      <div class="ba-titulo">Suplementos de por vida: mitos y verdades que debes conocer después de tu cirugía</div>
+      <div class="ba-intro">Salir del quirófano es solo el inicio. Desde ese momento, los suplementos se convierten en parte de tu nueva vida. Pero hay mucha información confusa por ahí — hoy te contamos la verdad.</div>
+
+      <div class="ba-h2">¿Por qué necesitas suplementos?</div>
+      <div class="ba-p">Tu cirugía cambió la forma en que tu cuerpo absorbe nutrientes. Algunos procedimientos reducen lo que comes, otros cambian cómo absorbes. Por eso necesitas apoyo extra — y análisis periódicos para saber exactamente cuánto.</div>
+
+      <div class="ba-h2">Los mitos más comunes</div>
+      <div class="ba-mito">❌ <strong>"Todos toman lo mismo de por vida"</strong></div>
+      <div class="ba-verdad">✅ Depende de tu cirugía y tus análisis. No hay una fórmula igual para todos.</div>
+      <div class="ba-mito">❌ <strong>"Si como bien, no necesito suplementos"</strong></div>
+      <div class="ba-verdad">✅ Comer sano ayuda, pero tu absorción ya no es la misma. La dieta sola no siempre es suficiente.</div>
+      <div class="ba-mito">❌ <strong>"Los suplementos crean dependencia"</strong></div>
+      <div class="ba-verdad">✅ No crean dependencia. El riesgo real es NO tomarlos cuando los necesitas.</div>
+      <div class="ba-mito">❌ <strong>"Cualquier marca barata sirve"</strong></div>
+      <div class="ba-verdad">✅ La calidad importa. Busca etiquetas claras, ingredientes verificables y buena reputación.</div>
+      <div class="ba-mito">❌ <strong>"Si los dejo un tiempo no pasa nada"</strong></div>
+      <div class="ba-verdad">✅ Sí puede pasar. Algunas deficiencias aparecen rápido. Consulta antes de interrumpirlos.</div>
+
+      <div class="ba-h2">Nutrientes que debes vigilar</div>
+      <ul class="ba-lista">
+        <li><strong>Vitamina B12</strong> → energía y sistema nervioso</li>
+        <li><strong>Hierro</strong> → evita anemia</li>
+        <li><strong>Calcio + Vitamina D</strong> → salud ósea</li>
+        <li><strong>Tiamina (B1)</strong> → cuidado si hay vómitos</li>
+        <li><strong>Zinc y folato</strong> → según tu caso clínico</li>
+      </ul>
+
+      <div class="ba-h2">Cómo elegir bien</div>
+      <ul class="ba-lista ba-check">
+        <li>Etiquetas claras con ingredientes completos</li>
+        <li>Productos con certificaciones reconocidas</li>
+        <li>Sin promesas milagro ni pérdida garantizada</li>
+        <li>Fecha de vencimiento y número de lote visible</li>
+        <li>Reseñas verificables y política de devolución</li>
+      </ul>
+
+      <div class="ba-disclaimer">Esta información es orientativa. Consulta siempre con tu nutriólogo antes de hacer cambios en tu suplementación.</div>
+
+      <div class="ba-cta">
+        <h4>¿Tienes dudas sobre qué suplemento necesitas?</h4>
+        <p>ZOE te orienta sin costo y sin compromiso. Conocemos el mundo bariátrico porque lo vivimos contigo.</p>
+        <a class="ba-cta-btn" href="https://wa.me/51961841069?text=Hola%2C%20le%C3%AD%20el%20art%C3%ADculo%20del%20BariBlog%20y%20tengo%20dudas%20sobre%20mis%20suplementos" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.529 5.858L.057 23.5l5.805-1.48A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.368l-.36-.214-3.444.878.908-3.334-.235-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
+          Escríbenos por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModalFondo(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="mTitulo"></h3>
+      <button class="modal-close" onclick="cerrarModal()">&#x2715;</button>
+    </div>
+    <div class="modal-img-wrap" id="mImgWrap">
+      <img id="mImg" class="modal-img" src="" alt="">
+    </div>
+    <div class="zoom-controls">
+      <span class="zoom-lbl">🔍</span>
+      <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1" oninput="aplicarZoom(this.value)">
+      <button class="zoom-reset-btn" onclick="resetZoom()">Restablecer</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-badges" id="mBadges"></div>
+      <div class="modal-nombre" id="mNombre"></div>
+      <div class="modal-desc" id="mDesc"></div>
+      <div class="modal-incluye" id="mIncluye" style="display:none"></div>
+      <div class="modal-tags" id="mTags"></div>
+      <div id="mSabores" style="display:none"></div>
+      <div class="modal-precio-area" id="mPrecio"></div>
+      <button class="tn-toggle" id="tnBtn" onclick="toggleTN()" style="display:none">
+        Ver tabla nutricional completa <span id="tnArrow">+</span>
+      </button>
+      <div class="tn-body" id="tnBody"></div>
+      <div class="modo-uso" id="mUso" style="display:none"></div>
+      <button class="modal-cart-btn" onclick="agregarDesdeModalCot()" data-i18n="btn_agregar_modal">+ Agregar a cotización</button>
+      <a class="modal-wa" id="mWA" href="#" target="_blank" data-i18n="modal_consultar">Consultar solo este producto por WhatsApp</a>
+      <button class="modal-wa" style="background:none;border:1.5px solid var(--border);color:var(--text-muted);margin-top:6px;cursor:pointer;border-radius:var(--r-sm);padding:11px;font-size:13px;width:100%;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;transition:background 0.15s" onclick="compartirProducto()" data-i18n="modal_compartir">&#128279; Compartir este producto</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGOS -->
+<div class="pagos">
+  <h3 data-i18n="pagos_titulo">MÉTODOS DE PAGO</h3>
+  <div class="pagos-lista">
+    <div class="pago-item">Yape</div>
+    <div class="pago-item">Plin</div>
+    <div class="pago-item">Transferencia BCP</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <!-- Col 1: Marca -->
+    <div>
+      <div class="footer-brand-name">Zona Bariátrica</div>
+      <div class="footer-tagline">Confianza y Acompañamiento Integral</div>
+      <div class="footer-contact-line">WhatsApp: <strong>+51 961 841 069</strong></div>
+      <div class="footer-contact-line" style="margin-top:4px">Lima y provincias</div>
+    </div>
+    <!-- Col 2: Envíos -->
+    <div>
+      <div class="footer-col-title">Despacho y envíos</div>
+      <div class="footer-envios-badge">
+        <div style="flex:1">
+          <div class="ev-title">Envíos a todo el Perú</div>
+          <div class="ev-sub">Lima y provincias</div>
+        </div>
+        <div style="flex:1;display:flex;justify-content:center;align-items:center">
+          <img src="img/shalom.png" alt="Shalom Courier" style="height:75px;width:auto;object-fit:contain">
+        </div>
+      </div>
+    </div>
+    <!-- Col 3: Redes -->
+    <div>
+      <div class="footer-col-title">Síguenos</div>
+      <div class="footer-redes">
+        <a href="https://instagram.com/zonabariatricaof" target="_blank">
+          <img src="img/instagram.png" alt="Instagram">
+        </a>
+        <a href="https://www.tiktok.com/@zonabariatrica" target="_blank">
+          <img src="img/tiktok.png" alt="TikTok">
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom" data-i18n="footer_rights">© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos</div>
+</footer>
+
+<script>
+const WA = "51961841069";
+
+// ---- i18n ----
+let currentLang = 'es';
+const T = {
+  es:{ topbar1:'Envíos a todo el Perú · Lima y provincias', topbar2:'Bienestar en cada etapa de tu vida bariátrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTODOS DE PAGO', cart_enviar_btn:'REALIZAR MI PEDIDO', envio_titulo:'¿Dónde te enviamos tu pedido?', envio_step2_lima:'Lima — Costo según distrito', envio_step2_prov:'Provincias — Vía Shalom', envio_btn_send:'REALIZAR MI PEDIDO', envio_btn_back:'Seguir comprando', envio_cambiar:'← Cambiar destino', nav_suplementos:'Suplementos', nav_ofertas:'OFERTAS', search_ph:'Buscar producto... (ej: proteína, biotina, colágeno, pack)', sort_default:'Ordenar por', sort_asc:'Precio: menor a mayor', sort_desc:'Precio: mayor a menor', cart_title:'Mi Cotización', cart_empty:'Tu cotización está vacía.\nAgrega productos para comenzar.', cart_total:'Total estimado', cart_enviar:'Cotizar por WhatsApp', btn_ver:'Ver', btn_agregar:'Agregar', btn_agregar_modal:'+ Agregar a cotización', modal_consultar:'Consultar solo este producto por WhatsApp', modal_compartir:'🔗 Compartir este producto', pack_ahorra:'Ahorra', badge_recom:'Recomendado', recom_titulo:'También te puede interesar', recom_sub:'Seleccionados para cada etapa de tu proceso bariátrico', sec_proteinas:'Proteínas', sec_vitaminas:'Vitaminas', sec_colageno:'Colágeno', sec_ofertas:'Ofertas Para Ti', sec_packs:'Packs', tit_todos:'Suplementos', tit_proteinas:'Proteínas', tit_vitaminas:'Vitaminas & Minerales', tit_colageno:'Colágeno & Fibra', tit_ofertas:'Las mejores ofertas para ti', tit_packs:'Packs Bariátricos', mega_proteinas:'Proteínas', mega_vitaminas:'Vitaminas & Minerales', mega_colageno:'Colágeno & Fibra', mega_packs:'Packs', mega_polvo:'Polvo', mega_liquida:'Líquida', mega_biotina:'Biotina', mega_hierro:'Hierro + Vit. C', mega_multivit:'Multivitamínico', mega_b12:'B12 + Ác. Fólico', mega_colageno_sub:'Colágeno', mega_fibra:'Fibra', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos', potencia:'Potencia Bariátrica' },
+  en:{ topbar1:'Shipping across Peru · Lima and provinces', topbar2:'Wellness at every stage of your bariatric life', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'PAYMENT METHODS', cart_enviar_btn:'PLACE MY ORDER', envio_titulo:'Where do we ship your order?', envio_step2_lima:'Lima — Costo según distrito', envio_step2_prov:'Provinces — Via Shalom', envio_btn_send:'PLACE MY ORDER', envio_btn_back:'Keep shopping', envio_cambiar:'← Change destination', nav_suplementos:'Supplements', nav_ofertas:'OFFERS', search_ph:'Search product... (e.g: protein, biotin, collagen, pack)', sort_default:'Sort by', sort_asc:'Price: low to high', sort_desc:'Price: high to low', cart_title:'My Quote', cart_empty:'Your quote is empty.\nAdd products to get started.', cart_total:'Estimated total', cart_enviar:'Quote via WhatsApp', btn_ver:'View', btn_agregar:'Add', btn_agregar_modal:'+ Add to quote', modal_consultar:'Ask about this product on WhatsApp', modal_compartir:'🔗 Share this product', pack_ahorra:'Save', badge_recom:'Recommended', recom_titulo:'You might also like', recom_sub:'Selected for each stage of your bariatric journey', sec_proteinas:'Proteins', sec_vitaminas:'Vitamins', sec_colageno:'Collagen', sec_ofertas:'Offers For You', sec_packs:'Packs', tit_todos:'Supplements', tit_proteinas:'Proteins', tit_vitaminas:'Vitamins & Minerals', tit_colageno:'Collagen & Fiber', tit_ofertas:'Best offers for you', tit_packs:'Bariatric Packs', mega_proteinas:'Proteins', mega_vitaminas:'Vitamins & Minerals', mega_colageno:'Collagen & Fiber', mega_packs:'Packs', mega_polvo:'Powder', mega_liquida:'Liquid', mega_biotina:'Biotin', mega_hierro:'Iron + Vit. C', mega_multivit:'Multivitamin', mega_b12:'B12 + Folic Acid', mega_colageno_sub:'Collagen', mega_fibra:'Fiber', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Specialized supplements for bariatric patients', potencia:'Bariatric Power' },
+  de:{ topbar1:'Lieferung in ganz Peru · Lima und Provinzen', topbar2:'Wohlbefinden in jeder Phase Ihres bariatrischen Lebens', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'ZAHLUNGSMETHODEN', cart_enviar_btn:'BESTELLUNG AUFGEBEN', envio_titulo:'Wohin liefern wir Ihre Bestellung?', envio_step2_lima:'Lima — Lieferung S/ 8.00', envio_step2_prov:'Provinzen — Über Shalom', envio_btn_send:'BESTELLUNG AUFGEBEN', envio_btn_back:'Weiter einkaufen', envio_cambiar:'← Ziel ändern', nav_suplementos:'Supplemente', nav_ofertas:'ANGEBOTE', search_ph:'Produkt suchen... (z.B.: Protein, Biotin, Kollagen)', sort_default:'Sortieren nach', sort_asc:'Preis: aufsteigend', sort_desc:'Preis: absteigend', cart_title:'Mein Angebot', cart_empty:'Ihr Angebot ist leer.\nFügen Sie Produkte hinzu.', cart_total:'Geschätzter Gesamtbetrag', cart_enviar:'Angebot per WhatsApp', btn_ver:'Ansehen', btn_agregar:'Hinzufügen', btn_agregar_modal:'+ Zum Angebot', modal_consultar:'Produkt per WhatsApp anfragen', modal_compartir:'🔗 Teilen', pack_ahorra:'Sparen', badge_recom:'Empfohlen', recom_titulo:'Das könnte Ihnen gefallen', recom_sub:'Ausgewählt für jede Phase Ihres bariatrischen Prozesses', sec_proteinas:'Proteine', sec_vitaminas:'Vitamine', sec_colageno:'Kollagen', sec_ofertas:'Angebote für Sie', sec_packs:'Pakete', tit_todos:'Supplemente', tit_proteinas:'Proteine', tit_vitaminas:'Vitamine & Mineralien', tit_colageno:'Kollagen & Ballaststoffe', tit_ofertas:'Beste Angebote für Sie', tit_packs:'Bariatrische Pakete', mega_proteinas:'Proteine', mega_vitaminas:'Vitamine & Mineralien', mega_colageno:'Kollagen & Ballaststoffe', mega_packs:'Pakete', mega_polvo:'Pulver', mega_liquida:'Flüssig', mega_biotina:'Biotin', mega_hierro:'Eisen + Vit. C', mega_multivit:'Multivitamin', mega_b12:'B12 + Folsäure', mega_colageno_sub:'Kollagen', mega_fibra:'Ballaststoffe', mega_packs_bn:'Pakete Bari & Nut.', mega_packs_lvl:'Pakete LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Spezialisierte Supplemente für bariatrische Patienten', potencia:'Bariatrische Kraft' },
+  it:{ topbar1:'Spedizioni in tutto il Perù · Lima e province', topbar2:'Benessere in ogni fase della tua vita bariatrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'METODI DI PAGAMENTO', cart_enviar_btn:'EFFETTUA IL MIO ORDINE', envio_titulo:'Dove spediamo il tuo ordine?', envio_step2_lima:'Lima — Consegna S/ 8.00', envio_step2_prov:'Province — Via Shalom', envio_btn_send:'EFFETTUA IL MIO ORDINE', envio_btn_back:'Continua ad acquistare', envio_cambiar:'← Cambia destinazione', nav_suplementos:'Integratori', nav_ofertas:'OFFERTE', search_ph:'Cerca prodotto... (es: proteina, biotina, collagene)', sort_default:'Ordina per', sort_asc:'Prezzo: crescente', sort_desc:'Prezzo: decrescente', cart_title:'Il mio preventivo', cart_empty:'Il tuo preventivo è vuoto.\nAggiungi prodotti per iniziare.', cart_total:'Totale stimato', cart_enviar:'Preventivo su WhatsApp', btn_ver:'Vedi', btn_agregar:'Aggiungi', btn_agregar_modal:'+ Aggiungi al preventivo', modal_consultar:'Chiedi di questo prodotto su WhatsApp', modal_compartir:'🔗 Condividi', pack_ahorra:'Risparmia', badge_recom:'Consigliato', recom_titulo:'Potrebbe interessarti', recom_sub:'Selezionati per ogni fase del percorso bariatrico', sec_proteinas:'Proteine', sec_vitaminas:'Vitamine', sec_colageno:'Collagene', sec_ofertas:'Offerte Per Te', sec_packs:'Pacchi', tit_todos:'Integratori', tit_proteinas:'Proteine', tit_vitaminas:'Vitamine & Minerali', tit_colageno:'Collagene & Fibra', tit_ofertas:'Le migliori offerte per te', tit_packs:'Pacchi Bariatrici', mega_proteinas:'Proteine', mega_vitaminas:'Vitamine & Minerali', mega_colageno:'Collagene & Fibra', mega_packs:'Pacchi', mega_polvo:'Polvere', mega_liquida:'Liquida', mega_biotina:'Biotina', mega_hierro:'Ferro + Vit. C', mega_multivit:'Multivitaminico', mega_b12:'B12 + Acido Folico', mega_colageno_sub:'Collagene', mega_fibra:'Fibra', mega_packs_bn:'Pacchi Bari & Nut.', mega_packs_lvl:'Pacchi LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Integratori specializzati per pazienti bariatrici', potencia:'Potenza Bariatrica' },
+  pt:{ topbar1:'Envios para todo o Peru · Lima e províncias', topbar2:'Bem-estar em cada etapa da sua vida bariátrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTODOS DE PAGAMENTO', cart_enviar_btn:'REALIZAR MEU PEDIDO', envio_titulo:'Para onde enviamos seu pedido?', envio_step2_lima:'Lima — Entrega S/ 8.00', envio_step2_prov:'Províncias — Via Shalom', envio_btn_send:'REALIZAR MEU PEDIDO', envio_btn_back:'Continuar comprando', envio_cambiar:'← Mudar destino', nav_suplementos:'Suplementos', nav_ofertas:'OFERTAS', search_ph:'Buscar produto... (ex: proteína, biotina, colágeno)', sort_default:'Ordenar por', sort_asc:'Preço: menor para maior', sort_desc:'Preço: maior para menor', cart_title:'Minha Cotação', cart_empty:'Sua cotação está vazia.\nAdicione produtos para começar.', cart_total:'Total estimado', cart_enviar:'Cotação pelo WhatsApp', btn_ver:'Ver', btn_agregar:'Adicionar', btn_agregar_modal:'+ Adicionar à cotação', modal_consultar:'Consultar este produto pelo WhatsApp', modal_compartir:'🔗 Compartilhar', pack_ahorra:'Economize', badge_recom:'Recomendado', recom_titulo:'Você também pode gostar', recom_sub:'Selecionados para cada etapa do seu processo bariátrico', sec_proteinas:'Proteínas', sec_vitaminas:'Vitaminas', sec_colageno:'Colágeno', sec_ofertas:'Ofertas Para Você', sec_packs:'Pacotes', tit_todos:'Suplementos', tit_proteinas:'Proteínas', tit_vitaminas:'Vitaminas & Minerais', tit_colageno:'Colágeno & Fibra', tit_ofertas:'As melhores ofertas para você', tit_packs:'Pacotes Bariátricos', mega_proteinas:'Proteínas', mega_vitaminas:'Vitaminas & Minerais', mega_colageno:'Colágeno & Fibra', mega_packs:'Pacotes', mega_polvo:'Pó', mega_liquida:'Líquida', mega_biotina:'Biotina', mega_hierro:'Ferro + Vit. C', mega_multivit:'Multivitamínico', mega_b12:'B12 + Ác. Fólico', mega_colageno_sub:'Colágeno', mega_fibra:'Fibra', mega_packs_bn:'Pacotes Bari & Nut.', mega_packs_lvl:'Pacotes LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos', potencia:'Potência Bariátrica' },
+  fr:{ topbar1:'Livraison dans tout le Pérou · Lima et provinces', topbar2:'Bien-être à chaque étape de votre vie bariatrique', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTHODES DE PAIEMENT', cart_enviar_btn:'PASSER MA COMMANDE', envio_titulo:'Où livrons-nous votre commande?', envio_step2_lima:'Lima — Livraison S/ 8.00', envio_step2_prov:'Provinces — Via Shalom', envio_btn_send:'PASSER MA COMMANDE', envio_btn_back:'Continuer mes achats', envio_cambiar:'← Changer la destination', nav_suplementos:'Suppléments', nav_ofertas:'OFFRES', search_ph:'Rechercher un produit... (ex: protéine, biotine, collagène)', sort_default:'Trier par', sort_asc:'Prix: croissant', sort_desc:'Prix: décroissant', cart_title:'Mon Devis', cart_empty:'Votre devis est vide.\nAjoutez des produits pour commencer.', cart_total:'Total estimé', cart_enviar:'Devis par WhatsApp', btn_ver:'Voir', btn_agregar:'Ajouter', btn_agregar_modal:'+ Ajouter au devis', modal_consultar:'Demander ce produit sur WhatsApp', modal_compartir:'🔗 Partager', pack_ahorra:'Économisez', badge_recom:'Recommandé', recom_titulo:'Vous pourriez aussi aimer', recom_sub:'Sélectionnés pour chaque étape de votre parcours bariatrique', sec_proteinas:'Protéines', sec_vitaminas:'Vitamines', sec_colageno:'Collagène', sec_ofertas:'Offres Pour Vous', sec_packs:'Packs', tit_todos:'Suppléments', tit_proteinas:'Protéines', tit_vitaminas:'Vitamines & Minéraux', tit_colageno:'Collagène & Fibres', tit_ofertas:'Meilleures offres pour vous', tit_packs:'Packs Bariatriques', mega_proteinas:'Protéines', mega_vitaminas:'Vitamines & Minéraux', mega_colageno:'Collagène & Fibres', mega_packs:'Packs', mega_polvo:'Poudre', mega_liquida:'Liquide', mega_biotina:'Biotine', mega_hierro:'Fer + Vit. C', mega_multivit:'Multivitamine', mega_b12:'B12 + Acide Folique', mega_colageno_sub:'Collagène', mega_fibra:'Fibres', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suppléments spécialisés pour les patients bariatriques', potencia:'Puissance Bariatrique' }
+};
+function __(key) { return (T[currentLang] && T[currentLang][key]) || T.es[key] || key; }
+
+function toggleLangMenu(e) {
+  e.stopPropagation();
+  document.getElementById('langMenu').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-wrap')) document.getElementById('langMenu').classList.remove('open');
+});
+
+function cambiarIdioma(lang) {
+  currentLang = lang;
+  const codes = {es:'ES',en:'EN',de:'DE',it:'IT',pt:'PT',fr:'FR'};
+  document.getElementById('langLabel').textContent = codes[lang];
+  document.querySelectorAll('.lang-option').forEach(b => b.classList.toggle('active', b.onclick.toString().includes("'"+lang+"'")));
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = __(el.dataset.i18n); });
+  document.getElementById('searchInput').placeholder = __('search_ph');
+  const sel = document.getElementById('ordenSelect');
+  if (sel) { sel.options[0].text = __('sort_default'); sel.options[1].text = __('sort_asc'); sel.options[2].text = __('sort_desc'); }
+  document.getElementById('langMenu').classList.remove('open');
+  renderizar(currentCat, null);
+  actualizarCartUI();
+}
+const BN = "img/bn-";
+const LVL = "img/lvl-";
+
+const tn = {
+  fibra_bn: {
+    srv: "1 Scoop (5g)", srvs: "64 servicios por envase",
+    filas: [
+      ["Carbohidratos","5 g","2%"],
+      ["Fibra dietética","5 g","20%"],
+      ["Azúcar","0 g","0%"],
+      ["Grasas","0 g","0%"],
+      ["Proteína","0 g","0%"]
+    ]
+  },
+  biotina: {
+    srv: "2 gomitas", srvs: "45 porciones por envase",
+    filas: [
+      ["Calorías","20 kcal",""],
+      ["Carbohidratos totales","—",""],
+      ["Azúcares totales","1 g",""],
+      ["Azúcares añadidos","1 g",""],
+      ["Biotina","10,000 mcg",""]
+    ],
+    nota: "2 gomitas al día, preferiblemente con una comida. La biotina puede interferir con pruebas de laboratorio."
+  },
+  hierro: {
+    srv: "1 gomita masticable", srvs: "30 gomitas por envase",
+    filas: [
+      ["Calorías","15 kcal",""],
+      ["Grasa total","0.5 g","1%"],
+      ["Carbohidratos totales","4 g","1%"],
+      ["Azúcares totales","0 g",""],
+      ["Azúcar Alcohol","4 g",""],
+      ["Vitamina C (Ác. Ascórbico)","60 mg","67%"],
+      ["Hierro (fumarato ferroso)","45 mg","250%"],
+      ["Sodio","20 mg","1%"]
+    ],
+    nota: "Vía oral. Adultos: 1 gomita masticable al día."
+  },
+  multivit: {
+    srv: "4 gomitas", srvs: "22 porciones por envase",
+    filas: [
+      ["Calorías","10 kcal",""],
+      ["Grasa total","0 g","0%"],
+      ["Carbohidratos totales","1.5 g","1%"],
+      ["Azúcar","1 g",""],
+      ["Proteína","0 g","0%"],
+      ["Vitamina A (Retinol)","560 mcg","63%"],
+      ["Vitamina C","45 mg","50%"],
+      ["Vitamina D3","18.8 mcg","94%"],
+      ["Vitamina E","15 mg","100%"],
+      ["Vitamina B1 (Tiamina)","12 mg","250%"],
+      ["Vitamina B2","430 mcg","33%"],
+      ["Vitamina B3","5 mg","31%"],
+      ["Vitamina B6","500 mcg","29%"],
+      ["Ácido fólico","650 mcg","84%"],
+      ["Vitamina B12 (Metilcobalamina)","425 mcg","5833%"],
+      ["Biotina","150 mcg","500%"],
+      ["Ácido pantoténico","2.5 mg","50%"],
+      ["Calcio","1400 mcg","23%"],
+      ["Hierro (fumarato ferroso)","50 mg","63%"],
+      ["Yodo","38 mcg","25%"],
+      ["Magnesio","100 mg","24%"],
+      ["Zinc","11 mg","68%"],
+      ["Selenio","18 mcg","32%"],
+      ["Cobre","1 mg","56%"],
+      ["Manganeso","500 mcg","22%"],
+      ["Cromo","30 mcg","86%"],
+      ["Molibdeno","18.8 mcg","42%"]
+    ]
+  },
+  b12: {
+    srv: "3 gomitas masticables", srvs: "30 porciones por envase",
+    filas: [
+      ["Folato (200 mcg ác. fólico)","340 mcg DFE","85%"],
+      ["Vitamina B12 (metilcobalamina)","1,000 mcg","41,667%"]
+    ]
+  },
+  liquid: {
+    srv: "30 ml", srvs: "33 porciones por envase",
+    filas: [
+      ["Calorías","100 kcal",""],
+      ["Proteínas","20 g",""],
+      ["Grasa total","0.0 g",""],
+      ["Carbohidrato total","6.0 g",""],
+      ["Fibra","6 g",""],
+      ["Hierro","50 mg",""],
+      ["Calcio","1 mg",""],
+      ["Sodio","10 mg",""],
+      ["Potasio","20 mg",""],
+      ["Fósforo","30 mcg",""],
+      ["Biotina","20 mcg",""]
+    ],
+    nota: "Sin lactosa · 0% azúcar"
+  },
+  whey: {
+    srv: "3 Scoops (48g)", srvs: "31 servicios por envase",
+    filas: [
+      ["Calorías","176 kcal",""],
+      ["Proteína","30 g",""],
+      ["Grasas","2.0 g",""],
+      ["Grasas saturadas","1 g",""],
+      ["Carbohidratos","3.7 g",""],
+      ["Azúcares","1 g",""],
+      ["Fibra dietética","1 g",""],
+      ["Sodio","83 mg",""],
+      ["Ácido fólico","100 mcg","26%"],
+      ["Biotina","7.5 mcg","25%"],
+      ["Niacina","4.96 mg","45%"],
+      ["Vitamina A","252 mcg","44%"],
+      ["Vitamina B1","375 mcg","47%"],
+      ["Vitamina B2","425 mcg","51%"],
+      ["Vitamina B6","500 mcg","54%"],
+      ["Vitamina B12","1.5 mcg","71%"],
+      ["Vitamina C","20 mg","25%"],
+      ["Vitamina D","2.8 mcg","45%"],
+      ["Vitamina E","8.7 mg","68%"],
+      ["Vitamina K","6.25 mcg","8%"],
+      ["Calcio","286 mg","35%"],
+      ["Cobre","500 mcg","77%"],
+      ["Cromo","30 mcg","136%"],
+      ["Hierro","5.5 mg","26%"],
+      ["Magnesio","25 mg","10%"],
+      ["Manganeso","0.5 mg","22%"],
+      ["Selenio","5 mcg","12%"],
+      ["Yodo","37.5 mcg","38%"],
+      ["Zinc","3.75 mg","38%"]
+    ],
+    nota: "Sin azúcares añadidos · Sin colorantes artificiales · Sin gluten · Deslactosada"
+  },
+  lvl_pro: {
+    srv: "1 Scoop (40g)", srvs: "25 servicios por envase",
+    filas: [
+      ["Calorías","145–155 kcal",""],
+      ["Proteína","27 g","52%"],
+      ["Grasas totales","< 1 g","< 1.43%"],
+      ["Grasas Saturadas","0 g","0%"],
+      ["Sodio","130–135 mg",""],
+      ["Carbohidratos totales","2 g","0.7%"],
+      ["Vitamina A","160 mcg","17.8%"],
+      ["Vitamina C","20 mg","22.2%"],
+      ["Vitamina D","3 mcg","15%"],
+      ["Vitamina E","1.8 mg","12%"],
+      ["Vitamina B1","0.2 mg","16.7%"],
+      ["Vitamina B2","0.5 mg","38.5%"],
+      ["Vitamina B3","3 mg","18.8%"],
+      ["Vitamina B5","1 mg","20%"],
+      ["Vitamina B6","0.3 mg","15%"],
+      ["Vitamina B9","80 mcg","20%"],
+      ["Vitamina B12","1 mcg","41.7%"],
+      ["Biotina","6 mcg","20%"],
+      ["Calcio","200 mg","20%"],
+      ["Hierro","2.8 mg","15.6%"],
+      ["Magnesio","62 mg","15.5%"],
+      ["Zinc","2.8 mg","25.5%"],
+      ["Selenio","12 mcg","21.8%"],
+      ["Vitamina K","12 mcg","10%"],
+      ["Yodo","30 mcg","20%"],
+      ["Cobre","180 mcg","20%"],
+      ["Manganeso","0.6 mg","26.1%"],
+      ["Molibdeno","9 mcg","20%"]
+    ],
+    nota: "Endulzado con stevia natural · Sin azúcares añadidos · Sin gluten · Apto bariátrico"
+  },
+  lvl_col: {
+    srv: "1 Scoop (12g)", srvs: "41 servicios por envase",
+    filas: [
+      ["Calorías","40 kcal","2%"],
+      ["Proteína (colágeno)","9 g","18%"],
+      ["Grasas totales","0.1 g","0.1%"],
+      ["Grasas Saturadas","0 g","0%"],
+      ["Sodio","10 mg","0.4%"],
+      ["Carbohidratos totales","0.5 g","0.2%"],
+      ["Vitamina A","134.4 mcg","15%"],
+      ["Vitamina C","46.8 mg","52%"],
+      ["Vitamina D","2.5 mcg","17%"],
+      ["Vitamina E","10 mg","67%"],
+      ["Vitamina B1","0.2 mg","17%"],
+      ["Vitamina B2","0.2 mg","15%"],
+      ["Vitamina B3","2.5 mg","16%"],
+      ["Vitamina B5","0.8 mg","16%"],
+      ["Vitamina B6","0.2 mg","12%"],
+      ["Vitamina B9","67.2 mcg","17%"],
+      ["Vitamina B12","0.4 mcg","17%"],
+      ["Biotina","10 mcg","33%"],
+      ["Calcio","178 mg","18%"],
+      ["Hierro","2.5 mg","14%"],
+      ["Magnesio","55.1 mg","13%"],
+      ["Zinc","2.4 mg","22%"],
+      ["Selenio","10.1 mcg","18%"],
+      ["Vitamina K","10.1 mcg","8%"],
+      ["Yodo","25.2 mcg","17%"],
+      ["Cobre","151.2 mcg","17%"],
+      ["Manganeso","0.5 mg","22%"],
+      ["Molibdeno","7.6 mcg","17%"]
+    ],
+    nota: "Con colágeno hidrolizado, camu camu y arándano · Sin azúcares añadidos · Apto bariátrico"
+  },
+  lvl_fib: {
+    srv: "1 Scoop (10g)", srvs: "20 servicios por envase",
+    filas: [
+      ["Calorías","27 kcal","1.4%"],
+      ["Grasas totales","0 g","0%"],
+      ["Carbohidratos totales","6.2 g","2.3%"],
+      ["Fibra dietética","6.2 g","22.1%"],
+      ["Vitamina A","159.5 mcg","17.7%"],
+      ["Vitamina C","19.9 mg","22.1%"],
+      ["Vitamina D","3 mcg","15%"],
+      ["Vitamina E","1.8 mg","12%"],
+      ["Vitamina B1","0.2 mg","16.7%"],
+      ["Vitamina B2","0.2 mg","15.4%"],
+      ["Vitamina B3","3 mg","18.8%"],
+      ["Vitamina B5","1 mg","20%"],
+      ["Vitamina B6","0.3 mg","17.7%"],
+      ["Vitamina B9","79.8 mcg","20%"],
+      ["Vitamina B12","0.5 mcg","20.8%"],
+      ["Biotina","6 mcg","20%"],
+      ["Calcio","199.4 mg","15.3%"],
+      ["Hierro","2.8 mg","15.6%"],
+      ["Magnesio","61.8 mg","14.7%"],
+      ["Zinc","2.8 mg","25.5%"],
+      ["Selenio","12 mcg","21.8%"],
+      ["Vitamina K","12 mcg","10%"],
+      ["Yodo","29.9 mcg","19.9%"],
+      ["Cobre","179.5 mcg","19.9%"],
+      ["Manganeso","0.6 mg","26.1%"],
+      ["Molibdeno","9 mcg","20%"]
+    ],
+    nota: "Fibra inulina · Sabor manzana verde · Sin azúcares añadidos · Apto bariátrico"
+  }
+};
+
+const scores = {
+  bp1:{v:9.0,t:'Élite'}, bp2:{v:8.9,t:'Premium'}, bp3:{v:8.7,t:'Premium'}, bp4:{v:9.8,t:'Élite'},
+  lp1:{v:9.5,t:'Élite'}, lp2:{v:9.2,t:'Élite'},   lp3:{v:8.8,t:'Premium'}, lp4:{v:8.5,t:'Premium'},
+  lp5:{v:8.3,t:'Sólido'},lp6:{v:8.4,t:'Sólido'},  lp7:{v:9.1,t:'Élite'},
+  bi1:{v:9.6,t:'Élite'}, bi2:{v:9.4,t:'Élite'},   bi3:{v:9.2,t:'Élite'},   bi4:{v:9.5,t:'Élite'},
+  bi5:{v:8.8,t:'Premium'},bi6:{v:8.7,t:'Premium'},bi7:{v:9.3,t:'Élite'},   bi8:{v:8.9,t:'Premium'}, bi9:{v:8.5,t:'Premium'},
+  li1:{v:8.7,t:'Premium'},li2:{v:8.6,t:'Premium'},li3:{v:8.9,t:'Premium'}, li4:{v:8.4,t:'Sólido'},
+};
+
+const recomIds = [
+  { id:'li1', porque:'Proteína en polvo sabor Vainilla. 27g de proteína por porción, sin azúcares, apta para bariátricos.' },
+  { id:'li2', porque:'Proteína en polvo sabor Chocolate. 27g de proteína por porción, endulzada con stevia natural.' },
+  { id:'bi5', porque:'10,000 mcg de biotina para fortalecer cabello y uñas. Sin azúcares añadidos.' },
+  { id:'bi8', porque:'B12 + Ácido Fólico esencial en el post-operatorio. 1,000 mcg de metilcobalamina.' },
+  { id:'bi3', porque:'Proteína líquida sabor Fresa. Lista para tomar, sin lactosa, 20g de proteína por porción.' },
+  { id:'bi4', porque:'Proteína líquida sabor Maracumango. Ideal para las primeras semanas post-operatorio.' },
+];
+
+function scoreHTML(id, full) {
+  const s = scores[id];
+  if (!s) return '';
+  const cls = s.t === 'Élite' ? 'sc-elite' : s.t === 'Premium' ? 'sc-premium' : 'sc-solido';
+  const filled = Math.round(s.v / 2);
+  const starsHTML = [1,2,3,4,5].map(n =>
+    `<span class="sc-star${n <= filled ? '' : ' empty'}">★</span>`
+  ).join('');
+  if (full) {
+    return `<div class="sc-wrap ${cls}">
+      <div>
+        <div class="sc-label">${__('potencia')}</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:3px">
+          <div class="sc-stars">${starsHTML}</div>
+          <span class="sc-val">${s.v}</span>
+        </div>
+      </div>
+    </div>`;
+  }
+  return `<div class="sc-wrap-sm ${cls}">
+    <div class="sc-stars sc-stars-sm">${starsHTML}</div>
+    <span class="sc-val-sm">${s.v}</span>
+  </div>`;
+}
+
+function renderRecomendados() {
+  const grid = document.getElementById('recomGrid');
+  if (!grid) return;
+  grid.innerHTML = recomIds.map(r => {
+    const p = productos.find(x => x.id === r.id);
+    if (!p) return '';
+    return `<div class="recom-card">
+      <img class="recom-img" src="${p.img}" alt="${p.nombre}" onerror="this.style.background='var(--bg)'" onclick="abrirModal('${p.id}')">
+      <div class="recom-body">
+        ${scoreHTML(p.id, true)}
+        <div class="recom-nombre" onclick="abrirModal('${p.id}')">${p.nombre}</div>
+        <div class="recom-porque">${r.porque}</div>
+        <div class="recom-precio">S/ ${p.precio}</div>
+        <button class="recom-btn" onclick="agregarACotizacion('${p.id}',true)">+ ${__('btn_agregar')}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+const productos = [
+  // OFERTA ESPECIAL
+  { id:"oferta1", tipo:"oferta", marcaTipo:"bn", cat:"oferta", destacado:true, marca:"Bari&Nutrition",
+    nombre:"2 Proteínas Líquidas",
+    desc:"Llévate 2 proteínas líquidas para tu recuperación post cirugía bariátrica. Sin lactosa, enriquecidas en fibra, aminoácidos, vitaminas y minerales.",
+    incluye:"Proteína líquida x2 · Sabores a elección: Maracumango o Fresa",
+    tags:["Sin lactosa","20g proteína","Post operatorio"],
+    precio:360, precioN:400, ahorro:40,
+    img: "img/popup-proteina.png",
+    seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
+    uso:"Consume según indicación de tu equipo médico. Ideal para la etapa post operatoria.", tn:null },
+
+  // BARI&NUTRITION PACKS
+  { id:"bp1", tipo:"pack", marcaTipo:"bn", cat:"pack", marca:"Bari&Nutrition",
+    nombre:"Pack Proteína Líquida",
+    desc:"Combinación ideal para la etapa de transición líquida.",
+    incluye:"Proteína líquida x2 · Gomitas multivitamínicas x1 · Gomitas B12 + ácido fólico x1 · Fibra soluble x1",
+    tags:["Alta proteína","Fácil absorción","Vitaminas esenciales"],
+    precio:722, precioN:785, ahorro:63,
+    img: "img/bn-pack-inicial.png",
+    seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
+    uso:"Combina cada producto según indicación de tu equipo médico. Consulta las dosis en cada envase.", tn:null },
+
+  { id:"bp2", tipo:"pack", marcaTipo:"bn", cat:"pack", marca:"Bari&Nutrition",
+    nombre:"Pack Proteína en Polvo + Vitaminas",
+    desc:"Ideal cuando ya puedes consumir proteína en polvo. Cubre vitaminas y minerales esenciales.",
+    incluye:"Proteína en polvo x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1",
+    tags:["30g proteína","Hierro","Multivitamínico"],
+    precio:672, precioN:730, ahorro:58,
+    img: "img/bn-pack-polvo-vitaminas.png",
+    seleccionSabor:[{label:"Proteína en Polvo (Whey)",sabores:["Vainilla","Chocolate"]}],
+    uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
+
+  { id:"bp3", tipo:"pack", marcaTipo:"bn", cat:"pack", marca:"Bari&Nutrition",
+    nombre:"Pack Energía y Cabello",
+    desc:"Para quienes experimentan pérdida de cabello y quieren reforzar biotina y hierro.",
+    incluye:"Gomitas biotina x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1",
+    tags:["Biotina 10,000 mcg","Hierro 45mg","Cabello y uñas"],
+    precio:552, precioN:600, ahorro:48,
+    img: "img/bn-pack-energia-cabello.png",
+    uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
+
+  { id:"bp4", tipo:"pack", marcaTipo:"bn", cat:"pack", destacado:true, marca:"Bari&Nutrition",
+    nombre:"Pack Suplementación Completa",
+    desc:"El pack más completo de Bari&Nutrition. Cubre proteína líquida, proteína en polvo, vitaminas, hierro, biotina y fibra.",
+    incluye:"Proteína líquida x1 · Proteína en polvo x1 · Gomitas biotina x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1 · Fibra soluble x1",
+    tags:["7 productos","Ahorro máximo","Todo en uno"],
+    precio:1060, precioN:1165, ahorro:105,
+    img: "img/bn-pack-suplementacion-completa.png",
+    seleccionSabor:[{label:"Proteína Líquida",sabores:["Maracumango","Fresa"]},{label:"Proteína en Polvo (Whey)",sabores:["Vainilla","Chocolate"]}],
+    uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
+
+  // LVL DRINK PACKS
+  { id:"lp1", tipo:"pack", marcaTipo:"lvl", cat:"pack", destacado:true, marca:"LVL Drink",
+    nombre:"Pack Completo LVL",
+    desc:"El pack más completo de LVL Drink. Proteína, colágeno, fibra y shaker oficial en un solo pedido.",
+    incluye:"Proteína en Polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g · Shaker oficial",
+    tags:["4 productos","Shaker incluido","Apto bariátrico"],
+    precio:389, precioN:477, ahorro:88,
+    img: LVL+"pack-completo.jpg",
+    seleccionSabor:[{label:"Proteína en Polvo HIGH ISO",sabores:["Vainilla","Chocolate"]}],
+    uso:"Consulta las dosis individuales en cada envase.", tn:null },
+
+  { id:"lp2", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+    nombre:"Pack Proteína + Colágeno + Shaker",
+    desc:"Proteína en Polvo HIGH ISO + Colágeno Hidrolizado SKINFINITY + Shaker oficial LVL.",
+    incluye:"Proteína en Polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Shaker oficial",
+    tags:["3 productos","Shaker incluido","Apto bariátrico"],
+    precio:309, precioN:368, ahorro:59,
+    img: LVL+"pack-prot-colageno.jpg",
+    seleccionSabor:[{label:"Proteína en Polvo HIGH ISO",sabores:["Vainilla","Chocolate"]}],
+    uso:"Consulta las dosis individuales en cada envase.", tn:null },
+
+  { id:"lp3", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+    nombre:"Pack Proteína + Fibra + Shaker",
+    desc:"Proteína en Polvo HIGH ISO + Fibra Manzana Verde + Shaker oficial LVL.",
+    incluye:"Proteína en Polvo 1kg (sabor a elegir) · Fibra Manzana Verde 200g · Shaker oficial",
+    tags:["3 productos","Shaker incluido","Apto bariátrico"],
+    precio:269, precioN:349, ahorro:80,
+    img: LVL+"pack-prot-fibra.jpg",
+    seleccionSabor:[{label:"Proteína en Polvo HIGH ISO",sabores:["Vainilla","Chocolate"]}],
+    uso:"Consulta las dosis individuales en cada envase.", tn:null },
+
+  { id:"lp4", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+    nombre:"Pack Colágeno + Fibra + Shaker",
+    desc:"Colágeno Hidrolizado SKINFINITY + Fibra Manzana Verde + Shaker oficial LVL.",
+    incluye:"Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g · Shaker oficial",
+    tags:["3 productos","Shaker incluido","Apto bariátrico"],
+    precio:179, precioN:238, ahorro:59,
+    img: LVL+"pack-colageno-fibra.jpg",
+    uso:"Consulta las dosis individuales en cada envase.", tn:null },
+
+  { id:"lp5", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+    nombre:"Pack Doble Fibra + Shaker",
+    desc:"Dos potes de Fibra Manzana Verde + Shaker oficial LVL. Ideal para el cuidado intestinal.",
+    incluye:"Fibra Manzana Verde x2 (200g c/u) · Shaker oficial",
+    tags:["Doble fibra","Shaker incluido","Tránsito intestinal"],
+    precio:149, precioN:218, ahorro:69,
+    img: LVL+"pack-doble-fibra.jpg",
+    uso:"Disolver 1 scoop (10g) en 250ml de agua al día.", tn:null },
+
+  { id:"lp6", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+    nombre:"Pack Doble Colágeno + Shaker",
+    desc:"Dos potes de Colágeno Hidrolizado SKINFINITY + Shaker oficial LVL.",
+    incluye:"Colágeno Hidrolizado x2 (500g c/u) · Shaker oficial",
+    tags:["Doble colágeno","Shaker incluido","Piel y cabello"],
+    precio:209, precioN:258, ahorro:49,
+    img: LVL+"pack-doble-colageno.jpg",
+    uso:"Disolver 1 scoop (12g) en 250ml de agua al día.", tn:null },
+
+  { id:"lp7", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+    nombre:"Pack 2 Proteínas + Shaker",
+    desc:"Proteína Chocolate + Proteína Vainilla + Shaker oficial. Ambos sabores para variar.",
+    incluye:"Proteína Chocolate 1kg · Proteína Vainilla 1kg · Shaker oficial",
+    tags:["Ambos sabores","Shaker incluido","54g proteína/día"],
+    precio:399, precioN:479, ahorro:80,
+    img: LVL+"pack-2proteinas.jpg",
+    uso:"Disolver 1 scoop (40g) en 250ml de agua al día.", tn:null },
+
+  // BARI&NUTRITION INDIVIDUALES
+  { id:"bi1", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"polvo", destacado:true, marca:"Bari&Nutrition",
+    sabores:["Vainilla","Chocolate"], saborPredeterminado:"Vainilla",
+    nombre:"Whey Protein Vainilla 1.5kg",
+    desc:"Proteína en polvo hidrolizada a base de suero de leche deslactosada. 30g de proteína por servicio. Enriquecida con vitaminas y minerales.",
+    tags:["30g proteína","Sin gluten","Sin lactosa","Con biotina","0% azúcar"],
+    precio:280,
+    img: BN+"whey-vainilla.png",
+    uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir preferentemente como suplemento proteico según indicación médica.",
+    tn: tn.whey },
+
+  { id:"bi2", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"polvo", marca:"Bari&Nutrition",
+    sabores:["Vainilla","Chocolate"], saborPredeterminado:"Chocolate",
+    nombre:"Whey Protein Chocolate 1.5kg",
+    desc:"Proteína en polvo hidrolizada a base de suero de leche deslactosada. 30g de proteína por servicio. Enriquecida con vitaminas y minerales.",
+    tags:["30g proteína","Sin gluten","Sin lactosa","Con biotina","0% azúcar"],
+    precio:280,
+    img: BN+"whey-chocolate.png",
+    uso:"Disolver 3 scoops (48g) en 250ml de agua o leche.",
+    tn: tn.whey },
+
+  { id:"bi3", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"liquida", destacado:true, marca:"Bari&Nutrition",
+    sabores:["Fresa","Maracumango"], saborPredeterminado:"Fresa",
+    nombre:"Liquid Protein Fresa 1LT",
+    desc:"Proteína líquida lista para consumir. 20g de proteína por porción de 30ml. Sin lactosa, 0% azúcar. Enriquecida con fibra, aminoácidos, vitaminas y minerales.",
+    tags:["20g proteína","Sin lactosa","0% azúcar","Lista para tomar","50mg hierro"],
+    precio:200,
+    img: BN+"liquid-fresa.png",
+    uso:"Tomar 30ml por porción. Hasta 33 porciones por envase de 1 litro.",
+    tn: tn.liquid },
+
+  { id:"bi4", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"liquida", destacado:true, marca:"Bari&Nutrition",
+    sabores:["Maracumango","Fresa"], saborPredeterminado:"Maracumango",
+    nombre:"Liquid Protein Maracumango 1LT",
+    desc:"Proteína líquida lista para consumir. 20g de proteína por porción de 30ml. Sin lactosa, 0% azúcar. Enriquecida con fibra, aminoácidos, vitaminas y minerales.",
+    tags:["20g proteína","Sin lactosa","0% azúcar","Lista para tomar","50mg hierro"],
+    precio:200,
+    img: BN+"liquid-maracumango.png",
+    uso:"Tomar 30ml por porción. Hasta 33 porciones por envase de 1 litro.",
+    tn: tn.liquid },
+
+  { id:"bi5", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"biotina", formato:"gomitas", destacado:true, marca:"Bari&Nutrition",
+    nombre:"Gomitas Biotina 10,000mcg — 90 und",
+    desc:"Gomitas de glicerina sabor durazno. 10,000 mcg de biotina por porción. Apoya la salud del cabello, piel y uñas. Sin azúcares añadidos, sin colorantes artificiales.",
+    tags:["10,000 mcg biotina","Sabor durazno","Sin azúcares","Sin colorantes"],
+    precio:150,
+    img: BN+"gomita-biotina.png",
+    uso:"2 gomitas al día, preferiblemente con una comida. No exceda la dosis recomendada.",
+    tn: tn.biotina },
+
+  { id:"bi6", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"hierro", formato:"gomitas", marca:"Bari&Nutrition",
+    nombre:"Gomitas Hierro 45mg + Vitamina C — 30 und",
+    desc:"Gomitas de gelatina sabor naranja. 45mg de hierro (250% VD) + 60mg de vitamina C. La vitamina C potencia la absorción del hierro.",
+    tags:["45mg hierro","Vitamina C 60mg","250% VD","Sabor naranja","Sin azúcares"],
+    precio:150,
+    img: BN+"gomita-hierro.png",
+    uso:"1 gomita masticable al día. Vía oral.",
+    tn: tn.hierro },
+
+  { id:"bi7", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"multivit", formato:"gomitas", marca:"Bari&Nutrition",
+    nombre:"Gomitas Multivitamínico — 90 und",
+    desc:"Gomitas multisabor con 23 vitaminas y minerales esenciales. Fórmula completa para cubrir los requerimientos nutricionales post-quirúrgicos.",
+    tags:["23 vitaminas y minerales","Multisabor","Sin azúcares","Sin colorantes"],
+    precio:150,
+    img: BN+"gomita-multivit.png",
+    uso:"4 gomitas al día.",
+    tn: tn.multivit },
+
+  { id:"bi8", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"b12", formato:"gomitas", destacado:true, marca:"Bari&Nutrition",
+    nombre:"Gomitas B12 + Ácido Fólico — 90 und",
+    desc:"Gomitas sabor piña. 1,000 mcg de vitamina B12 como metilcobalamina (41,667% VD) + ácido fólico. Esencial en el post-operatorio bariátrico.",
+    tags:["1,000 mcg B12","41,667% VD","Ácido fólico","Sabor piña","Sin azúcares"],
+    precio:150,
+    img: BN+"gomita-b12.png",
+    uso:"3 gomitas masticables al día.",
+    tn: tn.b12 },
+
+  { id:"bi9", tipo:"bn", marcaTipo:"bn", cat:"colageno", subcat:"fibra", marca:"Bari&Nutrition",
+    nombre:"Fibra Soluble 320g",
+    desc:"Fibra soluble a base de maíz, de origen francés. Rápida absorción. Ayuda en el tratamiento del estreñimiento y mantiene la regularidad intestinal.",
+    tags:["Base de maíz","Origen francés","Rápida absorción","Sin azúcar","64 servicios"],
+    precio:85,
+    img: BN+"fibra.png",
+    uso:"1 scoop (5g) al día disuelto en agua o bebida de preferencia.",
+    tn: tn.fibra_bn },
+
+  // LVL DRINK INDIVIDUALES
+  { id:"li1", tipo:"lvl", marcaTipo:"lvl", cat:"proteina", subcat:"polvo", destacado:true, marca:"LVL Drink",
+    sabores:["Vainilla","Chocolate"], saborPredeterminado:"Vainilla",
+    nombre:"Proteína Vainilla HIGH ISO 1kg",
+    desc:"Proteína concentrada de suero de leche (WPC). 27g de proteína por porción. Endulzada con stevia natural, sin azúcares añadidos, sin gluten. Apta para nutrición bariátrica.",
+    tags:["27g proteína","Stevia natural","Sin gluten","Sin azúcares","Apto bariátrico"],
+    precio:209,
+    img: LVL+"proteina-vainilla.jpg",
+    uso:"Disolver 1 scoop (40g) en 250ml de agua. Consumir una vez al día.",
+    tn: tn.lvl_pro },
+
+  { id:"li2", tipo:"lvl", marcaTipo:"lvl", cat:"proteina", subcat:"polvo", destacado:true, marca:"LVL Drink",
+    sabores:["Vainilla","Chocolate"], saborPredeterminado:"Chocolate",
+    nombre:"Proteína Chocolate HIGH ISO 1kg",
+    desc:"Proteína concentrada de suero de leche (WPC). 27g de proteína por porción. Sabor a chocolate 100% cacao, endulzado con stevia natural. Sin azúcares añadidos, sin gluten.",
+    tags:["27g proteína","100% cacao","Stevia natural","Sin gluten","Apto bariátrico"],
+    precio:209,
+    img: LVL+"proteina-chocolate.jpg",
+    uso:"Disolver 1 scoop (40g) en 250ml de agua. Consumir una vez al día.",
+    tn: tn.lvl_pro },
+
+  { id:"li3", tipo:"lvl", marcaTipo:"lvl", cat:"colageno", subcat:"colageno", marca:"LVL Drink",
+    nombre:"Colágeno SKINFINITY 500g",
+    desc:"Colágeno hidrolizado con camu camu, arándano y 10,000 mcg de biotina. Para el cuidado de piel, cabello y uñas. Sabor natural arándano, sin azúcares añadidos.",
+    tags:["9g colágeno","10,000 mcg biotina","Camu camu","Sabor arándano","Apto bariátrico"],
+    precio:109,
+    img: LVL+"colageno.jpg",
+    uso:"Disolver 1 scoop (12g) en 250ml de agua al día. Se recomienda consumir en ayunas o antes de acostarse.",
+    tn: tn.lvl_col },
+
+  { id:"li4", tipo:"lvl", marcaTipo:"lvl", cat:"colageno", subcat:"fibra", marca:"LVL Drink",
+    nombre:"Fibra GET OUT Manzana Verde 200g",
+    desc:"Fibra natural de inulina. Mejora la digestión, promueve la salud intestinal y favorece la sensación de saciedad. Sabor manzana verde, sin azúcares añadidos.",
+    tags:["6g fibra","Fibra inulina","Sabor manzana verde","Sin azúcares","Apto bariátrico"],
+    precio:79,
+    img: LVL+"fibra.jpg",
+    uso:"Disolver 1 scoop (10g) en 250ml de agua al día.",
+    tn: tn.lvl_fib }
+];
+
+// ---- MENU ----
+function abrirMenu() {
+  document.getElementById('sidemenu').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+function cerrarMenu() {
+  document.getElementById('sidemenu').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+function toggleEtapa(btn) {
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+  btn.querySelector('span').textContent = body.classList.contains('open') ? '−' : '+';
+}
+function irInicio() {
+  limpiarBusqueda();
+  filtrar('todos');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollProductos() {
+  const el = document.getElementById('productos-section');
+  if (!el) return;
+  const header = document.querySelector('header');
+  const offset = header ? header.offsetHeight + 8 : 8;
+  const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
+
+function scrollCategorias() {
+  const el = document.querySelector('.categorias-section');
+  if (!el) return;
+  const header = document.querySelector('header');
+  const offset = header ? header.offsetHeight + 8 : 8;
+  const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
+
+// ---- MEGA MENU ----
+function cerrarMegaMenu() {}
+
+function megaFiltrar(cat, sub) {
+  ocultarBlog();
+  cerrarMegaMenu();
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').style.display = 'none';
+  cerrarSugerencias();
+  ocultarSlider();
+  currentCat = cat;
+  document.querySelectorAll('.nav-link[data-filter]').forEach(b => b.classList.remove('active'));
+  actualizarSubfiltros(cat);
+
+  if (cat === 'vitaminas' && sub) {
+    vitTipo = sub;
+    vitFormato = 'todos';
+    document.querySelectorAll('.sv-tipo').forEach(b => b.classList.toggle('active', b.dataset.tipo === sub));
+    renderizar('vitaminas', null);
+  } else {
+    renderizar(cat, sub);
+    if (sub) {
+      document.querySelectorAll('.sub-btn[data-sub]').forEach(b => b.classList.toggle('active', b.dataset.sub === sub));
+    }
+  }
+  scrollProductos();
+}
+
+// ---- FILTER ----
+function filtrar(f) {
+  ocultarBlog();
+  currentCat = f;
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').style.display = 'none';
+  cerrarSugerencias();
+  mostrarSlider();
+  document.querySelectorAll('.nav-link[data-filter]').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === f || (f === 'todos' && b.dataset.filter === 'suplementos'));
+  });
+  document.getElementById('navBlog').classList.remove('active');
+  actualizarSubfiltros(f);
+  renderizar(f, null);
+}
+
+function mostrarBlog() {
+  ocultarSlider();
+  document.getElementById('productos-section').style.display = 'none';
+  document.getElementById('blog-section').style.display = 'block';
+  document.querySelectorAll('.nav-link[data-filter]').forEach(b => b.classList.remove('active'));
+  document.getElementById('navBlog').classList.add('active');
+  const el = document.getElementById('blog-section');
+  const header = document.querySelector('header');
+  const offset = header ? header.offsetHeight + 8 : 8;
+  window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - offset, behavior: 'smooth' });
+}
+
+function ocultarBlog() {
+  document.getElementById('blog-section').style.display = 'none';
+  document.getElementById('productos-section').style.display = '';
+}
+
+function normalizar(str) {
+  return str.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
+function buscar(texto) {
+  const q = normalizar(texto.trim());
+  document.getElementById('searchClear').style.display = q ? 'block' : 'none';
+  if (!q) { cerrarSugerencias(); mostrarSlider(); filtrar(currentCat); return; }
+  mostrarSugerencias(q);
+}
+
+function mostrarSugerencias(q) {
+  const items = [];
+
+  // Sugerencias de marca primero
+  const marcasDef = [
+    { display: 'Bari & Nutrition', tipo: 'bn' },
+    { display: 'LVL Drink',        tipo: 'lvl' }
+  ];
+  marcasDef.forEach(m => {
+    if (normalizar(m.display).includes(q)) {
+      items.push({
+        texto: m.display, etiqueta: 'Marca',
+        onclick: `filtrarMarca('${m.tipo}')`
+      });
+    }
+  });
+
+  // Sugerencias de producto y etiquetas
+  const visto = new Set();
+  productos.forEach(p => {
+    if (normalizar(p.nombre).includes(q) && !visto.has(p.nombre)) {
+      visto.add(p.nombre);
+      items.push({
+        texto: p.nombre, etiqueta: p.marca,
+        onclick: `seleccionarSugerencia('${p.nombre.replace(/'/g,"\\'")}')`
+      });
+    }
+    (p.tags || []).forEach(t => {
+      if (normalizar(t).includes(q) && !visto.has(t)) {
+        visto.add(t);
+        items.push({
+          texto: t, etiqueta: 'etiqueta',
+          onclick: `seleccionarSugerencia('${t.replace(/'/g,"\\'")}')`
+        });
+      }
+    });
+  });
+
+  const box = document.getElementById('searchSugerencias');
+  if (!items.length) { box.style.display = 'none'; return; }
+  box.innerHTML = items.slice(0, 12).map(s =>
+    `<div class="sug-item" onclick="${s.onclick}">
+      <span>${s.texto}</span><span class="sug-tipo">${s.etiqueta}</span>
+    </div>`
+  ).join('');
+  box.style.display = 'block';
+}
+
+function seleccionarSugerencia(texto) {
+  document.getElementById('searchInput').value = texto;
+  cerrarSugerencias();
+  ejecutarBusqueda(normalizar(texto), texto);
+}
+
+function cerrarSugerencias() {
+  document.getElementById('searchSugerencias').style.display = 'none';
+}
+
+function ejecutarBusqueda(q, textoOriginal) {
+  ocultarSlider();
+  document.querySelectorAll('.nav-link[data-filter]').forEach(b => b.classList.remove('active'));
+  document.getElementById('subfiltros').style.display = 'none';
+  const tEl = document.getElementById('productos-titulo');
+  if (tEl) tEl.textContent = '';
+
+  const principales = productos.filter(p =>
+    normalizar(p.nombre).includes(q) ||
+    normalizar(p.desc).includes(q) ||
+    normalizar(p.marca).includes(q) ||
+    (p.tags || []).some(t => normalizar(t).includes(q))
+  );
+
+  const idsEncontrados = new Set(principales.map(p => p.id));
+  const catPrincipal = principales.length ? principales[0].cat : null;
+  const otros = catPrincipal
+    ? productos.filter(p => p.cat === catPrincipal && !idsEncontrados.has(p.id))
+    : [];
+
+  const el = document.getElementById('contenido');
+  if (!principales.length) {
+    el.innerHTML = `<div style="padding:48px 32px;text-align:center;color:var(--text-muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px">Sin resultados para "<strong style="color:var(--text)">${textoOriginal}</strong>"</div>`;
+  } else {
+    let html = `<div style="padding:20px 32px 8px;font-size:20px;font-weight:700;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif">
+                  Resultados: <span style="color:var(--blue)">"${textoOriginal}"</span>
+                  <span style="font-size:13px;font-weight:500;color:var(--text-light);margin-left:10px">${principales.length} producto${principales.length > 1 ? 's' : ''}</span>
+                </div>`;
+    html += `<div class="grid">${principales.map(cardHTML).join('')}</div>`;
+    if (otros.length) {
+      html += `<div class="seccion-titulo" style="margin-top:16px">OTROS PRODUCTOS QUE TE PUEDEN INTERESAR</div>
+               <div class="grid-sug">${otros.slice(0, 3).map(cardMiniHTML).join('')}</div>`;
+    }
+    html += recomSectionHTML();
+    el.innerHTML = html;
+    aplicarVistaActual();
+  }
+  scrollProductos();
+}
+
+function filtrarMarca(tipo) {
+  ocultarBlog();
+  const nombres = { bn: 'Bari & Nutrition', lvl: 'LVL Drink' };
+  const nombre = nombres[tipo];
+  cerrarSugerencias();
+  document.getElementById('searchInput').value = nombre;
+  document.getElementById('searchClear').style.display = 'block';
+  ocultarSlider();
+  document.querySelectorAll('.nav-link[data-filter]').forEach(b => b.classList.remove('active'));
+  document.getElementById('subfiltros').style.display = 'none';
+  const tEl = document.getElementById('productos-titulo');
+  if (tEl) tEl.textContent = '';
+  const resultado = productos.filter(p => p.marcaTipo === tipo);
+  const packs = resultado.filter(p => p.tipo === 'pack');
+  const individuales = resultado.filter(p => p.tipo !== 'pack');
+  let html = `<div style="padding:20px 32px 8px;font-size:20px;font-weight:700;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif">
+    Productos de <span style="color:var(--blue)">${nombre}</span>
+    <span style="font-size:13px;font-weight:500;color:var(--text-light);margin-left:10px">${resultado.length} productos</span>
+  </div>`;
+  if (packs.length) html += `<div class="seccion-titulo">Packs</div><div class="grid">${packs.map(cardHTML).join('')}</div>`;
+  if (individuales.length) html += `<div class="seccion-titulo">Individuales</div><div class="grid">${individuales.map(cardHTML).join('')}</div>`;
+  document.getElementById('contenido').innerHTML = html;
+  aplicarVistaActual();
+  scrollProductos();
+}
+
+document.getElementById('searchInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const texto = this.value.trim();
+    if (texto) ejecutarBusqueda(normalizar(texto), texto);
+  }
+});
+
+function ocultarSlider() {
+  document.querySelector('.promo-slider').style.display = 'none';
+}
+
+function mostrarSlider() {
+  const slider = document.querySelector('.promo-slider');
+  slider.style.display = '';
+  const slides = slider.querySelectorAll('.slide');
+  const hayActivo = [...slides].some(s => s.classList.contains('active'));
+  if (!hayActivo) sliderGoTo(sliderIdx);
+}
+
+function limpiarBusqueda() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').style.display = 'none';
+  cerrarSugerencias();
+  mostrarSlider();
+  filtrar(currentCat);
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.search-inner')) cerrarSugerencias();
+});
+
+let currentCat = 'todos';
+
+function filtrarSub(sub) {
+  document.querySelectorAll('.sub-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.sub === sub);
+  });
+  renderizar(currentCat, sub);
+}
+
+let vitTipo = 'todas';
+let vitFormato = 'todos';
+let ofertaMarca = 'todas';
+
+function filtrarOfertaMarca(m) {
+  ofertaMarca = m;
+  document.querySelectorAll('[data-marca]').forEach(b => b.classList.toggle('active', b.dataset.marca === m));
+  renderizar('pack', null);
+}
+
+function filtrarVitTipo(t) {
+  vitTipo = t;
+  document.querySelectorAll('.sv-tipo').forEach(b => b.classList.toggle('active', b.dataset.tipo === t));
+  renderizar('vitaminas', null);
+}
+function filtrarVitFormato(f) {
+  vitFormato = f;
+  document.querySelectorAll('.sv-fmt').forEach(b => b.classList.toggle('active', b.dataset.fmt === f));
+  renderizar('vitaminas', null);
+}
+
+function actualizarSubfiltros(f) {
+  currentCat = f;
+  const el = document.getElementById('subfiltros');
+
+  if (f === 'proteina') {
+    const btns = [
+      { sub:'ambas', label:'Ambas' },
+      { sub:'polvo', label:'En Polvo' },
+      { sub:'liquida', label:'Líquida' },
+      { sub:'packs', label:'Packs' }
+    ];
+    el.innerHTML = `<div class="subfiltros-fila">${btns.map((b,i)=>
+      `<button class="sub-btn${i===0?' active':''}" data-sub="${b.sub}" onclick="filtrarSub('${b.sub}')">${b.label}</button>`
+    ).join('')}</div>`;
+    el.style.display = 'flex';
+
+  } else if (f === 'vitaminas') {
+    vitTipo = 'todas'; vitFormato = 'todos';
+    el.innerHTML = `
+      <div class="subfiltros-fila">
+        <button class="sub-btn sv-tipo active" data-tipo="todas" onclick="filtrarVitTipo('todas')">Todas</button>
+        <button class="sub-btn sv-tipo" data-tipo="biotina" onclick="filtrarVitTipo('biotina')">Biotina</button>
+        <button class="sub-btn sv-tipo" data-tipo="hierro" onclick="filtrarVitTipo('hierro')">Hierro</button>
+        <button class="sub-btn sv-tipo" data-tipo="multivit" onclick="filtrarVitTipo('multivit')">Multivit</button>
+        <button class="sub-btn sv-tipo" data-tipo="b12" onclick="filtrarVitTipo('b12')">B12</button>
+      </div>
+      <div class="subfiltros-fila">
+        <span class="subfiltros-label">Formato:</span>
+        <button class="sub-btn sv-fmt active" data-fmt="todos" onclick="filtrarVitFormato('todos')">Todos</button>
+        <button class="sub-btn sv-fmt" data-fmt="gomitas" onclick="filtrarVitFormato('gomitas')">Gomitas</button>
+        <button class="sub-btn sv-fmt" data-fmt="capsulas" onclick="filtrarVitFormato('capsulas')">Cápsulas</button>
+      </div>`;
+    el.style.display = 'flex';
+
+  } else if (f === 'colageno') {
+    const btns = [
+      { sub:'ambas', label:'Ambas' },
+      { sub:'colageno', label:'Colágeno' },
+      { sub:'fibra', label:'Fibra' },
+      { sub:'packs', label:'Packs' }
+    ];
+    el.innerHTML = `<div class="subfiltros-fila">${btns.map((b,i)=>
+      `<button class="sub-btn${i===0?' active':''}" data-sub="${b.sub}" onclick="filtrarSub('${b.sub}')">${b.label}</button>`
+    ).join('')}</div>`;
+    el.style.display = 'flex';
+
+  } else if (f === 'pack') {
+    ofertaMarca = 'todas';
+    const btns = [
+      { m:'todas', label:'Todas' },
+      { m:'bn',    label:'Bari & Nutrition' },
+      { m:'lvl',   label:'LVL Drink' }
+    ];
+    el.innerHTML = `<div class="subfiltros-fila">${btns.map((b,i) =>
+      `<button class="sub-btn${i===0?' active':''}" data-marca="${b.m}" onclick="filtrarOfertaMarca('${b.m}')">${b.label}</button>`
+    ).join('')}</div>`;
+    el.style.display = 'flex';
+
+  } else {
+    el.style.display = 'none';
+    el.innerHTML = '';
+  }
+}
+
+function renderizar(f, sub) {
+  const el = document.getElementById('contenido');
+  const tEl = document.getElementById('productos-titulo');
+
+  const packs_bn  = productos.filter(p => p.tipo === 'pack' && p.marcaTipo === 'bn');
+  const packs_lvl = productos.filter(p => p.tipo === 'pack' && p.marcaTipo === 'lvl');
+  const allPacks  = productos.filter(p => p.tipo === 'pack');
+  const ind_bn    = productos.filter(p => p.tipo !== 'pack' && p.marcaTipo === 'bn');
+  const ind_lvl   = productos.filter(p => p.tipo !== 'pack' && p.marcaTipo === 'lvl');
+
+  let html = '', titulo = 'Tienda';
+
+  switch(f) {
+    case 'todos':
+      titulo = __('tit_todos');
+      html += carouselSec(__('sec_ofertas'), productos.filter(p => p.cat === 'oferta'), 'todos-ofertas');
+      html += carouselSec(__('sec_proteinas'), productos.filter(p => p.cat === 'proteina' && p.tipo !== 'pack'), 'todos-prot');
+      html += carouselSec(__('sec_vitaminas'), productos.filter(p => p.cat === 'vitaminas'), 'todos-vit');
+      html += carouselSec(__('sec_colageno'), productos.filter(p => p.cat === 'colageno' && p.tipo !== 'pack'), 'todos-col');
+      html += carouselSec(__('sec_packs'), allPacks, 'todos-packs');
+      break;
+
+    case 'oferta': {
+      titulo = __('tit_ofertas');
+      const ofertasFilt = productos.filter(p => p.cat === 'oferta');
+      html += sec('', ofertasFilt);
+      break;
+    }
+
+    case 'pack': {
+      titulo = __('tit_packs');
+      const ofertasBase = productos.filter(p => p.tipo === 'pack');
+      const ofertasFilt = ofertaMarca === 'todas' ? ofertasBase : ofertasBase.filter(p => p.marcaTipo === ofertaMarca);
+      html += sec('', ofertasFilt);
+      break;
+    }
+
+    case 'proteina':
+      titulo = __('tit_proteinas');
+      if (!sub || sub === 'ambas') {
+        html += carouselSec('', productos.filter(p => p.cat === 'proteina'), 'prot-all');
+      } else if (sub === 'packs') {
+        html += carouselSec('Bari&amp;Nutrition', packs_bn, 'prot-pack-bn');
+        html += carouselSec('LVL Drink', packs_lvl, 'prot-pack-lvl');
+      } else {
+        html += carouselSec('', productos.filter(p => p.cat === 'proteina' && p.subcat === sub), 'prot-sub');
+      }
+      break;
+
+    case 'vitaminas':
+      titulo = __('tit_vitaminas');
+      let vLista = productos.filter(p => p.cat === 'vitaminas');
+      if (vitTipo !== 'todas') vLista = vLista.filter(p => p.subcat === vitTipo);
+      if (vitFormato !== 'todos') vLista = vLista.filter(p => p.formato === vitFormato);
+      html += carouselSec('', vLista, 'vit');
+      break;
+
+    case 'colageno':
+      titulo = __('tit_colageno');
+      if (!sub || sub === 'ambas') {
+        html += carouselSec('', productos.filter(p => p.cat === 'colageno'), 'col-all');
+      } else if (sub === 'packs') {
+        html += carouselSec('Bari&amp;Nutrition', packs_bn, 'col-pack-bn');
+        html += carouselSec('LVL Drink', packs_lvl, 'col-pack-lvl');
+      } else {
+        html += carouselSec('', productos.filter(p => p.cat === 'colageno' && p.subcat === sub), 'col-sub');
+      }
+      break;
+  }
+
+  if (tEl) tEl.textContent = titulo;
+  el.innerHTML = html || `<div style="padding:40px 32px;text-align:center;color:var(--text-light);font-size:14px">No hay productos disponibles para este filtro.</div>`;
+  aplicarVistaActual();
+}
+
+function sec(titulo, lista) {
+  if (!lista.length) return '';
+  const tit = titulo ? `<div class="seccion-titulo">${titulo}</div>` : '';
+  return `${tit}<div class="grid">${lista.map(cardHTML).join('')}</div>`;
+}
+
+function carouselSec(titulo, lista, key) {
+  if (!lista.length) return '';
+  const id = 'car-' + key;
+  const tit = titulo ? `<div class="seccion-titulo">${titulo}</div>` : '';
+  const cards = lista.map(cardHTML).join('');
+  const infinite = lista.length >= 5;
+  return `${tit}<div class="carousel-wrap">
+    <button class="carousel-btn prev" onclick="moverCarousel('${id}',-1)">&#8249;</button>
+    <div class="carousel" id="${id}" data-inf="${infinite}">${infinite ? cards+cards : cards}</div>
+    <button class="carousel-btn next" onclick="moverCarousel('${id}',1)">&#8250;</button>
+  </div>`;
+}
+
+function moverCarousel(id, dir) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (el._animating) return;
+
+  const card = el.querySelector('.card');
+  const cardW = (card ? card.offsetWidth : 234) + 14;
+  const paso = cardW * 2;
+
+  if (el.dataset.inf === 'true') {
+    const half = el.scrollWidth / 2;
+    if (dir < 0 && el.scrollLeft < paso) el.scrollLeft += half;
+    const from = el.scrollLeft;
+    const to   = from + dir * paso;
+    const dur  = 320;
+    const t0   = performance.now();
+    el._animating = true;
+    function tick(now) {
+      const p = Math.min((now - t0) / dur, 1);
+      const e = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2, 2)/2;
+      let pos = from + (to - from) * e;
+      if (pos >= half) pos -= half;
+      if (pos < 0)     pos += half;
+      el.scrollLeft = pos;
+      if (p < 1) requestAnimationFrame(tick);
+      else el._animating = false;
+    }
+    requestAnimationFrame(tick);
+  } else {
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    let next = el.scrollLeft + dir * paso;
+    if (next > maxScroll) next = 0;
+    if (next < 0) next = maxScroll;
+    el.scrollTo({ left: next, behavior: 'smooth' });
+  }
+}
+
+function recomSectionHTML() {
+  const cards = recomIds.map(r => {
+    const p = productos.find(x => x.id === r.id);
+    if (!p) return '';
+    return `<div class="recom-card">
+      <img class="recom-img" src="${p.img}" alt="${p.nombre}" onerror="this.style.background='var(--bg)'" onclick="abrirModal('${p.id}')">
+      <div class="recom-body">
+        ${scoreHTML(p.id, true)}
+        <div class="recom-nombre" onclick="abrirModal('${p.id}')">${p.nombre}</div>
+        <div class="recom-porque">${r.porque}</div>
+        <div class="recom-precio">S/ ${p.precio}</div>
+        <button class="recom-btn" onclick="agregarACotizacion('${p.id}',true)">+ ${__('btn_agregar')}</button>
+      </div>
+    </div>`;
+  }).join('');
+  return `<section class="recom-section" style="display:block;margin-top:8px">
+    <div class="recom-inner">
+      <div class="recom-header">
+        <h2>${__('recom_titulo')}</h2>
+        <div class="recom-sub">${__('recom_sub')}</div>
+      </div>
+      <div class="recom-grid">${cards}</div>
+    </div>
+  </section>`;
+}
+
+function cardMiniHTML(p) {
+  return `<div class="card-mini">
+    <img class="card-mini-img" src="${p.img}" alt="${p.nombre}"
+      onerror="this.style.background='#e8eeff'" onclick="abrirModal('${p.id}')">
+    <div class="card-mini-body">
+      <div class="card-mini-nombre" onclick="abrirModal('${p.id}')">${p.nombre}</div>
+      <div class="card-mini-precio">S/ ${p.precio}</div>
+      <button class="card-mini-btn" onclick="agregarACotizacion('${p.id}',true)">+ ${__('btn_agregar')}</button>
+    </div>
+  </div>`;
+}
+
+function cardHTML(p) {
+  const pack = p.tipo === 'pack';
+  const oferta = p.tipo === 'oferta';
+  return `<div class="card${pack?' pack':''}${oferta?' oferta':''}">
+    <img class="card-img" src="${p.img}" alt="${p.nombre}"
+      onerror="this.style.background='#e8eeff'" onclick="abrirModal('${p.id}')" style="cursor:pointer">
+    <div class="card-body">
+      ${oferta ? `<span class="badge-oferta">🔥 OFERTA &nbsp;·&nbsp; ${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
+      ${pack ? `<span class="badge-pack">PACK &nbsp;·&nbsp; ${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
+      ${p.destacado && !pack && !oferta ? `<span class="badge-recomendado">★ ${__('badge_recom')}</span>` : ''}
+      <span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>
+      <div class="nombre" onclick="abrirModal('${p.id}')" style="cursor:pointer">${p.nombre}</div>
+      <div class="precio-area">
+        <div class="precio">S/ ${p.precio}</div>
+        ${p.precioN ? `<div class="precio-normal">S/ ${p.precioN}</div>` : ''}
+      </div>
+      ${scores[p.id] ? scoreHTML(p.id, false) : ''}
+      <div class="card-btns">
+        <button class="btn-ver-sm" onclick="abrirModal('${p.id}')">${__('btn_ver')}</button>
+        <button class="btn-agregar" onclick="agregarACotizacion('${p.id}',true)">+ ${__('btn_agregar')}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ---- MODAL ----
+let currentModalId = null;
+function abrirModal(id) {
+  const p = productos.find(x => x.id === id);
+  if (!p) return;
+  currentModalId = id;
+
+  document.getElementById('mTitulo').textContent = p.nombre;
+  document.getElementById('mImg').src = p.img;
+  document.getElementById('mImg').alt = p.nombre;
+
+  document.getElementById('mBadges').innerHTML =
+    `<span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>` +
+    (p.tipo === 'pack'   ? ' <span class="badge-pack">PACK</span>' : '') +
+    (p.tipo === 'oferta' ? ' <span class="badge-oferta">🔥 OFERTA · Ahorra S/ ' + p.ahorro + '</span>' : '');
+
+  document.getElementById('mNombre').textContent = p.nombre;
+  document.getElementById('mDesc').textContent = p.desc;
+
+  const incEl = document.getElementById('mIncluye');
+  if (p.incluye) {
+    incEl.style.display = 'block';
+    incEl.innerHTML = '<strong>Incluye:</strong> ' + p.incluye;
+  } else {
+    incEl.style.display = 'none';
+  }
+
+  document.getElementById('mTags').innerHTML = (p.tags||[]).map(t=>`<span class="modal-tag">${t}</span>`).join('');
+
+  const esOferta = p.tipo === 'oferta';
+  let ph = `<div class="modal-precio" style="${esOferta ? 'color:#DC2626' : ''}">S/ ${p.precio}</div>`;
+  if (p.precioN) ph += `<div class="modal-precio-normal">S/ ${p.precioN}</div>`;
+  if (p.ahorro)  ph += `<div class="modal-ahorro" style="${esOferta ? 'color:#DC2626;font-weight:700' : ''}">Ahorra S/ ${p.ahorro}</div>`;
+  document.getElementById('mPrecio').innerHTML = ph;
+
+  const tnBtn  = document.getElementById('tnBtn');
+  const tnBody = document.getElementById('tnBody');
+  tnBody.classList.remove('open');
+  document.getElementById('tnArrow').textContent = '+';
+
+  if (p.tn) {
+    tnBtn.style.display = 'flex';
+    const t = p.tn;
+    let tbl = `<table class="tn-table">
+      <thead><tr><td>Nutriente</td><td>Cantidad</td><td>%VD</td></tr></thead>
+      <tbody><tr class="subhdr"><td colspan="3">${t.srv} &nbsp;·&nbsp; ${t.srvs}</td></tr>`;
+    t.filas.forEach(r => {
+      tbl += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]||'—'}</td></tr>`;
+    });
+    tbl += '</tbody></table>';
+    if (t.nota) tbl += `<div class="tn-note">${t.nota}</div>`;
+    tnBody.innerHTML = tbl;
+  } else {
+    tnBtn.style.display = 'none';
+    tnBody.innerHTML = '';
+  }
+
+  const usoEl = document.getElementById('mUso');
+  if (p.uso) {
+    usoEl.style.display = 'block';
+    usoEl.innerHTML = '<strong>Modo de uso</strong>' + p.uso;
+  } else {
+    usoEl.style.display = 'none';
+  }
+
+  const msg = encodeURIComponent('Hola! Quiero pedir: ' + p.nombre + ' — S/ ' + p.precio);
+  document.getElementById('mWA').href = 'https://wa.me/' + WA + '?text=' + msg;
+
+  // Selector de sabores
+  const mSabores = document.getElementById('mSabores');
+  if (p.sabores && p.sabores.length) {
+    const pred = p.saborPredeterminado || p.sabores[0];
+    mSabores.style.display = 'block';
+    mSabores.innerHTML = `<div class="sabor-section">
+      <div class="sabor-section-title">Elige tu sabor</div>
+      <div class="sabor-pills">${p.sabores.map(s =>
+        `<button class="sabor-pill${s===pred?' active':''}" onclick="elegirSabor(this)">${s}</button>`
+      ).join('')}</div></div>`;
+  } else if (p.seleccionSabor && p.seleccionSabor.length) {
+    mSabores.style.display = 'block';
+    mSabores.innerHTML = `<div class="sabor-section">
+      <div class="sabor-section-title">Elige los sabores del pack</div>
+      ${p.seleccionSabor.map((g,i) =>
+        `<div class="sabor-grupo">
+          <div class="sabor-grupo-label">${g.label}</div>
+          <div class="sabor-pills" data-grupo="${i}">${g.sabores.map((s,j) =>
+            `<button class="sabor-pill${j===0?' active':''}" onclick="elegirSaborGrupo(this,${i})">${s}</button>`
+          ).join('')}</div></div>`
+      ).join('')}</div>`;
+  } else {
+    mSabores.style.display = 'none';
+    mSabores.innerHTML = '';
+  }
+
+  resetZoom();
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function cerrarModalFondo(e) {
+  if (e.target === document.getElementById('modalOverlay')) cerrarModal();
+}
+function toggleTN() {
+  const b = document.getElementById('tnBody');
+  b.classList.toggle('open');
+  document.getElementById('tnArrow').textContent = b.classList.contains('open') ? '−' : '+';
+}
+
+// ---- COTIZADOR ----
+let carrito = [];
+
+function elegirSabor(btn) {
+  btn.closest('.sabor-pills').querySelectorAll('.sabor-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+}
+function elegirSaborGrupo(btn, grupoIdx) {
+  document.querySelector(`.sabor-pills[data-grupo="${grupoIdx}"]`)
+    .querySelectorAll('.sabor-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+}
+function obtenerNotasSabor() {
+  const mSabores = document.getElementById('mSabores');
+  if (!mSabores || mSabores.style.display === 'none') return '';
+  const grupos = mSabores.querySelectorAll('.sabor-grupo');
+  if (!grupos.length) {
+    const active = mSabores.querySelector('.sabor-pill.active');
+    return active ? 'Sabor: ' + active.textContent : '';
+  }
+  return [...grupos].map(g => {
+    const label = g.querySelector('.sabor-grupo-label').textContent;
+    const active = g.querySelector('.sabor-pill.active');
+    return label + ': ' + (active ? active.textContent : '—');
+  }).join(' · ');
+}
+
+function agregarACotizacion(id, silencioso = false) {
+  const prod = productos.find(x => x.id === id);
+  const idx = carrito.findIndex(i => i.id === id);
+  let notas = '';
+  if (prod && prod.sabores && prod.saborPredeterminado) notas = 'Sabor: ' + prod.saborPredeterminado;
+  if (idx >= 0) carrito[idx].qty++;
+  else carrito.push({ id, qty: 1, notas });
+  actualizarCartUI();
+  if (silencioso) {
+    const badge = document.getElementById('floatBadge');
+    badge.classList.remove('pulsar');
+    void badge.offsetWidth;
+    badge.classList.add('pulsar');
+    badge.addEventListener('animationend', () => badge.classList.remove('pulsar'), { once: true });
+  } else {
+    abrirCarrito();
+  }
+}
+
+function agregarDesdeModalCot() {
+  if (!currentModalId) return;
+  const notas = obtenerNotasSabor();
+  const idx = carrito.findIndex(i => i.id === currentModalId);
+  if (idx >= 0) { carrito[idx].qty++; if (notas) carrito[idx].notas = notas; }
+  else carrito.push({ id: currentModalId, qty: 1, notas });
+  actualizarCartUI();
+  abrirCarrito();
+  cerrarModal();
+}
+
+function cambiarQty(id, delta) {
+  const idx = carrito.findIndex(i => i.id === id);
+  if (idx < 0) return;
+  carrito[idx].qty += delta;
+  if (carrito[idx].qty <= 0) carrito.splice(idx, 1);
+  actualizarCartUI();
+}
+
+function calcularSubtotal() {
+  return carrito.reduce((s, i) => {
+    const p = productos.find(x => x.id === i.id);
+    return s + (p ? p.precio * i.qty : 0);
+  }, 0);
+}
+
+function actualizarCartUI() {
+  const total = carrito.reduce((s, i) => s + i.qty, 0);
+  const sub = calcularSubtotal();
+  const badge = document.getElementById('floatBadge');
+  badge.textContent = total > 0 ? total + ' · S/' + sub : '0';
+  badge.classList.toggle('visible', total > 0);
+  if (total > 0) {
+    badge.style.width = 'auto';
+    badge.style.borderRadius = '10px';
+    badge.style.padding = '0 6px';
+  } else {
+    badge.style.width = '20px';
+    badge.style.borderRadius = '50%';
+    badge.style.padding = '0';
+  }
+  renderizarCartItems();
+}
+
+function calcularAhorro() {
+  return carrito.reduce((s, i) => {
+    const p = productos.find(x => x.id === i.id);
+    return s + (p && p.ahorro ? p.ahorro * i.qty : 0);
+  }, 0);
+}
+
+function renderizarCartItems() {
+  const el = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+  const subtotalEl = document.getElementById('cartSubtotal');
+  if (carrito.length === 0) {
+    el.innerHTML = '<div class="cart-empty" data-i18n="cart_empty">Tu cotización está vacía.<br>Agrega productos para comenzar.</div>';
+    footer.style.display = 'none';
+    document.getElementById('cartAhorro').style.display = 'none';
+    return;
+  }
+  footer.style.display = 'block';
+  subtotalEl.textContent = 'S/ ' + calcularSubtotal();
+
+  const totalAhorro = calcularAhorro();
+  const ahorroEl = document.getElementById('cartAhorro');
+  if (totalAhorro > 0) {
+    ahorroEl.style.display = 'block';
+    ahorroEl.innerHTML = `💚 ¡Estás ahorrando <strong>S/ ${totalAhorro}</strong> en esta compra!`;
+  } else {
+    ahorroEl.style.display = 'none';
+  }
+
+  el.innerHTML = carrito.map(item => {
+    const p = productos.find(x => x.id === item.id);
+    if (!p) return '';
+    const ahorroItem = p.ahorro ? `<div class="cart-item-ahorro">🏷️ Ahorras S/ ${p.ahorro * item.qty}</div>` : '';
+    return `<div class="cart-item">
+      <img class="cart-item-img" src="${p.img}" alt="${p.nombre}" onerror="this.style.background='#eee'">
+      <div class="cart-item-info">
+        <div class="cart-item-nombre">${p.nombre}</div>
+        ${item.notas ? `<div class="cart-item-notas">${item.notas}</div>` : ''}
+        <div class="cart-item-precio">S/ ${p.precio * item.qty}${p.precioN ? ` <span class="cart-precio-tachado">S/ ${p.precioN * item.qty}</span>` : ''}</div>
+        ${ahorroItem}
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="cambiarQty('${p.id}',-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="cambiarQty('${p.id}',1)">+</button>
+        </div>
+      </div>
+      <button class="cart-item-remove" onclick="cambiarQty('${p.id}',-${item.qty})">&#x2715;</button>
+    </div>`;
+  }).join('');
+}
+
+function abrirCarrito() {
+  document.getElementById('cartPanel').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('floatCot').style.display = 'none';
+  document.body.style.overflow = 'hidden';
+  renderizarCartItems();
+}
+
+function cerrarCarrito() {
+  document.getElementById('cartPanel').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('floatCot').style.display = '';
+  document.body.style.overflow = '';
+}
+
+let envioDestino = null;
+
+function abrirModalEnvio() {
+  if (!carrito.length) return;
+  envioDestino = null;
+  document.getElementById('envioStep1').style.display = '';
+  document.getElementById('envioStep2Lima').style.display = 'none';
+  document.getElementById('envioStep2Prov').style.display = 'none';
+  document.getElementById('envioBtnSend').style.display = 'none';
+  document.getElementById('envioTitulo').textContent = __('envio_titulo');
+  document.getElementById('envioOverlay').classList.add('open');
+  document.getElementById('envioModal').classList.add('open');
+}
+
+function elegirDestino(tipo) {
+  envioDestino = tipo;
+  document.getElementById('envioStep1').style.display = 'none';
+  document.getElementById('envioBtnSend').style.display = '';
+  if (tipo === 'lima') {
+    const h = new Date().getHours() + new Date().getMinutes() / 60;
+    document.getElementById('envioFila0').classList.toggle('activo', h < 12);
+    document.getElementById('envioFila1').classList.toggle('activo', h >= 12 && h < 20);
+    document.getElementById('envioFila2').classList.toggle('activo', h >= 20);
+    document.getElementById('envioStep2Lima').style.display = '';
+    document.getElementById('envioStep2Prov').style.display = 'none';
+    document.getElementById('envioTitulo').textContent = __('envio_step2_lima');
+  } else {
+    document.getElementById('envioStep2Prov').style.display = '';
+    document.getElementById('envioStep2Lima').style.display = 'none';
+    document.getElementById('envioTitulo').textContent = __('envio_step2_prov');
+  }
+}
+
+function volverStep1() {
+  envioDestino = null;
+  document.getElementById('envioStep1').style.display = '';
+  document.getElementById('envioStep2Lima').style.display = 'none';
+  document.getElementById('envioStep2Prov').style.display = 'none';
+  document.getElementById('envioBtnSend').style.display = 'none';
+  document.getElementById('envioTitulo').textContent = __('envio_titulo');
+}
+
+function cerrarModalEnvio() {
+  document.getElementById('envioOverlay').classList.remove('open');
+  document.getElementById('envioModal').classList.remove('open');
+}
+
+function confirmarEnvio() {
+  cerrarModalEnvio();
+  document.getElementById('modalDatosCliente').classList.add('open');
+}
+
+function cerrarDatosCliente() {
+  document.getElementById('modalDatosCliente').classList.remove('open');
+}
+
+function enviarConDatos() {
+  const nombre = document.getElementById('clienteNombre').value.trim();
+  const dni = document.getElementById('clienteDNI').value.trim();
+  const direccion = document.getElementById('clienteDireccion').value.trim();
+  const distrito = document.getElementById('clienteDistrito').value.trim();
+  if (!nombre || !dni || !direccion || !distrito) {
+    alert('Por favor completa todos los campos.');
+    return;
+  }
+  cerrarDatosCliente();
+  enviarCotizacion(nombre, dni, direccion, distrito);
+}
+
+function enviarCotizacion(nombre, dni, direccion, distrito) {
+  if (!carrito.length) return;
+  const lineas = carrito.map(i => {
+    const p = productos.find(x => x.id === i.id);
+    let linea = `📦 ${p.nombre} x${i.qty} — S/ ${p.precio * i.qty}`;
+    if (i.notas) linea += ` (${i.notas})`;
+    return linea;
+  }).join('\n');
+  const sub = calcularSubtotal();
+  const envioLinea = envioDestino === 'lima'
+    ? '🚚 Envío: Lima'
+    : '🚚 Envío: Provincia vía Shalom';
+  const msg =
+    `Hola! 👋 Quiero comprar:\n\n` +
+    `${lineas}\n\n` +
+    `Total: S/ ${sub}\n` +
+    `${envioLinea}\n\n` +
+    `👤 Nombre: ${nombre}\n` +
+    `🪪 DNI: ${dni}\n` +
+    `📍 Dirección: ${direccion}\n` +
+    `🏙️ Distrito/Ciudad: ${distrito}\n\n` +
+    `¿Me pueden confirmar disponibilidad y costo de envío?`;
+  window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank');
+  cerrarCarrito();
+  carrito = [];
+  actualizarCartUI();
+  document.getElementById('cotConfirm').classList.add('open');
+}
+
+function cerrarConfirm() {
+  document.getElementById('cotConfirm').classList.remove('open');
+}
+
+// ---- SLIDER ----
+let sliderIdx = 0;
+function sliderGoTo(n) {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.slider-dot');
+  slides[sliderIdx].classList.remove('active');
+  if (dots[sliderIdx]) dots[sliderIdx].classList.remove('active');
+  sliderIdx = (n + slides.length) % slides.length;
+  slides[sliderIdx].classList.add('active');
+  if (dots[sliderIdx]) dots[sliderIdx].classList.add('active');
+}
+function sliderMove(dir) { sliderGoTo(sliderIdx + dir); }
+(function initSlider() {
+  const slides = document.querySelectorAll('.slide');
+  const dc = document.getElementById('sliderDots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'slider-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => sliderGoTo(i);
+    dc.appendChild(d);
+  });
+  setInterval(() => sliderMove(1), 4000);
+})();
+
+function aplicarOrden() {
+  const orden = document.getElementById('ordenSelect').value;
+  const grids = document.querySelectorAll('#contenido .grid');
+  grids.forEach(grid => {
+    const cards = [...grid.querySelectorAll('.card')];
+    cards.sort((a, b) => {
+      const pa = parseFloat(a.querySelector('.precio').textContent.replace('S/ ',''));
+      const pb = parseFloat(b.querySelector('.precio').textContent.replace('S/ ',''));
+      return orden === 'asc' ? pa - pb : pb - pa;
+    });
+    cards.forEach(c => grid.appendChild(c));
+  });
+}
+
+function compartirProducto() {
+  const p = productos.find(x => x.id === currentModalId);
+  if (!p) return;
+  const msg = `¡Mira este producto de *Zona Bariátrica*!\n\n*${p.nombre}*\n${p.desc}\n\nPrecio: S/ ${p.precio}\n\nPídelo aquí 👉 https://wa.me/${WA}`;
+  if (navigator.share) {
+    navigator.share({ title: p.nombre, text: msg });
+  } else {
+    window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+  }
+}
+
+let vistaDesktop = 'normal';
+let vistaMobile = '1col';
+
+renderizar('todos', null);
+
+// ---- TOOLTIP FLOTANTE ----
+const tooltipMsgs = [
+  '¡Agrega más productos!',
+  '¿Ya elegiste todo?',
+  '¡Arma tu lista!',
+  '¿Qué más necesitas?',
+  '¡Completa tu pedido!',
+  '¿Te faltó algo?',
+];
+let tooltipIdx = 0;
+function mostrarTooltip() {
+  if (!carrito.length) return;
+  const tip = document.getElementById('floatTooltip');
+  tip.textContent = tooltipMsgs[tooltipIdx];
+  tip.classList.add('show');
+  tooltipIdx = (tooltipIdx + 1) % tooltipMsgs.length;
+  setTimeout(() => tip.classList.remove('show'), 3000);
+}
+setInterval(mostrarTooltip, 6000);
+
+// ZOOM + PAN en modal
+let zoomLevel = 1, panX = 0, panY = 0;
+let isDragging = false, dragStartX = 0, dragStartY = 0, basePanX = 0, basePanY = 0;
+
+function actualizarTransform() {
+  document.getElementById('mImg').style.transform =
+    `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+}
+
+function aplicarZoom(val) {
+  zoomLevel = parseFloat(val);
+  if (zoomLevel === 1) { panX = 0; panY = 0; }
+  actualizarTransform();
+  const wrap = document.getElementById('mImgWrap');
+  if (wrap) wrap.style.cursor = zoomLevel > 1 ? 'grab' : 'default';
+}
+
+function resetZoom() {
+  zoomLevel = 1; panX = 0; panY = 0;
+  actualizarTransform();
+  const sl = document.getElementById('zoomSlider');
+  if (sl) sl.value = 1;
+  const wrap = document.getElementById('mImgWrap');
+  if (wrap) wrap.style.cursor = 'default';
+}
+
+function aplicarVistaActual() {
+  const el = document.getElementById('contenido');
+  if (!el) return;
+  const esMobile = window.innerWidth <= 600;
+
+  // Aplicar/quitar clases CSS (enfoque más robusto que estilos inline)
+  el.classList.toggle('v-mob-2col', esMobile && vistaMobile === '2col');
+  el.classList.toggle('v-dt-grande', !esMobile && vistaDesktop === 'grande');
+
+  const modo2col = (esMobile && vistaMobile === '2col') || (!esMobile && vistaDesktop === 'grande');
+
+  // Ocultar duplicados en carruseles infinitos (no se puede hacer solo con CSS)
+  el.querySelectorAll('.carousel[data-inf="true"]').forEach(car => {
+    const all = car.querySelectorAll('.card');
+    const mitad = Math.floor(all.length / 2);
+    all.forEach((c, i) => { if (i >= mitad) c.style.display = modo2col ? 'none' : ''; });
+  });
+}
+
+function setVistaDt(mode) {
+  vistaDesktop = mode;
+  document.getElementById('vBtnNormal').classList.toggle('active', mode === 'normal');
+  document.getElementById('vBtnGrande').classList.toggle('active', mode === 'grande');
+  aplicarVistaActual();
+}
+
+function setVistaMob(mode) {
+  vistaMobile = mode;
+  document.getElementById('vBtnMob1').classList.toggle('active', mode === '1col');
+  document.getElementById('vBtnMob2').classList.toggle('active', mode === '2col');
+  aplicarVistaActual();
+}
+
+function abrirArticulo() {
+  document.getElementById('baOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function cerrarArticulo() {
+  document.getElementById('baOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function cerrarArticuloFondo(e) {
+  if (e.target === document.getElementById('baOverlay')) cerrarArticulo();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const wrap = document.getElementById('mImgWrap');
+  if (!wrap) return;
+  wrap.addEventListener('mousedown', e => {
+    if (zoomLevel <= 1) return;
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    basePanX = panX;
+    basePanY = panY;
+    wrap.classList.add('grabbing');
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    panX = basePanX + (e.clientX - dragStartX);
+    panY = basePanY + (e.clientY - dragStartY);
+    actualizarTransform();
+  });
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    const w = document.getElementById('mImgWrap');
+    if (w) w.classList.remove('grabbing');
+  });
+});
+</script>
+<!-- POPUP PROMOCIONAL -->
+<div id="popup-overlay" style="
+  display:flex; position:fixed; inset:0; z-index:9999;
+  background:rgba(0,0,0,0.75); align-items:center; justify-content:center;
+">
+  <div style="position:relative; max-width:700px; width:90%;">
+    <button onclick="document.getElementById('popup-overlay').style.display='none'" style="
+      position:absolute; top:-14px; right:-14px; z-index:10;
+      background:#fff; border:none; border-radius:50%;
+      width:32px; height:32px; font-size:18px; font-weight:700;
+      cursor:pointer; line-height:1; box-shadow:0 2px 8px rgba(0,0,0,0.3);
+    ">✕</button>
+    <img src="img/popup-proteina.png" alt="Promoción Proteína Líquida" style="width:100%; border-radius:12px; display:block;">
+  </div>
+</div>
+
+</body>
+</html>
