@@ -1065,6 +1065,10 @@ footer {
   /* COTIZADOR PANEL — ancho completo */
   .cart-panel { width: 100%; right: -100%; }
 
+  /* CARRUSEL — en móvil las flechas sobran, el usuario desliza con el dedo */
+  .carousel-btn { display: none !important; }
+  .carousel-wrap { padding: 0 12px 20px; }
+
   /* MÓVIL — vista 2 columnas: grids Y carruseles */
   #contenido.v-mob-2col .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px; }
   #contenido.v-mob-2col .card-img { height: 130px; }
@@ -2726,10 +2730,11 @@ function carouselSec(titulo, lista, key) {
   const tit = titulo ? `<div class="seccion-titulo">${titulo}</div>` : '';
   const cards = lista.map(cardHTML).join('');
   const infinite = lista.length >= 5;
+  const showArrows = lista.length > 1;
   return `${tit}<div class="carousel-wrap">
-    <button class="carousel-btn prev" onclick="moverCarousel('${id}',-1)">&#8249;</button>
+    ${showArrows ? `<button class="carousel-btn prev" onclick="moverCarousel('${id}',-1)">&#8249;</button>` : ''}
     <div class="carousel" id="${id}" data-inf="${infinite}">${infinite ? cards+cards : cards}</div>
-    <button class="carousel-btn next" onclick="moverCarousel('${id}',1)">&#8250;</button>
+    ${showArrows ? `<button class="carousel-btn next" onclick="moverCarousel('${id}',1)">&#8250;</button>` : ''}
   </div>`;
 }
 
