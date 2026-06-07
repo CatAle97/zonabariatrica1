@@ -2885,6 +2885,7 @@ function renderizar(f, sub) {
   if (tEl) tEl.textContent = titulo;
   el.innerHTML = html || `<div style="padding:40px 32px;text-align:center;color:var(--text-light);font-size:14px">No hay productos disponibles para este filtro.</div>`;
   aplicarVistaActual();
+  setTimeout(inicializarFlechasCarouseles, 50);
 }
 
 function sec(titulo, lista) {
@@ -2900,11 +2901,43 @@ function carouselSec(titulo, lista, key) {
   const cards = lista.map(cardHTML).join('');
   const infinite = lista.length >= 5;
   return `${tit}<div class="carousel-wrap">
-    <button class="carousel-btn prev" onclick="moverCarousel('${id}',-1)">&#8249;</button>
+    <button class="carousel-btn prev" id="${id}-prev" onclick="moverCarousel('${id}',-1)">&#8249;</button>
     <div class="carousel" id="${id}" data-inf="${infinite}">${infinite ? cards+cards : cards}</div>
-    <button class="carousel-btn next" onclick="moverCarousel('${id}',1)">&#8250;</button>
+    <button class="carousel-btn next" id="${id}-next" onclick="moverCarousel('${id}',1)">&#8250;</button>
   </div>`;
 }
+
+function actualizarFlechas(el) {
+  const btnPrev = document.getElementById(el.id + '-prev');
+  const btnNext = document.getElementById(el.id + '-next');
+  if (!btnPrev || !btnNext) return;
+  const noDesborda = el.scrollWidth <= el.clientWidth + 2;
+  if (noDesborda) {
+    btnPrev.style.display = 'none';
+    btnNext.style.display = 'none';
+    return;
+  }
+  if (el.dataset.inf === 'true') {
+    btnPrev.style.display = '';
+    btnNext.style.display = '';
+    return;
+  }
+  const maxScroll = el.scrollWidth - el.clientWidth;
+  btnPrev.style.display = el.scrollLeft <= 2 ? 'none' : '';
+  btnNext.style.display = el.scrollLeft >= maxScroll - 2 ? 'none' : '';
+}
+
+function inicializarFlechasCarouseles() {
+  document.querySelectorAll('.carousel').forEach(el => {
+    actualizarFlechas(el);
+    if (!el._flechasInit) {
+      el.addEventListener('scroll', () => actualizarFlechas(el), { passive: true });
+      el._flechasInit = true;
+    }
+  });
+}
+
+window.addEventListener('resize', () => { setTimeout(inicializarFlechasCarouseles, 100); });
 
 function moverCarousel(id, dir) {
   const el = document.getElementById(id);
@@ -3559,6 +3592,7 @@ function aplicarVistaActual() {
     const mitad = Math.floor(all.length / 2);
     all.forEach((c, i) => { if (i >= mitad) c.style.display = modo2col ? 'none' : ''; });
   });
+  setTimeout(inicializarFlechasCarouseles, 50);
 }
 
 function setVistaDt(mode) {
