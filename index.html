@@ -1344,10 +1344,10 @@ footer {
 
 <!-- MODAL DATOS CLIENTE -->
 <div class="cot-confirm" id="modalDatosCliente">
-  <div class="cot-confirm-box" style="max-width:400px;text-align:left;">
+  <div class="cot-confirm-box" style="max-width:420px;text-align:left;padding:28px 24px;max-height:92vh;overflow-y:auto;">
     <div class="cot-confirm-icon" style="text-align:center;">📋</div>
-    <h3 style="text-align:center;margin-bottom:6px;">Completa tus datos</h3>
-    <p style="text-align:center;margin-bottom:20px;">Para coordinar tu entrega necesitamos estos datos.</p>
+    <h3 style="text-align:center;margin-bottom:6px;">Completa tu pedido</h3>
+    <p style="text-align:center;margin-bottom:20px;font-size:13px;color:var(--text-muted);">Ingresa tus datos y elige cómo pagar.</p>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div>
         <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Nombre completo *</label>
@@ -1365,9 +1365,48 @@ footer {
         <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Distrito / Ciudad *</label>
         <input id="clienteDistrito" type="text" placeholder="Ej: Miraflores, Trujillo..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
       </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Correo electrónico *</label>
+        <input id="clienteCorreo" type="email" placeholder="tucorreo@ejemplo.com" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">Método de pago *</label>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label id="formLabelYape" style="display:flex;align-items:center;gap:10px;padding:11px 13px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);">
+            <input type="radio" name="formMetodoPago" value="yape" checked style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
+            <img src="img/logo-yape.png" alt="Yape" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--text);">Yape / Transferencia BCP</div>
+              <div style="font-size:11px;color:var(--text-muted);">Sin costo adicional</div>
+            </div>
+          </label>
+          <label id="formLabelIzipay" style="display:flex;align-items:center;gap:10px;padding:11px 13px;border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;background:var(--surface);">
+            <input type="radio" name="formMetodoPago" value="tarjeta" style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
+            <img src="img/logo-izipay.png" alt="Izipay" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--text);">Tarjeta de crédito/débito</div>
+              <div style="font-size:11px;color:#dc2626;font-weight:600;">+ 4% de recargo</div>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div style="background:var(--bg);border-radius:var(--r-sm);padding:12px 14px;border-left:3px solid var(--blue);">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);margin-bottom:4px;">
+          <span>Subtotal</span><span id="formSubtotal">S/ 0</span>
+        </div>
+        <div id="formRecargoFila" style="display:none;justify-content:space-between;font-size:13px;color:#dc2626;margin-bottom:4px;">
+          <span>Recargo tarjeta (4%)</span><span id="formRecargoVal">S/ 0.00</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:700;color:var(--blue);border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">
+          <span>Total a pagar</span><span id="formTotal">S/ 0</span>
+        </div>
+      </div>
     </div>
-    <button class="cot-confirm-btn" onclick="enviarConDatos()" style="margin-top:20px;">ENVIAR PEDIDO POR WHATSAPP</button>
-    <button onclick="cerrarDatosCliente()" style="width:100%;margin-top:8px;background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;padding:6px;">Cancelar</button>
+    <div style="margin-top:14px;background:#FFFBEB;border-left:3px solid #F59E0B;border-radius:var(--r-sm);padding:10px 13px;font-size:12px;color:#92400E;line-height:1.5;">
+      ⚠️ El costo de entrega no está incluido en el total. Se calculará según tu ubicación y se confirmará antes del envío.
+    </div>
+    <button class="cot-confirm-btn" onclick="enviarConDatos()" style="margin-top:16px;">Confirmar pedido</button>
+    <button onclick="cerrarDatosCliente()" style="width:100%;margin-top:8px;background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;padding:6px;font-family:inherit;">Cancelar</button>
   </div>
 </div>
 
@@ -1808,15 +1847,11 @@ footer {
 <div class="pagos">
   <h3 data-i18n="pagos_titulo">MÉTODOS DE PAGO</h3>
   <div class="pagos-lista">
-    <div class="pago-item" style="display:flex;align-items:center;gap:8px;">
-      <img src="img/logo-yape.png" alt="Yape" style="height:22px;width:auto;object-fit:contain;">
-      Yape
+    <div class="pago-item" style="background:none;border:none;padding:4px;">
+      <img src="img/logo-yape.png" alt="Yape" style="height:36px;width:auto;object-fit:contain;">
     </div>
-    <div class="pago-item">Plin</div>
-    <div class="pago-item">Transferencia BCP</div>
-    <div class="pago-item" style="display:flex;align-items:center;gap:8px;">
-      <img src="img/logo-izipay.png" alt="Izipay" style="height:22px;width:auto;object-fit:contain;">
-      Izipay
+    <div class="pago-item" style="background:none;border:none;padding:4px;">
+      <img src="img/logo-izipay.png" alt="Izipay" style="height:36px;width:auto;object-fit:contain;">
     </div>
   </div>
 </div>
@@ -2917,11 +2952,6 @@ function actualizarFlechas(el) {
     btnNext.style.display = 'none';
     return;
   }
-  if (el.dataset.inf === 'true') {
-    btnPrev.style.display = '';
-    btnNext.style.display = '';
-    return;
-  }
   const maxScroll = el.scrollWidth - el.clientWidth;
   btnPrev.style.display = el.scrollLeft <= 2 ? 'none' : '';
   btnNext.style.display = el.scrollLeft >= maxScroll - 2 ? 'none' : '';
@@ -3356,27 +3386,57 @@ function cerrarModalEnvio() {
 
 function confirmarEnvio() {
   cerrarModalEnvio();
+  document.querySelectorAll('input[name="formMetodoPago"]').forEach(r => { r.checked = r.value === 'yape'; });
+  actualizarTotalForm();
   document.getElementById('modalDatosCliente').classList.add('open');
+}
+
+function actualizarTotalForm() {
+  const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
+  const sub = calcularSubtotal();
+  const recargoFila = document.getElementById('formRecargoFila');
+  const recargoVal = document.getElementById('formRecargoVal');
+  const totalEl = document.getElementById('formTotal');
+  const subtotalEl = document.getElementById('formSubtotal');
+  const labelYape = document.getElementById('formLabelYape');
+  const labelIzipay = document.getElementById('formLabelIzipay');
+  subtotalEl.textContent = 'S/ ' + sub;
+  if (metodo === 'tarjeta') {
+    const recargo = Math.round(sub * 0.04 * 100) / 100;
+    recargoFila.style.display = 'flex';
+    recargoVal.textContent = 'S/ ' + recargo.toFixed(2);
+    totalEl.textContent = 'S/ ' + (sub + recargo).toFixed(2);
+    labelYape.style.borderColor = 'var(--border)';
+    labelYape.style.background = 'var(--surface)';
+    labelIzipay.style.borderColor = 'var(--blue)';
+    labelIzipay.style.background = 'var(--blue-light)';
+  } else {
+    recargoFila.style.display = 'none';
+    totalEl.textContent = 'S/ ' + sub;
+    labelYape.style.borderColor = 'var(--blue)';
+    labelYape.style.background = 'var(--blue-light)';
+    labelIzipay.style.borderColor = 'var(--border)';
+    labelIzipay.style.background = 'var(--surface)';
+  }
 }
 
 function cerrarDatosCliente() {
   document.getElementById('modalDatosCliente').classList.remove('open');
 }
 
-let _datosPedido = {};
-
 function enviarConDatos() {
   const nombre = document.getElementById('clienteNombre').value.trim();
   const dni = document.getElementById('clienteDNI').value.trim();
   const direccion = document.getElementById('clienteDireccion').value.trim();
   const distrito = document.getElementById('clienteDistrito').value.trim();
-  if (!nombre || !dni || !direccion || !distrito) {
+  const correo = document.getElementById('clienteCorreo').value.trim();
+  const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
+  if (!nombre || !dni || !direccion || !distrito || !correo) {
     alert('Por favor completa todos los campos.');
     return;
   }
-  _datosPedido = { nombre, dni, direccion, distrito };
   cerrarDatosCliente();
-  mostrarResumenPago();
+  enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo);
 }
 
 function mostrarResumenPago() {
@@ -3433,37 +3493,42 @@ function confirmarYEnviar() {
   enviarCotizacion(nombre, dni, direccion, distrito, metodo);
 }
 
-function enviarCotizacion(nombre, dni, direccion, distrito, metodo) {
+function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo) {
   if (!carrito.length) return;
   const lineas = carrito.map(i => {
     const p = productos.find(x => x.id === i.id);
-    let linea = `📦 ${p.nombre} x${i.qty} — S/ ${p.precio * i.qty}`;
+    let linea = `• ${p.nombre} x${i.qty} — S/ ${p.precio * i.qty}`;
     if (i.notas) linea += ` (${i.notas})`;
     return linea;
   }).join('\n');
   const sub = calcularSubtotal();
-  const esIzipay = metodo === 'izipay';
-  const recargo = esIzipay ? Math.round(sub * 0.04 * 100) / 100 : 0;
+  const esTarjeta = metodo === 'tarjeta';
+  const recargo = esTarjeta ? Math.round(sub * 0.04 * 100) / 100 : 0;
   const total = sub + recargo;
-  const envioLinea = envioDestino === 'lima'
-    ? '🚚 Envío: Lima'
-    : '🚚 Envío: Provincia vía Shalom';
-  const pagoLinea = esIzipay
-    ? `💳 Pago: Izipay (tarjeta de crédito) — recargo 4%: S/ ${recargo.toFixed(2)}`
-    : `🟣 Pago: Yape / Transferencia`;
-  const msg =
-    `Hola! 👋 Quiero comprar:\n\n` +
-    `${lineas}\n\n` +
-    `Subtotal: S/ ${sub}\n` +
-    (esIzipay ? `Recargo Izipay (4%): S/ ${recargo.toFixed(2)}\n` : '') +
-    `*Total: S/ ${total.toFixed(2)}*\n` +
-    `${envioLinea}\n` +
-    `${pagoLinea}\n\n` +
-    `👤 Nombre: ${nombre}\n` +
-    `🪪 DNI: ${dni}\n` +
-    `📍 Dirección: ${direccion}\n` +
-    `🏙️ Distrito/Ciudad: ${distrito}\n\n` +
-    `¿Me pueden confirmar disponibilidad y costo de envío?`;
+  let msg;
+  if (esTarjeta) {
+    msg =
+      `🛒 NUEVO PEDIDO — Zona Bariátrica\n\n` +
+      `👤 Cliente: ${nombre}\n` +
+      `🪪 DNI: ${dni}\n` +
+      `📧 Correo: ${correo}\n` +
+      `📍 Dirección: ${direccion} — ${distrito}\n\n` +
+      `📦 PRODUCTOS:\n${lineas}\n\n` +
+      `💰 TOTAL: S/ ${total.toFixed(2)} (incluye 4% por tarjeta)\n` +
+      `💳 Pago: TARJETA\n\n` +
+      `¿Me puede confirmar el costo de delivery y enviarme el link de pago?`;
+  } else {
+    msg =
+      `🛒 NUEVO PEDIDO — Zona Bariátrica\n\n` +
+      `👤 Cliente: ${nombre}\n` +
+      `🪪 DNI: ${dni}\n` +
+      `📧 Correo: ${correo}\n` +
+      `📍 Dirección: ${direccion} — ${distrito}\n\n` +
+      `📦 PRODUCTOS:\n${lineas}\n\n` +
+      `💰 TOTAL: S/ ${total}\n` +
+      `🟣 Pago: YAPE\n\n` +
+      `¿Me puede confirmar el costo de delivery y enviarme el QR y número para realizar el Yape?`;
+  }
   window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank');
   cerrarCarrito();
   carrito = [];
