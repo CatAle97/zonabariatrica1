@@ -3909,6 +3909,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const w = document.getElementById('mImgWrap');
     if (w) w.classList.remove('grabbing');
   });
+
+  // Touch: pan con un dedo y pinch-to-zoom con dos dedos
+  let touchStartDist = 0, baseZoom = 1;
+  let touchStartX = 0, touchStartY = 0;
+
+  function distancia(t) {
+    return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  }
+
+  wrap.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      touchStartDist = distancia(e.touches);
+      baseZoom = zoomLevel;
+      e.preventDefault();
+    } else if (e.touches.length === 1 && zoomLevel > 1) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      basePanX = panX;
+      basePanY = panY;
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  wrap.addEventListener('touchmove', e => {
+    if (e.touches.length === 2) {
+      const nuevaDist = distancia(e.touches);
+      zoomLevel = Math.min(4, Math.max(1, baseZoom * (nuevaDist / touchStartDist)));
+      const sl = document.getElementById('zoomSlider');
+      if (sl) sl.value = zoomLevel;
+      if (zoomLevel <= 1) { panX = 0; panY = 0; }
+      actualizarTransform();
+      e.preventDefault();
+    } else if (e.touches.length === 1 && zoomLevel > 1) {
+      panX = basePanX + (e.touches[0].clientX - touchStartX);
+      panY = basePanY + (e.touches[0].clientY - touchStartY);
+      actualizarTransform();
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  wrap.addEventListener('touchend', e => {
+    if (e.touches.length === 0 && zoomLevel <= 1) {
+      panX = 0; panY = 0;
+      actualizarTransform();
+    }
+  });
 });
 </script>
 <!-- POPUP PROMOCIONAL -->
