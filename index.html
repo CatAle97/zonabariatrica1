@@ -1244,6 +1244,93 @@ footer {
   /* PAGOS */
   .pago-item { padding: 6px 12px; font-size: 11.5px; }
 }
+
+/* MI CUENTA */
+.btn-cuenta {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--blue-light); color: var(--blue);
+  border: 1.5px solid var(--blue); border-radius: var(--r-pill);
+  padding: 6px 14px; font-size: 12.5px; font-weight: 700;
+  cursor: pointer; transition: background 0.15s, color 0.15s;
+  white-space: nowrap; flex-shrink: 0;
+}
+.btn-cuenta:hover { background: var(--blue); color: white; }
+.btn-cuenta svg { flex-shrink: 0; }
+
+/* MODAL AUTH */
+.auth-overlay {
+  display: none; position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0,0,0,0.55); align-items: center; justify-content: center;
+}
+.auth-overlay.open { display: flex; }
+.auth-box {
+  background: white; border-radius: 18px; padding: 36px 32px;
+  width: 100%; max-width: 400px; box-shadow: var(--shadow-lg);
+  position: relative;
+}
+.auth-close {
+  position: absolute; top: 14px; right: 16px;
+  background: none; border: none; font-size: 22px;
+  cursor: pointer; color: var(--text-muted); line-height: 1;
+}
+.auth-logo { text-align: center; margin-bottom: 20px; }
+.auth-logo span {
+  background: var(--blue); color: white; font-size: 16px; font-weight: 800;
+  padding: 8px 16px; border-radius: 10px; letter-spacing: -0.5px;
+}
+.auth-tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 24px; }
+.auth-tab {
+  flex: 1; padding: 10px; font-size: 14px; font-weight: 600;
+  background: none; border: none; cursor: pointer; color: var(--text-muted);
+  border-bottom: 2.5px solid transparent; margin-bottom: -2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.auth-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+.auth-input-wrap { margin-bottom: 14px; }
+.auth-input-wrap label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; }
+.auth-input {
+  width: 100%; padding: 10px 14px; border: 1.5px solid var(--border);
+  border-radius: var(--r-sm); font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: border-color 0.15s; outline: none;
+}
+.auth-input:focus { border-color: var(--blue); }
+.auth-btn {
+  width: 100%; padding: 12px; background: var(--blue); color: white;
+  border: none; border-radius: var(--r-sm); font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: background 0.15s; margin-top: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.auth-btn:hover { background: var(--blue-dark); }
+.auth-msg { font-size: 12.5px; text-align: center; margin-top: 12px; min-height: 18px; }
+.auth-msg.ok { color: #059669; }
+.auth-msg.err { color: #DC2626; }
+
+/* USUARIO LOGUEADO */
+.user-wrap { position: relative; }
+.user-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--blue); color: white;
+  border: none; border-radius: var(--r-pill);
+  padding: 6px 14px; font-size: 12.5px; font-weight: 700;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+}
+.user-dropdown {
+  display: none; position: absolute; top: calc(100% + 8px); right: 0;
+  background: white; border: 1px solid var(--border); border-radius: var(--r);
+  box-shadow: var(--shadow-md); min-width: 200px; z-index: 600; overflow: hidden;
+}
+.user-dropdown.open { display: block; }
+.user-dropdown-email {
+  padding: 12px 16px; font-size: 12px; color: var(--text-muted);
+  border-bottom: 1px solid var(--border); word-break: break-all;
+}
+.user-dropdown-btn {
+  display: block; width: 100%; padding: 11px 16px; text-align: left;
+  background: none; border: none; font-size: 13px; font-weight: 600;
+  cursor: pointer; color: #DC2626; font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background 0.1s;
+}
+.user-dropdown-btn:hover { background: #FEF2F2; }
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -1685,6 +1772,12 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
           <button class="lang-option" onclick="cambiarIdioma('pt')">🇧🇷 Português</button>
           <button class="lang-option" onclick="cambiarIdioma('fr')">🇫🇷 Français</button>
         </div>
+      </div>
+      <div id="authHeaderBtn">
+        <button class="btn-cuenta" onclick="abrirAuth()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          Mi cuenta
+        </button>
       </div>
     </div>
   </div>
@@ -3990,5 +4083,143 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 
+<!-- MODAL MI CUENTA -->
+<div class="auth-overlay" id="authOverlay" onclick="cerrarAuthFuera(event)">
+  <div class="auth-box">
+    <button class="auth-close" onclick="cerrarAuth()">&#x2715;</button>
+    <div class="auth-logo"><span>ZB</span></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Iniciar sesión</button>
+      <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Crear cuenta</button>
+    </div>
+    <!-- LOGIN -->
+    <div id="formLogin">
+      <div class="auth-input-wrap">
+        <label>Correo electrónico</label>
+        <input type="email" id="loginEmail" class="auth-input" placeholder="tu@correo.com">
+      </div>
+      <div class="auth-input-wrap">
+        <label>Contraseña</label>
+        <input type="password" id="loginPass" class="auth-input" placeholder="Tu contraseña">
+      </div>
+      <button class="auth-btn" onclick="hacerLogin()">Entrar</button>
+      <div class="auth-msg" id="loginMsg"></div>
+    </div>
+    <!-- REGISTER -->
+    <div id="formRegister" style="display:none">
+      <div class="auth-input-wrap">
+        <label>Nombre</label>
+        <input type="text" id="regNombre" class="auth-input" placeholder="Tu nombre">
+      </div>
+      <div class="auth-input-wrap">
+        <label>Correo electrónico</label>
+        <input type="email" id="regEmail" class="auth-input" placeholder="tu@correo.com">
+      </div>
+      <div class="auth-input-wrap">
+        <label>Contraseña</label>
+        <input type="password" id="regPass" class="auth-input" placeholder="Mínimo 6 caracteres">
+      </div>
+      <button class="auth-btn" onclick="hacerRegistro()">Crear cuenta gratis</button>
+      <div class="auth-msg" id="registerMsg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPA_URL = 'https://pcdjuajibqhhlqcllmgr.supabase.co';
+const SUPA_KEY = 'sb_publishable_YekCaTFfLVuMLL169Hl7uw_vySLd9XL';
+const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// Inicializar estado de sesión al cargar
+(async () => {
+  const { data: { session } } = await supa.auth.getSession();
+  if (session) mostrarUsuarioLogueado(session.user);
+})();
+
+supa.auth.onAuthStateChange((_event, session) => {
+  if (session) mostrarUsuarioLogueado(session.user);
+  else mostrarBtnLogin();
+});
+
+function abrirAuth() {
+  document.getElementById('authOverlay').classList.add('open');
+}
+function cerrarAuth() {
+  document.getElementById('authOverlay').classList.remove('open');
+  document.getElementById('loginMsg').textContent = '';
+  document.getElementById('registerMsg').textContent = '';
+}
+function cerrarAuthFuera(e) {
+  if (e.target === document.getElementById('authOverlay')) cerrarAuth();
+}
+function switchTab(tab) {
+  document.getElementById('formLogin').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('formRegister').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+}
+
+async function hacerLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const msg = document.getElementById('loginMsg');
+  msg.textContent = 'Ingresando...'; msg.className = 'auth-msg';
+  const { error } = await supa.auth.signInWithPassword({ email, password: pass });
+  if (error) { msg.textContent = 'Correo o contraseña incorrectos'; msg.className = 'auth-msg err'; }
+  else { cerrarAuth(); }
+}
+
+async function hacerRegistro() {
+  const nombre = document.getElementById('regNombre').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+  const msg = document.getElementById('registerMsg');
+  if (!nombre || !email || !pass) { msg.textContent = 'Completa todos los campos'; msg.className = 'auth-msg err'; return; }
+  if (pass.length < 6) { msg.textContent = 'La contraseña debe tener al menos 6 caracteres'; msg.className = 'auth-msg err'; return; }
+  msg.textContent = 'Creando cuenta...'; msg.className = 'auth-msg';
+  const { error } = await supa.auth.signUp({ email, password: pass, options: { data: { nombre } } });
+  if (error) { msg.textContent = error.message; msg.className = 'auth-msg err'; }
+  else { msg.textContent = '¡Cuenta creada! Revisa tu correo para confirmar.'; msg.className = 'auth-msg ok'; }
+}
+
+async function cerrarSesion() {
+  await supa.auth.signOut();
+  document.getElementById('userDropdown').classList.remove('open');
+}
+
+function mostrarUsuarioLogueado(user) {
+  const wrap = document.getElementById('authHeaderBtn');
+  const nombre = user.user_metadata?.nombre || user.email.split('@')[0];
+  wrap.innerHTML = `
+    <div class="user-wrap">
+      <button class="user-btn" onclick="toggleUserDropdown()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        ${nombre}
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="user-dropdown-email">${user.email}</div>
+        <button class="user-dropdown-btn" onclick="cerrarSesion()">Cerrar sesión</button>
+      </div>
+    </div>`;
+}
+
+function mostrarBtnLogin() {
+  const wrap = document.getElementById('authHeaderBtn');
+  wrap.innerHTML = `<button class="btn-cuenta" onclick="abrirAuth()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    Mi cuenta
+  </button>`;
+}
+
+function toggleUserDropdown() {
+  document.getElementById('userDropdown').classList.toggle('open');
+}
+document.addEventListener('click', (e) => {
+  const drop = document.getElementById('userDropdown');
+  if (drop && !drop.closest('.user-wrap').contains(e.target)) drop.classList.remove('open');
+});
+</script>
 </body>
 </html>
