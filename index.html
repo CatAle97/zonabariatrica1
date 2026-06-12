@@ -4238,6 +4238,15 @@ function mostrarUsuarioLogueado(user) {
       </button>
       <div class="user-dropdown" id="userDropdown">
         <div class="user-dropdown-email">${user.email}</div>
+        <div style="padding:10px 16px 6px;border-bottom:1px solid var(--border-light)">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:1px;margin-bottom:8px">🌐 Idioma</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button onclick="cambiarIdioma('es')" style="border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:12px;cursor:pointer;background:none;font-family:inherit">🇪🇸 ES</button>
+            <button onclick="cambiarIdioma('en')" style="border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:12px;cursor:pointer;background:none;font-family:inherit">🇬🇧 EN</button>
+            <button onclick="cambiarIdioma('pt')" style="border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:12px;cursor:pointer;background:none;font-family:inherit">🇧🇷 PT</button>
+            <button onclick="cambiarIdioma('fr')" style="border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:12px;cursor:pointer;background:none;font-family:inherit">🇫🇷 FR</button>
+          </div>
+        </div>
         <button class="user-dropdown-btn" onclick="cerrarSesion()">Cerrar sesión</button>
       </div>
     </div>`;
