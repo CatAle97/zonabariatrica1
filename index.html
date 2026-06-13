@@ -1580,6 +1580,22 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <input id="clienteDistrito" type="text" placeholder="Ej: Miraflores, Trujillo..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
       </div>
       <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">¿Dónde te encuentras? *</label>
+        <div style="display:flex;gap:8px;">
+          <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 13px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);" id="zonaLimaLabel">
+            <input type="radio" name="zonaEnvio" value="lima" checked onchange="actualizarZona()" style="accent-color:var(--blue);width:15px;height:15px;">
+            <span style="font-size:13px;font-weight:600;color:var(--text);">Lima</span>
+          </label>
+          <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 13px;border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;background:var(--surface);" id="zonaProvLabel">
+            <input type="radio" name="zonaEnvio" value="provincia" onchange="actualizarZona()" style="accent-color:var(--blue);width:15px;height:15px;">
+            <span style="font-size:13px;font-weight:600;color:var(--text);">Provincia</span>
+          </label>
+        </div>
+        <div id="avisoTraslado" style="display:none;margin-top:8px;padding:9px 12px;background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:var(--r-sm);font-size:12px;color:#92400E;font-weight:500;">
+          📦 Se agregará <strong>S/ 10</strong> por traslado y embalaje a agencia Shalom.
+        </div>
+      </div>
+      <div>
         <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Correo electrónico *</label>
         <input id="clienteCorreo" type="email" placeholder="tucorreo@ejemplo.com" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
       </div>
@@ -1610,6 +1626,9 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         </div>
         <div id="formRecargoFila" style="display:none;justify-content:space-between;font-size:13px;color:#dc2626;margin-bottom:4px;">
           <span>Recargo tarjeta (4%)</span><span id="formRecargoVal">S/ 0.00</span>
+        </div>
+        <div id="formTrasladoFila" style="display:none;justify-content:space-between;font-size:13px;color:#92400E;margin-bottom:4px;">
+          <span>Traslado y embalaje</span><span>S/ 10.00</span>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:700;color:var(--blue);border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">
           <span>Total a pagar</span><span id="formTotal">S/ 0</span>
@@ -3788,9 +3807,22 @@ async function confirmarEnvio() {
   document.getElementById('modalDatosCliente').classList.add('open');
 }
 
+function actualizarZona() {
+  const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
+  document.getElementById('avisoTraslado').style.display = esProv ? 'block' : 'none';
+  document.getElementById('formTrasladoFila').style.display = esProv ? 'flex' : 'none';
+  document.getElementById('zonaLimaLabel').style.borderColor = esProv ? 'var(--border)' : 'var(--blue)';
+  document.getElementById('zonaLimaLabel').style.background = esProv ? 'var(--surface)' : 'var(--blue-light)';
+  document.getElementById('zonaProvLabel').style.borderColor = esProv ? 'var(--blue)' : 'var(--border)';
+  document.getElementById('zonaProvLabel').style.background = esProv ? 'var(--blue-light)' : 'var(--surface)';
+  actualizarTotalForm();
+}
+
 function actualizarTotalForm() {
   const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
+  const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
   const sub = calcularSubtotal();
+  const traslado = esProv ? 10 : 0;
   const recargoFila = document.getElementById('formRecargoFila');
   const recargoVal = document.getElementById('formRecargoVal');
   const totalEl = document.getElementById('formTotal');
@@ -3799,17 +3831,17 @@ function actualizarTotalForm() {
   const labelIzipay = document.getElementById('formLabelIzipay');
   subtotalEl.textContent = 'S/ ' + sub;
   if (metodo === 'tarjeta') {
-    const recargo = Math.round(sub * 0.04 * 100) / 100;
+    const recargo = Math.round((sub + traslado) * 0.04 * 100) / 100;
     recargoFila.style.display = 'flex';
     recargoVal.textContent = 'S/ ' + recargo.toFixed(2);
-    totalEl.textContent = 'S/ ' + (sub + recargo).toFixed(2);
+    totalEl.textContent = 'S/ ' + (sub + traslado + recargo).toFixed(2);
     labelYape.style.borderColor = 'var(--border)';
     labelYape.style.background = 'var(--surface)';
     labelIzipay.style.borderColor = 'var(--blue)';
     labelIzipay.style.background = 'var(--blue-light)';
   } else {
     recargoFila.style.display = 'none';
-    totalEl.textContent = 'S/ ' + sub;
+    totalEl.textContent = 'S/ ' + (sub + traslado);
     labelYape.style.borderColor = 'var(--blue)';
     labelYape.style.background = 'var(--blue-light)';
     labelIzipay.style.borderColor = 'var(--border)';
@@ -3828,12 +3860,13 @@ function enviarConDatos() {
   const distrito = document.getElementById('clienteDistrito').value.trim();
   const correo = document.getElementById('clienteCorreo').value.trim();
   const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
+  const zona = document.querySelector('input[name="zonaEnvio"]:checked')?.value || 'lima';
   if (!nombre || !dni || !direccion || !distrito || !correo) {
     alert('Por favor completa todos los campos.');
     return;
   }
   cerrarDatosCliente();
-  enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo);
+  enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo, zona);
 }
 
 function mostrarResumenPago() {
@@ -3890,7 +3923,7 @@ function confirmarYEnviar() {
   enviarCotizacion(nombre, dni, direccion, distrito, metodo);
 }
 
-function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo) {
+function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo, zona) {
   if (!carrito.length) return;
   const lineas = carrito.map(i => {
     const p = productos.find(x => x.id === i.id);
@@ -3899,9 +3932,12 @@ function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo) {
     return linea;
   }).join('\n');
   const sub = calcularSubtotal();
+  const esProv = zona === 'provincia';
+  const traslado = esProv ? 10 : 0;
   const esTarjeta = metodo === 'tarjeta';
-  const recargo = esTarjeta ? Math.round(sub * 0.04 * 100) / 100 : 0;
-  const total = sub + recargo;
+  const recargo = esTarjeta ? Math.round((sub + traslado) * 0.04 * 100) / 100 : 0;
+  const total = sub + traslado + recargo;
+  const lineaTraslado = esProv ? `🚚 Traslado y embalaje (Shalom): S/ 10\n` : '';
   let msg;
   if (esTarjeta) {
     msg =
@@ -3909,8 +3945,9 @@ function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo) {
       `👤 Cliente: ${nombre}\n` +
       `🪪 DNI: ${dni}\n` +
       `📧 Correo: ${correo}\n` +
-      `📍 Dirección: ${direccion} — ${distrito}\n\n` +
+      `📍 Dirección: ${direccion} — ${distrito} (${esProv ? 'PROVINCIA' : 'LIMA'})\n\n` +
       `📦 PRODUCTOS:\n${lineas}\n\n` +
+      `${lineaTraslado}` +
       `💰 TOTAL: S/ ${total.toFixed(2)} (incluye 4% por tarjeta)\n` +
       `💳 Pago: TARJETA\n\n` +
       `¿Me puede confirmar el costo de delivery y enviarme el link de pago?`;
@@ -3920,8 +3957,9 @@ function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo) {
       `👤 Cliente: ${nombre}\n` +
       `🪪 DNI: ${dni}\n` +
       `📧 Correo: ${correo}\n` +
-      `📍 Dirección: ${direccion} — ${distrito}\n\n` +
+      `📍 Dirección: ${direccion} — ${distrito} (${esProv ? 'PROVINCIA' : 'LIMA'})\n\n` +
       `📦 PRODUCTOS:\n${lineas}\n\n` +
+      `${lineaTraslado}` +
       `💰 TOTAL: S/ ${total}\n` +
       `🟣 Pago: YAPE\n\n` +
       `¿Me puede confirmar el costo de delivery y enviarme el QR y número para realizar el Yape?`;
