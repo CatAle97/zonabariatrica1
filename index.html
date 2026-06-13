@@ -339,6 +339,19 @@ header {
 }
 .filtro-chip:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
 .filtro-chip.active { background: var(--text); color: #fff; border-color: var(--text); }
+/* FAVORITOS */
+.fav-btn {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.92); border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  transition: transform 0.15s, background 0.15s;
+}
+.fav-btn:hover { transform: scale(1.18); background: #fff; }
+.fav-btn svg { width: 15px; height: 15px; }
+.fav-btn svg path { fill: none; stroke: #9CA3AF; stroke-width: 2.2; transition: all 0.2s; }
+.fav-btn.activo svg path { fill: #EF4444; stroke: #EF4444; }
 .seccion-titulo {
   padding: 20px 32px 8px; font-size: 10.5px; font-weight: 700;
   text-transform: uppercase; color: var(--text-light); letter-spacing: 1.5px;
@@ -372,7 +385,7 @@ header {
 .card {
   background: var(--surface); border-radius: var(--r); border: 1.5px solid var(--border);
   overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
-  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; position: relative;
 }
 .card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: var(--shadow-md); }
 .card.pack { border-color: var(--border); }
@@ -3350,10 +3363,13 @@ function cardMiniHTML(p) {
   </div>`;
 }
 
+const HEART_SVG = `<svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>`;
+
 function cardHTML(p) {
   const pack = p.tipo === 'pack';
   const oferta = p.tipo === 'oferta';
   return `<div class="card${pack?' pack':''}${oferta?' oferta':''}">
+    <button class="fav-btn${favoritosSet.has(p.id)?' activo':''}" data-id="${p.id}" onclick="toggleFavorito('${p.id}',event)" title="Favorito">${HEART_SVG}</button>
     <img class="card-img" src="${p.img}" alt="${p.nombre}"
       onerror="this.style.background='#e8eeff'" onclick="abrirModal('${p.id}')" style="cursor:pointer">
     <div class="card-body">
@@ -3973,6 +3989,7 @@ function aplicarVistaActual() {
     all.forEach((c, i) => { if (i >= mitad) c.style.display = modo2col ? 'none' : ''; });
   });
   setTimeout(inicializarFlechasCarouseles, 50);
+  actualizarCorazones();
 }
 
 function setVistaDt(mode) {
@@ -4174,6 +4191,55 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+// ---- FAVORITOS ----
+let favoritosSet = new Set();
+
+async function toggleFavorito(id, e) {
+  e.stopPropagation();
+  const { data: { session } } = await supa.auth.getSession();
+  if (!session) { abrirAuth(); return; }
+  if (favoritosSet.has(id)) { favoritosSet.delete(id); } else { favoritosSet.add(id); }
+  actualizarCorazones();
+  supa.auth.updateUser({ data: { favoritos: [...favoritosSet] } });
+}
+
+function actualizarCorazones() {
+  document.querySelectorAll('.fav-btn').forEach(btn => {
+    const activo = favoritosSet.has(btn.dataset.id);
+    btn.classList.toggle('activo', activo);
+    btn.title = activo ? 'Quitar de favoritos' : 'Agregar a favoritos';
+  });
+}
+
+function cargarFavoritos(user) {
+  favoritosSet = new Set(user.user_metadata?.favoritos || []);
+  actualizarCorazones();
+}
+
+function mostrarVistaFavoritos() {
+  document.getElementById('userDropdown').classList.remove('open');
+  ocultarBlog();
+  ocultarSlider();
+  actualizarChips('');
+  const tEl = document.getElementById('productos-titulo');
+  if (tEl) tEl.textContent = 'Mis Favoritos';
+  const favProds = productos.filter(p => favoritosSet.has(p.id));
+  const el = document.getElementById('contenido');
+  if (!favProds.length) {
+    el.innerHTML = `<div style="padding:64px 32px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif">
+      <div style="font-size:44px;margin-bottom:16px">🤍</div>
+      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Aún no tienes favoritos</div>
+      <div style="font-size:13px;color:var(--text-muted)">Toca el corazón en cualquier producto para guardarlo aquí.</div>
+    </div>`;
+  } else {
+    el.innerHTML = `<div class="grid">${favProds.map(cardHTML).join('')}</div>`;
+    aplicarVistaActual();
+  }
+  scrollProductos();
+}
+</script>
+
+<script>
 const SUPA_URL = 'https://pcdjuajibqhhlqcllmgr.supabase.co';
 const SUPA_KEY = 'sb_publishable_YekCaTFfLVuMLL169Hl7uw_vySLd9XL';
 const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
@@ -4181,12 +4247,12 @@ const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
 // Inicializar estado de sesión al cargar
 (async () => {
   const { data: { session } } = await supa.auth.getSession();
-  if (session) mostrarUsuarioLogueado(session.user);
+  if (session) { mostrarUsuarioLogueado(session.user); cargarFavoritos(session.user); }
 })();
 
 supa.auth.onAuthStateChange((_event, session) => {
-  if (session) mostrarUsuarioLogueado(session.user);
-  else mostrarBtnLogin();
+  if (session) { mostrarUsuarioLogueado(session.user); cargarFavoritos(session.user); }
+  else { mostrarBtnLogin(); favoritosSet = new Set(); actualizarCorazones(); }
 });
 
 function abrirAuth() {
@@ -4267,6 +4333,7 @@ function mostrarUsuarioLogueado(user) {
             <button onclick="cambiarIdioma('fr');cerrarLangDropdown()" style="display:flex;align-items:center;gap:10px;width:100%;padding:10px 20px;background:none;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;color:var(--text)">🇫🇷 Français</button>
           </div>
         </div>
+        <button class="user-dropdown-btn" onclick="mostrarVistaFavoritos()">🤍 Mis Favoritos</button>
         <button class="user-dropdown-btn" onclick="cerrarSesion()">Cerrar sesión</button>
       </div>
     </div>`;
