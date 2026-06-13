@@ -3387,7 +3387,6 @@ function cardHTML(p) {
         <div class="precio">S/ ${p.precio}</div>
         ${p.precioN ? `<div class="precio-normal">S/ ${p.precioN}</div>` : ''}
       </div>
-      ${scores[p.id] ? scoreHTML(p.id, false) : ''}
       <div class="card-btns">
         <button class="btn-ver-sm" onclick="abrirModal('${p.id}')">${__('btn_ver')}</button>
         <button class="btn-agregar" onclick="agregarACotizacion('${p.id}',true)">+ ${__('btn_agregar')}</button>
