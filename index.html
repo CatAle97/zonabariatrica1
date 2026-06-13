@@ -4231,6 +4231,39 @@ document.addEventListener('DOMContentLoaded', () => {
         <input type="text" id="pfNumDoc" class="auth-input" placeholder="Nro. documento">
       </div>
     </div>
+    <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:12px">Dirección de envío</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="auth-input-wrap" style="margin-bottom:0">
+          <label>País</label>
+          <select id="pfPais" class="auth-input" style="cursor:pointer">
+            <option value="">Seleccionar</option>
+            <option value="Peru">Perú</option>
+            <option value="Mexico">México</option>
+            <option value="Colombia">Colombia</option>
+            <option value="Chile">Chile</option>
+            <option value="Argentina">Argentina</option>
+            <option value="Ecuador">Ecuador</option>
+            <option value="Bolivia">Bolivia</option>
+            <option value="Venezuela">Venezuela</option>
+            <option value="España">España</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        <div class="auth-input-wrap" style="margin-bottom:0">
+          <label>Ciudad / Departamento</label>
+          <input type="text" id="pfCiudad" class="auth-input" placeholder="Ej: Lima">
+        </div>
+      </div>
+      <div class="auth-input-wrap" style="margin-top:10px">
+        <label>Dirección completa</label>
+        <input type="text" id="pfDireccion" class="auth-input" placeholder="Ej: Av. Javier Prado 1234, Miraflores">
+      </div>
+      <div class="auth-input-wrap">
+        <label>Referencia</label>
+        <input type="text" id="pfReferencia" class="auth-input" placeholder="Ej: Frente al parque, edificio azul">
+      </div>
+    </div>
     <button class="auth-btn" style="margin-top:20px" onclick="guardarPerfil()">Guardar cambios</button>
     <div class="auth-msg" id="pfMsg"></div>
   </div>
@@ -4481,6 +4514,10 @@ async function cargarDatosPerfil() {
   document.getElementById('pfCelular').value = m.celular || '';
   document.getElementById('pfTipoDoc').value = m.tipo_documento || 'DNI';
   document.getElementById('pfNumDoc').value = m.numero_documento || '';
+  document.getElementById('pfPais').value = m.pais || '';
+  document.getElementById('pfCiudad').value = m.ciudad || '';
+  document.getElementById('pfDireccion').value = m.direccion || '';
+  document.getElementById('pfReferencia').value = m.referencia || '';
 }
 async function guardarPerfil() {
   const nombre = document.getElementById('pfNombre').value.trim();
@@ -4488,11 +4525,15 @@ async function guardarPerfil() {
   const celular = document.getElementById('pfCelular').value.trim();
   const tipoDoc = document.getElementById('pfTipoDoc').value;
   const numDoc = document.getElementById('pfNumDoc').value.trim();
+  const pais = document.getElementById('pfPais').value;
+  const ciudad = document.getElementById('pfCiudad').value.trim();
+  const direccion = document.getElementById('pfDireccion').value.trim();
+  const referencia = document.getElementById('pfReferencia').value.trim();
   const msg = document.getElementById('pfMsg');
   if (!nombre || !apellido) { msg.textContent = 'Nombre y apellido son obligatorios'; msg.className = 'auth-msg err'; return; }
   msg.textContent = 'Guardando...'; msg.className = 'auth-msg';
   const { error } = await supa.auth.updateUser({
-    data: { name: nombre+' '+apellido, full_name: nombre+' '+apellido, nombre, apellido, celular, tipo_documento: tipoDoc, numero_documento: numDoc }
+    data: { name: nombre+' '+apellido, full_name: nombre+' '+apellido, nombre, apellido, celular, tipo_documento: tipoDoc, numero_documento: numDoc, pais, ciudad, direccion, referencia }
   });
   if (error) { msg.textContent = 'Error al guardar. Intenta de nuevo.'; msg.className = 'auth-msg err'; return; }
   msg.textContent = '¡Perfil actualizado correctamente!'; msg.className = 'auth-msg ok';
