@@ -787,6 +787,7 @@ footer {
   background: var(--surface); border: 1.5px solid var(--border);
   border-radius: var(--r); overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
 }
 .card-mini:hover { border-color: var(--blue); box-shadow: var(--shadow-sm); }
 .card-mini-img {
@@ -3418,6 +3419,8 @@ function recomSectionHTML() {
 
 function cardMiniHTML(p) {
   return `<div class="card-mini">
+    <button class="fav-btn${favoritosSet.has(p.id)?' activo':''}" data-id="${p.id}" onclick="toggleFavorito('${p.id}',event)" title="Favorito">${HEART_SVG}</button>
+    <button class="share-btn" onclick="compartirDesdeCard('${p.id}',event)" title="Compartir">${SHARE_SVG}</button>
     <img class="card-mini-img" src="${p.img}" alt="${p.nombre}"
       onerror="this.style.background='#e8eeff'" onclick="abrirModal('${p.id}')">
     <div class="card-mini-body">
