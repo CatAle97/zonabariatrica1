@@ -4247,11 +4247,13 @@ async function cerrarSesion() {
 function mostrarUsuarioLogueado(user) {
   const wrap = document.getElementById('authHeaderBtn');
   const nombre = user.user_metadata?.nombre || user.email.split('@')[0];
+  const apellido = user.user_metadata?.apellido || '';
+  const iniciales = ((nombre[0] || '').toUpperCase() + (apellido[0] || '').toUpperCase()) || nombre.substring(0,2).toUpperCase();
   wrap.innerHTML = `
     <div class="user-wrap">
       <button class="user-btn" onclick="toggleUserDropdown()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        <span class="cuenta-texto">${nombre}</span>
+        <span class="cuenta-texto">${iniciales}</span>
       </button>
       <div class="user-dropdown" id="userDropdown">
         <div class="user-dropdown-email">${user.email}</div>
@@ -4271,7 +4273,7 @@ function mostrarUsuarioLogueado(user) {
       </div>
     </div>`;
   const sm = document.getElementById('sidemenuCuenta');
-  if (sm) { sm.textContent = '👤 ' + nombre; sm.onclick = (e) => { toggleUserDropdown(); cerrarMenu(); e.preventDefault(); }; }
+  if (sm) { sm.textContent = '👤 ' + iniciales; sm.onclick = (e) => { toggleUserDropdown(); cerrarMenu(); e.preventDefault(); }; }
 }
 
 function mostrarBtnLogin() {
