@@ -2208,6 +2208,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 
 <script>
 const WA = "51961841069";
+let favoritosSet = new Set();
 
 // ---- i18n ----
 let currentLang = 'es';
@@ -4192,8 +4193,6 @@ document.addEventListener('DOMContentLoaded', () => {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 // ---- FAVORITOS ----
-let favoritosSet = new Set();
-
 async function toggleFavorito(id, e) {
   e.stopPropagation();
   const { data: { session } } = await supa.auth.getSession();
