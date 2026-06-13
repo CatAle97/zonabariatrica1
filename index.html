@@ -399,16 +399,6 @@ header {
 .fav-btn svg { width: 15px; height: 15px; }
 .fav-btn svg path { fill: none; stroke: #9CA3AF; stroke-width: 2.2; transition: all 0.2s; }
 .fav-btn.activo svg path { fill: #EF4444; stroke: #EF4444; }
-.share-btn {
-  position: absolute; top: 8px; right: 44px; z-index: 2;
-  width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(255,255,255,0.92); border: none;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-  transition: transform 0.15s, background 0.15s;
-}
-.share-btn:hover { transform: scale(1.18); background: #fff; }
-.share-btn svg { width: 14px; height: 14px; }
 .seccion-titulo {
   padding: 20px 32px 8px; font-size: 10.5px; font-weight: 700;
   text-transform: uppercase; color: var(--text-light); letter-spacing: 1.5px;
@@ -3420,7 +3410,6 @@ function recomSectionHTML() {
 function cardMiniHTML(p) {
   return `<div class="card-mini">
     <button class="fav-btn${favoritosSet.has(p.id)?' activo':''}" data-id="${p.id}" onclick="toggleFavorito('${p.id}',event)" title="Favorito">${HEART_SVG}</button>
-    <button class="share-btn" onclick="compartirDesdeCard('${p.id}',event)" title="Compartir">${SHARE_SVG}</button>
     <img class="card-mini-img" src="${p.img}" alt="${p.nombre}"
       onerror="this.style.background='#e8eeff'" onclick="abrirModal('${p.id}')">
     <div class="card-mini-body">
@@ -3432,27 +3421,12 @@ function cardMiniHTML(p) {
 }
 
 const HEART_SVG = `<svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>`;
-const SHARE_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>`;
-
-function compartirDesdeCard(id, e) {
-  e.stopPropagation();
-  const url = `https://www.zonabariatrica.com/#producto/${id}`;
-  const p = productos.find(x => x.id === id);
-  if (navigator.share) {
-    navigator.share({ title: p?.nombre || 'Zona Bariátrica', url });
-  } else {
-    navigator.clipboard?.writeText(url).then(() => alert('¡Link copiado!')).catch(() => {
-      window.open('https://wa.me/?text=' + encodeURIComponent('¡Mira este producto! ' + url), '_blank');
-    });
-  }
-}
 
 function cardHTML(p) {
   const pack = p.tipo === 'pack';
   const oferta = p.tipo === 'oferta';
   return `<div class="card${pack?' pack':''}${oferta?' oferta':''}">
     <button class="fav-btn${favoritosSet.has(p.id)?' activo':''}" data-id="${p.id}" onclick="toggleFavorito('${p.id}',event)" title="Favorito">${HEART_SVG}</button>
-    <button class="share-btn" onclick="compartirDesdeCard('${p.id}',event)" title="Compartir">${SHARE_SVG}</button>
     <img class="card-img" src="${p.img}" alt="${p.nombre}"
       onerror="this.style.background='#e8eeff'" onclick="abrirModal('${p.id}')" style="cursor:pointer">
     <div class="card-body">
