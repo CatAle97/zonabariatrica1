@@ -311,7 +311,9 @@ header {
 .productos-header h2 { font-size: 20px; font-weight: 700; color: var(--text); }
 #subfiltros { margin-top: 12px; }
 .subfiltros { display: flex; flex-direction: column; gap: 8px; }
-.subfiltros-fila { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.subfiltros-fila { display: flex; gap: 6px; flex-wrap: nowrap; align-items: center; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
+.subfiltros-fila::-webkit-scrollbar { display: none; }
+.sub-btn { flex-shrink: 0; }
 .subfiltros-label {
   font-size: 11px; color: var(--text-muted); font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
@@ -4310,13 +4312,18 @@ function mostrarUsuarioLogueado(user) {
       <button class="user-btn" onclick="toggleUserDropdown()">${iniciales}</button>
       <div class="user-dropdown" id="userDropdown">
         <div class="user-dropdown-email">${user.email}</div>
-        <div style="padding:10px 16px;border-bottom:1px solid var(--border-light)">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-light);letter-spacing:1px;margin-bottom:8px">🌐 Idioma</div>
-          <div style="display:flex;gap:6px;flex-wrap:wrap">
-            <button class="lang-option" onclick="cambiarIdioma('es')" style="padding:4px 10px;border:1.5px solid var(--border);border-radius:20px;font-size:12px">🇪🇸 ES</button>
-            <button class="lang-option" onclick="cambiarIdioma('en')" style="padding:4px 10px;border:1.5px solid var(--border);border-radius:20px;font-size:12px">🇬🇧 EN</button>
-            <button class="lang-option" onclick="cambiarIdioma('pt')" style="padding:4px 10px;border:1.5px solid var(--border);border-radius:20px;font-size:12px">🇧🇷 PT</button>
-            <button class="lang-option" onclick="cambiarIdioma('fr')" style="padding:4px 10px;border:1.5px solid var(--border);border-radius:20px;font-size:12px">🇫🇷 FR</button>
+        <div style="border-bottom:1px solid var(--border-light)">
+          <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.querySelector('.lang-arrow').textContent=this.nextElementSibling.style.display==='block'?'▲':'▼'" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:11px 16px;background:none;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:var(--text)">
+            <span>🌐 Idioma</span>
+            <span class="lang-arrow" style="font-size:11px;color:var(--text-muted)">▼</span>
+          </button>
+          <div style="display:none;background:var(--bg);padding:8px 16px 12px">
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="lang-option" onclick="cambiarIdioma('es')" style="padding:4px 10px;border:1.5px solid var(--border);border-radius:20px;font-size:12px">🇪🇸 ES</button>
+              <button class="lang-option" onclick="cambiarIdioma('en')" style="padding:4px 10px;border:1.5px solid var(--border);border-radius:20px;font-size:12px">🇬🇧 EN</button>
+              <button class="lang-option" onclick="cambiarIdioma('pt')" style="padding:4px 10px;border:1.5px solid var(--border);border-radius:20px;font-size:12px">🇧🇷 PT</button>
+              <button class="lang-option" onclick="cambiarIdioma('fr')" style="padding:4px 10px;border:1.5px solid var(--border);border-radius:20px;font-size:12px">🇫🇷 FR</button>
+            </div>
           </div>
         </div>
         <button class="user-dropdown-btn" onclick="mostrarVistaFavoritos()">🤍 Mis Favoritos</button>
