@@ -129,9 +129,7 @@ header {
 .hamburger:hover { background: var(--bg); }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; cursor: pointer; }
 .logo-zb {
-  background: var(--blue); color: white; font-size: 15px; font-weight: 800;
-  width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
-  border-radius: 10px; letter-spacing: -0.5px; flex-shrink: 0;
+  width: 42px; height: 42px; flex-shrink: 0; object-fit: contain;
 }
 .logo-name { font-size: 13.5px; font-weight: 700; color: var(--text); line-height: 1.2; }
 .logo-tagline { font-size: 9.5px; color: var(--text-muted); letter-spacing: 0.2px; }
@@ -1206,7 +1204,7 @@ footer {
   /* HEADER — compacto */
   .logo-tagline { display: none; }
   .logo-name { font-size: 12.5px; }
-  .logo-zb { width: 34px; height: 34px; font-size: 13px; border-radius: 8px; }
+  .logo-zb { width: 34px; height: 34px; }
   .wa-bar { font-size: 0; letter-spacing: 0; padding: 8px; border-radius: 50%; width: 36px; height: 36px; justify-content: center; flex-shrink: 0; gap: 0; }
   .lang-btn { padding: 5px 9px; font-size: 11px; }
 
@@ -1402,7 +1400,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     <button class="close-btn" onclick="cerrarMenu()">&#x2715;</button>
   </div>
   <nav class="sidemenu-nav">
-    <a href="#" id="sidemenuCuenta" onclick="abrirAuth();cerrarMenu();return false;">👤 Mi cuenta</a>
+    <div id="sidemenuUserArea"><a href="#" onclick="abrirAuth();cerrarMenu();return false;">👤 Mi cuenta</a></div>
     <a href="#" onclick="irInicio();cerrarMenu();return false;" style="border-top:2px solid var(--border)">Inicio</a>
     <a href="#" onclick="filtrar('todos');cerrarMenu();scrollCategorias();return false;">Suplementos</a>
     <a href="#" onclick="filtrar('pack');cerrarMenu();scrollProductos();return false;">Ofertas</a>
@@ -1759,7 +1757,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   <div class="header-inner">
     <button class="hamburger" onclick="abrirMenu()">&#9776;</button>
     <div class="logo" onclick="filtrar('todos');window.scrollTo({top:0,behavior:'smooth'})">
-      <div class="logo-zb">ZB</div>
+      <img src="img/logo-zb.png" alt="ZB" class="logo-zb">
       <div>
         <div class="logo-name">ZONA BARIÁTRICA</div>
         <div class="logo-tagline">Suplementos Bariátricos</div>
@@ -4431,11 +4429,11 @@ function mostrarUsuarioLogueado(user) {
         <button class="user-dropdown-btn" onclick="cerrarSesion()">Cerrar sesión</button>
       </div>
     </div>`;
-  const sm = document.getElementById('sidemenuCuenta');
+  const sm = document.getElementById('sidemenuUserArea');
   if (sm) {
-    sm.outerHTML = `
+    sm.innerHTML = `
       <a href="#" onclick="abrirPerfil();cerrarMenu();return false;">👤 Mi Perfil</a>
-      <a href="#" id="sidemenuCuenta" onclick="mostrarVistaFavoritos();cerrarMenu();return false;">🤍 Mis Favoritos</a>
+      <a href="#" onclick="mostrarVistaFavoritos();cerrarMenu();return false;">🤍 Mis Favoritos</a>
       <a href="#" onclick="cerrarSesion();cerrarMenu();return false;" style="color:#DC2626">Cerrar sesión</a>`;
   }
 }
@@ -4446,10 +4444,8 @@ function mostrarBtnLogin() {
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
     <span class="cuenta-texto">Mi cuenta</span>
   </button>`;
-  const sm = document.getElementById('sidemenuCuenta');
-  if (sm) {
-    sm.outerHTML = `<a href="#" id="sidemenuCuenta" onclick="abrirAuth();cerrarMenu();return false;">👤 Mi cuenta</a>`;
-  }
+  const sm = document.getElementById('sidemenuUserArea');
+  if (sm) sm.innerHTML = `<a href="#" onclick="abrirAuth();cerrarMenu();return false;">👤 Mi cuenta</a>`;
 }
 
 // ---- CALIFICACIONES ----
