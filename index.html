@@ -4404,8 +4404,9 @@ async function calificarProducto(productoId, estrellas) {
   const { data: { session } } = await supa.auth.getSession();
   if (!session) { abrirAuth(); return; }
 
+  const prod = productos.find(p => p.id === productoId);
   await supa.from('calificaciones').upsert(
-    { user_id: session.user.id, producto_id: productoId, estrellas },
+    { user_id: session.user.id, producto_id: productoId, estrellas, nombre_producto: prod?.nombre || productoId },
     { onConflict: 'user_id,producto_id' }
   );
   cargarCalificacionModal(productoId);
