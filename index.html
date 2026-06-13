@@ -2140,6 +2140,10 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       </button>
       <div class="tn-body" id="tnBody"></div>
       <div class="modo-uso" id="mUso" style="display:none"></div>
+      <div id="mCalificacion" style="margin:14px 0;padding:14px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg)">
+        <div id="mCalAvg" style="font-size:13px;color:var(--text-muted)">Cargando calificaciones...</div>
+        <div id="mCalUser" style="margin-top:10px"></div>
+      </div>
       <button class="modal-cart-btn" onclick="agregarDesdeModalCot()" data-i18n="btn_agregar_modal">+ Agregar a cotización</button>
       <a class="modal-wa" id="mWA" href="#" target="_blank" data-i18n="modal_consultar">Consultar solo este producto por WhatsApp</a>
       <button class="modal-wa" style="background:none;border:1.5px solid var(--border);color:var(--text-muted);margin-top:6px;cursor:pointer;border-radius:var(--r-sm);padding:11px;font-size:13px;width:100%;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;transition:background 0.15s" onclick="compartirProducto()" data-i18n="modal_compartir">&#128279; Compartir este producto</button>
@@ -3489,6 +3493,7 @@ function abrirModal(id) {
   resetZoom();
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+  cargarCalificacionModal(id);
 }
 
 function cerrarModal() {
@@ -4342,6 +4347,69 @@ function mostrarBtnLogin() {
   </button>`;
   const sm = document.getElementById('sidemenuCuenta');
   if (sm) { sm.textContent = '👤 Mi cuenta'; sm.onclick = (e) => { abrirAuth(); cerrarMenu(); e.preventDefault(); }; }
+}
+
+// ---- CALIFICACIONES ----
+function estrellasSVG(n, seleccionadas, interactivo, productoId) {
+  return [1,2,3,4,5].map(i => {
+    const llena = i <= n;
+    const color = llena ? '#F59E0B' : '#D1D5DB';
+    const onclick = interactivo ? `onclick="calificarProducto('${productoId}',${i})"` : '';
+    const hover = interactivo ? `onmouseover="resaltarEstrellas(${i})" onmouseout="resaltarEstrellas(${seleccionadas})"` : '';
+    return `<svg ${onclick} ${hover} data-star="${i}" style="cursor:${interactivo?'pointer':'default'};transition:transform 0.1s" width="22" height="22" viewBox="0 0 24 24" fill="${color}"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+  }).join('');
+}
+
+function resaltarEstrellas(n) {
+  document.querySelectorAll('#mCalUser [data-star]').forEach(el => {
+    el.style.fill = parseInt(el.dataset.star) <= n ? '#F59E0B' : '#D1D5DB';
+    el.setAttribute('fill', parseInt(el.dataset.star) <= n ? '#F59E0B' : '#D1D5DB');
+  });
+}
+
+async function cargarCalificacionModal(productoId) {
+  const avgEl = document.getElementById('mCalAvg');
+  const userEl = document.getElementById('mCalUser');
+  avgEl.innerHTML = '<span style="color:var(--text-muted);font-size:13px">Cargando...</span>';
+  userEl.innerHTML = '';
+
+  const { data } = await supa.from('calificaciones').select('estrellas, user_id').eq('producto_id', productoId);
+  const total = data?.length || 0;
+  const avg = total ? (data.reduce((s, r) => s + r.estrellas, 0) / total) : 0;
+
+  avgEl.innerHTML = total
+    ? `<div style="display:flex;align-items:center;gap:8px">
+        <div>${estrellasSVG(Math.round(avg), 0, false, productoId)}</div>
+        <span style="font-size:14px;font-weight:700;color:var(--text)">${avg.toFixed(1)}</span>
+        <span style="font-size:12px;color:var(--text-muted)">(${total} calificación${total>1?'es':''})</span>
+       </div>`
+    : `<span style="font-size:13px;color:var(--text-muted)">Sin calificaciones aún. ¡Sé el primero!</span>`;
+
+  const { data: { session } } = await supa.auth.getSession();
+  if (!session) {
+    userEl.innerHTML = `<div style="font-size:12px;color:var(--text-muted);margin-top:6px"><a href="#" onclick="abrirAuth();return false" style="color:var(--blue);font-weight:600">Inicia sesión</a> para calificar este producto.</div>`;
+    return;
+  }
+
+  const miCal = data?.find(r => r.user_id === session.user.id);
+  const miVal = miCal?.estrellas || 0;
+  userEl.innerHTML = `
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+      <div style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px">${miCal ? 'TU CALIFICACIÓN' : 'CALIFICA ESTE PRODUCTO'}</div>
+      <div style="display:flex;align-items:center;gap:4px">${estrellasSVG(miVal, miVal, true, productoId)}</div>
+      ${miCal ? `<div style="font-size:11px;color:var(--text-muted);margin-top:4px">Toca las estrellas para cambiar tu calificación</div>` : ''}
+    </div>`;
+}
+
+async function calificarProducto(productoId, estrellas) {
+  const { data: { session } } = await supa.auth.getSession();
+  if (!session) { abrirAuth(); return; }
+
+  await supa.from('calificaciones').upsert(
+    { user_id: session.user.id, producto_id: productoId, estrellas },
+    { onConflict: 'user_id,producto_id' }
+  );
+  cargarCalificacionModal(productoId);
 }
 
 function toggleUserDropdown() {
