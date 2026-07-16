@@ -316,6 +316,20 @@ header {
 .slide.slide-img.active { display: block; }
 .slide.slide-img img { width: 100%; height: 220px; object-fit: cover; display: block; }
 
+/* Banner que no es formato tira (más alto de lo que cabe): se muestra entero
+   y centrado, y el espacio sobrante se rellena con el mismo banner ampliado
+   y difuminado, para que no queden franjas muertas a los lados. */
+.slide.slide-img-fit { position: relative; }
+.slide.slide-img-fit .slide-img-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; filter: blur(22px) saturate(1.1);
+  transform: scale(1.12); pointer-events: none;
+}
+.slide.slide-img-fit .slide-img-fg {
+  position: relative; width: auto; max-width: 100%; height: 220px;
+  object-fit: contain; margin: 0 auto;
+}
+
 /* CATEGORIAS */
 .categorias-section { background: var(--surface); padding: 32px; border-bottom: 1px solid var(--border); }
 .sec-h { max-width: 1280px; margin: 0 auto 20px; }
@@ -1286,6 +1300,10 @@ footer {
   .slider-arrow { padding: 6px 10px; font-size: 16px; }
   /* BANNER IMAGEN — altura reducida */
   .slide.slide-img img { height: 160px; }
+  /* En móvil el banner ocupa todo el ancho con su altura natural: centrado se
+     vería demasiado pequeño para leer el precio. Aquí el fondo no se ve. */
+  .slide.slide-img-fit .slide-img-fg { width: 100%; height: auto; }
+  .slide.slide-img-fit .slide-img-bg { height: 100%; }
   /* ETAPAS — ocultar del sidemenu en móvil */
   .etapa-disclaimer { display: none; }
   .sidemenu-section { display: none; }
@@ -1994,7 +2012,13 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 
 <!-- PROMO SLIDER -->
 <section class="promo-slider">
-  <div class="slide slide-img active">
+  <!-- Banner vertical (2.5:1): se muestra completo y el sobrante se rellena
+       con el mismo banner difuminado. Ver .slide-img-fit en el CSS. -->
+  <div class="slide slide-img slide-img-fit active">
+    <img class="slide-img-bg" src="img/slide-lvl-pack-wellness.png" alt="" aria-hidden="true">
+    <img class="slide-img-fg" src="img/slide-lvl-pack-wellness.png" alt="Pack Wellness LVL Drink a S/389">
+  </div>
+  <div class="slide slide-img">
     <img src="img/slide-envios.png" alt="Envíos a todo el Perú">
   </div>
   <div class="slide slide-img">
