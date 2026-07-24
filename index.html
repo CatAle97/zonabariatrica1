@@ -3919,13 +3919,22 @@ function confirmarSaborPopup() {
 
   cerrarSaborPopup();
   actualizarCartUI();
-  abrirCarrito();
+  pulsarBadgeCot();
 }
 
 function cerrarSaborPopup() {
   document.getElementById('spOverlay').classList.remove('open');
   document.body.style.overflow = '';
   _spId = null;
+}
+
+function pulsarBadgeCot() {
+  const badge = document.getElementById('floatBadge');
+  if (!badge) return;
+  badge.classList.remove('pulsar');
+  void badge.offsetWidth;
+  badge.classList.add('pulsar');
+  badge.addEventListener('animationend', function() { badge.classList.remove('pulsar'); }, { once: true });
 }
 
 function _agregarDirecto(id, silencioso) {
@@ -3936,15 +3945,7 @@ function _agregarDirecto(id, silencioso) {
   if (idx >= 0) carrito[idx].qty++;
   else carrito.push({ id: id, qty: 1, notas: notas });
   actualizarCartUI();
-  if (silencioso) {
-    const badge = document.getElementById('floatBadge');
-    badge.classList.remove('pulsar');
-    void badge.offsetWidth;
-    badge.classList.add('pulsar');
-    badge.addEventListener('animationend', function() { badge.classList.remove('pulsar'); }, { once: true });
-  } else {
-    abrirCarrito();
-  }
+  pulsarBadgeCot();
 }
 // ---- FIN SABOR POPUP ----
 
@@ -3964,7 +3965,7 @@ function agregarDesdeModalCot() {
   if (idx >= 0) { carrito[idx].qty++; if (notas) carrito[idx].notas = notas; }
   else carrito.push({ id: currentModalId, qty: 1, notas });
   actualizarCartUI();
-  abrirCarrito();
+  pulsarBadgeCot();
   cerrarModal();
 }
 
