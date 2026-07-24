@@ -4691,22 +4691,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-<!-- POPUP PROMOCIONAL -->
-<div id="popup-overlay" style="
-  display:flex; position:fixed; inset:0; z-index:9999;
-  background:rgba(0,0,0,0.75); align-items:center; justify-content:center;
-">
-  <div style="position:relative; max-width:700px; width:90%;">
-    <button onclick="document.getElementById('popup-overlay').style.display='none'" style="
-      position:absolute; top:-14px; right:-14px; z-index:10;
-      background:#fff; border:none; border-radius:50%;
-      width:32px; height:32px; font-size:18px; font-weight:700;
-      cursor:pointer; line-height:1; box-shadow:0 2px 8px rgba(0,0,0,0.3);
-    ">✕</button>
-    <img src="img/popup-proteina.png" alt="Promoción Proteína Líquida" style="width:100%; border-radius:12px; display:block;">
-  </div>
-</div>
-
 <!-- MODAL MI CUENTA -->
 <div class="auth-overlay" id="authOverlay" onclick="cerrarAuthFuera(event)">
   <div class="auth-box">
