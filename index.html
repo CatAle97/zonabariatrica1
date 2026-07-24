@@ -444,18 +444,20 @@ header {
 
 /* CARDS */
 .card {
-  background: var(--surface); border-radius: var(--r); border: 1.5px solid var(--border);
+  background: #fff; border-radius: var(--r); border: 1px solid #f0f0f0;
   overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
-  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease; position: relative;
 }
-.card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: var(--shadow-md); }
-.card.pack { border-color: var(--border); }
-.card.oferta { background: #FFF0F0; border: 2px solid #DC2626; }
-.card.oferta:hover { border-color: #b91c1c; }
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: #e2e8f0; }
+.card.pack { border-color: #f0f0f0; }
+.card.oferta { background: #fff; border: 1px solid #FECACA; }
+.card.oferta:hover { border-color: #FCA5A5; }
 .card.oferta .precio { color: #DC2626; }
+/* --- Etiqueta destacada: máx. una por tarjeta, estilo suave --- */
 .badge-oferta {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  color: white; background: #DC2626; padding: 3px 9px;
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  color: #DC2626; background: #FEF2F2; padding: 4px 10px;
   border-radius: var(--r-pill); display: inline-block; width: fit-content; letter-spacing: 0.3px;
 }
 .escarapela-badge {
@@ -465,40 +467,43 @@ header {
 }
 .escarapela-logo { width: 18px; height: auto; flex-shrink: 0; }
 .card-img { width: 100%; height: 240px; object-fit: contain; background: #fff; display: block; padding: 8px; }
-.card-body { padding: 14px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.card-body { padding: 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .badge-pack {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  color: white; background: #16a34a; padding: 3px 9px;
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  color: #15803D; background: #F0FDF4; padding: 4px 10px;
   border-radius: var(--r-pill); display: inline-block; width: fit-content; letter-spacing: 0.3px;
 }
 .badge-recomendado {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  color: white; background: #ea580c; padding: 3px 9px;
+  font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+  color: #B45309; background: #FFFBEB; padding: 4px 10px;
   border-radius: var(--r-pill); display: inline-block; width: fit-content; letter-spacing: 0.3px;
 }
+/* --- Marca: texto secundario gris, no badge de color --- */
 .marca {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  color: white; background: var(--blue); padding: 3px 9px;
-  border-radius: var(--r-pill); display: inline-block; width: fit-content; letter-spacing: 0.3px;
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  color: var(--text-muted); background: none; padding: 0; letter-spacing: 0.6px;
+  display: inline-block; width: fit-content;
 }
-.marca.lvl { background: var(--dark); }
+.marca.lvl { color: var(--text-muted); background: none; }
 .nombre { font-size: 13.5px; font-weight: 600; line-height: 1.35; flex: 1; color: var(--text); }
 .precio-area { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
 .precio { font-size: 22px; font-weight: 700; color: var(--blue); }
 .precio-normal { font-size: 12px; color: var(--text-light); text-decoration: line-through; }
-.card-btns { display: flex; gap: 6px; margin-top: auto; }
+/* --- Botonera con jerarquía: Agregar principal, Ver secundario --- */
+.card-btns { display: flex; gap: 8px; margin-top: auto; padding-top: 4px; }
 .btn-ver-sm {
-  background: var(--surface); color: var(--blue); border: 1.5px solid var(--blue);
-  border-radius: var(--r-sm); padding: 8px 12px; font-size: 12px; font-weight: 600; cursor: pointer;
-  transition: background 0.15s;
+  background: transparent; color: var(--text-muted); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 9px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s;
 }
-.btn-ver-sm:hover { background: var(--blue-light); }
+.btn-ver-sm:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
 .btn-agregar {
   flex: 1; background: var(--blue); color: white; border: none;
-  border-radius: var(--r-sm); padding: 8px; font-size: 12.5px; font-weight: 600; cursor: pointer;
-  transition: background 0.15s;
+  border-radius: var(--r-sm); padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 1px 2px rgba(37,99,235,0.2);
+  transition: all 0.2s;
 }
-.btn-agregar:hover { background: var(--blue-dark); }
+.btn-agregar:hover { background: var(--blue-dark); box-shadow: 0 3px 8px rgba(37,99,235,0.3); }
 
 /* CART BUTTON */
 .cart-btn {
