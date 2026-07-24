@@ -78,6 +78,9 @@
   --blue-dark: #1E40AF;
   --mint: #00D68F;
   --green-wa: #25D366;
+  --green: #059669;
+  --green-dark: #047857;
+  --green-light: #ECFDF5;
   --dark: #1E3A8A;
   --dark-2: #1B2D6B;
   --text: #111827;
@@ -475,35 +478,35 @@ header {
 }
 .badge-recomendado {
   font-size: 10.5px; font-weight: 600; text-transform: uppercase;
-  color: #B45309; background: #FFFBEB; padding: 4px 10px;
+  color: var(--text-muted); background: #F3F4F6; padding: 4px 10px;
   border-radius: var(--r-pill); display: inline-block; width: fit-content; letter-spacing: 0.3px;
 }
-/* --- Marca: texto secundario gris, no badge de color --- */
+/* --- Marca: texto secundario gris, debajo del título --- */
 .marca {
   font-size: 11px; font-weight: 600; text-transform: uppercase;
   color: var(--text-muted); background: none; padding: 0; letter-spacing: 0.6px;
-  display: inline-block; width: fit-content;
+  display: inline-block; width: fit-content; margin-top: -2px;
 }
 .marca.lvl { color: var(--text-muted); background: none; }
-.nombre { font-size: 13.5px; font-weight: 600; line-height: 1.35; flex: 1; color: var(--text); }
-.precio-area { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.nombre { font-size: 13.5px; font-weight: 600; line-height: 1.35; color: var(--text); }
+.precio-area { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
 .precio { font-size: 22px; font-weight: 700; color: var(--blue); }
 .precio-normal { font-size: 12px; color: var(--text-light); text-decoration: line-through; }
-/* --- Botonera con jerarquía: Agregar principal, Ver secundario --- */
-.card-btns { display: flex; gap: 8px; margin-top: auto; padding-top: 4px; }
+/* --- Botonera con jerarquía: Agregar principal (verde), Ver secundario (gris) --- */
+.card-btns { display: flex; gap: 8px; margin-top: auto; padding-top: 10px; }
 .btn-ver-sm {
   background: transparent; color: var(--text-muted); border: 1px solid var(--border);
   border-radius: var(--r-sm); padding: 9px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer;
   transition: all 0.2s;
 }
-.btn-ver-sm:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.btn-ver-sm:hover { border-color: #CBD5E1; color: var(--text); background: #F8FAFC; }
 .btn-agregar {
-  flex: 1; background: var(--blue); color: white; border: none;
+  flex: 1; background: var(--green); color: white; border: none;
   border-radius: var(--r-sm); padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer;
-  box-shadow: 0 1px 2px rgba(37,99,235,0.2);
+  box-shadow: 0 1px 2px rgba(5,150,105,0.2);
   transition: all 0.2s;
 }
-.btn-agregar:hover { background: var(--blue-dark); box-shadow: 0 3px 8px rgba(37,99,235,0.3); }
+.btn-agregar:hover { background: var(--green-dark); box-shadow: 0 3px 8px rgba(5,150,105,0.3); }
 
 /* CART BUTTON */
 .cart-btn {
@@ -3657,9 +3660,9 @@ function cardHTML(p) {
     <div class="card-body">
       ${oferta ? `<span class="badge-oferta">🔥 OFERTA &nbsp;·&nbsp; ${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
       ${pack ? `<span class="badge-pack">PACK &nbsp;·&nbsp; ${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
-      ${p.destacado && !pack && !oferta ? `<span class="badge-recomendado">★ ${__('badge_recom')}</span>` : ''}
-      <span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>
+      ${p.destacado && !pack && !oferta ? `<span class="badge-recomendado">${__('badge_recom')}</span>` : ''}
       <div class="nombre" onclick="abrirModal('${p.id}')" style="cursor:pointer">${p.nombre}</div>
+      <span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>
       <div class="precio-area">
         <div class="precio">S/ ${p.precio}</div>
         ${p.precioN ? `<div class="precio-normal">S/ ${p.precioN}</div>` : ''}
