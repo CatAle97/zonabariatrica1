@@ -52,57 +52,188 @@
   ]
 }
 </script>
-<style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+/* ============================================================
+   DESIGN SYSTEM â€” Zona BariÃ¡trica (pÃ¡ginas de categorÃ­a)
+   Mismas variables que index.html: color, espacio 8px,
+   tipografÃ­a, radios 16/18/20, sombras suaves y transiciones.
+   ============================================================ */
 :root {
-  --blue: #2563EB;
-  --blue-light: #EFF6FF;
-  --dark: #1E3A8A;
-  --mint: #00D68F;
-  --green-wa: #25D366;
-  --text: #111827;
-  --text-muted: #6B7280;
-  --bg: #F5F7FA;
-  --surface: #FFFFFF;
-  --border: #E5E7EB;
-  --r: 14px;
-  --r-sm: 8px;
-  --r-pill: 999px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  --blue:#2563EB; --blue-hover:#1D4ED8; --blue-dark:#1E40AF; --blue-light:#EFF6FF;
+  --blue-ring:rgba(37,99,235,0.12);
+  --text:#111827; --text-muted:#6B7280; --text-light:#9CA3AF;
+  --surface:#FFFFFF; --bg:#F8FAFC; --bg-soft:#F1F5F9;
+  --border:#E5E7EB; --border-light:#F1F5F9;
+  --green-wa:#25D366; --green-wa-hover:#1FB855;
+  --success:#15803D; --success-bg:#F0FDF4; --success-br:#BBF7D0;
+  --dark:#111827; --mint:#10B981;
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px;
+  --s-6:32px; --s-7:40px; --s-8:56px; --s-9:72px;
+  --gutter:32px; --maxw:1200px;
+  --font:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-h1:34px; --fs-h2:24px; --fs-h3:17px; --fs-body:14px; --fs-sm:13px; --fs-cap:11.5px;
+  --tracking-tight:-0.02em; --tracking-caps:0.08em;
+  --r-xs:10px; --r-sm:12px; --r:16px; --r-md:18px; --r-lg:20px; --r-pill:999px;
+  --shadow-xs:0 1px 2px rgba(16,24,40,0.04);
+  --shadow-sm:0 1px 3px rgba(16,24,40,0.05), 0 1px 2px rgba(16,24,40,0.03);
+  --shadow-md:0 4px 12px rgba(16,24,40,0.06), 0 2px 4px rgba(16,24,40,0.03);
+  --shadow-lg:0 12px 28px rgba(16,24,40,0.08), 0 4px 10px rgba(16,24,40,0.04);
+  --shadow-blue:0 4px 14px rgba(37,99,235,0.20);
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --t-fast:200ms var(--ease); --t-base:250ms var(--ease); --t-slow:300ms var(--ease);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Plus Jakarta Sans','Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); }
-header { background:var(--surface); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
-.header-inner { max-width:1200px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-.logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text); }
-.logo img { height:42px; width:auto; }
-.logo-name { font-weight:800; font-size:15px; color:var(--dark); letter-spacing:0.5px; }
-.logo-tagline { font-size:11px; color:var(--text-muted); }
-nav.cats { display:flex; gap:6px; flex-wrap:wrap; margin-left:auto; }
-nav.cats a { text-decoration:none; font-size:13px; font-weight:600; color:var(--text-muted); padding:7px 14px; border-radius:var(--r-pill); border:1.5px solid var(--border); background:var(--surface); }
-nav.cats a.active, nav.cats a:hover { color:var(--blue); border-color:var(--blue); background:var(--blue-light); }
-.hero { max-width:1200px; margin:0 auto; padding:34px 20px 10px; }
-.hero h1 { font-size:26px; color:var(--dark); margin-bottom:10px; }
-.hero p { font-size:14.5px; color:var(--text-muted); line-height:1.65; max-width:760px; }
-.grid { max-width:1200px; margin:0 auto; padding:24px 20px 50px; display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:18px; }
-.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r); box-shadow:var(--shadow-sm); display:flex; flex-direction:column; overflow:hidden; }
-.card img { width:100%; height:210px; object-fit:contain; background:#fff; padding:14px; }
-.card-body { padding:16px; display:flex; flex-direction:column; gap:8px; flex:1; }
-.marca { font-size:11px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.5px; }
-.card h2 { font-size:16px; line-height:1.35; }
-.card p.desc { font-size:13px; color:var(--text-muted); line-height:1.55; }
-.card p.incluye { font-size:12.5px; color:var(--text); line-height:1.55; background:var(--blue-light); border-radius:var(--r-sm); padding:9px 11px; flex:1; }
-.tags { display:flex; flex-wrap:wrap; gap:5px; }
-.tag { font-size:11px; background:var(--blue-light); color:var(--dark); padding:3px 9px; border-radius:var(--r-pill); font-weight:600; }
-.precio { font-size:20px; font-weight:800; color:var(--dark); }
-.precio .antes { font-size:13px; font-weight:500; color:var(--text-muted); text-decoration:line-through; margin-left:8px; }
-.ahorro { display:inline-block; font-size:11.5px; font-weight:700; color:#15803d; background:#f0fdf4; padding:2px 8px; border-radius:var(--r-pill); margin-left:6px; }
-.acciones { display:flex; flex-direction:column; gap:8px; margin-top:4px; }
-.btn-wa { display:block; text-align:center; background:var(--green-wa); color:#fff; text-decoration:none; font-weight:700; font-size:13.5px; padding:11px; border-radius:var(--r-sm); }
-.btn-tienda { display:block; text-align:center; background:var(--surface); color:var(--blue); border:1.5px solid var(--blue); text-decoration:none; font-weight:700; font-size:13.5px; padding:10px; border-radius:var(--r-sm); }
-.aviso { max-width:1200px; margin:0 auto; padding:0 20px 30px; font-size:12.5px; color:var(--text-muted); }
-footer { background:var(--surface); border-top:1px solid var(--border); padding:26px 20px; text-align:center; font-size:13px; color:var(--text-muted); }
-footer a { color:var(--blue); text-decoration:none; font-weight:600; }
-footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
+html, body { overflow-x:clip; }
+body {
+  font-family:var(--font); background:var(--surface); color:var(--text);
+  font-size:var(--fs-body); line-height:1.6;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+img { max-width:100%; }
+:focus-visible { outline:2px solid var(--blue); outline-offset:2px; border-radius:4px; }
+
+/* HEADER â€” sticky con blur, igual que la tienda */
+header {
+  background:rgba(255,255,255,0.82);
+  backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--border-light); position:sticky; top:0; z-index:10;
+  transition:box-shadow var(--t-slow);
+}
+header.scrolled { box-shadow:0 8px 24px -12px rgba(16,24,40,0.14); border-bottom-color:transparent; }
+.header-inner {
+  max-width:var(--maxw); margin:0 auto; padding:var(--s-4) var(--gutter);
+  display:flex; align-items:center; gap:var(--s-4); flex-wrap:wrap;
+}
+.logo { display:flex; align-items:center; gap:var(--s-3); text-decoration:none; color:var(--text); }
+.logo img { height:44px; width:auto; transition:transform var(--t-base); }
+.logo:hover img { transform:scale(1.04); }
+.logo-name { font-weight:700; font-size:14px; color:var(--text); letter-spacing:var(--tracking-tight); line-height:1.2; }
+.logo-tagline { font-size:10.5px; color:var(--text-muted); margin-top:1px; }
+nav.cats { display:flex; gap:var(--s-2); flex-wrap:wrap; margin-left:auto; }
+nav.cats a {
+  text-decoration:none; font-size:var(--fs-sm); font-weight:500; color:var(--text-muted);
+  padding:9px 16px; border-radius:var(--r-pill); border:1px solid var(--border); background:var(--surface);
+  transition:background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+nav.cats a:hover { color:var(--text); border-color:#D8DEE7; background:var(--bg-soft); }
+nav.cats a.active { color:#fff; border-color:var(--text); background:var(--text); font-weight:600; box-shadow:var(--shadow-sm); }
+
+/* HERO */
+.hero { max-width:var(--maxw); margin:0 auto; padding:var(--s-9) var(--gutter) var(--s-4); }
+.hero h1 {
+  font-size:var(--fs-h1); line-height:1.15; color:var(--text);
+  margin-bottom:var(--s-4); letter-spacing:var(--tracking-tight); font-weight:700;
+}
+.hero p { font-size:16px; color:var(--text-muted); line-height:1.75; max-width:780px; }
+
+/* GRID + CARDS â€” radio 18, sombra suave, elevaciÃ³n al hover */
+.grid {
+  max-width:var(--maxw); margin:0 auto; padding:var(--s-7) var(--gutter) var(--s-9);
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:var(--s-6) var(--s-5);
+}
+.card {
+  background:var(--surface); border:1px solid var(--border-light); border-radius:var(--r-md);
+  box-shadow:var(--shadow-xs); display:flex; flex-direction:column; overflow:hidden;
+  transition:transform var(--t-slow), box-shadow var(--t-slow), border-color var(--t-slow);
+}
+.card:hover { transform:translateY(-6px); border-color:var(--border); box-shadow:var(--shadow-lg); }
+.card:hover img { transform:scale(1.05); }
+.card img {
+  width:100%; height:230px; object-fit:contain; background:var(--surface);
+  padding:var(--s-5) var(--s-4) var(--s-3); transition:transform var(--t-slow);
+}
+.card-body { padding:var(--s-4) var(--s-5) var(--s-5); display:flex; flex-direction:column; gap:var(--s-3); flex:1; }
+.marca {
+  font-size:10.5px; font-weight:500; color:var(--text-light);
+  text-transform:uppercase; letter-spacing:var(--tracking-caps);
+}
+.card h2 { font-size:16px; line-height:1.4; font-weight:600; letter-spacing:-0.01em; }
+.card p.desc { font-size:var(--fs-sm); color:var(--text-muted); line-height:1.7; flex:1; }
+.card p.incluye {
+  font-size:12.5px; color:var(--text); line-height:1.7; background:var(--bg);
+  border:1px solid var(--border-light); border-left:3px solid var(--blue);
+  border-radius:var(--r); padding:var(--s-3) var(--s-4); flex:1;
+}
+.tags { display:flex; flex-wrap:wrap; gap:var(--s-2); }
+.tag {
+  font-size:var(--fs-cap); background:var(--bg-soft); color:var(--text-muted);
+  padding:5px 11px; border-radius:var(--r-pill); font-weight:500;
+  border:1px solid var(--border-light);
+}
+/* PRECIO â€” mÃ¡xima jerarquÃ­a */
+.precio {
+  font-size:26px; font-weight:700; color:var(--blue);
+  letter-spacing:-0.03em; font-variant-numeric:tabular-nums;
+  display:flex; align-items:baseline; flex-wrap:wrap; gap:var(--s-2);
+}
+.precio .antes {
+  font-size:14px; font-weight:450; color:var(--text-light);
+  text-decoration:line-through; margin-left:0; letter-spacing:0;
+}
+.ahorro {
+  display:inline-block; font-size:var(--fs-cap); font-weight:600; color:var(--success);
+  background:var(--success-bg); border:1px solid var(--success-br);
+  padding:3px 10px; border-radius:var(--r-pill); margin-left:0; letter-spacing:0;
+}
+/* BOTONES */
+.acciones { display:flex; flex-direction:column; gap:var(--s-2); margin-top:auto; padding-top:var(--s-2); }
+.btn-wa {
+  display:flex; align-items:center; justify-content:center; gap:var(--s-2);
+  background:var(--green-wa); color:#fff; text-decoration:none;
+  font-weight:600; font-size:var(--fs-body); padding:14px; border-radius:var(--r);
+  box-shadow:0 2px 8px rgba(37,211,102,0.22);
+  transition:background var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
+}
+.btn-wa:hover { background:var(--green-wa-hover); transform:translateY(-1px); box-shadow:0 8px 20px rgba(37,211,102,0.26); }
+.btn-tienda {
+  display:block; text-align:center; background:var(--surface); color:var(--blue);
+  border:1px solid #C7D9F8; text-decoration:none; font-weight:600;
+  font-size:var(--fs-sm); padding:13px; border-radius:var(--r);
+  transition:background var(--t-fast), border-color var(--t-fast);
+}
+.btn-tienda:hover { background:var(--blue-light); border-color:var(--blue); }
+
+/* AVISO + FOOTER */
+.aviso {
+  max-width:var(--maxw); margin:0 auto; padding:0 var(--gutter) var(--s-8);
+  font-size:12.5px; color:var(--text-light); line-height:1.7;
+}
+footer {
+  background:var(--dark); border-top:none; padding:var(--s-8) var(--gutter);
+  text-align:center; font-size:var(--fs-sm); color:rgba(255,255,255,0.6);
+}
+footer a { color:rgba(255,255,255,0.75); text-decoration:none; font-weight:500; transition:color var(--t-fast); }
+footer a:hover { color:#fff; }
+footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:wrap; margin-bottom:var(--s-4); }
+
+/* Iconos Lucide inline */
+.ico { width:18px; height:18px; stroke-width:2; flex-shrink:0; display:block; }
+
+/* RESPONSIVE */
+@media (max-width:1024px) { :root { --gutter:24px; --fs-h1:30px; } }
+@media (max-width:768px) {
+  :root { --gutter:20px; --fs-h1:26px; }
+  .header-inner { padding:var(--s-3) var(--gutter); gap:var(--s-3); }
+  nav.cats { margin-left:0; width:100%; overflow-x:auto; flex-wrap:nowrap; scrollbar-width:none; padding-bottom:2px; }
+  nav.cats::-webkit-scrollbar { display:none; }
+  nav.cats a { flex-shrink:0; }
+  .hero { padding:var(--s-7) var(--gutter) var(--s-3); }
+  .hero p { font-size:15px; }
+}
+@media (max-width:520px) {
+  :root { --gutter:16px; --fs-h1:24px; }
+  .grid { grid-template-columns:1fr; gap:var(--s-5); padding:var(--s-5) var(--gutter) var(--s-8); }
+  .card img { height:210px; }
+  .logo img { height:38px; }
+  footer .links { gap:var(--s-4); }
+}
+
+/* Movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+}
 </style>
 </head>
 <body>
@@ -115,7 +246,6 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
         <div class="logo-name">ZONA BARIÁTRICA</div>
         <div class="logo-tagline">Suplementos Bariátricos</div>
       </div>
-      <svg viewBox="0 0 64 84" aria-label="Fiestas Patrias Perú" style="width:18px;height:auto;flex-shrink:0;"><polygon points="22,40 10,76 20,69 27,80 34,46" fill="#D91023"/><polygon points="42,40 54,76 44,69 37,80 30,46" fill="#D91023"/><circle cx="32" cy="26" r="24" fill="#D91023"/><circle cx="32" cy="26" r="16.5" fill="#fff"/><circle cx="32" cy="26" r="9" fill="#D91023"/></svg>
     </a>
     <nav class="cats">
       <a href="/">Tienda</a>
@@ -143,20 +273,13 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Proteína líquida x2 · Sabores a elección: Maracumango o Fresa</p>
       <div class="precio">S/ 360 <span class="antes">S/ 400</span><span class="ahorro">Ahorras S/ 40</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20la%20oferta%202%20Prote%C3%ADnas%20L%C3%ADquidas%20(S%2F%20360)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20la%20oferta%202%20Prote%C3%ADnas%20L%C3%ADquidas%20(S%2F%20360)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=oferta">Ver en la tienda</a>
       </div>
     </div>
   </div>
 
   <div class="card" style="position:relative;">
-    <svg viewBox="0 0 64 84" aria-label="Fiestas Patrias Perú" style="position:absolute;top:6px;left:6px;z-index:2;width:42px;height:auto;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.25));">
-      <polygon points="22,40 10,76 20,69 27,80 34,46" fill="#D91023"/>
-      <polygon points="42,40 54,76 44,69 37,80 30,46" fill="#D91023"/>
-      <circle cx="32" cy="26" r="24" fill="#D91023"/>
-      <circle cx="32" cy="26" r="16.5" fill="#fff"/>
-      <circle cx="32" cy="26" r="9" fill="#D91023"/>
-    </svg>
     <img src="img/bn-whey-vainilla.png" alt="Promo julio: 2 proteínas en polvo whey para bariátricos" loading="lazy">
     <div class="card-body">
       <div class="marca">Bari&amp;Nutrition · Promo Julio</div>
@@ -165,7 +288,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Whey Protein 1.5kg x2 · Sabores a elección: Vainilla o Chocolate</p>
       <div class="precio">S/ 520 <span class="antes">S/ 560</span><span class="ahorro">Ahorras S/ 40</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20la%20promo%202%20Prote%C3%ADnas%20en%20Polvo%20(S%2F%20520)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20la%20promo%202%20Prote%C3%ADnas%20en%20Polvo%20(S%2F%20520)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=oferta">Ver en la tienda</a>
       </div>
     </div>
@@ -180,7 +303,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Proteína líquida x2 · Gomitas multivitamínicas x1 · Gomitas B12 + ácido fólico x1 · Fibra soluble x1</p>
       <div class="precio">S/ 722 <span class="antes">S/ 785</span><span class="ahorro">Ahorras S/ 63</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20L%C3%ADquida%20(S%2F%20722)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20L%C3%ADquida%20(S%2F%20722)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -195,7 +318,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Proteína en polvo x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1</p>
       <div class="precio">S/ 672 <span class="antes">S/ 730</span><span class="ahorro">Ahorras S/ 58</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20en%20Polvo%20%2B%20Vitaminas%20(S%2F%20672)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20en%20Polvo%20%2B%20Vitaminas%20(S%2F%20672)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -210,7 +333,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Gomitas biotina x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1</p>
       <div class="precio">S/ 552 <span class="antes">S/ 600</span><span class="ahorro">Ahorras S/ 48</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Energ%C3%ADa%20y%20Cabello%20(S%2F%20552)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Energ%C3%ADa%20y%20Cabello%20(S%2F%20552)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -225,7 +348,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Proteína líquida x1 · Proteína en polvo x1 · Gomitas biotina x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1 · Fibra soluble x1</p>
       <div class="precio">S/ 1,060 <span class="antes">S/ 1,165</span><span class="ahorro">Ahorras S/ 105</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Suplementaci%C3%B3n%20Completa%20(S%2F%201060)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Suplementaci%C3%B3n%20Completa%20(S%2F%201060)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -240,7 +363,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Proteína en Polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g · Shaker oficial</p>
       <div class="precio">S/ 389 <span class="antes">S/ 477</span><span class="ahorro">Ahorras S/ 88</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Completo%20LVL%20(S%2F%20389)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Completo%20LVL%20(S%2F%20389)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -255,7 +378,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Proteína en Polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Shaker oficial</p>
       <div class="precio">S/ 309 <span class="antes">S/ 368</span><span class="ahorro">Ahorras S/ 59</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20%2B%20Col%C3%A1geno%20%2B%20Shaker%20(S%2F%20309)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20%2B%20Col%C3%A1geno%20%2B%20Shaker%20(S%2F%20309)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -270,7 +393,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Proteína en Polvo 1kg (sabor a elegir) · Fibra Manzana Verde 200g · Shaker oficial</p>
       <div class="precio">S/ 269 <span class="antes">S/ 349</span><span class="ahorro">Ahorras S/ 80</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20%2B%20Fibra%20%2B%20Shaker%20(S%2F%20269)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20%2B%20Fibra%20%2B%20Shaker%20(S%2F%20269)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -285,7 +408,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g · Shaker oficial</p>
       <div class="precio">S/ 179 <span class="antes">S/ 238</span><span class="ahorro">Ahorras S/ 59</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Col%C3%A1geno%20%2B%20Fibra%20%2B%20Shaker%20(S%2F%20179)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Col%C3%A1geno%20%2B%20Fibra%20%2B%20Shaker%20(S%2F%20179)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -300,7 +423,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Fibra Manzana Verde x2 (200g c/u) · Shaker oficial</p>
       <div class="precio">S/ 149 <span class="antes">S/ 218</span><span class="ahorro">Ahorras S/ 69</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Doble%20Fibra%20%2B%20Shaker%20(S%2F%20149)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Doble%20Fibra%20%2B%20Shaker%20(S%2F%20149)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -315,7 +438,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Colágeno Hidrolizado x2 (500g c/u) · Shaker oficial</p>
       <div class="precio">S/ 209 <span class="antes">S/ 258</span><span class="ahorro">Ahorras S/ 49</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Doble%20Col%C3%A1geno%20%2B%20Shaker%20(S%2F%20209)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Doble%20Col%C3%A1geno%20%2B%20Shaker%20(S%2F%20209)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -330,7 +453,7 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
       <p class="incluye"><strong>Incluye:</strong> Proteína Chocolate 1kg · Proteína Vainilla 1kg · Shaker oficial</p>
       <div class="precio">S/ 399 <span class="antes">S/ 479</span><span class="ahorro">Ahorras S/ 80</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%202%20Prote%C3%ADnas%20%2B%20Shaker%20(S%2F%20399)" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%202%20Prote%C3%ADnas%20%2B%20Shaker%20(S%2F%20399)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/?cat=pack">Ver en la tienda</a>
       </div>
     </div>
@@ -351,5 +474,16 @@ footer .links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; 
   © 2026 Zona Bariátrica · Todos los derechos reservados · Lima, Perú · 📱 +51 961 841 069
 </footer>
 
+<script>
+/* Header: gana sombra al bajar (misma capa visual que la tienda). */
+(function(){
+  var h = document.querySelector('header');
+  if (!h) return;
+  var t = false;
+  var s = function(){ h.classList.toggle('scrolled', window.scrollY > 8); t = false; };
+  window.addEventListener('scroll', function(){ if(!t){ t = true; requestAnimationFrame(s); } }, {passive:true});
+  s();
+})();
+</script>
 </body>
 </html>
