@@ -1341,33 +1341,31 @@ footer {
 }
 .float-cot-badge.pulsar { animation: badge-pulsar 0.4s ease forwards; }
 
-/* BOTÓN FLOTANTE COTIZADOR */
+/* BOTÓN FLOTANTE CARRITO — bolsa de compras, sin texto */
 .float-cot {
   position: fixed; bottom: var(--s-5); right: var(--s-5); z-index: 999;
-  background: transparent; border: none; border-radius: 0;
-  width: 76px; cursor: pointer; padding: 0;
-  display: flex; flex-direction: column; align-items: center; gap: var(--s-1);
-  filter: drop-shadow(0 6px 16px rgba(16,24,40,0.22));
-  transition: transform var(--t-base), filter var(--t-base);
+  width: 60px; height: 60px; border-radius: 50%; padding: 0; cursor: pointer;
+  background: var(--blue); border: none; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 20px rgba(37,99,235,0.34), 0 2px 6px rgba(16,24,40,0.10);
+  transition: transform var(--t-base), background var(--t-base), box-shadow var(--t-base);
 }
-.float-cot:hover { transform: translateY(-4px); filter: drop-shadow(0 10px 24px rgba(16,24,40,0.28)); }
+.float-cot:hover {
+  transform: translateY(-4px); background: var(--blue-hover);
+  box-shadow: 0 12px 28px rgba(37,99,235,0.40), 0 4px 10px rgba(16,24,40,0.12);
+}
 .float-cot:active { transform: translateY(-1px); }
-.float-cot img { width: 66px; height: 66px; object-fit: contain; border-radius: 50%; }
-.float-cot-label {
-  font-size: 11px; font-weight: 600; color: var(--blue);
-  background: #fff; border: 1px solid #C7D9F8;
-  border-radius: var(--r-pill); padding: 3px 12px; white-space: nowrap;
-  letter-spacing: 0.01em; box-shadow: var(--shadow-sm);
-}
+.float-cot-ico { width: 26px; height: 26px; display: block; }
 .float-cot-badge {
-  position: absolute; top: 0; right: 0;
-  background: #EF4444; color: white; border-radius: var(--r-pill);
-  min-width: 20px; height: 20px; font-size: 11px; font-weight: 700;
-  display: none; align-items: center; justify-content: center; padding: 0 5px;
+  position: absolute; top: -2px; right: -2px;
+  background: #EF4444; color: #fff; border-radius: var(--r-pill);
+  min-width: 22px; height: 22px; font-size: 11px; font-weight: 700;
+  display: none; align-items: center; justify-content: center; padding: 0 6px;
+  border: 2px solid #fff; box-shadow: var(--shadow-sm);
 }
 .float-cot-badge.visible { display: flex; }
 .float-tooltip {
-  position: absolute; bottom: 90px; right: 0;
+  position: absolute; bottom: 72px; right: 0;
   background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r);
   padding: 8px 13px; font-size: 12px; font-weight: 600; color: var(--text);
   white-space: nowrap; box-shadow: var(--shadow-md);
@@ -1982,10 +1980,9 @@ footer {
   .ba-body { padding: var(--s-5) var(--s-4) var(--s-6); }
   .ba-titulo { font-size: 19px; }
 
-  /* BOTÓN FLOTANTE COTIZADOR */
-  .float-cot { bottom: var(--s-3); right: var(--s-3); width: 64px; }
-  .float-cot img { width: 58px; height: 58px; }
-  .float-cot-label { font-size: 10px; padding: 2px 9px; }
+  /* BOTÓN FLOTANTE CARRITO */
+  .float-cot { bottom: var(--s-4); right: var(--s-4); width: 56px; height: 56px; }
+  .float-cot-ico { width: 24px; height: 24px; }
 
   /* PAGOS */
   .pago-item { padding: 7px 14px; font-size: 12px; }
@@ -2222,10 +2219,9 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 </div>
 
 <!-- COTIZADOR FLOTANTE -->
-<button class="float-cot" id="floatCot" onclick="abrirCarrito()" title="Ver mi carrito">
+<button class="float-cot" id="floatCot" onclick="abrirCarrito()" title="Ver mi carrito" aria-label="Ver mi carrito">
   <span class="float-cot-badge" id="floatBadge">0</span>
-  <img src="img/cotizador.jpg" alt="Carrito">
-  <span class="float-cot-label">Carrito</span>
+  <svg class="float-cot-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
   <div class="float-tooltip" id="floatTooltip"></div>
 </button>
 
