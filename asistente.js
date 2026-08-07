@@ -517,25 +517,6 @@
     + '.zb-rapida.wa{border-color:' + C.verdeWa + ';color:#128C4A}'
     + '.zb-rapida.wa:hover{background:#F0FDF4;border-color:' + C.verdeWa + ';color:#0E7038}'
 
-    /* ---------- CAMPO DE ESCRITURA ---------- */
-    + '.zb-input-wrap{display:flex;gap:8px;align-items:flex-end;padding:10px 12px;background:#fff;'
-    + 'border-top:1px solid ' + C.borde + '}'
-    + '.zb-input{flex:1;min-width:0;border:1.5px solid ' + C.borde + ';border-radius:12px;'
-    + 'padding:11px 13px;font-size:16px;font-family:inherit;color:' + C.texto + ';resize:none;'
-    + 'line-height:1.4;max-height:88px;background:' + C.fondo + ';'
-    + 'transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}'
-    + '.zb-input:focus{outline:none;border-color:' + C.azul + ';background:#fff;'
-    + 'box-shadow:0 0 0 3px rgba(37,99,235,.12)}'
-    + '.zb-input::placeholder{color:' + C.tenue + '}'
-    + '.zb-enviar{flex:none;width:42px;height:42px;border-radius:12px;border:none;cursor:pointer;'
-    + 'background:' + C.azul + ';color:#fff;display:flex;align-items:center;justify-content:center;'
-    + 'transition:background .2s ease,transform .2s ease}'
-    + '.zb-enviar:hover{background:' + C.azulOsc + ';transform:translateY(-1px)}'
-    + '.zb-enviar:active{transform:scale(.95)}'
-    + '.zb-enviar:disabled{background:' + C.borde + ';color:' + C.tenue + ';cursor:default;transform:none}'
-    + '.zb-enviar:focus-visible{outline:3px solid rgba(37,99,235,.45);outline-offset:2px}'
-    + '.zb-enviar svg{width:19px;height:19px}'
-
     /* ---------- PIE ---------- */
     + '.zb-foot{padding:8px 14px;background:#fff;border-top:1px solid ' + C.borde + ';font-size:10.5px;'
     + 'color:' + C.tenue + ';text-align:center;line-height:1.45}'
@@ -560,7 +541,7 @@
     /* ---------- MENOS MOVIMIENTO ---------- */
     + '@media(prefers-reduced-motion:reduce){'
     + '#zb-panel.abierto,#zb-panel.cerrando,.zb-fila,.zb-punto,.zb-dots i{animation:none!important}'
-    + '#zb-fab,.zb-op,.zb-rapida,.zb-enviar,.zb-fab-tip{transition:none!important}'
+    + '#zb-fab,.zb-op,.zb-rapida,.zb-fab-tip{transition:none!important}'
     + '}';
 
   /* =========================================================
@@ -773,7 +754,6 @@
 
     panel.appendChild(head);
     panel.appendChild(body);
-    panel.appendChild(construirEntrada());
     panel.appendChild(el('div', 'zb-foot',
       'La información brindada es referencial y no reemplaza la orientación ' +
       'de tu médico o nutricionista.'));
@@ -783,92 +763,6 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && panel.classList.contains('abierto')) cerrar();
     });
-  }
-
-  /* =========================================================
-     CAMPO DE ESCRITURA
-     ---------------------------------------------------------
-     El asistente responde por botones: no interpreta texto
-     libre y NO se le ha añadido esa capacidad aquí (sería
-     prometer algo que no existe).
-
-     Lo que sí hace este campo es real y útil: recoge la
-     pregunta y la lleva a WhatsApp ya escrita, donde hay una
-     persona que puede responderla. Por eso el botón de enviar
-     es verde: es el color del canal, no del asistente.
-
-     PARA CONECTARLO A OTRA COSA en el futuro (un backend, un
-     buscador de respuestas): cambia SOLO el cuerpo de enviar().
-     El resto de la interfaz ya está listo.
-     ========================================================= */
-  function construirEntrada() {
-    var wrap = el('div', 'zb-input-wrap');
-
-    var ta = el('textarea', 'zb-input');
-    ta.rows = 1;
-    ta.placeholder = 'Escribe tu pregunta...';
-    ta.setAttribute('aria-label', 'Escribe tu pregunta para Zoe');
-
-    var btn = el('button', 'zb-enviar',
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
-      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-      '<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>');
-    btn.type = 'button';
-    btn.disabled = true;
-    btn.setAttribute('aria-label', 'Enviar pregunta por WhatsApp');
-    btn.style.background = C.verdeWa;
-
-    /* Crece con el texto, hasta el tope que fija el CSS. */
-    function ajustarAlto() {
-      ta.style.height = 'auto';
-      ta.style.height = Math.min(ta.scrollHeight, 88) + 'px';
-    }
-
-    ta.addEventListener('input', function () {
-      btn.disabled = !ta.value.trim();
-      ajustarAlto();
-    });
-
-    function enviar() {
-      var texto = ta.value.trim();
-      if (!texto) return;
-
-      /* Queda en el chat como mensaje del usuario, para que se vea
-         que su pregunta fue recogida. */
-      body.appendChild(burbuja(texto, true));
-      scrollAbajo();
-
-      window.open(wa('Hola Zoe 👋 ' + texto), '_blank');
-
-      /* Se limpia el campo y se confirma en el propio chat. */
-      ta.value = '';
-      ta.style.height = 'auto';
-      btn.disabled = true;
-
-      mostrarEscribiendo();
-      setTimeout(function () {
-        quitarEscribiendo();
-        body.appendChild(burbuja(
-          'Te abrí WhatsApp con tu pregunta lista para enviar 💬<br><br>' +
-          'Mientras tanto, aquí puedes seguir consultando:', false));
-        body.appendChild(construirRapidas());
-        scrollAbajo();
-      }, 620);
-
-      /* En escritorio se devuelve el foco para seguir escribiendo;
-         en móvil no, para que el teclado no tape la conversación. */
-      if (window.matchMedia('(min-width:521px)').matches) ta.focus();
-    }
-
-    btn.onclick = enviar;
-    /* Enter envía, Mayús+Enter hace salto de línea. */
-    ta.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); enviar(); }
-    });
-
-    wrap.appendChild(ta);
-    wrap.appendChild(btn);
-    return wrap;
   }
 
   if (document.readyState === 'loading') {
