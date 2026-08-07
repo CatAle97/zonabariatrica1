@@ -2910,6 +2910,330 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .cart-nota { padding: 0 var(--s-6); }
 }
 
+/* ============================================================
+   REDISEÑO DE LA FICHA DE PRODUCTO
+   ------------------------------------------------------------
+   SOLO PRESENTACIÓN. No se toca abrirModal(), ni el carrito, ni
+   el zoom, ni las calificaciones, ni la tabla nutricional: los
+   identificadores (mImg, mNombre, mPrecio, tnBody…) son los
+   mismos de antes, solo cambia dónde y cómo se ven.
+
+   Idea del layout: en escritorio, dos columnas — la imagen se
+   queda fija a la izquierda mientras el contenido se desplaza a
+   la derecha. En móvil, una sola columna con una barra de compra
+   fija abajo. Así el precio y el botón nunca quedan lejos.
+   ============================================================ */
+.modal {
+  max-width: 1080px;                 /* antes 540: cabe la 2ª columna */
+  border-radius: var(--r-lg);
+  max-height: calc(100vh - 48px);
+  display: flex; flex-direction: column;
+}
+.modal-overlay.open { align-items: center; }
+
+/* Cabecera compacta: el nombre grande vive en el cuerpo */
+.modal-header {
+  padding: var(--s-4) var(--s-5);
+  position: sticky; top: 0; z-index: 5; flex-shrink: 0;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+}
+.modal-header h3 { font-size: var(--fs-sm); color: var(--text-muted); font-weight: 500; }
+
+/* Rejilla de dos columnas */
+.mp-grid {
+  display: grid; grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+  gap: 0; overflow-y: auto; flex: 1;
+}
+.mp-col-img {
+  position: sticky; top: 0; align-self: start;
+  background: var(--bg); border-right: 1px solid var(--border-light);
+  padding: var(--s-5);
+}
+.mp-col-info { padding: var(--s-6) var(--s-6) var(--s-8); min-width: 0; }
+
+.modal-img-wrap {
+  height: 380px; border-bottom: none; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--border-light);
+}
+.zoom-controls {
+  border-bottom: none; background: transparent; padding: var(--s-3) 0 0;
+}
+
+/* --- Encabezado del producto --- */
+.mp-marca {
+  font-size: var(--fs-cap); font-weight: 600; color: var(--text-light);
+  text-transform: uppercase; letter-spacing: var(--tracking-caps);
+  margin-bottom: var(--s-2);
+}
+.modal-nombre {
+  font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--text);
+  letter-spacing: var(--tracking-tight); margin-bottom: var(--s-3);
+}
+.modal-badges { margin-bottom: var(--s-3); }
+
+/* --- Precio: la cifra manda --- */
+.mp-precio-caja {
+  display: flex; align-items: baseline; gap: var(--s-3); flex-wrap: wrap;
+  margin: var(--s-5) 0 var(--s-4);
+}
+.modal-precio { font-size: 36px; font-weight: 700; color: var(--text); line-height: 1; letter-spacing: -0.03em; }
+.modal-precio-normal { font-size: 17px; color: var(--text-light); text-decoration: line-through; }
+.modal-ahorro {
+  font-size: var(--fs-cap); font-weight: 700; color: var(--success);
+  background: var(--success-bg); border: 1px solid var(--success-br);
+  padding: 5px 11px; border-radius: var(--r-pill);
+}
+
+/* --- Botones de compra --- */
+.mp-acciones { display: flex; flex-direction: column; gap: var(--s-2); margin: var(--s-5) 0; }
+.modal-cart-btn {
+  padding: 16px; font-size: 15px; font-weight: 600; border-radius: var(--r);
+  box-shadow: 0 4px 14px rgba(37,99,235,0.22);
+}
+.modal-cart-btn:hover { box-shadow: 0 8px 22px rgba(37,99,235,0.3); }
+.mp-acciones-fila { display: flex; gap: var(--s-2); }
+.mp-acciones-fila > * { flex: 1; }
+.mp-fav {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 12px; border-radius: var(--r-sm); border: 1.5px solid var(--border);
+  background: var(--surface); color: var(--text-muted); cursor: pointer;
+  font-family: var(--font); font-size: var(--fs-sm); font-weight: 500; min-height: 44px;
+  transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
+}
+.mp-fav svg { width: 16px; height: 16px; }
+.mp-fav:hover { border-color: #FCA5A5; color: var(--danger); background: var(--danger-bg); }
+.mp-fav.activo { border-color: #FCA5A5; color: var(--danger); background: var(--danger-bg); }
+.mp-fav.activo svg { fill: currentColor; }
+
+/* --- Fila de confianza (envío y pago) — datos ya publicados --- */
+.mp-confianza {
+  display: flex; flex-direction: column; gap: 9px;
+  padding: var(--s-4); background: var(--bg); border-radius: var(--r);
+  margin-bottom: var(--s-5);
+}
+.mp-confianza-item {
+  display: flex; align-items: center; gap: 9px;
+  font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.4;
+}
+.mp-confianza-item svg { width: 17px; height: 17px; color: var(--blue); flex: none; }
+.mp-confianza-item strong { color: var(--text); font-weight: 600; }
+
+/* --- Chips de información clave --- */
+.mp-datos { display: flex; flex-direction: column; gap: var(--s-4); margin: var(--s-5) 0; }
+.mp-dato-grupo { }
+.mp-dato-tit {
+  font-size: 10.5px; font-weight: 700; color: var(--text-light);
+  text-transform: uppercase; letter-spacing: var(--tracking-caps); margin-bottom: 7px;
+}
+.mp-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.mp-chip {
+  font-size: var(--fs-cap); font-weight: 600; line-height: 1;
+  padding: 7px 12px; border-radius: var(--r-pill);
+  background: var(--bg-soft); color: var(--text-muted); border: 1px solid var(--border);
+}
+.mp-chip.cir { background: var(--blue-light); color: var(--blue-dark); border-color: var(--blue-ring); }
+.mp-chip.eta { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-br); }
+.mp-chip.car { background: var(--success-bg); color: var(--success); border-color: var(--success-br); }
+
+/* --- Descripción plegable --- */
+.modal-desc {
+  font-size: var(--fs-body); line-height: 1.75; color: var(--text-muted);
+  margin-bottom: var(--s-2);
+}
+.mp-desc-corta {
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.mp-vermas {
+  background: none; border: none; padding: 0; cursor: pointer;
+  font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; color: var(--blue);
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.mp-vermas svg { width: 14px; height: 14px; transition: transform var(--t-base); }
+.mp-vermas.abierto svg { transform: rotate(180deg); }
+
+/* --- Secciones del cuerpo --- */
+.mp-sec { margin-top: var(--s-7); }
+.mp-sec-h {
+  display: flex; align-items: center; gap: 9px;
+  font-size: var(--fs-h3); font-weight: 700; color: var(--text);
+  letter-spacing: var(--tracking-tight); margin-bottom: var(--s-4);
+}
+.mp-sec-h svg { width: 18px; height: 18px; color: var(--blue); flex: none; }
+
+/* --- ¿Es para ti? --- */
+.mp-parati {
+  background: var(--blue-light); border: 1px solid var(--blue-ring);
+  border-radius: var(--r-md); padding: var(--s-5);
+}
+.mp-parati-txt { font-size: var(--fs-sm); line-height: 1.7; color: var(--text); margin-bottom: var(--s-4); }
+.mp-parati-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+.mp-check { display: flex; align-items: flex-start; gap: 7px; font-size: var(--fs-sm); color: var(--text); line-height: 1.5; margin-bottom: 6px; }
+.mp-check svg { width: 14px; height: 14px; color: var(--success); flex: none; margin-top: 3px; }
+
+/* --- Beneficios en tarjetas --- */
+.mp-benef { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
+.mp-benef-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r);
+  padding: var(--s-4); display: flex; flex-direction: column; gap: 7px;
+  transition: border-color var(--t-base), box-shadow var(--t-base), transform var(--t-base);
+}
+.mp-benef-card:hover { border-color: #D8DEE7; box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+.mp-benef-ico {
+  width: 34px; height: 34px; border-radius: var(--r-xs); flex: none;
+  background: var(--blue-light); color: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+}
+.mp-benef-ico svg { width: 17px; height: 17px; }
+.mp-benef-txt { font-size: var(--fs-sm); line-height: 1.6; color: var(--text-muted); }
+
+/* --- Modo de consumo en pasos --- */
+.mp-pasos { display: flex; flex-direction: column; gap: var(--s-3); }
+.mp-paso { display: flex; gap: var(--s-3); align-items: flex-start; }
+.mp-paso-n {
+  width: 28px; height: 28px; border-radius: 50%; flex: none;
+  background: var(--blue); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--fs-cap); font-weight: 700;
+}
+.mp-paso-txt { font-size: var(--fs-sm); line-height: 1.6; color: var(--text); padding-top: 4px; }
+
+/* --- Acordeones --- */
+.mp-acc { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: var(--s-2); }
+.mp-acc-h {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
+  padding: var(--s-4); background: var(--surface); border: none; cursor: pointer; text-align: left;
+  font-family: var(--font); font-size: var(--fs-body); font-weight: 600; color: var(--text);
+  min-height: 44px; transition: background var(--t-fast), color var(--t-fast);
+}
+.mp-acc-h:hover { background: var(--bg); color: var(--blue); }
+.mp-acc-h svg { width: 18px; height: 18px; color: var(--text-light); flex: none; transition: transform var(--t-base); }
+.mp-acc.abierto .mp-acc-h { color: var(--blue); border-bottom: 1px solid var(--border-light); }
+.mp-acc.abierto .mp-acc-h svg { transform: rotate(180deg); color: var(--blue); }
+.mp-acc-c { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--t-slow); }
+.mp-acc.abierto .mp-acc-c { grid-template-rows: 1fr; }
+.mp-acc-c > div { overflow: hidden; }
+.mp-acc-in { padding: var(--s-4); }
+
+/* --- Carrusel de relacionados --- */
+.mp-carru {
+  display: flex; gap: var(--s-3); overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: var(--s-2); margin: 0 calc(var(--s-6) * -1); padding-left: var(--s-6); padding-right: var(--s-6);
+  -webkit-overflow-scrolling: touch;
+}
+.mp-carru::-webkit-scrollbar { height: 5px; }
+.mp-carru::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.mp-rel {
+  flex: 0 0 152px; scroll-snap-align: start;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r);
+  padding: var(--s-3); display: flex; flex-direction: column; gap: 6px;
+  transition: border-color var(--t-base), box-shadow var(--t-base), transform var(--t-base);
+}
+.mp-rel:hover { border-color: #D8DEE7; box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.mp-rel img { width: 100%; height: 104px; object-fit: contain; cursor: pointer; background: var(--bg); border-radius: var(--r-xs); }
+.mp-rel-nom {
+  font-size: var(--fs-cap); font-weight: 600; color: var(--text); line-height: 1.35; cursor: pointer;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1;
+}
+.mp-rel-precio { font-size: var(--fs-sm); font-weight: 700; color: var(--blue); }
+.mp-rel-btn {
+  width: 100%; padding: 8px; border-radius: var(--r-xs); border: 1.5px solid var(--blue);
+  background: var(--surface); color: var(--blue); cursor: pointer;
+  font-family: var(--font); font-size: var(--fs-cap); font-weight: 600; min-height: 34px;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.mp-rel-btn:hover { background: var(--blue); color: #fff; }
+
+/* --- Complementarios: más peso visual (sube el ticket) --- */
+.mp-combina { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s-5); }
+
+/* --- Artículos del blog, compactos --- */
+.mp-art { display: flex; align-items: center; gap: var(--s-3); padding: 9px 0; cursor: pointer; width: 100%;
+  background: none; border: none; text-align: left; font-family: var(--font);
+  border-bottom: 1px solid var(--border-light); transition: opacity var(--t-fast); }
+.mp-art:last-child { border-bottom: none; }
+.mp-art:hover { opacity: .7; }
+.mp-art-mini {
+  width: 42px; height: 42px; border-radius: var(--r-xs); flex: none;
+  background: var(--blue-light); color: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+}
+.mp-art-mini svg { width: 19px; height: 19px; }
+.mp-art-cat { font-size: 9.5px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: var(--tracking-caps); }
+.mp-art-tit { font-size: var(--fs-cap); font-weight: 600; color: var(--text); line-height: 1.4; }
+
+/* --- Calificaciones --- */
+#mCalificacion {
+  margin: var(--s-7) 0 0 !important; padding: var(--s-5) !important;
+  border-radius: var(--r-md) !important; background: var(--bg) !important;
+}
+
+/* --- Aviso legal --- */
+.mp-legal {
+  display: flex; gap: 9px; align-items: flex-start; margin-top: var(--s-5);
+  padding: 11px var(--s-4); background: var(--warning-bg);
+  border: 1px solid var(--warning-br); border-radius: var(--r-sm);
+  font-size: var(--fs-cap); line-height: 1.6; color: var(--warning); font-weight: 500;
+}
+.mp-legal svg { width: 14px; height: 14px; flex: none; margin-top: 2px; }
+
+/* --- Barra de compra fija en móvil --- */
+.mp-barra {
+  display: none; position: sticky; bottom: 0; z-index: 6;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: saturate(180%) blur(12px); -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-top: 1px solid var(--border);
+  padding: 10px var(--s-4) calc(10px + env(safe-area-inset-bottom, 0px));
+  gap: var(--s-3); align-items: center;
+}
+.mp-barra-precio { flex: none; }
+.mp-barra-precio-lbl { font-size: 9.5px; color: var(--text-light); text-transform: uppercase; letter-spacing: var(--tracking-caps); }
+.mp-barra-precio-val { font-size: 19px; font-weight: 700; color: var(--text); line-height: 1.1; }
+.mp-barra-btn {
+  flex: 1; padding: 13px; border-radius: var(--r-sm); border: none;
+  background: var(--blue); color: #fff; cursor: pointer;
+  font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; min-height: 46px;
+}
+.mp-barra-wa {
+  flex: none; width: 46px; height: 46px; border-radius: var(--r-sm);
+  background: var(--green-wa); color: #fff; display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+}
+.mp-barra-wa svg { width: 21px; height: 21px; }
+
+/* ---------- TABLET Y MÓVIL ---------- */
+@media (max-width: 900px) {
+  .modal { max-width: 560px; max-height: calc(100vh - 24px); }
+  .mp-grid { grid-template-columns: 1fr; }
+  .mp-col-img {
+    position: static; border-right: none;
+    border-bottom: 1px solid var(--border-light); padding: var(--s-4);
+  }
+  .mp-col-info { padding: var(--s-5) var(--s-5) var(--s-6); }
+  .modal-img-wrap { height: 280px; }
+  .modal-nombre { font-size: 22px; }
+  .modal-precio { font-size: 30px; }
+  .mp-benef { grid-template-columns: 1fr; }
+  .mp-parati-cols { grid-template-columns: 1fr; gap: var(--s-3); }
+  .mp-carru { margin: 0 calc(var(--s-5) * -1); padding-left: var(--s-5); padding-right: var(--s-5); }
+  /* La barra de compra aparece pegada abajo */
+  .mp-barra { display: flex; }
+  /* Los botones grandes del cuerpo ya no hacen falta duplicados arriba */
+  .mp-acciones { margin-bottom: var(--s-4); }
+}
+@media (max-width: 560px) {
+  .modal-overlay, .modal-overlay.open { padding: 0; align-items: flex-end; }
+  .modal { max-width: 100%; max-height: 96vh; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+  .modal-img-wrap { height: 240px; }
+  .modal-nombre { font-size: 20px; }
+  .mp-col-info { padding: var(--s-4) var(--s-4) var(--s-5); }
+  .mp-carru { margin: 0 calc(var(--s-4) * -1); padding-left: var(--s-4); padding-right: var(--s-4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mp-benef-card, .mp-rel { transition: none; }
+}
+
 /* ------------------------------------------------------------
    Quitar el recuadro azul al tocar en móvil.
    Android y iOS pintan por defecto un bloque azul translúcido
@@ -3900,36 +4224,110 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       <h3 id="mTitulo"></h3>
       <button class="modal-close" onclick="cerrarModal()"><svg class="ico ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
-    <div class="modal-img-wrap" id="mImgWrap">
-      <img id="mImg" class="modal-img" src="" alt="">
-    </div>
-    <div class="zoom-controls">
-      <span class="zoom-lbl"><svg class="ico ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
-      <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1" oninput="aplicarZoom(this.value)">
-      <button class="zoom-reset-btn" onclick="resetZoom()">Restablecer</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-badges" id="mBadges"></div>
-      <div class="modal-nombre" id="mNombre"></div>
-      <div class="modal-desc" id="mDesc"></div>
-      <div class="modal-incluye" id="mIncluye" style="display:none"></div>
-      <div class="modal-tags" id="mTags"></div>
-      <div id="mSabores" style="display:none"></div>
-      <div class="modal-precio-area" id="mPrecio"></div>
-      <button class="tn-toggle" id="tnBtn" onclick="toggleTN()" style="display:none">
-        Ver tabla nutricional completa <span id="tnArrow">+</span>
-      </button>
-      <div class="tn-body" id="tnBody"></div>
-      <div class="modo-uso" id="mUso" style="display:none"></div>
-      <!-- Ficha educativa ampliada — se dibuja desde productos-info.js -->
-      <div class="ficha" id="mFicha" style="display:none"></div>
-      <div id="mCalificacion" style="margin:14px 0;padding:14px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg)">
-        <div id="mCalAvg" style="font-size:13px;color:var(--text-muted)">Cargando calificaciones...</div>
-        <div id="mCalUser" style="margin-top:10px"></div>
+    <!-- Dos columnas en escritorio, una en móvil.
+         TODOS los identificadores son los de siempre: abrirModal()
+         sigue rellenándolos sin enterarse del cambio de sitio. -->
+    <div class="mp-grid">
+
+      <!-- Columna izquierda: imagen (queda fija al desplazar) -->
+      <div class="mp-col-img">
+        <div class="modal-img-wrap" id="mImgWrap">
+          <img id="mImg" class="modal-img" src="" alt="">
+        </div>
+        <div class="zoom-controls">
+          <span class="zoom-lbl"><svg class="ico ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1" oninput="aplicarZoom(this.value)" aria-label="Acercar la imagen">
+          <button class="zoom-reset-btn" onclick="resetZoom()">Restablecer</button>
+        </div>
       </div>
-      <button class="modal-cart-btn" onclick="agregarDesdeModalCot()" data-i18n="btn_agregar_modal">+ Agregar al carrito</button>
-      <a class="modal-wa" id="mWA" href="#" target="_blank" data-i18n="modal_consultar">Habla con Zoe</a>
-      <button class="modal-wa" style="background:none;border:1.5px solid var(--border);color:var(--text-muted);margin-top:6px;cursor:pointer;border-radius:var(--r-sm);padding:11px;font-size:13px;width:100%;text-align:center;font-family:'Inter', system-ui, -apple-system, sans-serif;font-weight:500;transition:background 0.15s" onclick="compartirProducto()" data-i18n="modal_compartir"><svg class="ico ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg> Compartir este producto</button>
+
+      <!-- Columna derecha: todo lo demás -->
+      <div class="mp-col-info">
+        <div class="modal-badges" id="mBadges"></div>
+        <h2 class="modal-nombre" id="mNombre"></h2>
+
+        <!-- Chips de datos clave (etapas, cirugías y características) -->
+        <div id="mDatos"></div>
+
+        <div class="mp-precio-caja modal-precio-area" id="mPrecio"></div>
+
+        <!-- Selector de sabor, si el producto lo tiene -->
+        <div id="mSabores" style="display:none"></div>
+
+        <div class="mp-acciones">
+          <button class="modal-cart-btn" onclick="agregarDesdeModalCot()" data-i18n="btn_agregar_modal">+ Agregar al carrito</button>
+          <div class="mp-acciones-fila">
+            <a class="modal-wa" id="mWA" href="#" target="_blank" style="margin:0" data-i18n="modal_consultar">Habla con Zoe</a>
+            <button class="mp-fav" id="mFav" type="button" onclick="favDesdeModal(event)" aria-label="Guardar en favoritos">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+              <span>Favorito</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Envío y pago: datos que el sitio ya publica -->
+        <div class="mp-confianza">
+          <div class="mp-confianza-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3M15 17h6v-5l-3-4h-3v9M6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+            <span><strong>Envíos a todo el Perú</strong> · Lima y provincias vía Shalom</span>
+          </div>
+          <div class="mp-confianza-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+            <span><strong>Yape o Izipay</strong> · el pago se coordina por WhatsApp</span>
+          </div>
+        </div>
+
+        <!-- Descripción (se pliega si es larga) -->
+        <div id="mDescWrap">
+          <div class="modal-desc" id="mDesc"></div>
+          <div class="modal-incluye" id="mIncluye" style="display:none"></div>
+        </div>
+
+        <!-- Etiquetas antiguas: se conservan ocultas porque
+             abrirModal() las rellena. Su contenido se muestra
+             ahora dentro de #mDatos. -->
+        <div class="modal-tags" id="mTags" hidden></div>
+
+        <!-- Bloques educativos: los dibuja productos-info.js -->
+        <div class="ficha" id="mFicha" style="display:none"></div>
+
+        <!-- Tabla nutricional, plegada -->
+        <div class="mp-sec" id="mTnSec" style="display:none">
+          <div class="mp-acc" id="tnAcc">
+            <button class="mp-acc-h" id="tnBtn" type="button" onclick="toggleTN()" aria-expanded="false">
+              <span>Información nutricional</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="mp-acc-c"><div><div class="mp-acc-in">
+              <div class="tn-body" id="tnBody"></div>
+              <span id="tnArrow" hidden></span>
+            </div></div></div>
+          </div>
+        </div>
+
+        <!-- Modo de uso: abrirModal() lo rellena; se convierte
+             en pasos numerados desde el JavaScript. -->
+        <div class="modo-uso" id="mUso" style="display:none"></div>
+
+        <div id="mCalificacion" style="margin:14px 0;padding:14px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg)">
+          <div id="mCalAvg" style="font-size:13px;color:var(--text-muted)">Cargando calificaciones...</div>
+          <div id="mCalUser" style="margin-top:10px"></div>
+        </div>
+
+        <button class="modal-wa" style="background:none;border:1.5px solid var(--border);color:var(--text-muted);margin-top:6px;cursor:pointer;border-radius:var(--r-sm);padding:11px;font-size:13px;width:100%;text-align:center;font-family:'Inter', system-ui, -apple-system, sans-serif;font-weight:500;transition:background 0.15s" onclick="compartirProducto()" data-i18n="modal_compartir"><svg class="ico ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg> Compartir este producto</button>
+      </div>
+    </div>
+
+    <!-- Barra de compra fija — solo móvil (CSS) -->
+    <div class="mp-barra" id="mBarra">
+      <div class="mp-barra-precio">
+        <div class="mp-barra-precio-lbl">Precio</div>
+        <div class="mp-barra-precio-val" id="mBarraPrecio">—</div>
+      </div>
+      <button class="mp-barra-btn" onclick="agregarDesdeModalCot()">Agregar al carrito</button>
+      <a class="mp-barra-wa" id="mBarraWA" href="#" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      </a>
     </div>
   </div>
 </div>
@@ -5248,10 +5646,13 @@ function abrirModal(id) {
   const tnBtn  = document.getElementById('tnBtn');
   const tnBody = document.getElementById('tnBody');
   tnBody.classList.remove('open');
-  document.getElementById('tnArrow').textContent = '+';
+  const tnAcc = document.getElementById('tnAcc');
+  if (tnAcc) tnAcc.classList.remove('abierto');          // siempre cerrado al abrir
+  tnBtn.setAttribute('aria-expanded', 'false');
+  const tnSec = document.getElementById('mTnSec');
 
   if (p.tn) {
-    tnBtn.style.display = 'flex';
+    if (tnSec) tnSec.style.display = '';
     const t = p.tn;
     let tbl = `<table class="tn-table">
       <thead><tr><td>Nutriente</td><td>Cantidad</td><td>%VD</td></tr></thead>
@@ -5263,7 +5664,7 @@ function abrirModal(id) {
     if (t.nota) tbl += `<div class="tn-note">${t.nota}</div>`;
     tnBody.innerHTML = tbl;
   } else {
-    tnBtn.style.display = 'none';
+    if (tnSec) tnSec.style.display = 'none';
     tnBody.innerHTML = '';
   }
 
@@ -5277,6 +5678,13 @@ function abrirModal(id) {
 
   /* Ficha educativa ampliada (Fase 2). */
   pintarFicha(p);
+
+  /* Presentación de la ficha (solo visual, no cambia datos). */
+  pintarDatosClave(p);
+  plegarDescripcion();
+  pintarPasosUso(p);
+  pintarBarraCompra(p);
+  sincronizarFavModal(p);
 
   const msg = encodeURIComponent('Hola! Quiero pedir: ' + p.nombre + ' — S/ ' + p.precio);
   document.getElementById('mWA').href = 'https://wa.me/' + WA + '?text=' + msg;
@@ -5328,9 +5736,14 @@ window.addEventListener('popstate', () => {
   else { document.getElementById('modalOverlay').classList.remove('open'); document.body.style.overflow = ''; }
 });
 function toggleTN() {
+  /* El contenido y los datos no cambian: solo se abre/cierra el
+     acordeón nuevo. Se conserva la clase .open de tnBody por si
+     algún estilo antiguo depende de ella. */
+  const acc = document.getElementById('tnAcc');
   const b = document.getElementById('tnBody');
-  b.classList.toggle('open');
-  document.getElementById('tnArrow').textContent = b.classList.contains('open') ? '−' : '+';
+  const abierto = acc.classList.toggle('abierto');
+  b.classList.toggle('open', abierto);
+  document.getElementById('tnBtn').setAttribute('aria-expanded', String(abierto));
 }
 
 // ---- COTIZADOR ----
@@ -6699,132 +7112,296 @@ function fichaBloque(titulo, icono, contenidoHTML) {
 }
 
 function fichaHTML(p, d) {
+  /* Presentación de los bloques educativos.
+     Los TEXTOS siguen llegando intactos de productos-info.js:
+     aquí solo se decide cómo se ven.
+
+     Cambios respecto a la versión anterior:
+       · "¿Para quién?" y "¿En qué etapa?" se funden en un único
+         bloque "¿Es para ti?" — antes eran bloques separados que
+         repetían la misma idea y alargaban el scroll.
+       · Los beneficios pasan de lista a tarjetas con icono.
+       · Relacionados en carrusel; artículos del blog en filas
+         compactas, para que no compitan con el producto.
+     Las etiquetas de etapa y cirugía ya salen arriba en los
+     chips, así que aquí no se repiten. */
   let html = '';
 
-  /* Etiquetas de etapa y cirugía (Fase 3): ubican el producto
-     de un vistazo, antes de leer nada. */
-  if ((d.etiquetasEtapa && d.etiquetasEtapa.length) ||
-      (d.etiquetasCirugia && d.etiquetasCirugia.length)) {
-    html += fichaBloque('Etapas y cirugías en las que suele aparecer',
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 12 22l-9-9V3h10z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
-      '<div class="ficha-etiquetas">' +
-        (d.etiquetasEtapa || []).map(e => `<span class="ficha-et et-etapa">${e}</span>`).join('') +
-        (d.etiquetasCirugia || []).map(c => `<span class="ficha-et et-cir">${c}</span>`).join('') +
-      '</div>');
+  /* ---- ¿ES PARA TI? (consolida varios bloques en uno) ---- */
+  const cirugias = d.etiquetasCirugia || [];
+  const etapas   = d.etiquetasEtapa || [];
+  const col = (titulo, items) => items.length
+    ? '<div><div class="mp-dato-tit">' + titulo + '</div>' +
+      items.map(x => '<div class="mp-check">' + ICO_CHECK_MINI + '<span>' + x + '</span></div>').join('') +
+      '</div>'
+    : '';
+
+  html += '<div class="mp-sec">' +
+    '<div class="mp-sec-h">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>' +
+      '¿Es para ti?' +
+    '</div>' +
+    '<div class="mp-parati">' +
+      '<p class="mp-parati-txt">' + d.paraQuien + '</p>' +
+      '<div class="mp-parati-cols">' + col('Cirugías', cirugias) + col('Etapas', etapas) + '</div>' +
+      '<p class="mp-benef-txt" style="margin-top:14px">' + d.etapa + '</p>' +
+    '</div>' +
+  '</div>';
+
+  /* ---- BENEFICIOS en tarjetas ----
+     Cada beneficio se parte en título y detalle por la primera
+     coma, solo si cae en un punto razonable. El texto no cambia. */
+  if (d.beneficios && d.beneficios.length) {
+    html += '<div class="mp-sec">' +
+      '<div class="mp-sec-h">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>' +
+        'Beneficios' +
+      '</div>' +
+      '<div class="mp-benef">' + d.beneficios.map(b => {
+        const corte = b.indexOf(',');
+        const parte = corte > 12 && corte < 62;
+        const titulo  = parte ? b.slice(0, corte) : b;
+        const detalle = parte ? b.slice(corte + 1).trim() : '';
+        return '<div class="mp-benef-card">' +
+          '<span class="mp-benef-ico">' + ICO_CHECK_MINI + '</span>' +
+          '<strong style="font-size:13.5px;line-height:1.45;color:var(--text)">' + titulo + '</strong>' +
+          (detalle ? '<span class="mp-benef-txt">' + detalle + '</span>' : '') +
+        '</div>';
+      }).join('') + '</div>' +
+    '</div>';
   }
 
-  if (d.descripcion) {
-    html += fichaBloque('Descripción',
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>',
-      `<p class="ficha-txt">${d.descripcion}</p>`);
-  }
-
-  html += fichaBloque('¿Para quién suele utilizarse?',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>',
-    `<p class="ficha-txt">${d.paraQuien}</p>`);
-
-  html += fichaBloque('¿En qué etapa suele utilizarse?',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
-    `<p class="ficha-txt">${d.etapa}</p>`);
-
-  html += fichaBloque('Beneficios generales',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>',
-    '<ul class="ficha-lista">' +
-      d.beneficios.map(b => `<li>${ICO_CHECK_MINI}<span>${b}</span></li>`).join('') +
-    '</ul>');
-
-  html += fichaBloque('Forma de consumo',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l-1 9a4 4 0 0 1-6 0z"/><path d="M12 11v11M8 22h8"/></svg>',
-    `<p class="ficha-txt">${d.consumo}</p>
-     <div class="ficha-leyenda">
-       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-       <span>${d.leyenda}</span>
-     </div>`);
-
+  /* ---- PREGUNTAS FRECUENTES (acordeón) ---- */
   if (d.faq && d.faq.length) {
-    html += fichaBloque('Preguntas frecuentes',
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
-      '<div class="ficha-faq">' +
-        d.faq.map(f => `<div class="ficha-faq-item">
-          <button class="ficha-faq-q" type="button" aria-expanded="false" onclick="toggleFichaFaq(this)">
-            <span>${f.q}</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="ficha-faq-c"><div><div class="ficha-faq-r">${f.r}</div></div></div>
-        </div>`).join('') +
-      '</div>');
+    html += '<div class="mp-sec">' +
+      '<div class="mp-sec-h">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>' +
+        'Preguntas frecuentes' +
+      '</div>' +
+      d.faq.map(f => '<div class="mp-acc">' +
+        '<button class="mp-acc-h" type="button" aria-expanded="false" onclick="toggleFichaFaq(this)">' +
+          '<span>' + f.q + '</span>' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>' +
+        '</button>' +
+        '<div class="mp-acc-c"><div><div class="mp-acc-in mp-benef-txt">' + f.r + '</div></div></div>' +
+      '</div>').join('') +
+    '</div>';
   }
 
-  /* Productos relacionados: se resuelven contra el catálogo real,
-     así nunca se muestra un producto que ya no existe. */
-  const rel = (d.relacionados || [])
-    .map(id => productos.find(x => x.id === id))
-    .filter(Boolean);
-  if (rel.length) {
-    html += fichaBloque('Productos relacionados',
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
-      '<div class="ficha-rel">' +
-        rel.map(r => `<button class="ficha-rel-item" type="button" onclick="abrirModal('${r.id}')">
-          <img class="ficha-rel-img" src="${r.img}" alt="" loading="lazy">
-          <span class="ficha-rel-txt">
-            <span class="ficha-rel-nom">${r.nombre}</span>
-            <span class="ficha-rel-precio">S/ ${r.precio}</span>
-          </span>
-        </button>`).join('') +
-      '</div>');
-  }
-
-  /* Productos complementarios (Fase 3): de OTRA categoría, con
-     botón para agregar al carrito sin salir de la ficha. */
-  const comp = (d.complementarios || [])
-    .map(id => productos.find(x => x.id === id))
-    .filter(Boolean);
+  /* ---- SUELE COMBINARSE CON (complementarios) ----
+     Va antes que los relacionados: es lo que sube el ticket. */
+  const comp = (d.complementarios || []).map(id => productos.find(x => x.id === id)).filter(Boolean);
   if (comp.length) {
-    html += fichaBloque('Suele combinarse con',
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>',
-      '<div class="ficha-comp">' +
-        comp.map(c => `<div class="ficha-comp-item">
-          <img class="ficha-comp-img" src="${c.img}" alt="" loading="lazy" onclick="abrirModal('${c.id}')">
-          <div class="ficha-comp-txt" onclick="abrirModal('${c.id}')">
-            <div class="ficha-comp-nom">${c.nombre}</div>
-            <div class="ficha-comp-precio">S/ ${c.precio}</div>
-          </div>
-          <button class="ficha-comp-btn" type="button" onclick="agregarACotizacion('${c.id}',true)" title="Agregar al carrito">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-            Agregar
-          </button>
-        </div>`).join('') +
-      '</div>');
+    html += '<div class="mp-sec">' +
+      '<div class="mp-sec-h">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>' +
+        'Suele combinarse con' +
+      '</div>' +
+      '<div class="mp-combina"><div class="ficha-comp">' + comp.map(c =>
+        '<div class="ficha-comp-item">' +
+          '<img class="ficha-comp-img" src="' + c.img + '" alt="" loading="lazy" onclick="abrirModal(\'' + c.id + '\')">' +
+          '<div class="ficha-comp-txt" onclick="abrirModal(\'' + c.id + '\')">' +
+            '<div class="ficha-comp-nom">' + c.nombre + '</div>' +
+            '<div class="ficha-comp-precio">S/ ' + c.precio + '</div>' +
+          '</div>' +
+          '<button class="ficha-comp-btn" type="button" onclick="agregarACotizacion(\'' + c.id + '\',true)">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Agregar' +
+          '</button>' +
+        '</div>').join('') + '</div></div>' +
+    '</div>';
   }
 
-  if (d.articulos && d.articulos.length) {
-    html += fichaBloque('Artículos relacionados del BariBlog',
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
-      '<div class="ficha-art">' +
-        d.articulos.map(a => `<button class="ficha-art-item" type="button" onclick="cerrarModal();${a.fn}()">
-          <span class="ficha-art-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          </span>
-          <span>
-            <span class="ficha-art-tag">${a.tag}</span>
-            <span class="ficha-art-tit" style="display:block">${a.titulo}</span>
-          </span>
-        </button>`).join('') +
-      '</div>');
+  /* ---- PRODUCTOS RELACIONADOS (carrusel) ---- */
+  const rel = (d.relacionados || []).map(id => productos.find(x => x.id === id)).filter(Boolean);
+  if (rel.length) {
+    html += '<div class="mp-sec">' +
+      '<div class="mp-sec-h">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
+        'También te puede servir' +
+      '</div>' +
+      '<div class="mp-carru">' + rel.map(r =>
+        '<div class="mp-rel">' +
+          '<img src="' + r.img + '" alt="' + r.nombre + '" loading="lazy" onclick="abrirModal(\'' + r.id + '\')">' +
+          '<div class="mp-rel-nom" onclick="abrirModal(\'' + r.id + '\')">' + r.nombre + '</div>' +
+          '<div class="mp-rel-precio">S/ ' + r.precio + '</div>' +
+          '<button class="mp-rel-btn" type="button" onclick="agregarACotizacion(\'' + r.id + '\',true)">Agregar</button>' +
+        '</div>').join('') + '</div>' +
+    '</div>';
   }
+
+  /* ---- ARTÍCULOS DEL BARIBLOG (compactos) ---- */
+  if (d.articulos && d.articulos.length) {
+    html += '<div class="mp-sec">' +
+      '<div class="mp-sec-h">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>' +
+        'Para leer más' +
+      '</div>' +
+      d.articulos.map(a => '<button class="mp-art" type="button" onclick="cerrarModal();' + a.fn + '()">' +
+        '<span class="mp-art-mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>' +
+        '<span><span class="mp-art-cat">' + a.tag + '</span><span class="mp-art-tit" style="display:block">' + a.titulo + '</span></span>' +
+      '</button>').join('') +
+    '</div>';
+  }
+
+  /* ---- Leyenda obligatoria ---- */
+  html += '<div class="mp-legal">' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>' +
+    '<span>' + d.leyenda + '</span>' +
+  '</div>';
 
   return html;
 }
 
+/* ============================================================
+   FICHA DE PRODUCTO — PRESENTACIÓN
+   ------------------------------------------------------------
+   Todo lo de aquí abajo REORDENA datos que ya existen. No crea
+   información: si un producto no tiene un dato, ese bloque
+   simplemente no aparece.
+
+   Origen de cada cosa:
+     · chips de etapa y cirugía → productos-info.js
+     · características          → p.tags (del catálogo)
+     · marca, precio, imagen    → el producto
+     · pasos de consumo         → p.uso, partido por frases
+   ============================================================ */
+
+/* Chips de información clave, bajo el nombre. */
+function pintarDatosClave(p) {
+  const cont = document.getElementById('mDatos');
+  if (!cont) return;
+
+  const info = window.ZB_PRODUCTO_INFO
+    ? window.ZB_PRODUCTO_INFO.obtener(p, productos) : null;
+  const grupos = [];
+
+  if (info && info.etiquetasCirugia && info.etiquetasCirugia.length) {
+    grupos.push({ tit: 'Compatible con', cls: 'cir', items: info.etiquetasCirugia });
+  }
+  if (info && info.etiquetasEtapa && info.etiquetasEtapa.length) {
+    grupos.push({ tit: 'Etapa', cls: 'eta', items: info.etiquetasEtapa });
+  }
+  /* Las características vienen de p.tags, tal cual están escritas. */
+  if (p.tags && p.tags.length) {
+    grupos.push({ tit: 'Características', cls: 'car', items: p.tags });
+  }
+
+  if (!grupos.length) { cont.innerHTML = ''; return; }
+
+  cont.innerHTML = '<div class="mp-datos">' + grupos.map(g =>
+    `<div class="mp-dato-grupo">
+       <div class="mp-dato-tit">${g.tit}</div>
+       <div class="mp-chips">${g.items.map(i => `<span class="mp-chip ${g.cls}">${i}</span>`).join('')}</div>
+     </div>`).join('') + '</div>';
+}
+
+/* Descripción: 3 líneas y "Ver más" si hay texto de sobra. */
+function plegarDescripcion() {
+  const desc = document.getElementById('mDesc');
+  const wrap = document.getElementById('mDescWrap');
+  if (!desc || !wrap) return;
+
+  const btnPrevio = wrap.querySelector('.mp-vermas');
+  if (btnPrevio) btnPrevio.remove();
+  desc.classList.remove('mp-desc-corta');
+
+  /* Solo se pliega si de verdad sobra texto. */
+  if (desc.scrollHeight <= desc.clientHeight + 4) return;
+
+  desc.classList.add('mp-desc-corta');
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'mp-vermas';
+  btn.setAttribute('aria-expanded', 'false');
+  btn.innerHTML = '<span>Ver más</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+  btn.onclick = function () {
+    const abierto = !desc.classList.contains('mp-desc-corta');
+    desc.classList.toggle('mp-desc-corta', abierto);
+    btn.classList.toggle('abierto', !abierto);
+    btn.setAttribute('aria-expanded', String(!abierto));
+    btn.querySelector('span').textContent = abierto ? 'Ver más' : 'Ver menos';
+  };
+  desc.insertAdjacentElement('afterend', btn);
+}
+
+/* Modo de uso → pasos numerados.
+   Se parte el texto por frases; NO se cambian cantidades ni
+   palabras: solo se reparte en líneas para que se lea mejor. */
+function pintarPasosUso(p) {
+  const el = document.getElementById('mUso');
+  if (!el || !p.uso) return;
+
+  const frases = p.uso.split(/\.\s+/).map(f => f.trim()).filter(Boolean);
+  /* Con una sola frase no hay pasos que numerar: se deja el texto. */
+  if (frases.length < 2) {
+    el.innerHTML =
+      '<div class="mp-sec-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l-1 9a4 4 0 0 1-6 0z"/><path d="M12 11v11M8 22h8"/></svg>Forma de consumo</div>' +
+      '<p class="mp-benef-txt">' + p.uso + '</p>';
+    el.className = 'mp-sec';
+    el.style.display = '';
+    return;
+  }
+
+  el.className = 'mp-sec';
+  el.style.display = '';
+  el.innerHTML =
+    '<div class="mp-sec-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l-1 9a4 4 0 0 1-6 0z"/><path d="M12 11v11M8 22h8"/></svg>Forma de consumo</div>' +
+    '<div class="mp-pasos">' +
+      frases.map((f, i) => {
+        const texto = f.endsWith('.') ? f : f + '.';
+        return `<div class="mp-paso">
+          <span class="mp-paso-n">${i + 1}</span>
+          <span class="mp-paso-txt">${texto}</span>
+        </div>`;
+      }).join('') +
+    '</div>';
+}
+
+/* Barra de compra fija en móvil. Reutiliza el precio y el enlace
+   de WhatsApp que ya calculó abrirModal(). */
+function pintarBarraCompra(p) {
+  const val = document.getElementById('mBarraPrecio');
+  const wa = document.getElementById('mBarraWA');
+  if (val) val.textContent = 'S/ ' + p.precio;
+  const enlaceWA = document.getElementById('mWA');
+  if (wa && enlaceWA) wa.href = enlaceWA.href;
+}
+
+/* El corazón del modal refleja el estado real de favoritos. */
+function sincronizarFavModal(p) {
+  const btn = document.getElementById('mFav');
+  if (!btn) return;
+  const activo = favoritosSet.has(p.id);
+  btn.classList.toggle('activo', activo);
+  btn.querySelector('span').textContent = activo ? 'Guardado' : 'Favorito';
+  btn.setAttribute('aria-pressed', String(activo));
+}
+
+/* Usa la MISMA función de favoritos del catálogo: no se duplica
+   la lógica de sesión ni el guardado en Supabase. */
+async function favDesdeModal(e) {
+  if (!currentModalId) return;
+  await toggleFavorito(currentModalId, e);
+  const p = productos.find(x => x.id === currentModalId);
+  if (p) sincronizarFavModal(p);
+}
+
 /* Abre y cierra una pregunta de la ficha. Una a la vez. */
 function toggleFichaFaq(btn) {
-  const item = btn.closest('.ficha-faq-item');
+  /* Acordeón de las preguntas de la ficha. Una abierta a la vez,
+     y solo dentro de su propio grupo: así no cierra la tabla
+     nutricional, que usa el mismo estilo pero otra sección. */
+  const item = btn.closest('.mp-acc');
+  if (!item) return;
   const cont = item.parentElement;
   const abierto = item.classList.contains('abierto');
-  cont.querySelectorAll('.ficha-faq-item.abierto').forEach(o => {
+
+  cont.querySelectorAll(':scope > .mp-acc.abierto').forEach(o => {
     o.classList.remove('abierto');
-    o.querySelector('.ficha-faq-q').setAttribute('aria-expanded', 'false');
+    const h = o.querySelector('.mp-acc-h');
+    if (h) h.setAttribute('aria-expanded', 'false');
   });
+
   if (!abierto) {
     item.classList.add('abierto');
     btn.setAttribute('aria-expanded', 'true');
