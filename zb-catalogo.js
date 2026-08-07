@@ -474,6 +474,7 @@ const productos = [
     tags:["27g proteína","Stevia natural","Sin gluten","Sin azúcares","Apto bariátrico"],
     precio:209,
     img: LVL+"proteina-vainilla.jpg",
+    galeria: [LVL+"proteina-vainilla.jpg", "img/tn-lvl-proteina-vainilla.jpg"],
     uso:"Disolver 1 scoop (40g) en 250ml de agua. Consumir una vez al día.",
     tn: tn.lvl_pro },
 
@@ -484,6 +485,7 @@ const productos = [
     tags:["27g proteína","100% cacao","Stevia natural","Sin gluten","Apto bariátrico"],
     precio:209,
     img: LVL+"proteina-chocolate.jpg",
+    galeria: [LVL+"proteina-chocolate.jpg", "img/tn-lvl-proteina-chocolate.jpg"],
     uso:"Disolver 1 scoop (40g) en 250ml de agua. Consumir una vez al día.",
     tn: tn.lvl_pro },
 
@@ -493,6 +495,7 @@ const productos = [
     tags:["9g colágeno","10,000 mcg biotina","Camu camu","Sabor arándano","Apto bariátrico"],
     precio:109,
     img: LVL+"colageno.jpg",
+    galeria: [LVL+"colageno.jpg", "img/tn-lvl-colageno.jpg"],
     uso:"Disolver 1 scoop (12g) en 250ml de agua al día. Se recomienda consumir en ayunas o antes de acostarse.",
     tn: tn.lvl_col },
 
@@ -502,6 +505,7 @@ const productos = [
     tags:["6g fibra","Fibra inulina","Sabor manzana verde","Sin azúcares","Apto bariátrico"],
     precio:79,
     img: LVL+"fibra.jpg",
+    galeria: [LVL+"fibra.jpg", "img/tn-lvl-fibra.jpg"],
     uso:"Disolver 1 scoop (10g) en 250ml de agua al día.",
     tn: tn.lvl_fib }
 ];
