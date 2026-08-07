@@ -400,16 +400,22 @@
 
   var CSS = ''
     /* ---------- BOTÓN FLOTANTE (avatar ya existente) ---------- */
+    /* Círculo limpio: borde blanco de 2px y una sombra apenas
+       perceptible. Nada de contornos oscuros.
+       (La imagen zoe.png viene recortada en círculo con el fondo
+       transparente; antes tenía las esquinas negras y se veía un
+       anillo oscuro alrededor del avatar.) */
     + '#zb-fab{position:fixed;bottom:24px;left:24px;z-index:998;width:64px;height:64px;border-radius:50%;'
-    + 'background:#fff;border:2px solid #fff;cursor:pointer;box-shadow:0 4px 16px rgba(16,24,40,.20);'
-    + 'display:flex;align-items:center;justify-content:center;padding:0;'
+    + 'background:#fff;border:2px solid #fff;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.08);'
+    + 'display:flex;align-items:center;justify-content:center;padding:0;overflow:visible;'
     + 'transition:transform .2s ease,box-shadow .2s ease;-webkit-tap-highlight-color:transparent}'
     /* La foto llena el botón; el recorte circular lo da el propio botón. */
-    + '.zb-fab-foto{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}'
+    + '.zb-fab-foto{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;'
+    + 'background:#fff}'
     /* Punto verde de "disponible": sugiere que hay alguien al otro lado. */
     + '#zb-fab::after{content:"";position:absolute;right:2px;bottom:4px;width:14px;height:14px;'
     + 'border-radius:50%;background:' + C.verde + ';border:2.5px solid #fff}'
-    + '#zb-fab:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(16,24,40,.28)}'
+    + '#zb-fab:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,.14)}'
     + '#zb-fab:active{transform:translateY(-1px)}'
     + '#zb-fab:focus-visible{outline:3px solid rgba(37,99,235,.45);outline-offset:3px}'
     + '#zb-fab.oculto{display:none}'

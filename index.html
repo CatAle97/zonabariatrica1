@@ -2986,6 +2986,16 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .mp-thumb.activa { border-color: var(--blue); box-shadow: 0 0 0 2px var(--blue-ring); }
 .mp-thumb:focus-visible { outline: 3px solid var(--blue-ring); outline-offset: 2px; }
 
+/* Al ver una tabla nutricional el recuadro crece: son imágenes
+   altas y llenas de texto pequeño, y a 380px no se leía nada.
+   La foto del producto no lo necesita, por eso solo se aplica
+   cuando la foto activa no es la primera. */
+.modal-img-wrap.viendo-tabla { height: 560px; }
+@media (max-width: 900px) { .modal-img-wrap.viendo-tabla { height: 460px; } }
+@media (max-width: 560px) { .modal-img-wrap.viendo-tabla { height: 400px; } }
+.modal-img-wrap { transition: height var(--t-slow); }
+@media (prefers-reduced-motion: reduce) { .modal-img-wrap { transition: none; } }
+
 /* --- Modo de uso compacto (ficha simple) --- */
 .mp-uso-card {
   display: flex; align-items: center; gap: var(--s-3);
@@ -7388,9 +7398,16 @@ function verFoto(btn, src) {
   if (!img) return;
   img.src = src;
   if (typeof resetZoom === 'function') resetZoom();
+
   const cont = btn.parentElement;
-  cont.querySelectorAll('.mp-thumb').forEach(t => t.classList.remove('activa'));
+  const fotos = [...cont.querySelectorAll('.mp-thumb')];
+  fotos.forEach(t => t.classList.remove('activa'));
   btn.classList.add('activa');
+
+  /* La primera foto es el producto; el resto son etiquetas y
+     tablas, que necesitan más alto para poder leerse. */
+  const wrap = document.getElementById('mImgWrap');
+  if (wrap) wrap.classList.toggle('viendo-tabla', fotos.indexOf(btn) > 0);
 }
 
 /* Chips de información clave, bajo el nombre.
