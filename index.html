@@ -792,6 +792,24 @@ a.nav-link {
   background: var(--success-bg); border-radius: var(--r-pill); padding: 2px 8px;
 }
 
+/* Productos recién llegados que todavía no tienen precio.
+   Ocupa el lugar del precio, pero más discreto: no compite
+   visualmente con los productos que sí se pueden comprar. */
+.precio-consultar {
+  font-size: 16px; font-weight: 600; color: var(--text-light);
+  letter-spacing: -0.01em;
+}
+/* En la ficha sí manda: ahí es la información principal, así que
+   conserva el tamaño del precio. Se declara con las dos clases
+   para no depender del orden en que se escriban las reglas. */
+.modal-precio.precio-consultar {
+  font-size: 30px; color: var(--text); font-weight: 700;
+}
+.modal-precio-nota {
+  font-size: 12.5px; color: var(--text-light); line-height: 1.5;
+  margin-top: var(--s-1); max-width: 42ch;
+}
+
 /* --- BOTONERA: Agregar principal (azul), Ver secundario (outline azul) --- */
 .card-btns { display: flex; gap: var(--s-2); margin-top: auto; padding-top: var(--s-3); }
 .btn-ver-sm {
@@ -813,6 +831,18 @@ a.nav-link {
   background: var(--blue-hover); box-shadow: var(--shadow-blue); transform: translateY(-1px);
 }
 .btn-agregar:active { transform: translateY(0); box-shadow: 0 1px 2px rgba(37,99,235,0.18); }
+
+/* Mismo botón, pero para los productos sin precio: lleva a
+   WhatsApp en vez de al carrito. Se distingue en verde para que
+   nadie espere que se agregue al pedido. */
+.btn-consultar {
+  background: var(--success);
+  box-shadow: 0 1px 2px rgba(22,163,74,0.18);
+}
+.btn-consultar:hover {
+  background: #166534; box-shadow: 0 4px 12px rgba(22,163,74,0.22);
+}
+.btn-consultar:active { box-shadow: 0 1px 2px rgba(22,163,74,0.18); }
 
 /* CART BUTTON */
 .cart-btn {
@@ -5310,6 +5340,7 @@ function actualizarSubfiltros(f) {
         <span class="subfiltros-label">Formato:</span>
         <button class="sub-btn sv-fmt active" data-fmt="todos" onclick="filtrarVitFormato('todos')">Todos</button>
         <button class="sub-btn sv-fmt" data-fmt="gomitas" onclick="filtrarVitFormato('gomitas')">Gomitas</button>
+        <button class="sub-btn sv-fmt" data-fmt="tabletas" onclick="filtrarVitFormato('tabletas')">Tabletas</button>
         <button class="sub-btn sv-fmt" data-fmt="capsulas" onclick="filtrarVitFormato('capsulas')">Cápsulas</button>
       </div>`;
     el.style.display = 'flex';
@@ -5625,9 +5656,33 @@ function badgesEtapaHTML(p, max) {
     '</div>';
 }
 
+/* Productos que aún no tienen precio (llegada reciente).
+   ------------------------------------------------------------
+   En vez de mostrar un precio vacío o dejarlos fuera del
+   catálogo, se muestran con "Consultar precio" y el botón lleva
+   a WhatsApp. No entran al carrito, así que el total del pedido
+   nunca se descuadra. En cuanto el producto tenga precio en
+   zb-catalogo.js, vuelve solo al comportamiento normal. */
+function sinPrecio(p) {
+  return !!(p && (p.consultar || p.precio == null));
+}
+
+function enlaceConsulta(p) {
+  return 'https://wa.me/' + WA + '?text=' +
+    encodeURIComponent('Hola Zoe 👋 Quiero consultar el precio de: ' + p.nombre);
+}
+
+function consultarPrecio(id, e) {
+  if (e) e.stopPropagation();
+  const p = productos.find(x => x.id === id);
+  if (!p) return;
+  window.open(enlaceConsulta(p), '_blank', 'noopener');
+}
+
 function cardHTML(p) {
   const pack = p.tipo === 'pack';
   const oferta = p.tipo === 'oferta';
+  const consultar = sinPrecio(p);
   // Escarapela de Fiestas Patrias: desactivada tras el 29-07. Para reactivarla
   // el próximo julio, restaurar: ${'$'}{(oferta || p.fiestas) ? ESCARAPELA_SVG : ''}
   return `<div class="card${pack?' pack':''}${oferta?' oferta':''}">
@@ -5642,13 +5697,17 @@ function cardHTML(p) {
       ${badgesEtapaHTML(p, 2)}
       <span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>
       <div class="precio-area">
-        <div class="precio">S/ ${p.precio}</div>
+        ${consultar
+          ? `<div class="precio precio-consultar">Consultar precio</div>`
+          : `<div class="precio">S/ ${p.precio}</div>
         ${p.precioN ? `<div class="precio-normal">S/ ${p.precioN}</div>` : ''}
-        ${(p.ahorro && !pack && !oferta) ? `<span class="precio-ahorro">−S/ ${p.ahorro}</span>` : ''}
+        ${(p.ahorro && !pack && !oferta) ? `<span class="precio-ahorro">−S/ ${p.ahorro}</span>` : ''}`}
       </div>
       <div class="card-btns">
         <button class="btn-ver-sm" onclick="abrirModal('${p.id}')">${__('btn_ver')}</button>
-        <button class="btn-agregar" onclick="agregarACotizacion('${p.id}',true)">+ ${__('btn_agregar')}</button>
+        ${consultar
+          ? `<button class="btn-agregar btn-consultar" onclick="consultarPrecio('${p.id}',event)">Consultar</button>`
+          : `<button class="btn-agregar" onclick="agregarACotizacion('${p.id}',true)">+ ${__('btn_agregar')}</button>`}
       </div>
     </div>
   </div>`;
@@ -5694,10 +5753,22 @@ function abrirModal(id) {
   document.getElementById('mTags').innerHTML = (p.tags||[]).map(t=>`<span class="modal-tag">${t}</span>`).join('');
 
   const esOferta = p.tipo === 'oferta';
-  let ph = `<div class="modal-precio" style="${esOferta ? 'color:#DC2626' : ''}">S/ ${p.precio}</div>`;
-  if (p.precioN) ph += `<div class="modal-precio-normal">S/ ${p.precioN}</div>`;
-  if (p.ahorro)  ph += `<div class="modal-ahorro" style="${esOferta ? 'color:#DC2626;font-weight:700' : ''}">Ahorra S/ ${p.ahorro}</div>`;
+  const consultar = sinPrecio(p);
+  let ph;
+  if (consultar) {
+    ph = `<div class="modal-precio precio-consultar">Consultar precio</div>
+          <div class="modal-precio-nota">Producto recién llegado. Escríbenos por WhatsApp y te confirmamos precio y disponibilidad.</div>`;
+  } else {
+    ph = `<div class="modal-precio" style="${esOferta ? 'color:#DC2626' : ''}">S/ ${p.precio}</div>`;
+    if (p.precioN) ph += `<div class="modal-precio-normal">S/ ${p.precioN}</div>`;
+    if (p.ahorro)  ph += `<div class="modal-ahorro" style="${esOferta ? 'color:#DC2626;font-weight:700' : ''}">Ahorra S/ ${p.ahorro}</div>`;
+  }
   document.getElementById('mPrecio').innerHTML = ph;
+
+  /* Sin precio no se puede agregar al carrito: se oculta el botón
+     y la consulta por WhatsApp queda como acción principal. */
+  const btnCarrito = document.querySelector('.modal-cart-btn');
+  if (btnCarrito) btnCarrito.style.display = consultar ? 'none' : '';
 
   const tnBtn  = document.getElementById('tnBtn');
   const tnBody = document.getElementById('tnBody');
@@ -5749,8 +5820,10 @@ function abrirModal(id) {
   pintarBarraCompra(p);
   sincronizarFavModal(p);
 
-  const msg = encodeURIComponent('Hola! Quiero pedir: ' + p.nombre + ' — S/ ' + p.precio);
-  document.getElementById('mWA').href = 'https://wa.me/' + WA + '?text=' + msg;
+  document.getElementById('mWA').href = consultar
+    ? enlaceConsulta(p)
+    : 'https://wa.me/' + WA + '?text=' +
+      encodeURIComponent('Hola! Quiero pedir: ' + p.nombre + ' — S/ ' + p.precio);
 
   // Selector de sabores
   const mSabores = document.getElementById('mSabores');
@@ -5976,6 +6049,10 @@ function _agregarDirecto(id, silencioso) {
 
 function agregarACotizacion(id, silencioso = false) {
   const prod = productos.find(x => x.id === id);
+  /* Red de seguridad: si un producto todavía no tiene precio, no
+     entra al carrito por ninguna vía (tarjeta, buscador, selector);
+     se deriva a WhatsApp para que el total nunca quede mal sumado. */
+  if (sinPrecio(prod)) { consultarPrecio(id); return; }
   if (prod && ((prod.seleccionSabor && prod.seleccionSabor.length) || (prod.sabores && prod.sabores.length > 1))) {
     mostrarSaborPopup(id);
     return;
@@ -5985,6 +6062,8 @@ function agregarACotizacion(id, silencioso = false) {
 
 function agregarDesdeModalCot() {
   if (!currentModalId) return;
+  const prodModal = productos.find(x => x.id === currentModalId);
+  if (sinPrecio(prodModal)) { consultarPrecio(currentModalId); return; }
   const notas = obtenerNotasSabor();
   const idx = carrito.findIndex(i => i.id === currentModalId);
   if (idx >= 0) { carrito[idx].qty++; if (notas) carrito[idx].notas = notas; }
@@ -7542,9 +7621,21 @@ function pintarPasosUso(p) {
 function pintarBarraCompra(p) {
   const val = document.getElementById('mBarraPrecio');
   const wa = document.getElementById('mBarraWA');
-  if (val) val.textContent = 'S/ ' + p.precio;
-  const enlaceWA = document.getElementById('mWA');
-  if (wa && enlaceWA) wa.href = enlaceWA.href;
+  const consultar = sinPrecio(p);
+
+  if (val) {
+    val.textContent = consultar ? 'Consultar' : 'S/ ' + p.precio;
+    val.classList.toggle('precio-consultar', consultar);
+  }
+
+  /* Arma su propio enlace en vez de copiar el de #mWA: ese aún
+     conserva el href del producto anterior cuando se pinta la barra. */
+  if (wa) {
+    wa.href = consultar
+      ? enlaceConsulta(p)
+      : 'https://wa.me/' + WA + '?text=' +
+        encodeURIComponent('Hola! Quiero pedir: ' + p.nombre + ' — S/ ' + p.precio);
+  }
 }
 
 /* El corazón del modal refleja el estado real de favoritos. */

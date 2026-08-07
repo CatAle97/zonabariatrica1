@@ -14,6 +14,7 @@
    ========================================================= */
 const BN = "img/bn-";
 const LVL = "img/lvl-";
+const BF = "img/bf-";
 
 const tn = {
   fibra_bn: {
@@ -511,7 +512,34 @@ const productos = [
     img: LVL+"fibra.jpg",
     galeria: [LVL+"fibra.jpg", "img/tn-lvl-fibra.jpg"],
     uso:"Disolver 1 scoop (10g) en 250ml de agua al día.",
-    tn: tn.lvl_fib }
+    tn: tn.lvl_fib },
+
+  /* BARIATRIC FUSION — recién llegados, todavía sin precio.
+     ---------------------------------------------------------
+     Llevan "consultar:true": mientras esa línea esté, la tienda
+     muestra "Consultar precio" y el botón manda a WhatsApp en
+     lugar de agregarlos al carrito. Así se ven y generan
+     consultas sin romper el total del pedido.
+
+     CUANDO TENGAS EL PRECIO: borra la línea consultar:true y
+     escribe precio:XXX — con eso pasan a venderse como
+     cualquier otro producto, sin tocar nada más.
+
+     No llevan "uso" ni "tn" porque el envase no indica dosis
+     ni tabla; se agregan cuando llegue la información oficial. */
+  { id:"bf1", tipo:"bf", marcaTipo:"bf", cat:"vitaminas", subcat:"multivit", formato:"tabletas", marca:"Bariatric Fusion",
+    consultar:true,
+    nombre:"Multivitamínico Completo Tropical — 120 tabletas",
+    desc:"Multivitamínico completo en tabletas masticables, sabor tropical. Envase de 120 tabletas. Escríbenos para conocer disponibilidad y precio.",
+    tags:["120 tabletas","Masticables","Sabor tropical","Suplemento dietético"],
+    img: BF+"multivit-tropical.png" },
+
+  { id:"bf2", tipo:"bf", marcaTipo:"bf", cat:"vitaminas", subcat:"multivit", formato:"tabletas", marca:"Bariatric Fusion",
+    consultar:true,
+    nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas",
+    desc:"Multivitamínico completo en tabletas masticables, sabor bayas mixtas. Envase de 120 tabletas. Escríbenos para conocer disponibilidad y precio.",
+    tags:["120 tabletas","Masticables","Sabor bayas mixtas","Suplemento dietético"],
+    img: BF+"multivit-bayas.png" }
 ];
 
 /* Se publica en window para que lo lean otras páginas

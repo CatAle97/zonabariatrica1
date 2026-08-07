@@ -144,13 +144,17 @@
     });
 
     /* Orden por relevancia según cirugía; a igualdad, el más
-       barato primero (entrada más accesible). */
+       barato primero (entrada más accesible). Los productos que
+       todavía no tienen precio van al final: restarlos daría NaN
+       y dejaría el orden a merced del navegador. */
     var pesos = RELEVANCIA[sel.cirugia] || {};
     return lista.sort(function (a, b) {
       var pa = pesos[a.id] || pesos[OBJETIVO_POR_FAMILIA[familiaDe(a)]] || 0;
       var pb = pesos[b.id] || pesos[OBJETIVO_POR_FAMILIA[familiaDe(b)]] || 0;
       if (pb !== pa) return pb - pa;
-      return a.precio - b.precio;
+      var ca = (a.precio == null) ? Infinity : a.precio;
+      var cb = (b.precio == null) ? Infinity : b.precio;
+      return ca - cb;
     });
   }
 
