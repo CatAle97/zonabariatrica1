@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Hidratación Bariátrica | Cuánta Agua al Día — Zona Bariátrica</title>
+<meta name="description" content="Calcula un rango orientativo de agua al día según tu peso y tu nivel de actividad física, con pautas de hidratación para pacientes bariátricos. Herramienta educativa gratuita.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://zonabariatrica.com/calculadora-hidratacion">
+<meta property="og:title" content="Calculadora de Hidratación Bariátrica — Zona Bariátrica">
+<meta property="og:description" content="¿Cuánta agua al día después de tu cirugía bariátrica? Calcula un rango orientativo y aprende a tomarla sin molestias.">
+<meta property="og:image" content="https://raw.githubusercontent.com/zonabariatrica/zonabariatrica1/main/img/logo-og.png">
+<meta property="og:url" content="https://zonabariatrica.com/calculadora-hidratacion">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zona Bariátrica">
+<meta property="og:locale" content="es_PE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Calculadora de Hidratación Bariátrica">
+<meta name="twitter:description" content="Calcula un rango orientativo de agua diaria según tu peso y actividad física.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/zonabariatrica/zonabariatrica1/main/img/logo-og.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DB7VQ9PWM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3DB7VQ9PWM');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://zonabariatrica.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Recursos Bariátricos", "item": "https://zonabariatrica.com/recursos"},
+    {"@type": "ListItem", "position": 3, "name": "Calculadora de Hidratación", "item": "https://zonabariatrica.com/calculadora-hidratacion"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calculadora de Hidratación Bariátrica",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "url": "https://zonabariatrica.com/calculadora-hidratacion",
+  "inLanguage": "es",
+  "description": "Herramienta educativa que estima un rango orientativo de ingesta diaria de líquidos a partir del peso y el nivel de actividad física. No sustituye la indicación de un profesional de la salud.",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "PEN"},
+  "publisher": {"@type": "Organization", "name": "Zona Bariátrica", "url": "https://zonabariatrica.com"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Por qué cuesta tanto hidratarse después de una cirugía bariátrica?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Porque el estómago admite volúmenes muy pequeños en cada toma. Beber un vaso completo de una vez suele resultar incómodo, de modo que lo habitual es repartir el total del día en sorbos frecuentes. Alcanzar el objetivo diario suele requerir constancia durante las primeras semanas."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Se puede tomar agua durante las comidas?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Es frecuente que los equipos bariátricos indiquen separar los líquidos de las comidas, habitualmente unos treinta minutos antes y después, para no ocupar con líquido el espacio disponible y favorecer la tolerancia. La pauta concreta la establece el profesional que hace el seguimiento."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué bebidas se suelen desaconsejar?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Con frecuencia se desaconsejan las bebidas con gas, las azucaradas y el alcohol, y se recomienda moderar las que contienen cafeína. El agua sigue siendo la referencia principal de hidratación. Cada equipo médico puede ajustar estas indicaciones."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo saber si estoy bebiendo suficiente?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Señales como orina oscura, boca seca, dolor de cabeza, mareo o cansancio marcado pueden orientar sobre una hidratación insuficiente. Si aparecen de forma persistente, corresponde consultarlo con el equipo médico y no ajustar la ingesta por cuenta propia."}
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="zb-herramientas.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="/">
+      <img src="img/logo-zb.png" alt="Zona Bariátrica">
+      <div>
+        <div class="logo-name">ZONA BARIÁTRICA</div>
+        <div class="logo-tagline">Suplementos Bariátricos</div>
+      </div>
+    </a>
+    <nav class="cats">
+      <a href="/">Tienda</a>
+      <a href="/recursos" class="active">Recursos</a>
+      <a href="/proteinas">Proteínas</a>
+      <a href="/vitaminas">Vitaminas</a>
+      <a href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
+      <a href="/packs">Packs</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="crumbs" aria-label="Ruta de navegación">
+  <a href="/">Inicio</a>
+  <span class="sep">/</span>
+  <a href="/recursos">Recursos</a>
+  <span class="sep">/</span>
+  <span aria-current="page">Calculadora de Hidratación</span>
+</nav>
+
+<section class="pg-hero">
+  <span class="pg-eyebrow">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6 5.4 6 10.1a6 6 0 0 1-12 0C6 8.1 12 2.7 12 2.7z"/></svg>
+    Herramienta educativa
+  </span>
+  <h1>Calculadora de <em>Hidratación</em></h1>
+  <p class="pg-lead">
+    Cuánta agua al día suele manejarse según tu peso y tu actividad física.
+    La deshidratación es una de las causas más frecuentes de malestar en los primeros meses.
+  </p>
+</section>
+
+<div class="calc-grid">
+
+  <form class="calc-form" id="formAgua" novalidate>
+    <h2 style="font-size:var(--fs-h3);font-weight:600;margin-bottom:24px">Tus datos</h2>
+
+    <div class="campo">
+      <label for="pesoAgua">Peso</label>
+      <div class="input-uni">
+        <input type="number" id="pesoAgua" name="peso" min="30" max="300" step="0.1"
+               inputmode="decimal" placeholder="Por ejemplo: 82" autocomplete="off" required>
+        <span class="uni">kg</span>
+      </div>
+      <p class="campo-ayuda">Tu peso actual en kilos.</p>
+    </div>
+
+    <div class="campo">
+      <span class="campo-titulo" id="lblAct">Nivel de actividad física</span>
+      <div class="opciones" role="radiogroup" aria-labelledby="lblAct">
+        <label class="opcion">
+          <input type="radio" name="actividad" value="baja" required>
+          <span class="opcion-tit">Baja</span>
+          <span class="opcion-sub">Vida sedentaria o reposo post operatorio</span>
+        </label>
+        <label class="opcion">
+          <input type="radio" name="actividad" value="media">
+          <span class="opcion-tit">Moderada</span>
+          <span class="opcion-sub">Caminatas o ejercicio suave algunos días</span>
+        </label>
+        <label class="opcion">
+          <input type="radio" name="actividad" value="alta">
+          <span class="opcion-tit">Alta</span>
+          <span class="opcion-sub">Ejercicio regular o trabajo físico</span>
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-zb btn-zb-primario" style="width:100%;margin-top:8px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6 5.4 6 10.1a6 6 0 0 1-12 0C6 8.1 12 2.7 12 2.7z"/></svg>
+      Calcular mi rango
+    </button>
+  </form>
+
+  <div class="calc-out" id="resAgua" aria-live="polite">
+    <div class="res-vacio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6 5.4 6 10.1a6 6 0 0 1-12 0C6 8.1 12 2.7 12 2.7z"/></svg>
+      <div>Completa tus datos y pulsa <strong>Calcular mi rango</strong>.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="zb-wrap" style="max-width:1040px;margin-top:32px">
+  <div class="aviso">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+    <div>
+      <strong>Las recomendaciones pueden variar según cada paciente.</strong> El clima, la etapa
+      post operatoria, la medicación y otras condiciones de salud —especialmente las renales o
+      cardíacas— modifican la cantidad adecuada. Consulta siempre con tu médico o tu nutricionista.
+    </div>
+  </div>
+  <div class="btn-fila centrado" style="margin-top:24px">
+    <a class="btn-zb btn-zb-wa" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Us%C3%A9%20la%20calculadora%20de%20hidrataci%C3%B3n%20y%20tengo%20una%20consulta." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Hablar con Zoe
+    </a>
+  </div>
+</div>
+
+<section class="bloque" style="margin-top:32px">
+  <div class="bloque-header">
+    <h2>Pautas generales de hidratación</h2>
+    <p class="bloque-sub">Recomendaciones habituales para pacientes bariátricos.</p>
+  </div>
+  <div class="etapas">
+
+    <div class="etapa">
+      <div class="etapa-num">1</div>
+      <h3>Bebe a sorbos, durante todo el día</h3>
+      <p>El estómago admite poco volumen de una vez. Lo habitual es llevar siempre una botella
+      cerca y dar sorbos pequeños de forma continua, en lugar de intentar vasos completos.</p>
+    </div>
+
+    <div class="etapa">
+      <div class="etapa-num">2</div>
+      <h3>Separa los líquidos de las comidas</h3>
+      <p>Muchos equipos bariátricos indican dejar unos <strong>30 minutos antes y después</strong>
+      de cada comida sin beber, para no ocupar con líquido el espacio disponible y favorecer
+      la tolerancia de los alimentos.</p>
+    </div>
+
+    <div class="etapa">
+      <div class="etapa-num">3</div>
+      <h3>No esperes a tener sed</h3>
+      <p>Después de la cirugía la sensación de sed puede percibirse de forma distinta. Es
+      frecuente que se recomiende beber por horario y no por sensación.</p>
+    </div>
+
+    <div class="etapa">
+      <div class="etapa-num">4</div>
+      <h3>Cuidado con el gas, el azúcar y el alcohol</h3>
+      <p>Las bebidas gasificadas suelen generar molestias, y las azucaradas y alcohólicas
+      habitualmente se desaconsejan. La cafeína suele recomendarse con moderación.
+      El agua sigue siendo la referencia principal.</p>
+    </div>
+
+    <div class="etapa">
+      <div class="etapa-num">5</div>
+      <h3>Vigila las señales de deshidratación</h3>
+      <p>Orina oscura, boca seca, dolor de cabeza, mareo o cansancio marcado pueden indicar
+      hidratación insuficiente. Si aparecen de forma persistente, corresponde consultarlo
+      con tu equipo médico.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="bloque gris">
+  <div class="bloque-header">
+    <h2>Preguntas frecuentes sobre hidratación</h2>
+  </div>
+  <div class="zb-wrap" style="max-width:780px">
+    <div class="faq-lista">
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Por qué cuesta tanto hidratarse después de la cirugía?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in"><div class="faq-respuesta">
+          <p>Porque el estómago admite volúmenes muy pequeños en cada toma. Beber un vaso completo de una vez suele resultar incómodo, así que lo habitual es <strong>repartir el total del día en sorbos frecuentes</strong>.</p>
+          <p>Alcanzar el objetivo diario suele requerir constancia durante las primeras semanas.</p>
+        </div></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Se puede tomar agua durante las comidas?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in"><div class="faq-respuesta">
+          <p>Es frecuente que los equipos bariátricos indiquen <strong>separar los líquidos de las comidas</strong>, habitualmente unos treinta minutos antes y después.</p>
+          <p>La razón es no ocupar con líquido el poco espacio disponible y favorecer la tolerancia. La pauta concreta la establece el profesional que hace tu seguimiento.</p>
+        </div></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Qué bebidas se suelen desaconsejar?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in"><div class="faq-respuesta">
+          <p>Con frecuencia se desaconsejan las bebidas <strong>con gas, las azucaradas y el alcohol</strong>, y se recomienda moderar las que contienen cafeína.</p>
+          <p>El agua sigue siendo la referencia principal de hidratación. Cada equipo médico puede ajustar estas indicaciones según el caso.</p>
+        </div></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Cómo sé si estoy bebiendo suficiente?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in"><div class="faq-respuesta">
+          <p>Señales como <strong>orina oscura, boca seca, dolor de cabeza, mareo o cansancio marcado</strong> pueden orientar sobre una hidratación insuficiente.</p>
+          <p>Si aparecen de forma persistente, corresponde consultarlo con tu equipo médico y no ajustar la ingesta por cuenta propia.</p>
+        </div></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="links">
+    <a href="/">Tienda</a>
+    <a href="/recursos">Recursos</a>
+    <a href="/comparador-bariatrico">Comparador</a>
+    <a href="/calculadora-proteina">Calculadora de Proteína</a>
+    <a href="/calculadora-hidratacion">Calculadora de Hidratación</a>
+    <a href="/etapas-postoperatorias">Etapas Postoperatorias</a>
+  </div>
+  © 2026 Zona Bariátrica · Todos los derechos reservados · Lima, Perú · 📱 +51 961 841 069
+  <div class="fine">
+    La información publicada en esta sección tiene fines educativos y no constituye
+    indicación médica ni nutricional.
+  </div>
+</footer>
+
+<script src="zb-herramientas.js"></script>
+<script src="mejoras-ux.js"></script>
+</body>
+</html>

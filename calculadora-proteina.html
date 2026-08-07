@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Proteína Bariátrica | Cuánta Proteína al Día — Zona Bariátrica</title>
+<meta name="description" content="Calcula un rango orientativo de proteína diaria según tu peso, tipo de cirugía bariátrica y tiempo desde la operación. Herramienta educativa gratuita para pacientes de manga, bypass y balón.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://zonabariatrica.com/calculadora-proteina">
+<meta property="og:title" content="Calculadora de Proteína Bariátrica — Zona Bariátrica">
+<meta property="og:description" content="¿Cuánta proteína al día después de tu cirugía bariátrica? Calcula un rango orientativo en 30 segundos.">
+<meta property="og:image" content="https://raw.githubusercontent.com/zonabariatrica/zonabariatrica1/main/img/logo-og.png">
+<meta property="og:url" content="https://zonabariatrica.com/calculadora-proteina">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zona Bariátrica">
+<meta property="og:locale" content="es_PE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Calculadora de Proteína Bariátrica">
+<meta name="twitter:description" content="Calcula un rango orientativo de proteína diaria según tu cirugía y tu etapa.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/zonabariatrica/zonabariatrica1/main/img/logo-og.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DB7VQ9PWM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3DB7VQ9PWM');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://zonabariatrica.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Recursos Bariátricos", "item": "https://zonabariatrica.com/recursos"},
+    {"@type": "ListItem", "position": 3, "name": "Calculadora de Proteína", "item": "https://zonabariatrica.com/calculadora-proteina"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calculadora de Proteína Bariátrica",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "url": "https://zonabariatrica.com/calculadora-proteina",
+  "inLanguage": "es",
+  "description": "Herramienta educativa que estima un rango orientativo de proteína diaria a partir del peso, el tipo de cirugía bariátrica y el tiempo transcurrido desde la operación. No sustituye la indicación de un profesional de la salud.",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "PEN"},
+  "publisher": {"@type": "Organization", "name": "Zona Bariátrica", "url": "https://zonabariatrica.com"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuánta proteína se suele recomendar después de una cirugía bariátrica?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Como referencia general se suele hablar de un mínimo aproximado de 60 gramos de proteína al día, con rangos que habitualmente se sitúan entre 60 y 100 gramos según el tipo de cirugía, el peso y la etapa. La cantidad individual la define el nutricionista o el médico tratante."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Por qué es tan importante la proteína después de la cirugía bariátrica?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Al reducirse mucho la cantidad de comida, resulta difícil cubrir el requerimiento proteico solo con alimentos. Un aporte adecuado de proteína se asocia habitualmente al cuidado de la masa muscular, a la cicatrización y a la caída del cabello que muchos pacientes notan en los primeros meses."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Este resultado reemplaza la indicación de mi nutricionista?",
+      "acceptedAnswer": {"@type": "Answer", "text": "No. El resultado es una estimación educativa basada en valores de referencia generales. No considera analíticas, enfermedades asociadas, medicación ni tolerancia individual. La pauta personalizada solo puede darla tu médico o tu nutricionista."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo se reparte la proteína a lo largo del día?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Después de una cirugía bariátrica el volumen que se tolera en cada toma es pequeño, por lo que lo habitual es repartir el aporte en varias tomas a lo largo del día en lugar de concentrarlo en una o dos comidas. La distribución concreta forma parte del plan que define el profesional."}
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="zb-herramientas.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="/">
+      <img src="img/logo-zb.png" alt="Zona Bariátrica">
+      <div>
+        <div class="logo-name">ZONA BARIÁTRICA</div>
+        <div class="logo-tagline">Suplementos Bariátricos</div>
+      </div>
+    </a>
+    <nav class="cats">
+      <a href="/">Tienda</a>
+      <a href="/recursos" class="active">Recursos</a>
+      <a href="/proteinas">Proteínas</a>
+      <a href="/vitaminas">Vitaminas</a>
+      <a href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
+      <a href="/packs">Packs</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="crumbs" aria-label="Ruta de navegación">
+  <a href="/">Inicio</a>
+  <span class="sep">/</span>
+  <a href="/recursos">Recursos</a>
+  <span class="sep">/</span>
+  <span aria-current="page">Calculadora de Proteína</span>
+</nav>
+
+<section class="pg-hero">
+  <span class="pg-eyebrow">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v4.5L5.5 15A4 4 0 0 0 9 21h6a4 4 0 0 0 3.5-6L14 6.5V2"/></svg>
+    Herramienta educativa
+  </span>
+  <h1>Calculadora de <em>Proteína</em></h1>
+  <p class="pg-lead">
+    Una estimación orientativa de cuánta proteína al día suele manejarse en tu situación.
+    Sirve para que llegues con una idea clara a tu consulta —la cifra definitiva la pone tu profesional.
+  </p>
+</section>
+
+<div class="calc-grid">
+
+  <form class="calc-form" id="formProteina" novalidate>
+    <h2 style="font-size:var(--fs-h3);font-weight:600;margin-bottom:24px">Tus datos</h2>
+
+    <div class="campo">
+      <label for="pesoProt">Peso actual</label>
+      <div class="input-uni">
+        <input type="number" id="pesoProt" name="peso" min="30" max="300" step="0.1"
+               inputmode="decimal" placeholder="Por ejemplo: 82" autocomplete="off" required>
+        <span class="uni">kg</span>
+      </div>
+      <p class="campo-ayuda">Tu peso de hoy, no el que tenías antes de la cirugía.</p>
+    </div>
+
+    <div class="campo">
+      <span class="campo-titulo" id="lblCirugia">Tipo de cirugía</span>
+      <div class="opciones" role="radiogroup" aria-labelledby="lblCirugia">
+        <label class="opcion">
+          <input type="radio" name="cirugia" value="manga" required>
+          <span class="opcion-tit">Manga gástrica</span>
+          <span class="opcion-sub">Técnica restrictiva, sin cambios en el intestino</span>
+        </label>
+        <label class="opcion">
+          <input type="radio" name="cirugia" value="bypass">
+          <span class="opcion-tit">Bypass gástrico</span>
+          <span class="opcion-sub">Restricción y menor absorción de nutrientes</span>
+        </label>
+        <label class="opcion">
+          <input type="radio" name="cirugia" value="balon">
+          <span class="opcion-tit">Balón gástrico</span>
+          <span class="opcion-sub">Procedimiento temporal, sin cirugía</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="campo">
+      <span class="campo-titulo" id="lblEtapa">Tiempo desde la cirugía</span>
+      <div class="opciones dos" role="radiogroup" aria-labelledby="lblEtapa">
+        <label class="opcion">
+          <input type="radio" name="etapa" value="0-1" required>
+          <span class="opcion-tit">Primer mes</span>
+        </label>
+        <label class="opcion">
+          <input type="radio" name="etapa" value="1-3">
+          <span class="opcion-tit">1 a 3 meses</span>
+        </label>
+        <label class="opcion">
+          <input type="radio" name="etapa" value="3-6">
+          <span class="opcion-tit">3 a 6 meses</span>
+        </label>
+        <label class="opcion">
+          <input type="radio" name="etapa" value="6+">
+          <span class="opcion-tit">Más de 6 meses</span>
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-zb btn-zb-primario" style="width:100%;margin-top:8px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8M8 14h4"/></svg>
+      Calcular mi rango
+    </button>
+  </form>
+
+  <div class="calc-out" id="resProteina" aria-live="polite">
+    <div class="res-vacio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8M8 14h4"/></svg>
+      <div>Completa tus datos y pulsa <strong>Calcular mi rango</strong>.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="zb-wrap" style="max-width:1040px;margin-top:32px">
+  <div class="aviso">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+    <div>
+      <strong>Los resultados son únicamente referenciales.</strong> Esta calculadora usa valores
+      de referencia generales y no considera tus analíticas, enfermedades asociadas, medicación
+      ni tu tolerancia individual. La recomendación que aplica a tu caso debe indicarla
+      tu médico o tu nutricionista.
+    </div>
+  </div>
+  <div class="btn-fila centrado" style="margin-top:24px">
+    <a class="btn-zb btn-zb-primario" href="/proteinas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Ver proteínas disponibles
+    </a>
+    <a class="btn-zb btn-zb-wa" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Us%C3%A9%20la%20calculadora%20de%20prote%C3%ADna%20y%20quiero%20orientaci%C3%B3n." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Hablar con Zoe
+    </a>
+  </div>
+</div>
+
+<section class="bloque gris" style="margin-top:56px">
+  <div class="bloque-header">
+    <h2>Sobre la proteína después de la cirugía</h2>
+    <p class="bloque-sub">Lo que conviene entender antes de mirar cualquier número.</p>
+  </div>
+  <div class="zb-wrap" style="max-width:780px">
+    <div class="faq-lista">
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Cuánta proteína se suele recomendar?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in"><div class="faq-respuesta">
+          <p>Como referencia general se suele hablar de un <strong>mínimo aproximado de 60 gramos al día</strong>, con rangos que habitualmente se sitúan entre 60 y 100 gramos según el tipo de cirugía, el peso y la etapa.</p>
+          <p>La cantidad que aplica a tu caso la define tu nutricionista o tu médico tratante.</p>
+        </div></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Por qué es tan importante la proteína?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in"><div class="faq-respuesta">
+          <p>Al reducirse mucho la cantidad de comida, resulta difícil cubrir el requerimiento proteico solo con alimentos.</p>
+          <p>Un aporte adecuado se asocia habitualmente al cuidado de la <strong>masa muscular</strong>, a la cicatrización y a la caída del cabello que muchos pacientes notan en los primeros meses.</p>
+        </div></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Este resultado reemplaza a mi nutricionista?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in"><div class="faq-respuesta">
+          <p><strong>No.</strong> Es una estimación educativa basada en valores de referencia generales.</p>
+          <p>No considera analíticas, enfermedades asociadas, medicación ni tolerancia individual. La pauta personalizada solo puede darla tu médico o tu nutricionista.</p>
+        </div></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Cómo se reparte la proteína durante el día?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in"><div class="faq-respuesta">
+          <p>Después de la cirugía el volumen que se tolera en cada toma es pequeño, así que lo habitual es <strong>repartir el aporte en varias tomas</strong> a lo largo del día en lugar de concentrarlo en una o dos comidas.</p>
+          <p>La distribución concreta forma parte del plan que define el profesional.</p>
+        </div></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="links">
+    <a href="/">Tienda</a>
+    <a href="/recursos">Recursos</a>
+    <a href="/comparador-bariatrico">Comparador</a>
+    <a href="/calculadora-proteina">Calculadora de Proteína</a>
+    <a href="/calculadora-hidratacion">Calculadora de Hidratación</a>
+    <a href="/etapas-postoperatorias">Etapas Postoperatorias</a>
+  </div>
+  © 2026 Zona Bariátrica · Todos los derechos reservados · Lima, Perú · 📱 +51 961 841 069
+  <div class="fine">
+    La información publicada en esta sección tiene fines educativos y no constituye
+    indicación médica ni nutricional.
+  </div>
+</footer>
+
+<script src="zb-herramientas.js"></script>
+<script src="mejoras-ux.js"></script>
+</body>
+</html>

@@ -387,6 +387,12 @@ header.scrolled .header-inner { padding-top: var(--s-3); padding-bottom: var(--s
 }
 .nav-link:hover { color: var(--text); background: var(--bg-soft); }
 .nav-link.active { color: var(--blue); background: var(--blue-light); font-weight: 600; }
+/* "Recursos" es un enlace real (<a>) y no un botón: sale de la
+   página. Se iguala su aspecto al del resto del menú. */
+a.nav-link {
+  text-decoration: none; display: inline-flex; align-items: center;
+  font-family: var(--font); line-height: 1;
+}
 .nav-suplementos, .nav-suplementos.active { color: var(--text-muted) !important; background: none !important; font-weight: 500; }
 .nav-suplementos:hover { color: var(--text) !important; background: var(--bg-soft) !important; }
 .nav-ofertas {
@@ -2397,9 +2403,10 @@ footer {
 /* Se agrega una columna de marca a la izquierda y se pasa a 4
    columnas con anchos distintos, en vez de 3 iguales centradas. */
 .footer-inner {
-  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-  justify-items: start; max-width: 1180px;
-  gap: var(--s-7) var(--s-6);
+  /* 5 columnas: marca · navegación · recursos · categorías · contacto */
+  grid-template-columns: 1.4fr 0.9fr 1.1fr 1fr 1.1fr;
+  justify-items: start; max-width: 1280px;
+  gap: var(--s-7) var(--s-5);
 }
 .footer-brand { max-width: 260px; }
 .footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: var(--s-3); }
@@ -2420,9 +2427,12 @@ footer {
   transition: color var(--t-fast);
 }
 .footer-bottom-links a:hover { color: rgba(255,255,255,0.8); }
-@media (max-width: 980px) {
-  .footer-inner { grid-template-columns: 1fr 1fr; }
+@media (max-width: 1100px) {
+  .footer-inner { grid-template-columns: repeat(3, 1fr); }
   .footer-brand { grid-column: 1 / -1; max-width: none; }
+}
+@media (max-width: 780px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 700px) {
   .footer-inner { grid-template-columns: 1fr; justify-items: start; }
@@ -2465,6 +2475,144 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 /* Secciones nuevas: ocultas mientras se ve BariBlog o Quiénes somos,
    igual que hace el sitio con el catálogo. */
 .vista-inicio.oculta { display: none !important; }
+
+/* --- FASE 2 — Franja de recursos en la home ---------------- */
+.home-rec {
+  padding: var(--s-8) var(--gutter);
+  background: var(--surface); border-top: 1px solid var(--border-light);
+}
+.home-rec-inner { max-width: var(--maxw); margin: 0 auto; }
+.home-rec-head { text-align: center; margin-bottom: var(--s-6); }
+.home-rec-head h2 {
+  font-size: var(--fs-h2); line-height: var(--lh-h2); font-weight: 700;
+  letter-spacing: var(--tracking-tight); margin-bottom: var(--s-2);
+}
+.home-rec-head p { font-size: var(--fs-body); color: var(--text-muted); }
+.home-rec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-4); }
+.home-rec-card {
+  display: flex; flex-direction: column; gap: var(--s-2);
+  padding: var(--s-5); border: 1px solid var(--border); border-radius: var(--r-md);
+  background: var(--surface); text-decoration: none; color: inherit;
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--t-base), box-shadow var(--t-base), border-color var(--t-base);
+}
+.home-rec-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: #D8DEE7; }
+.home-rec-ico {
+  width: 42px; height: 42px; border-radius: var(--r-sm);
+  background: var(--blue-light); color: var(--blue);
+  display: flex; align-items: center; justify-content: center; margin-bottom: var(--s-1);
+  transition: background var(--t-base), color var(--t-base);
+}
+.home-rec-ico svg { width: 21px; height: 21px; }
+.home-rec-card:hover .home-rec-ico { background: var(--blue); color: #fff; }
+.home-rec-tit { font-size: var(--fs-h3); font-weight: 600; letter-spacing: var(--tracking-tight); line-height: 1.35; }
+.home-rec-sub { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.6; }
+@media (max-width: 900px) { .home-rec-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) {
+  .home-rec { padding: var(--s-7) var(--s-5); }
+  .home-rec-grid { grid-template-columns: 1fr; gap: var(--s-3); }
+  .home-rec-card { padding: var(--s-4); }
+  .home-rec-head h2 { font-size: 21px; }
+}
+
+/* ============================================================
+   FASE 2 — FICHA AMPLIADA DENTRO DEL MODAL DE PRODUCTO
+   Contenido educativo: para quién, etapa, beneficios, forma de
+   consumo, preguntas frecuentes, productos y artículos.
+   Se dibuja desde productos-info.js — ver ese archivo para
+   editar los textos.
+   ============================================================ */
+.ficha { margin-top: var(--s-5); border-top: 1px solid var(--border); padding-top: var(--s-5); }
+.ficha-bloque { margin-bottom: var(--s-5); }
+.ficha-bloque:last-child { margin-bottom: 0; }
+.ficha-h {
+  display: flex; align-items: center; gap: 8px;
+  font-size: var(--fs-cap); font-weight: 700; color: var(--text);
+  text-transform: uppercase; letter-spacing: var(--tracking-caps);
+  margin-bottom: var(--s-3);
+}
+.ficha-h svg { width: 15px; height: 15px; color: var(--blue); flex: none; }
+.ficha-txt { font-size: var(--fs-sm); line-height: 1.75; color: var(--text-muted); }
+
+/* Beneficios: lista con palomita, sin viñetas de sistema */
+.ficha-lista { list-style: none; display: flex; flex-direction: column; gap: var(--s-2); }
+.ficha-lista li {
+  display: flex; gap: 9px; align-items: flex-start;
+  font-size: var(--fs-sm); line-height: 1.65; color: var(--text-muted);
+}
+.ficha-lista li svg { width: 15px; height: 15px; color: var(--success); flex: none; margin-top: 3px; }
+
+/* Leyenda obligatoria bajo la forma de consumo */
+.ficha-leyenda {
+  display: flex; gap: 9px; align-items: flex-start;
+  margin-top: var(--s-3); padding: 11px var(--s-4);
+  background: var(--warning-bg); border: 1px solid var(--warning-br);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-cap); line-height: 1.6; color: var(--warning); font-weight: 500;
+}
+.ficha-leyenda svg { width: 14px; height: 14px; flex: none; margin-top: 2px; }
+
+/* FAQ compacto dentro del modal */
+.ficha-faq { display: flex; flex-direction: column; gap: var(--s-2); }
+.ficha-faq-item { border: 1px solid var(--border); border-radius: var(--r-sm); overflow: hidden; }
+.ficha-faq-item.abierto { border-color: var(--blue-ring); }
+.ficha-faq-q {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
+  padding: 11px var(--s-4); background: none; border: none; cursor: pointer; text-align: left;
+  font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; color: var(--text);
+  line-height: 1.45; transition: color var(--t-fast);
+}
+.ficha-faq-q:hover, .ficha-faq-item.abierto .ficha-faq-q { color: var(--blue); }
+.ficha-faq-q svg { width: 16px; height: 16px; flex: none; color: var(--text-light); transition: transform var(--t-base); }
+.ficha-faq-item.abierto .ficha-faq-q svg { transform: rotate(180deg); color: var(--blue); }
+.ficha-faq-c { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--t-base); }
+.ficha-faq-item.abierto .ficha-faq-c { grid-template-rows: 1fr; }
+.ficha-faq-c > div { overflow: hidden; }
+.ficha-faq-r {
+  padding: 0 var(--s-4) 13px; font-size: var(--fs-sm); line-height: 1.7; color: var(--text-muted);
+}
+
+/* Productos relacionados: tira horizontal compacta */
+.ficha-rel { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-2); }
+.ficha-rel-item {
+  display: flex; align-items: center; gap: 10px; padding: 9px;
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  background: var(--surface); cursor: pointer; text-align: left; width: 100%;
+  font-family: var(--font); transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.ficha-rel-item:hover { border-color: var(--blue-ring); background: var(--blue-light); transform: translateY(-2px); }
+.ficha-rel-img { width: 42px; height: 42px; object-fit: contain; border-radius: var(--r-xs); background: var(--bg); flex: none; }
+.ficha-rel-txt { min-width: 0; }
+.ficha-rel-nom {
+  font-size: var(--fs-cap); font-weight: 600; color: var(--text); line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.ficha-rel-precio { font-size: var(--fs-cap); font-weight: 700; color: var(--blue); margin-top: 2px; }
+
+/* Artículos del BariBlog */
+.ficha-art { display: flex; flex-direction: column; gap: var(--s-2); }
+.ficha-art-item {
+  display: flex; align-items: center; gap: 10px; padding: 11px var(--s-3);
+  border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface);
+  cursor: pointer; text-align: left; width: 100%; font-family: var(--font);
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.ficha-art-item:hover { border-color: var(--blue-ring); background: var(--blue-light); transform: translateX(3px); }
+.ficha-art-ico {
+  width: 32px; height: 32px; border-radius: var(--r-xs); flex: none;
+  background: var(--blue-light); color: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+}
+.ficha-art-ico svg { width: 16px; height: 16px; }
+.ficha-art-tag {
+  font-size: 9.5px; font-weight: 700; color: var(--text-light);
+  text-transform: uppercase; letter-spacing: var(--tracking-caps);
+}
+.ficha-art-tit { font-size: var(--fs-cap); font-weight: 600; color: var(--text); line-height: 1.4; }
+
+@media (max-width: 480px) {
+  .ficha-rel { grid-template-columns: 1fr; }
+}
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -2926,6 +3074,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         </div>
       </div>
       <button class="nav-link nav-ofertas" data-filter="oferta" onclick="filtrar('oferta');scrollProductos()">OFERTAS</button>
+      <a class="nav-link" href="/recursos" id="navRecursos">Recursos</a>
       <button class="nav-link" id="navBlog" onclick="mostrarBlog()">BariBlog</button>
       <button class="nav-link" id="navNosotros" onclick="mostrarNosotros()">Quiénes somos</button>
     </nav>
@@ -3350,6 +3499,8 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       </button>
       <div class="tn-body" id="tnBody"></div>
       <div class="modo-uso" id="mUso" style="display:none"></div>
+      <!-- Ficha educativa ampliada — se dibuja desde productos-info.js -->
+      <div class="ficha" id="mFicha" style="display:none"></div>
       <div id="mCalificacion" style="margin:14px 0;padding:14px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg)">
         <div id="mCalAvg" style="font-size:13px;color:var(--text-muted)">Cargando calificaciones...</div>
         <div id="mCalUser" style="margin-top:10px"></div>
@@ -3381,6 +3532,53 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 </div>
 
 <!-- FOOTER -->
+<!-- ============================================================
+     ACCESO AL CENTRO DE RECURSOS (Fase 2)
+     Franja compacta en la home que lleva a las herramientas
+     educativas. Se oculta en BariBlog / Quiénes somos.
+     ============================================================ -->
+<section class="home-rec vista-inicio" id="home-recursos">
+  <div class="home-rec-inner">
+    <div class="home-rec-head">
+      <h2>Recursos para tu proceso</h2>
+      <p>Herramientas educativas gratuitas, sin registro.</p>
+    </div>
+    <div class="home-rec-grid">
+      <a class="home-rec-card" href="/comparador-bariatrico">
+        <span class="home-rec-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/><path d="M8 3v18M16 3v18"/></svg>
+        </span>
+        <span class="home-rec-tit">Comparador Bariátrico</span>
+        <span class="home-rec-sub">Manga, bypass y balón lado a lado</span>
+      </a>
+      <a class="home-rec-card" href="/calculadora-proteina">
+        <span class="home-rec-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v4.5L5.5 15A4 4 0 0 0 9 21h6a4 4 0 0 0 3.5-6L14 6.5V2"/><path d="M9 2h6M6.5 13h11"/></svg>
+        </span>
+        <span class="home-rec-tit">Calculadora de Proteína</span>
+        <span class="home-rec-sub">Tu rango diario orientativo</span>
+      </a>
+      <a class="home-rec-card" href="/calculadora-hidratacion">
+        <span class="home-rec-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6 5.4 6 10.1a6 6 0 0 1-12 0C6 8.1 12 2.7 12 2.7z"/></svg>
+        </span>
+        <span class="home-rec-tit">Calculadora de Hidratación</span>
+        <span class="home-rec-sub">Cuánta agua al día</span>
+      </a>
+      <a class="home-rec-card" href="/etapas-postoperatorias">
+        <span class="home-rec-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </span>
+        <span class="home-rec-tit">Etapas Postoperatorias</span>
+        <span class="home-rec-sub">De líquidos a sólidos, paso a paso</span>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:var(--s-5)">
+      <a class="btn-zb btn-zb-outline" href="/recursos">Ver todos los recursos</a>
+    </div>
+  </div>
+</section>
+
 <!-- ============================================================
      TESTIMONIOS — "Lo que dicen nuestros pacientes"
      Las tarjetas se dibujan desde el array TESTIMONIOS, más abajo
@@ -3553,6 +3751,15 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       <a class="footer-nav-link" href="#" onclick="mostrarBlog();return false;">BariBlog</a>
       <a class="footer-nav-link" href="#" onclick="mostrarNosotros();return false;">Quiénes somos</a>
       <a class="footer-nav-link" href="#faq-section" onclick="irAFaq();return false;">Preguntas frecuentes</a>
+    </div>
+    <!-- Col: Recursos educativos (Fase 2) -->
+    <div>
+      <div class="footer-col-title">Recursos</div>
+      <a class="footer-nav-link" href="/recursos">Centro de Recursos</a>
+      <a class="footer-nav-link" href="/comparador-bariatrico">Comparador Bariátrico</a>
+      <a class="footer-nav-link" href="/calculadora-proteina">Calculadora de Proteína</a>
+      <a class="footer-nav-link" href="/calculadora-hidratacion">Calculadora de Hidratación</a>
+      <a class="footer-nav-link" href="/etapas-postoperatorias">Etapas Postoperatorias</a>
     </div>
     <!-- Col 3: Categorías (páginas indexables) -->
     <div>
@@ -4971,6 +5178,9 @@ function abrirModal(id) {
     usoEl.style.display = 'none';
   }
 
+  /* Ficha educativa ampliada (Fase 2). */
+  pintarFicha(p);
+
   const msg = encodeURIComponent('Hola! Quiero pedir: ' + p.nombre + ' — S/ ' + p.precio);
   document.getElementById('mWA').href = 'https://wa.me/' + WA + '?text=' + msg;
 
@@ -6372,6 +6582,133 @@ document.addEventListener('click', (e) => {
 });
 
 /* ============================================================
+   FASE 2 — FICHA EDUCATIVA AMPLIADA DEL PRODUCTO
+   ------------------------------------------------------------
+   Dibuja dentro del modal: para quién, en qué etapa, beneficios,
+   forma de consumo, preguntas frecuentes, productos relacionados
+   y artículos del BariBlog.
+
+   Los TEXTOS no viven aquí: están en productos-info.js. Este
+   bloque solo los maqueta. Si ese archivo no cargó, la ficha
+   simplemente no se muestra y el modal sigue funcionando igual.
+   ============================================================ */
+const ICO_CHECK_MINI = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
+function fichaBloque(titulo, icono, contenidoHTML) {
+  return `<div class="ficha-bloque">
+    <div class="ficha-h">${icono}${titulo}</div>
+    ${contenidoHTML}
+  </div>`;
+}
+
+function fichaHTML(p, d) {
+  let html = '';
+
+  html += fichaBloque('¿Para quién suele utilizarse?',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>',
+    `<p class="ficha-txt">${d.paraQuien}</p>`);
+
+  html += fichaBloque('¿En qué etapa suele utilizarse?',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+    `<p class="ficha-txt">${d.etapa}</p>`);
+
+  html += fichaBloque('Beneficios generales',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>',
+    '<ul class="ficha-lista">' +
+      d.beneficios.map(b => `<li>${ICO_CHECK_MINI}<span>${b}</span></li>`).join('') +
+    '</ul>');
+
+  html += fichaBloque('Forma de consumo',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l-1 9a4 4 0 0 1-6 0z"/><path d="M12 11v11M8 22h8"/></svg>',
+    `<p class="ficha-txt">${d.consumo}</p>
+     <div class="ficha-leyenda">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+       <span>${d.leyenda}</span>
+     </div>`);
+
+  if (d.faq && d.faq.length) {
+    html += fichaBloque('Preguntas frecuentes',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
+      '<div class="ficha-faq">' +
+        d.faq.map(f => `<div class="ficha-faq-item">
+          <button class="ficha-faq-q" type="button" aria-expanded="false" onclick="toggleFichaFaq(this)">
+            <span>${f.q}</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="ficha-faq-c"><div><div class="ficha-faq-r">${f.r}</div></div></div>
+        </div>`).join('') +
+      '</div>');
+  }
+
+  /* Productos relacionados: se resuelven contra el catálogo real,
+     así nunca se muestra un producto que ya no existe. */
+  const rel = (d.relacionados || [])
+    .map(id => productos.find(x => x.id === id))
+    .filter(Boolean);
+  if (rel.length) {
+    html += fichaBloque('Productos relacionados',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
+      '<div class="ficha-rel">' +
+        rel.map(r => `<button class="ficha-rel-item" type="button" onclick="abrirModal('${r.id}')">
+          <img class="ficha-rel-img" src="${r.img}" alt="" loading="lazy">
+          <span class="ficha-rel-txt">
+            <span class="ficha-rel-nom">${r.nombre}</span>
+            <span class="ficha-rel-precio">S/ ${r.precio}</span>
+          </span>
+        </button>`).join('') +
+      '</div>');
+  }
+
+  if (d.articulos && d.articulos.length) {
+    html += fichaBloque('Artículos relacionados del BariBlog',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+      '<div class="ficha-art">' +
+        d.articulos.map(a => `<button class="ficha-art-item" type="button" onclick="cerrarModal();${a.fn}()">
+          <span class="ficha-art-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </span>
+          <span>
+            <span class="ficha-art-tag">${a.tag}</span>
+            <span class="ficha-art-tit" style="display:block">${a.titulo}</span>
+          </span>
+        </button>`).join('') +
+      '</div>');
+  }
+
+  return html;
+}
+
+/* Abre y cierra una pregunta de la ficha. Una a la vez. */
+function toggleFichaFaq(btn) {
+  const item = btn.closest('.ficha-faq-item');
+  const cont = item.parentElement;
+  const abierto = item.classList.contains('abierto');
+  cont.querySelectorAll('.ficha-faq-item.abierto').forEach(o => {
+    o.classList.remove('abierto');
+    o.querySelector('.ficha-faq-q').setAttribute('aria-expanded', 'false');
+  });
+  if (!abierto) {
+    item.classList.add('abierto');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+
+/* Punto de entrada: lo llama abrirModal(). */
+function pintarFicha(p) {
+  const cont = document.getElementById('mFicha');
+  if (!cont) return;
+  /* Sin productos-info.js el modal sigue funcionando: solo
+     no se dibuja la parte educativa. */
+  if (!window.ZB_PRODUCTO_INFO) { cont.style.display = 'none'; return; }
+
+  const d = window.ZB_PRODUCTO_INFO.obtener(p, productos);
+  if (!d) { cont.style.display = 'none'; return; }
+
+  cont.innerHTML = fichaHTML(p, d);
+  cont.style.display = '';
+}
+
+/* ============================================================
    FASE 1 — TESTIMONIOS
    ------------------------------------------------------------
    ⚠️ CONTENIDO DE EJEMPLO: reemplázalo por testimonios reales
@@ -6512,6 +6849,16 @@ function irAFaq() {
   };
 })();
 
+/* Permite llegar al BariBlog desde otra página con /?ver=blog
+   (lo usan las tarjetas del Centro de Recursos). */
+(function () {
+  const ver = new URLSearchParams(location.search).get('ver');
+  if (ver === 'blog') {
+    /* Tras el render inicial, para que el scroll caiga bien. */
+    window.addEventListener('load', function () { mostrarBlog(); });
+  }
+})();
+
 /* Arranque de las secciones nuevas. */
 renderizarTestimonios();
 iniciarFaq();
@@ -6563,6 +6910,10 @@ iniciarFaq();
   if (cont) new MutationObserver(observar).observe(cont, { childList: true, subtree: true });
 })();
 </script>
+<!-- Textos educativos de las fichas de producto (Fase 2).
+     Si este archivo falta, el modal funciona igual: solo no
+     se dibuja la parte educativa. -->
+<script src="productos-info.js"></script>
 <script src="asistente.js"></script>
 <script src="mejoras-ux.js"></script>
 </body>
