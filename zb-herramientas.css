@@ -434,6 +434,127 @@ table.cmp td { color:var(--text-muted); }
   .cierre-cta h2 { font-size:21px; }
 }
 
+/* --- 12b. SELECTOR INTELIGENTE DE SUPLEMENTOS -------------
+   Asistente de 3 pasos. Las opciones son tarjetas grandes en
+   vez de <select>: se aciertan con el pulgar sin zoom.
+   ---------------------------------------------------------- */
+.sel-wrap { max-width: 780px; margin: 0 auto; padding: 0 var(--gutter); }
+
+/* Barra de progreso */
+.sel-progreso { margin-bottom: var(--s-6); }
+.sel-pasos { display: flex; align-items: center; gap: var(--s-2); margin-bottom: var(--s-3); }
+.sel-paso-pin {
+  flex: 1; height: 4px; border-radius: var(--r-pill); background: var(--border);
+  transition: background var(--t-slow);
+}
+.sel-paso-pin.hecho, .sel-paso-pin.activo { background: var(--blue); }
+.sel-paso-txt {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: var(--fs-cap); font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: var(--tracking-caps);
+}
+
+/* Panel de cada paso */
+.sel-panel { display: none; }
+.sel-panel.activo { display: block; animation: zbSubir var(--t-slow); }
+.sel-pregunta {
+  font-size: var(--fs-h2); line-height: 1.25; font-weight: 700;
+  letter-spacing: var(--tracking-tight); margin-bottom: var(--s-2);
+}
+.sel-ayuda { font-size: var(--fs-body); color: var(--text-muted); margin-bottom: var(--s-5); }
+
+.sel-opciones { display: grid; gap: var(--s-3); }
+.sel-opciones.tres { grid-template-columns: repeat(3, 1fr); }
+.sel-op {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  padding: var(--s-5); border: 1.5px solid var(--border); border-radius: var(--r-md);
+  background: var(--surface); cursor: pointer; text-align: left; width: 100%;
+  font-family: var(--font); box-shadow: var(--shadow-xs);
+  transition: border-color var(--t-fast), background var(--t-fast),
+              transform var(--t-fast), box-shadow var(--t-fast);
+}
+.sel-op:hover { border-color: var(--blue-ring); background: var(--blue-light); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.sel-op.elegida { border-color: var(--blue); background: var(--blue-light); box-shadow: 0 0 0 3px var(--blue-ring); }
+.sel-op-ico {
+  width: 40px; height: 40px; border-radius: var(--r-sm); margin-bottom: var(--s-1);
+  background: var(--blue-light); color: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+  transition: background var(--t-base), color var(--t-base);
+}
+.sel-op-ico svg { width: 20px; height: 20px; }
+.sel-op:hover .sel-op-ico, .sel-op.elegida .sel-op-ico { background: var(--blue); color: #fff; }
+.sel-op-tit { font-size: var(--fs-h3); font-weight: 600; color: var(--text); letter-spacing: var(--tracking-tight); }
+.sel-op-sub { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.55; }
+
+.sel-nav { display: flex; justify-content: space-between; gap: var(--s-3); margin-top: var(--s-5); }
+.sel-volver {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: none; border: none; cursor: pointer; padding: 10px 4px;
+  font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted);
+  transition: color var(--t-fast);
+}
+.sel-volver:hover { color: var(--blue); }
+.sel-volver svg { width: 15px; height: 15px; }
+
+/* Resultados */
+.sel-resumen {
+  display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center;
+  margin-bottom: var(--s-5);
+}
+.sel-chip-res {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--r-pill);
+  padding: 6px 13px; font-size: var(--fs-cap); font-weight: 600; color: var(--text);
+}
+.sel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+.sel-card {
+  display: flex; flex-direction: column; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden;
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--t-base), box-shadow var(--t-base), border-color var(--t-base);
+}
+.sel-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: #D8DEE7; }
+.sel-card-img { height: 150px; object-fit: contain; padding: var(--s-4); background: var(--surface); }
+.sel-card-body { padding: 0 var(--s-4) var(--s-4); display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.sel-card-marca {
+  font-size: 10px; font-weight: 600; color: var(--text-light);
+  text-transform: uppercase; letter-spacing: var(--tracking-caps);
+}
+.sel-card-nom { font-size: var(--fs-sm); font-weight: 600; line-height: 1.4; flex: 1; }
+.sel-card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.sel-tag {
+  font-size: 9.5px; font-weight: 600; padding: 3px 7px; border-radius: var(--r-pill);
+  background: var(--bg-soft); color: var(--text-muted); border: 1px solid var(--border);
+}
+.sel-tag.cirugia { background: var(--blue-light); color: var(--blue-dark); border-color: var(--blue-ring); }
+.sel-tag.etapa { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-br); }
+.sel-card-precio { font-size: 18px; font-weight: 700; color: var(--blue); }
+.sel-card-btn {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 11px; border-radius: var(--r-sm); border: none;
+  background: var(--blue); color: #fff; text-decoration: none;
+  font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; cursor: pointer;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+.sel-card-btn:hover { background: var(--blue-hover); transform: translateY(-2px); }
+/* Sin tamaño fijo, un SVG dentro de un flex se estira hasta
+   ocupar todo el botón. */
+.sel-card-btn svg { width: 15px; height: 15px; flex: none; }
+.sel-op-ico svg, .sel-chip-res svg { flex: none; }
+.sel-vacio { text-align: center; padding: var(--s-8) var(--s-5); color: var(--text-muted); }
+.sel-vacio svg { width: 42px; height: 42px; opacity: .45; margin-bottom: var(--s-3); }
+
+@media (max-width: 900px) { .sel-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px) {
+  .sel-wrap { padding: 0 var(--s-5); }
+  .sel-opciones.tres { grid-template-columns: 1fr; }
+  .sel-pregunta { font-size: 20px; }
+  .sel-op { padding: var(--s-4); flex-direction: row; align-items: center; gap: var(--s-3); }
+  .sel-op-ico { margin-bottom: 0; flex: none; }
+  .sel-op-txt { min-width: 0; }
+}
+@media (max-width: 460px) { .sel-grid { grid-template-columns: 1fr; } }
+
 /* --- 12. FOOTER ------------------------------------------- */
 footer {
   background:var(--dark); color:rgba(255,255,255,0.55);
@@ -460,6 +581,25 @@ footer .fine { font-size:var(--fs-cap); color:rgba(255,255,255,0.35); margin-top
   .pg-lead { font-size:14px; }
   .logo img { height:36px; }
   .btn-fila .btn-zb { width:100%; }
+}
+
+/* --- CONFORT TÁCTIL EN MÓVIL (Fase 3) ---------------------
+   Mismo criterio que en la tienda: objetivo táctil de 44 px,
+   inputs a 16 px para que iOS no haga zoom al enfocar, y algo
+   más de aire entre elementos que se tocan. */
+@media (max-width: 768px) {
+  .btn-zb, .cmp-chip, .faq-pregunta, .sel-op, .sel-volver,
+  .sel-card-btn, .rec-card, nav.cats a, footer .links a {
+    min-height: 44px;
+  }
+  .btn-zb, .sel-card-btn { padding-top: 13px; padding-bottom: 13px; }
+  input[type="number"], input[type="text"], select, textarea {
+    font-size: 16px !important;
+  }
+  .opcion { min-height: 52px; }
+  .opciones { gap: 10px; }
+  footer .links { gap: var(--s-3) var(--s-5); }
+  footer .links a { display: inline-flex; align-items: center; }
 }
 
 /* Respeta a quien pidió menos movimiento en su sistema. */

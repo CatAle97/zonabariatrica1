@@ -2488,7 +2488,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   letter-spacing: var(--tracking-tight); margin-bottom: var(--s-2);
 }
 .home-rec-head p { font-size: var(--fs-body); color: var(--text-muted); }
-.home-rec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-4); }
+.home-rec-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--s-4); }
 .home-rec-card {
   display: flex; flex-direction: column; gap: var(--s-2);
   padding: var(--s-5); border: 1px solid var(--border); border-radius: var(--r-md);
@@ -2507,12 +2507,120 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .home-rec-card:hover .home-rec-ico { background: var(--blue); color: #fff; }
 .home-rec-tit { font-size: var(--fs-h3); font-weight: 600; letter-spacing: var(--tracking-tight); line-height: 1.35; }
 .home-rec-sub { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.6; }
+@media (max-width: 1120px) { .home-rec-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 900px) { .home-rec-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) {
   .home-rec { padding: var(--s-7) var(--s-5); }
   .home-rec-grid { grid-template-columns: 1fr; gap: var(--s-3); }
   .home-rec-card { padding: var(--s-4); }
   .home-rec-head h2 { font-size: 21px; }
+}
+
+/* ============================================================
+   FASE 3 — BANNERS DEL SLIDER (línea gráfica única)
+   ------------------------------------------------------------
+   Los 5 banners se construyen con ESTA plantilla, no con
+   imágenes sueltas: así comparten por definición composición,
+   tipografía, tamaños y espaciados. Lo único que cambia entre
+   uno y otro es el texto, la foto y el color de acento.
+
+   Ventaja frente a un PNG: se adaptan solos al móvil, el texto
+   es real (lo lee Google) y cambiar un precio es editar texto.
+
+   PARA AÑADIR UN BANNER: copia un bloque .slide.slide-zb del
+   HTML y cambia data-acento, textos e imágenes. El slider los
+   detecta solo — no hay que tocar JavaScript.
+   ============================================================ */
+.slide-zb { padding: 0 !important; display: none; }
+.slide-zb.active { display: block; }
+.zb-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-6);
+  padding: var(--s-6) 80px; min-height: 210px; position: relative; overflow: hidden;
+}
+/* Halo de color: da identidad a cada banner sin salirse de la
+   paleta, porque siempre va sobre el mismo fondo oscuro. */
+.zb-banner::before {
+  content: ''; position: absolute; right: -6%; top: 50%;
+  width: 460px; height: 460px; transform: translateY(-50%);
+  background: radial-gradient(circle, var(--zb-acento, #2563EB) 0%, transparent 68%);
+  opacity: 0.30; pointer-events: none;
+}
+.slide-zb[data-acento="azul"]    .zb-banner { --zb-acento: #3B82F6; }
+.slide-zb[data-acento="celeste"] .zb-banner { --zb-acento: #06B6D4; }
+.slide-zb[data-acento="ambar"]   .zb-banner { --zb-acento: #F59E0B; }
+.slide-zb[data-acento="verde"]   .zb-banner { --zb-acento: #10B981; }
+.slide-zb[data-acento="violeta"] .zb-banner { --zb-acento: #8B5CF6; }
+
+.zb-banner-txt { flex: 1; min-width: 0; position: relative; z-index: 1; max-width: 560px; }
+.zb-banner-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: var(--tracking-caps);
+  text-transform: uppercase; color: #fff;
+  background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.20);
+  border-radius: var(--r-pill); padding: 5px 12px; margin-bottom: 14px;
+}
+.zb-banner-eyebrow svg { width: 12px; height: 12px; }
+.zb-banner-tit {
+  font-size: 30px; line-height: 1.15; font-weight: 700; color: #fff;
+  letter-spacing: var(--tracking-tight); margin-bottom: 10px;
+}
+.zb-banner-tit em { font-style: normal; color: var(--zb-acento, #3B82F6); }
+.zb-banner-sub {
+  font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.72);
+  margin-bottom: var(--s-5); max-width: 430px;
+}
+.zb-banner-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #fff; color: var(--text); border: none; border-radius: var(--r);
+  padding: 12px 22px; font-family: var(--font); font-size: var(--fs-sm);
+  font-weight: 600; cursor: pointer; line-height: 1;
+  transition: transform var(--t-base), box-shadow var(--t-base);
+}
+.zb-banner-cta svg { width: 15px; height: 15px; }
+.zb-banner-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.28); }
+
+/* Bloque de producto: siempre la misma altura y el mismo
+   solape, vengan una o dos fotos. */
+.zb-banner-img {
+  flex: none; display: flex; align-items: center; justify-content: flex-end;
+  position: relative; z-index: 1;
+}
+.zb-banner-img img {
+  height: 170px; width: auto; object-fit: contain;
+  filter: drop-shadow(0 18px 26px rgba(0,0,0,0.36));
+}
+.zb-banner-img img + img { margin-left: -34px; }
+
+@media (max-width: 900px) {
+  .zb-banner { padding: var(--s-5) var(--s-7); gap: var(--s-4); min-height: 180px; }
+  .zb-banner-tit { font-size: 23px; }
+  .zb-banner-img img { height: 132px; }
+}
+@media (max-width: 640px) {
+  .zb-banner {
+    flex-direction: column-reverse; text-align: center;
+    padding: var(--s-4) var(--s-5) var(--s-5); gap: var(--s-3); min-height: 0;
+  }
+  .zb-banner::before { right: 50%; transform: translate(50%,-50%); width: 300px; height: 300px; }
+  .zb-banner-txt { max-width: none; }
+  .zb-banner-sub { margin: 0 auto var(--s-4); font-size: 13px; }
+  .zb-banner-tit { font-size: 20px; }
+  .zb-banner-img img { height: 104px; }
+  .zb-banner-img img + img { margin-left: -26px; }
+}
+
+/* Transición suave de entrada. El slider solo alterna la clase
+   .active, así que la animación se dispara al aparecer.
+   (No se hace con position:absolute para no romper el alto
+   variable de las slides de imagen que ya existían.) */
+.slide.active { animation: zbSlideIn 420ms cubic-bezier(.16,1,.3,1); }
+@keyframes zbSlideIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.995); }
+  to   { opacity: 1; transform: none; }
+}
+.slider-arrow, .slider-dot { z-index: 2; }
+@media (prefers-reduced-motion: reduce) {
+  .slide.active { animation: none; }
 }
 
 /* ============================================================
@@ -2612,6 +2720,153 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 
 @media (max-width: 480px) {
   .ficha-rel { grid-template-columns: 1fr; }
+}
+
+/* --- FASE 3 — Etiquetas de etapa y cirugía en la ficha ----- */
+.ficha-etiquetas { display: flex; flex-wrap: wrap; gap: 6px; }
+.ficha-et {
+  font-size: 10.5px; font-weight: 600; line-height: 1;
+  padding: 6px 10px; border-radius: var(--r-pill); white-space: nowrap;
+}
+.ficha-et.et-etapa { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-br); }
+.ficha-et.et-cir   { background: var(--blue-light); color: var(--blue-dark); border: 1px solid var(--blue-ring); }
+
+/* --- FASE 3 — Productos complementarios -------------------- */
+.ficha-comp { display: flex; flex-direction: column; gap: var(--s-2); }
+.ficha-comp-item {
+  display: flex; align-items: center; gap: var(--s-3); padding: 9px;
+  border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface);
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.ficha-comp-item:hover { border-color: var(--blue-ring); background: var(--blue-light); }
+.ficha-comp-img {
+  width: 46px; height: 46px; object-fit: contain; flex: none;
+  border-radius: var(--r-xs); background: var(--bg); cursor: pointer;
+}
+.ficha-comp-txt { flex: 1; min-width: 0; cursor: pointer; }
+.ficha-comp-nom {
+  font-size: var(--fs-cap); font-weight: 600; color: var(--text); line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.ficha-comp-precio { font-size: var(--fs-cap); font-weight: 700; color: var(--blue); margin-top: 2px; }
+.ficha-comp-btn {
+  display: inline-flex; align-items: center; gap: 5px; flex: none;
+  padding: 9px 13px; border-radius: var(--r-sm); border: 1.5px solid var(--blue);
+  background: var(--surface); color: var(--blue);
+  font-family: var(--font); font-size: var(--fs-cap); font-weight: 600; cursor: pointer;
+  min-height: 40px;
+  transition: background var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+.ficha-comp-btn svg { width: 13px; height: 13px; }
+.ficha-comp-btn:hover { background: var(--blue); color: #fff; transform: translateY(-2px); }
+@media (max-width: 420px) {
+  .ficha-comp-btn span { display: none; }
+}
+
+/* ============================================================
+   FASE 3 — MICROINTERACCIONES
+   Discretas y cortas (150–400 ms). Todas se apagan solas si el
+   sistema pide menos movimiento (regla global más abajo).
+   ============================================================ */
+
+/* Agregar al carrito: el botón "confirma" con un pulso corto */
+@keyframes zbPulsoOk {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+.btn-agregar.zb-ok, .recom-btn.zb-ok, .ficha-comp-btn.zb-ok, .modal-cart-btn.zb-ok {
+  animation: zbPulsoOk 320ms var(--ease);
+}
+/* Estado momentáneo "Agregado" en verde */
+.btn-agregar.zb-ok, .modal-cart-btn.zb-ok { background: var(--success) !important; }
+.ficha-comp-btn.zb-ok { background: var(--success) !important; color: #fff !important; border-color: var(--success) !important; }
+
+/* El contador del carrito rebota al subir */
+@keyframes zbBadgeBote {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.45); }
+  100% { transform: scale(1); }
+}
+.float-cot-badge.zb-bote { animation: zbBadgeBote 380ms var(--ease); }
+
+/* Favorito: late al marcarse */
+@keyframes zbCorazon {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.35); }
+  70%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+.fav-btn.zb-late svg { animation: zbCorazon 420ms var(--ease); }
+
+/* Imagen del producto: entra con un fundido al cambiar de ficha */
+@keyframes zbImgEntra {
+  from { opacity: 0; transform: scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.modal-img.zb-cambio { animation: zbImgEntra 320ms var(--ease); }
+
+/* Badges de las tarjetas: aparecen escalonados con la tarjeta */
+@keyframes zbBadgeEntra {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: none; }
+}
+.card .badge-etapa { animation: zbBadgeEntra 300ms var(--ease) backwards; }
+.card .badge-etapa:nth-child(2) { animation-delay: 60ms; }
+
+/* Realimentación táctil en móvil: el dedo tapa el hover, así
+   que el "pressed" es lo único que confirma el toque. */
+@media (hover: none) {
+  .btn-agregar:active, .btn-zb:active, .sel-op:active,
+  .home-rec-card:active, .rec-card:active, .ficha-comp-btn:active {
+    transform: scale(0.975);
+  }
+}
+
+/* ============================================================
+   FASE 3 — CONFORT TÁCTIL EN MÓVIL
+   ------------------------------------------------------------
+   Tres reglas que se aplican a lo que ya existe, sin rediseñar:
+
+   1. Objetivo táctil mínimo de 44 px. Por debajo de eso el dedo
+      falla y el usuario toca lo de al lado.
+   2. Inputs a 16 px. Si son más pequeños, iOS hace zoom
+      automático al enfocarlos y descoloca toda la página.
+   3. Un poco más de aire entre elementos que se tocan, para que
+      no se pulse el equivocado con el pulgar.
+   ============================================================ */
+@media (max-width: 768px) {
+  /* 1 · Objetivo táctil */
+  .btn-agregar, .btn-ver-sm, .filtro-chip, .blog-chip, .nav-link,
+  .mega-item, .sug-item, .lang-option, .subfiltro-btn,
+  .cart-qty-btn, .modal-cart-btn, .btn-checkout, .slider-arrow,
+  .faq-pregunta, .ficha-faq-q, .zb-banner-cta {
+    min-height: 44px;
+  }
+  .fav-btn, .slider-arrow, .search-clear {
+    min-width: 44px; min-height: 44px;
+  }
+
+  /* 2 · Sin zoom automático al enfocar en iOS */
+  input[type="text"], input[type="search"], input[type="email"],
+  input[type="password"], input[type="tel"], input[type="number"],
+  select, textarea, .search-input {
+    font-size: 16px !important;
+  }
+
+  /* 3 · Aire entre elementos táctiles seguidos */
+  .filtros-chips { gap: 10px; }
+  .card-btns { gap: 10px; }
+  .footer-nav-link { padding: 3px 0; }
+
+  /* Scroll más suave dentro de paneles largos (carrito, modal) */
+  .cart-items, .modal, .sp-body { -webkit-overflow-scrolling: touch; }
+}
+
+/* El pulgar llega peor a la parte alta: en pantallas cortas el
+   footer del carrito se queda fijo abajo, al alcance. */
+@media (max-width: 640px) and (min-height: 480px) {
+  .cart-footer { position: sticky; bottom: 0; background: var(--surface); z-index: 2; }
 }
 </style>
 <!-- Meta Pixel Code -->
@@ -3081,7 +3336,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     <div class="header-actions" style="display:flex;gap:8px;align-items:center">
       <a class="wa-bar" href="https://wa.me/51961841069" target="_blank">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-        CHATEA CON NOSOTROS
+        HABLA CON ZOE
       </a>
       <div id="authHeaderBtn">
         <button class="btn-cuenta" onclick="abrirAuth()">
@@ -3109,17 +3364,125 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 
 <!-- PROMO SLIDER -->
 <section class="promo-slider">
-  <!-- Banner vertical (2.5:1): se muestra completo y el sobrante se rellena
-       con el mismo banner difuminado. Ver .slide-img-fit en el CSS. -->
-  <div class="slide slide-img slide-img-fit active">
-    <img class="slide-img-bg" src="img/slide-lvl-pack-wellness.png" alt="" aria-hidden="true">
-    <img class="slide-img-fg" src="img/slide-lvl-pack-wellness.png" alt="Pack Wellness LVL Drink a S/389">
+  <!-- ========================================================
+       BANNERS — una sola línea gráfica (Fase 3)
+       Los 5 comparten plantilla: eyebrow, título, subtítulo,
+       botón y foto a la derecha. Solo cambian texto, imagen y
+       data-acento. Ver el bloque "BANNERS DEL SLIDER" del CSS.
+
+       Las imágenes de banner anteriores siguen en /img
+       (slide-lvl-pack-wellness.png, slide-envios.png,
+       slide-proteina-liquida.png) por si se quieren recuperar:
+       basta volver a añadir un <div class="slide slide-img">.
+       ======================================================== -->
+
+  <!-- 1 · Proteína líquida -->
+  <div class="slide slide-zb active" data-acento="celeste">
+    <div class="zb-banner">
+      <div class="zb-banner-txt">
+        <span class="zb-banner-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6 5.4 6 10.1a6 6 0 0 1-12 0C6 8.1 12 2.7 12 2.7z"/></svg>
+          Proteína líquida
+        </span>
+        <h3 class="zb-banner-tit">Proteína <em>lista para tomar</em></h3>
+        <p class="zb-banner-sub">Sin lactosa y con 20 g de proteína por porción. Pensada para las primeras etapas, cuando todavía cuesta tolerar texturas.</p>
+        <button class="zb-banner-cta" onclick="megaFiltrar('proteina','liquida')">
+          Ver proteína líquida
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="zb-banner-img">
+        <img src="img/bn-liquid-fresa.png" alt="Proteína líquida sabor fresa" loading="eager">
+        <img src="img/bn-liquid-maracumango.png" alt="Proteína líquida sabor maracumango" loading="eager">
+      </div>
+    </div>
   </div>
-  <div class="slide slide-img">
-    <img src="img/slide-envios.png" alt="Envíos a todo el Perú">
+
+  <!-- 2 · Proteína en polvo -->
+  <div class="slide slide-zb" data-acento="azul">
+    <div class="zb-banner">
+      <div class="zb-banner-txt">
+        <span class="zb-banner-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v4.5L5.5 15A4 4 0 0 0 9 21h6a4 4 0 0 0 3.5-6L14 6.5V2"/><path d="M9 2h6"/></svg>
+          Proteína en polvo
+        </span>
+        <h3 class="zb-banner-tit">Whey sin lactosa, <em>0 % azúcar</em></h3>
+        <p class="zb-banner-sub">30 g de proteína por servicio. Para cuando ya toleras texturas blandas y sólidas, y en el mantenimiento a largo plazo.</p>
+        <button class="zb-banner-cta" onclick="megaFiltrar('proteina','polvo')">
+          Ver proteína en polvo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="zb-banner-img">
+        <img src="img/bn-whey-vainilla.png" alt="Whey protein sabor vainilla" loading="lazy">
+        <img src="img/bn-whey-chocolate.png" alt="Whey protein sabor chocolate" loading="lazy">
+      </div>
+    </div>
   </div>
-  <div class="slide slide-img">
-    <img src="img/slide-proteina-liquida.png" alt="Proteína líquida post cirugía bariátrica">
+
+  <!-- 3 · Vitaminas bariátricas -->
+  <div class="slide slide-zb" data-acento="ambar">
+    <div class="zb-banner">
+      <div class="zb-banner-txt">
+        <span class="zb-banner-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+          Vitaminas bariátricas
+        </span>
+        <h3 class="zb-banner-tit">Tus vitaminas, <em>en gomitas</em></h3>
+        <p class="zb-banner-sub">Multivitamínico, hierro con vitamina C, B12 y biotina. En gomitas, para cuando cuesta tragar cápsulas.</p>
+        <button class="zb-banner-cta" onclick="filtrar('vitaminas');scrollProductos()">
+          Ver vitaminas
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="zb-banner-img">
+        <img src="img/bn-gomita-multivit.png" alt="Gomitas multivitamínico" loading="lazy">
+        <img src="img/bn-gomita-biotina.png" alt="Gomitas de biotina" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 · Fibra -->
+  <div class="slide slide-zb" data-acento="verde">
+    <div class="zb-banner">
+      <div class="zb-banner-txt">
+        <span class="zb-banner-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>
+          Fibra
+        </span>
+        <h3 class="zb-banner-tit">Fibra soluble, <em>sin alterar el sabor</em></h3>
+        <p class="zb-banner-sub">Se disuelve en agua y no cambia el sabor de tu bebida. Un apoyo habitual cuando el tránsito se vuelve más lento.</p>
+        <button class="zb-banner-cta" onclick="megaFiltrar('colageno','fibra')">
+          Ver fibra
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="zb-banner-img">
+        <img src="img/bn-fibra.png" alt="Fibra soluble Bari&amp;Nutrition" loading="lazy">
+        <img src="img/lvl-fibra.jpg" alt="Fibra LVL Drink" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 · Combos bariátricos -->
+  <div class="slide slide-zb" data-acento="violeta">
+    <div class="zb-banner">
+      <div class="zb-banner-txt">
+        <span class="zb-banner-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Combos bariátricos
+        </span>
+        <h3 class="zb-banner-tit">Packs que <em>cubren tu etapa completa</em></h3>
+        <p class="zb-banner-sub">Proteína, vitaminas y fibra en una sola compra, a mejor precio que llevando cada producto por separado.</p>
+        <button class="zb-banner-cta" onclick="filtrar('pack');scrollProductos()">
+          Ver combos
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="zb-banner-img">
+        <img src="img/bn-pack-suplementacion-completa.png" alt="Pack de suplementación completa" loading="lazy">
+      </div>
+    </div>
   </div>
 
   <button class="slider-arrow prev" onclick="sliderMove(-1)" aria-label="Anterior"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
@@ -3133,12 +3496,12 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   <div class="hero-intro-inner">
     <span class="hero-eyebrow">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-      Especialistas en nutrición bariátrica
+      Especialistas en suplementación bariátrica
     </span>
     <h1 class="hero-titulo">Suplementos formulados para tu vida <em>después de la cirugía</em></h1>
     <p class="hero-sub">
-      Proteínas, vitaminas y fibra con la absorción y las dosis que necesita un paciente
-      de manga gástrica, bypass o balón. Te acompañamos desde el primer mes.
+      Proteínas, vitaminas y suplementos especializados para acompañarte en las
+      diferentes etapas después de una cirugía bariátrica.
     </p>
     <div class="hero-ctas">
       <button class="btn-zb btn-zb-primario" onclick="filtrar('todos');scrollProductos()">
@@ -3506,7 +3869,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <div id="mCalUser" style="margin-top:10px"></div>
       </div>
       <button class="modal-cart-btn" onclick="agregarDesdeModalCot()" data-i18n="btn_agregar_modal">+ Agregar al carrito</button>
-      <a class="modal-wa" id="mWA" href="#" target="_blank" data-i18n="modal_consultar">Consultar solo este producto por WhatsApp</a>
+      <a class="modal-wa" id="mWA" href="#" target="_blank" data-i18n="modal_consultar">Habla con Zoe</a>
       <button class="modal-wa" style="background:none;border:1.5px solid var(--border);color:var(--text-muted);margin-top:6px;cursor:pointer;border-radius:var(--r-sm);padding:11px;font-size:13px;width:100%;text-align:center;font-family:'Inter', system-ui, -apple-system, sans-serif;font-weight:500;transition:background 0.15s" onclick="compartirProducto()" data-i18n="modal_compartir"><svg class="ico ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg> Compartir este producto</button>
     </div>
   </div>
@@ -3544,6 +3907,13 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       <p>Herramientas educativas gratuitas, sin registro.</p>
     </div>
     <div class="home-rec-grid">
+      <a class="home-rec-card" href="/encuentra-tu-suplemento">
+        <span class="home-rec-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </span>
+        <span class="home-rec-tit">Encuentra tu Suplemento</span>
+        <span class="home-rec-sub">3 preguntas y te mostramos qué encaja</span>
+      </a>
       <a class="home-rec-card" href="/comparador-bariatrico">
         <span class="home-rec-ico">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/><path d="M8 3v18M16 3v18"/></svg>
@@ -3756,6 +4126,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     <div>
       <div class="footer-col-title">Recursos</div>
       <a class="footer-nav-link" href="/recursos">Centro de Recursos</a>
+      <a class="footer-nav-link" href="/encuentra-tu-suplemento">Encuentra tu Suplemento</a>
       <a class="footer-nav-link" href="/comparador-bariatrico">Comparador Bariátrico</a>
       <a class="footer-nav-link" href="/calculadora-proteina">Calculadora de Proteína</a>
       <a class="footer-nav-link" href="/calculadora-hidratacion">Calculadora de Hidratación</a>
@@ -3802,6 +4173,11 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   </div>
 </footer>
 
+<!-- CATÁLOGO — fuente única de verdad de productos y tablas
+     nutricionales. Debe cargarse ANTES del script principal:
+     el catálogo se dibuja al arrancar la página. -->
+<script src="zb-catalogo.js"></script>
+
 <script>
 const WA = "51961841069";
 let favoritosSet = new Set();
@@ -3816,12 +4192,12 @@ function actualizarCorazones() {
 // ---- i18n ----
 let currentLang = 'es';
 const T = {
-  es:{ topbar1:'Envíos a todo el Perú · Lima y provincias', topbar2:'Bienestar en cada etapa de tu vida bariátrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTODOS DE PAGO', cart_enviar_btn:'REALIZAR MI PEDIDO', envio_titulo:'¿Dónde te enviamos tu pedido?', envio_step2_lima:'Lima — Costo según distrito', envio_step2_prov:'Provincias — Vía Shalom', envio_btn_send:'REALIZAR MI PEDIDO', envio_btn_back:'Seguir comprando', envio_cambiar:'← Cambiar destino', nav_suplementos:'Suplementos', nav_ofertas:'OFERTAS', search_ph:'Busca tu suplemento — proteína, biotina, colágeno…', sort_default:'Ordenar por', sort_asc:'Precio: menor a mayor', sort_desc:'Precio: mayor a menor', cart_title:'Mi Carrito', cart_empty:'Tu carrito está vacío.\nAgrega productos para comenzar.', cart_total:'Total estimado', cart_enviar:'Enviar por WhatsApp', btn_ver:'Ver', btn_agregar:'Agregar', btn_agregar_modal:'+ Agregar al carrito', modal_consultar:'Consultar solo este producto por WhatsApp', modal_compartir:'🔗 Compartir este producto', pack_ahorra:'Ahorra', badge_recom:'Recomendado', recom_titulo:'También te puede interesar', recom_sub:'Seleccionados para cada etapa de tu proceso bariátrico', sec_proteinas:'Proteínas', sec_vitaminas:'Vitaminas', sec_colageno:'Colágeno', sec_ofertas:'Ofertas Para Ti', sec_packs:'Packs', tit_todos:'Suplementos', tit_proteinas:'Proteínas', tit_vitaminas:'Vitaminas & Minerales', tit_colageno:'Colágeno & Fibra', tit_ofertas:'Las mejores ofertas para ti', tit_packs:'Packs Bariátricos', mega_proteinas:'Proteínas', mega_vitaminas:'Vitaminas & Minerales', mega_colageno:'Colágeno & Fibra', mega_packs:'Packs', mega_polvo:'Polvo', mega_liquida:'Líquida', mega_biotina:'Biotina', mega_hierro:'Hierro + Vit. C', mega_multivit:'Multivitamínico', mega_b12:'B12 + Ác. Fólico', mega_colageno_sub:'Colágeno', mega_fibra:'Fibra', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos', potencia:'Potencia Bariátrica' },
-  en:{ topbar1:'Shipping across Peru · Lima and provinces', topbar2:'Wellness at every stage of your bariatric life', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'PAYMENT METHODS', cart_enviar_btn:'PLACE MY ORDER', envio_titulo:'Where do we ship your order?', envio_step2_lima:'Lima — Costo según distrito', envio_step2_prov:'Provinces — Via Shalom', envio_btn_send:'PLACE MY ORDER', envio_btn_back:'Keep shopping', envio_cambiar:'← Change destination', nav_suplementos:'Supplements', nav_ofertas:'OFFERS', search_ph:'Search product... (e.g: protein, biotin, collagen, pack)', sort_default:'Sort by', sort_asc:'Price: low to high', sort_desc:'Price: high to low', cart_title:'My Cart', cart_empty:'Your cart is empty.\nAdd products to get started.', cart_total:'Estimated total', cart_enviar:'Send via WhatsApp', btn_ver:'View', btn_agregar:'Add', btn_agregar_modal:'+ Add to cart', modal_consultar:'Ask about this product on WhatsApp', modal_compartir:'🔗 Share this product', pack_ahorra:'Save', badge_recom:'Recommended', recom_titulo:'You might also like', recom_sub:'Selected for each stage of your bariatric journey', sec_proteinas:'Proteins', sec_vitaminas:'Vitamins', sec_colageno:'Collagen', sec_ofertas:'Offers For You', sec_packs:'Packs', tit_todos:'Supplements', tit_proteinas:'Proteins', tit_vitaminas:'Vitamins & Minerals', tit_colageno:'Collagen & Fiber', tit_ofertas:'Best offers for you', tit_packs:'Bariatric Packs', mega_proteinas:'Proteins', mega_vitaminas:'Vitamins & Minerals', mega_colageno:'Collagen & Fiber', mega_packs:'Packs', mega_polvo:'Powder', mega_liquida:'Liquid', mega_biotina:'Biotin', mega_hierro:'Iron + Vit. C', mega_multivit:'Multivitamin', mega_b12:'B12 + Folic Acid', mega_colageno_sub:'Collagen', mega_fibra:'Fiber', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Specialized supplements for bariatric patients', potencia:'Bariatric Power' },
-  de:{ topbar1:'Lieferung in ganz Peru · Lima und Provinzen', topbar2:'Wohlbefinden in jeder Phase Ihres bariatrischen Lebens', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'ZAHLUNGSMETHODEN', cart_enviar_btn:'BESTELLUNG AUFGEBEN', envio_titulo:'Wohin liefern wir Ihre Bestellung?', envio_step2_lima:'Lima — Lieferung S/ 8.00', envio_step2_prov:'Provinzen — Über Shalom', envio_btn_send:'BESTELLUNG AUFGEBEN', envio_btn_back:'Weiter einkaufen', envio_cambiar:'← Ziel ändern', nav_suplementos:'Supplemente', nav_ofertas:'ANGEBOTE', search_ph:'Produkt suchen... (z.B.: Protein, Biotin, Kollagen)', sort_default:'Sortieren nach', sort_asc:'Preis: aufsteigend', sort_desc:'Preis: absteigend', cart_title:'Mein Warenkorb', cart_empty:'Ihr Warenkorb ist leer.\nFügen Sie Produkte hinzu.', cart_total:'Geschätzter Gesamtbetrag', cart_enviar:'Per WhatsApp senden', btn_ver:'Ansehen', btn_agregar:'Hinzufügen', btn_agregar_modal:'+ In den Warenkorb', modal_consultar:'Produkt per WhatsApp anfragen', modal_compartir:'🔗 Teilen', pack_ahorra:'Sparen', badge_recom:'Empfohlen', recom_titulo:'Das könnte Ihnen gefallen', recom_sub:'Ausgewählt für jede Phase Ihres bariatrischen Prozesses', sec_proteinas:'Proteine', sec_vitaminas:'Vitamine', sec_colageno:'Kollagen', sec_ofertas:'Angebote für Sie', sec_packs:'Pakete', tit_todos:'Supplemente', tit_proteinas:'Proteine', tit_vitaminas:'Vitamine & Mineralien', tit_colageno:'Kollagen & Ballaststoffe', tit_ofertas:'Beste Angebote für Sie', tit_packs:'Bariatrische Pakete', mega_proteinas:'Proteine', mega_vitaminas:'Vitamine & Mineralien', mega_colageno:'Kollagen & Ballaststoffe', mega_packs:'Pakete', mega_polvo:'Pulver', mega_liquida:'Flüssig', mega_biotina:'Biotin', mega_hierro:'Eisen + Vit. C', mega_multivit:'Multivitamin', mega_b12:'B12 + Folsäure', mega_colageno_sub:'Kollagen', mega_fibra:'Ballaststoffe', mega_packs_bn:'Pakete Bari & Nut.', mega_packs_lvl:'Pakete LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Spezialisierte Supplemente für bariatrische Patienten', potencia:'Bariatrische Kraft' },
-  it:{ topbar1:'Spedizioni in tutto il Perù · Lima e province', topbar2:'Benessere in ogni fase della tua vita bariatrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'METODI DI PAGAMENTO', cart_enviar_btn:'EFFETTUA IL MIO ORDINE', envio_titulo:'Dove spediamo il tuo ordine?', envio_step2_lima:'Lima — Consegna S/ 8.00', envio_step2_prov:'Province — Via Shalom', envio_btn_send:'EFFETTUA IL MIO ORDINE', envio_btn_back:'Continua ad acquistare', envio_cambiar:'← Cambia destinazione', nav_suplementos:'Integratori', nav_ofertas:'OFFERTE', search_ph:'Cerca prodotto... (es: proteina, biotina, collagene)', sort_default:'Ordina per', sort_asc:'Prezzo: crescente', sort_desc:'Prezzo: decrescente', cart_title:'Il mio carrello', cart_empty:'Il tuo carrello è vuoto.\nAggiungi prodotti per iniziare.', cart_total:'Totale stimato', cart_enviar:'Invia su WhatsApp', btn_ver:'Vedi', btn_agregar:'Aggiungi', btn_agregar_modal:'+ Aggiungi al carrello', modal_consultar:'Chiedi di questo prodotto su WhatsApp', modal_compartir:'🔗 Condividi', pack_ahorra:'Risparmia', badge_recom:'Consigliato', recom_titulo:'Potrebbe interessarti', recom_sub:'Selezionati per ogni fase del percorso bariatrico', sec_proteinas:'Proteine', sec_vitaminas:'Vitamine', sec_colageno:'Collagene', sec_ofertas:'Offerte Per Te', sec_packs:'Pacchi', tit_todos:'Integratori', tit_proteinas:'Proteine', tit_vitaminas:'Vitamine & Minerali', tit_colageno:'Collagene & Fibra', tit_ofertas:'Le migliori offerte per te', tit_packs:'Pacchi Bariatrici', mega_proteinas:'Proteine', mega_vitaminas:'Vitamine & Minerali', mega_colageno:'Collagene & Fibra', mega_packs:'Pacchi', mega_polvo:'Polvere', mega_liquida:'Liquida', mega_biotina:'Biotina', mega_hierro:'Ferro + Vit. C', mega_multivit:'Multivitaminico', mega_b12:'B12 + Acido Folico', mega_colageno_sub:'Collagene', mega_fibra:'Fibra', mega_packs_bn:'Pacchi Bari & Nut.', mega_packs_lvl:'Pacchi LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Integratori specializzati per pazienti bariatrici', potencia:'Potenza Bariatrica' },
-  pt:{ topbar1:'Envios para todo o Peru · Lima e províncias', topbar2:'Bem-estar em cada etapa da sua vida bariátrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTODOS DE PAGAMENTO', cart_enviar_btn:'REALIZAR MEU PEDIDO', envio_titulo:'Para onde enviamos seu pedido?', envio_step2_lima:'Lima — Entrega S/ 8.00', envio_step2_prov:'Províncias — Via Shalom', envio_btn_send:'REALIZAR MEU PEDIDO', envio_btn_back:'Continuar comprando', envio_cambiar:'← Mudar destino', nav_suplementos:'Suplementos', nav_ofertas:'OFERTAS', search_ph:'Buscar produto... (ex: proteína, biotina, colágeno)', sort_default:'Ordenar por', sort_asc:'Preço: menor para maior', sort_desc:'Preço: maior para menor', cart_title:'Meu Carrinho', cart_empty:'Seu carrinho está vazio.\nAdicione produtos para começar.', cart_total:'Total estimado', cart_enviar:'Enviar pelo WhatsApp', btn_ver:'Ver', btn_agregar:'Adicionar', btn_agregar_modal:'+ Adicionar ao carrinho', modal_consultar:'Consultar este produto pelo WhatsApp', modal_compartir:'🔗 Compartilhar', pack_ahorra:'Economize', badge_recom:'Recomendado', recom_titulo:'Você também pode gostar', recom_sub:'Selecionados para cada etapa do seu processo bariátrico', sec_proteinas:'Proteínas', sec_vitaminas:'Vitaminas', sec_colageno:'Colágeno', sec_ofertas:'Ofertas Para Você', sec_packs:'Pacotes', tit_todos:'Suplementos', tit_proteinas:'Proteínas', tit_vitaminas:'Vitaminas & Minerais', tit_colageno:'Colágeno & Fibra', tit_ofertas:'As melhores ofertas para você', tit_packs:'Pacotes Bariátricos', mega_proteinas:'Proteínas', mega_vitaminas:'Vitaminas & Minerais', mega_colageno:'Colágeno & Fibra', mega_packs:'Pacotes', mega_polvo:'Pó', mega_liquida:'Líquida', mega_biotina:'Biotina', mega_hierro:'Ferro + Vit. C', mega_multivit:'Multivitamínico', mega_b12:'B12 + Ác. Fólico', mega_colageno_sub:'Colágeno', mega_fibra:'Fibra', mega_packs_bn:'Pacotes Bari & Nut.', mega_packs_lvl:'Pacotes LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos', potencia:'Potência Bariátrica' },
-  fr:{ topbar1:'Livraison dans tout le Pérou · Lima et provinces', topbar2:'Bien-être à chaque étape de votre vie bariatrique', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTHODES DE PAIEMENT', cart_enviar_btn:'PASSER MA COMMANDE', envio_titulo:'Où livrons-nous votre commande?', envio_step2_lima:'Lima — Livraison S/ 8.00', envio_step2_prov:'Provinces — Via Shalom', envio_btn_send:'PASSER MA COMMANDE', envio_btn_back:'Continuer mes achats', envio_cambiar:'← Changer la destination', nav_suplementos:'Suppléments', nav_ofertas:'OFFRES', search_ph:'Rechercher un produit... (ex: protéine, biotine, collagène)', sort_default:'Trier par', sort_asc:'Prix: croissant', sort_desc:'Prix: décroissant', cart_title:'Mon Panier', cart_empty:'Votre panier est vide.\nAjoutez des produits pour commencer.', cart_total:'Total estimé', cart_enviar:'Envoyer par WhatsApp', btn_ver:'Voir', btn_agregar:'Ajouter', btn_agregar_modal:'+ Ajouter au panier', modal_consultar:'Demander ce produit sur WhatsApp', modal_compartir:'🔗 Partager', pack_ahorra:'Économisez', badge_recom:'Recommandé', recom_titulo:'Vous pourriez aussi aimer', recom_sub:'Sélectionnés pour chaque étape de votre parcours bariatrique', sec_proteinas:'Protéines', sec_vitaminas:'Vitamines', sec_colageno:'Collagène', sec_ofertas:'Offres Pour Vous', sec_packs:'Packs', tit_todos:'Suppléments', tit_proteinas:'Protéines', tit_vitaminas:'Vitamines & Minéraux', tit_colageno:'Collagène & Fibres', tit_ofertas:'Meilleures offres pour vous', tit_packs:'Packs Bariatriques', mega_proteinas:'Protéines', mega_vitaminas:'Vitamines & Minéraux', mega_colageno:'Collagène & Fibres', mega_packs:'Packs', mega_polvo:'Poudre', mega_liquida:'Liquide', mega_biotina:'Biotine', mega_hierro:'Fer + Vit. C', mega_multivit:'Multivitamine', mega_b12:'B12 + Acide Folique', mega_colageno_sub:'Collagène', mega_fibra:'Fibres', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suppléments spécialisés pour les patients bariatriques', potencia:'Puissance Bariatrique' }
+  es:{ topbar1:'Envíos a todo el Perú · Lima y provincias', topbar2:'Bienestar en cada etapa de tu vida bariátrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTODOS DE PAGO', cart_enviar_btn:'REALIZAR MI PEDIDO', envio_titulo:'¿Dónde te enviamos tu pedido?', envio_step2_lima:'Lima — Costo según distrito', envio_step2_prov:'Provincias — Vía Shalom', envio_btn_send:'REALIZAR MI PEDIDO', envio_btn_back:'Seguir comprando', envio_cambiar:'← Cambiar destino', nav_suplementos:'Suplementos', nav_ofertas:'OFERTAS', search_ph:'Busca tu suplemento — proteína, biotina, colágeno…', sort_default:'Ordenar por', sort_asc:'Precio: menor a mayor', sort_desc:'Precio: mayor a menor', cart_title:'Mi Carrito', cart_empty:'Tu carrito está vacío.\nAgrega productos para comenzar.', cart_total:'Total estimado', cart_enviar:'Enviar por WhatsApp', btn_ver:'Ver', btn_agregar:'Agregar', btn_agregar_modal:'+ Agregar al carrito', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Compartir este producto', pack_ahorra:'Ahorra', badge_recom:'Recomendado', recom_titulo:'También te puede interesar', recom_sub:'Seleccionados para cada etapa de tu proceso bariátrico', sec_proteinas:'Proteínas', sec_vitaminas:'Vitaminas', sec_colageno:'Colágeno', sec_ofertas:'Ofertas Para Ti', sec_packs:'Packs', tit_todos:'Suplementos', tit_proteinas:'Proteínas', tit_vitaminas:'Vitaminas & Minerales', tit_colageno:'Colágeno & Fibra', tit_ofertas:'Las mejores ofertas para ti', tit_packs:'Packs Bariátricos', mega_proteinas:'Proteínas', mega_vitaminas:'Vitaminas & Minerales', mega_colageno:'Colágeno & Fibra', mega_packs:'Packs', mega_polvo:'Polvo', mega_liquida:'Líquida', mega_biotina:'Biotina', mega_hierro:'Hierro + Vit. C', mega_multivit:'Multivitamínico', mega_b12:'B12 + Ác. Fólico', mega_colageno_sub:'Colágeno', mega_fibra:'Fibra', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos', potencia:'Potencia Bariátrica' },
+  en:{ topbar1:'Shipping across Peru · Lima and provinces', topbar2:'Wellness at every stage of your bariatric life', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'PAYMENT METHODS', cart_enviar_btn:'PLACE MY ORDER', envio_titulo:'Where do we ship your order?', envio_step2_lima:'Lima — Costo según distrito', envio_step2_prov:'Provinces — Via Shalom', envio_btn_send:'PLACE MY ORDER', envio_btn_back:'Keep shopping', envio_cambiar:'← Change destination', nav_suplementos:'Supplements', nav_ofertas:'OFFERS', search_ph:'Search product... (e.g: protein, biotin, collagen, pack)', sort_default:'Sort by', sort_asc:'Price: low to high', sort_desc:'Price: high to low', cart_title:'My Cart', cart_empty:'Your cart is empty.\nAdd products to get started.', cart_total:'Estimated total', cart_enviar:'Send via WhatsApp', btn_ver:'View', btn_agregar:'Add', btn_agregar_modal:'+ Add to cart', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Share this product', pack_ahorra:'Save', badge_recom:'Recommended', recom_titulo:'You might also like', recom_sub:'Selected for each stage of your bariatric journey', sec_proteinas:'Proteins', sec_vitaminas:'Vitamins', sec_colageno:'Collagen', sec_ofertas:'Offers For You', sec_packs:'Packs', tit_todos:'Supplements', tit_proteinas:'Proteins', tit_vitaminas:'Vitamins & Minerals', tit_colageno:'Collagen & Fiber', tit_ofertas:'Best offers for you', tit_packs:'Bariatric Packs', mega_proteinas:'Proteins', mega_vitaminas:'Vitamins & Minerals', mega_colageno:'Collagen & Fiber', mega_packs:'Packs', mega_polvo:'Powder', mega_liquida:'Liquid', mega_biotina:'Biotin', mega_hierro:'Iron + Vit. C', mega_multivit:'Multivitamin', mega_b12:'B12 + Folic Acid', mega_colageno_sub:'Collagen', mega_fibra:'Fiber', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Specialized supplements for bariatric patients', potencia:'Bariatric Power' },
+  de:{ topbar1:'Lieferung in ganz Peru · Lima und Provinzen', topbar2:'Wohlbefinden in jeder Phase Ihres bariatrischen Lebens', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'ZAHLUNGSMETHODEN', cart_enviar_btn:'BESTELLUNG AUFGEBEN', envio_titulo:'Wohin liefern wir Ihre Bestellung?', envio_step2_lima:'Lima — Lieferung S/ 8.00', envio_step2_prov:'Provinzen — Über Shalom', envio_btn_send:'BESTELLUNG AUFGEBEN', envio_btn_back:'Weiter einkaufen', envio_cambiar:'← Ziel ändern', nav_suplementos:'Supplemente', nav_ofertas:'ANGEBOTE', search_ph:'Produkt suchen... (z.B.: Protein, Biotin, Kollagen)', sort_default:'Sortieren nach', sort_asc:'Preis: aufsteigend', sort_desc:'Preis: absteigend', cart_title:'Mein Warenkorb', cart_empty:'Ihr Warenkorb ist leer.\nFügen Sie Produkte hinzu.', cart_total:'Geschätzter Gesamtbetrag', cart_enviar:'Per WhatsApp senden', btn_ver:'Ansehen', btn_agregar:'Hinzufügen', btn_agregar_modal:'+ In den Warenkorb', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Teilen', pack_ahorra:'Sparen', badge_recom:'Empfohlen', recom_titulo:'Das könnte Ihnen gefallen', recom_sub:'Ausgewählt für jede Phase Ihres bariatrischen Prozesses', sec_proteinas:'Proteine', sec_vitaminas:'Vitamine', sec_colageno:'Kollagen', sec_ofertas:'Angebote für Sie', sec_packs:'Pakete', tit_todos:'Supplemente', tit_proteinas:'Proteine', tit_vitaminas:'Vitamine & Mineralien', tit_colageno:'Kollagen & Ballaststoffe', tit_ofertas:'Beste Angebote für Sie', tit_packs:'Bariatrische Pakete', mega_proteinas:'Proteine', mega_vitaminas:'Vitamine & Mineralien', mega_colageno:'Kollagen & Ballaststoffe', mega_packs:'Pakete', mega_polvo:'Pulver', mega_liquida:'Flüssig', mega_biotina:'Biotin', mega_hierro:'Eisen + Vit. C', mega_multivit:'Multivitamin', mega_b12:'B12 + Folsäure', mega_colageno_sub:'Kollagen', mega_fibra:'Ballaststoffe', mega_packs_bn:'Pakete Bari & Nut.', mega_packs_lvl:'Pakete LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Spezialisierte Supplemente für bariatrische Patienten', potencia:'Bariatrische Kraft' },
+  it:{ topbar1:'Spedizioni in tutto il Perù · Lima e province', topbar2:'Benessere in ogni fase della tua vita bariatrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'METODI DI PAGAMENTO', cart_enviar_btn:'EFFETTUA IL MIO ORDINE', envio_titulo:'Dove spediamo il tuo ordine?', envio_step2_lima:'Lima — Consegna S/ 8.00', envio_step2_prov:'Province — Via Shalom', envio_btn_send:'EFFETTUA IL MIO ORDINE', envio_btn_back:'Continua ad acquistare', envio_cambiar:'← Cambia destinazione', nav_suplementos:'Integratori', nav_ofertas:'OFFERTE', search_ph:'Cerca prodotto... (es: proteina, biotina, collagene)', sort_default:'Ordina per', sort_asc:'Prezzo: crescente', sort_desc:'Prezzo: decrescente', cart_title:'Il mio carrello', cart_empty:'Il tuo carrello è vuoto.\nAggiungi prodotti per iniziare.', cart_total:'Totale stimato', cart_enviar:'Invia su WhatsApp', btn_ver:'Vedi', btn_agregar:'Aggiungi', btn_agregar_modal:'+ Aggiungi al carrello', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Condividi', pack_ahorra:'Risparmia', badge_recom:'Consigliato', recom_titulo:'Potrebbe interessarti', recom_sub:'Selezionati per ogni fase del percorso bariatrico', sec_proteinas:'Proteine', sec_vitaminas:'Vitamine', sec_colageno:'Collagene', sec_ofertas:'Offerte Per Te', sec_packs:'Pacchi', tit_todos:'Integratori', tit_proteinas:'Proteine', tit_vitaminas:'Vitamine & Minerali', tit_colageno:'Collagene & Fibra', tit_ofertas:'Le migliori offerte per te', tit_packs:'Pacchi Bariatrici', mega_proteinas:'Proteine', mega_vitaminas:'Vitamine & Minerali', mega_colageno:'Collagene & Fibra', mega_packs:'Pacchi', mega_polvo:'Polvere', mega_liquida:'Liquida', mega_biotina:'Biotina', mega_hierro:'Ferro + Vit. C', mega_multivit:'Multivitaminico', mega_b12:'B12 + Acido Folico', mega_colageno_sub:'Collagene', mega_fibra:'Fibra', mega_packs_bn:'Pacchi Bari & Nut.', mega_packs_lvl:'Pacchi LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Integratori specializzati per pazienti bariatrici', potencia:'Potenza Bariatrica' },
+  pt:{ topbar1:'Envios para todo o Peru · Lima e províncias', topbar2:'Bem-estar em cada etapa da sua vida bariátrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTODOS DE PAGAMENTO', cart_enviar_btn:'REALIZAR MEU PEDIDO', envio_titulo:'Para onde enviamos seu pedido?', envio_step2_lima:'Lima — Entrega S/ 8.00', envio_step2_prov:'Províncias — Via Shalom', envio_btn_send:'REALIZAR MEU PEDIDO', envio_btn_back:'Continuar comprando', envio_cambiar:'← Mudar destino', nav_suplementos:'Suplementos', nav_ofertas:'OFERTAS', search_ph:'Buscar produto... (ex: proteína, biotina, colágeno)', sort_default:'Ordenar por', sort_asc:'Preço: menor para maior', sort_desc:'Preço: maior para menor', cart_title:'Meu Carrinho', cart_empty:'Seu carrinho está vazio.\nAdicione produtos para começar.', cart_total:'Total estimado', cart_enviar:'Enviar pelo WhatsApp', btn_ver:'Ver', btn_agregar:'Adicionar', btn_agregar_modal:'+ Adicionar ao carrinho', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Compartilhar', pack_ahorra:'Economize', badge_recom:'Recomendado', recom_titulo:'Você também pode gostar', recom_sub:'Selecionados para cada etapa do seu processo bariátrico', sec_proteinas:'Proteínas', sec_vitaminas:'Vitaminas', sec_colageno:'Colágeno', sec_ofertas:'Ofertas Para Você', sec_packs:'Pacotes', tit_todos:'Suplementos', tit_proteinas:'Proteínas', tit_vitaminas:'Vitaminas & Minerais', tit_colageno:'Colágeno & Fibra', tit_ofertas:'As melhores ofertas para você', tit_packs:'Pacotes Bariátricos', mega_proteinas:'Proteínas', mega_vitaminas:'Vitaminas & Minerais', mega_colageno:'Colágeno & Fibra', mega_packs:'Pacotes', mega_polvo:'Pó', mega_liquida:'Líquida', mega_biotina:'Biotina', mega_hierro:'Ferro + Vit. C', mega_multivit:'Multivitamínico', mega_b12:'B12 + Ác. Fólico', mega_colageno_sub:'Colágeno', mega_fibra:'Fibra', mega_packs_bn:'Pacotes Bari & Nut.', mega_packs_lvl:'Pacotes LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos', potencia:'Potência Bariátrica' },
+  fr:{ topbar1:'Livraison dans tout le Pérou · Lima et provinces', topbar2:'Bien-être à chaque étape de votre vie bariatrique', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTHODES DE PAIEMENT', cart_enviar_btn:'PASSER MA COMMANDE', envio_titulo:'Où livrons-nous votre commande?', envio_step2_lima:'Lima — Livraison S/ 8.00', envio_step2_prov:'Provinces — Via Shalom', envio_btn_send:'PASSER MA COMMANDE', envio_btn_back:'Continuer mes achats', envio_cambiar:'← Changer la destination', nav_suplementos:'Suppléments', nav_ofertas:'OFFRES', search_ph:'Rechercher un produit... (ex: protéine, biotine, collagène)', sort_default:'Trier par', sort_asc:'Prix: croissant', sort_desc:'Prix: décroissant', cart_title:'Mon Panier', cart_empty:'Votre panier est vide.\nAjoutez des produits pour commencer.', cart_total:'Total estimé', cart_enviar:'Envoyer par WhatsApp', btn_ver:'Voir', btn_agregar:'Ajouter', btn_agregar_modal:'+ Ajouter au panier', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Partager', pack_ahorra:'Économisez', badge_recom:'Recommandé', recom_titulo:'Vous pourriez aussi aimer', recom_sub:'Sélectionnés pour chaque étape de votre parcours bariatrique', sec_proteinas:'Protéines', sec_vitaminas:'Vitamines', sec_colageno:'Collagène', sec_ofertas:'Offres Pour Vous', sec_packs:'Packs', tit_todos:'Suppléments', tit_proteinas:'Protéines', tit_vitaminas:'Vitamines & Minéraux', tit_colageno:'Collagène & Fibres', tit_ofertas:'Meilleures offres pour vous', tit_packs:'Packs Bariatriques', mega_proteinas:'Protéines', mega_vitaminas:'Vitamines & Minéraux', mega_colageno:'Collagène & Fibres', mega_packs:'Packs', mega_polvo:'Poudre', mega_liquida:'Liquide', mega_biotina:'Biotine', mega_hierro:'Fer + Vit. C', mega_multivit:'Multivitamine', mega_b12:'B12 + Acide Folique', mega_colageno_sub:'Collagène', mega_fibra:'Fibres', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suppléments spécialisés pour les patients bariatriques', potencia:'Puissance Bariatrique' }
 };
 function __(key) { return (T[currentLang] && T[currentLang][key]) || T.es[key] || key; }
 
@@ -3846,237 +4222,6 @@ function cambiarIdioma(lang) {
   renderizar(currentCat, null);
   actualizarCartUI();
 }
-const BN = "img/bn-";
-const LVL = "img/lvl-";
-
-const tn = {
-  fibra_bn: {
-    srv: "1 Scoop (5g)", srvs: "64 servicios por envase",
-    filas: [
-      ["Carbohidratos","5 g","2%"],
-      ["Fibra dietética","5 g","20%"],
-      ["Azúcar","0 g","0%"],
-      ["Grasas","0 g","0%"],
-      ["Proteína","0 g","0%"]
-    ]
-  },
-  biotina: {
-    srv: "2 gomitas", srvs: "45 porciones por envase",
-    filas: [
-      ["Calorías","20 kcal",""],
-      ["Carbohidratos totales","—",""],
-      ["Azúcares totales","1 g",""],
-      ["Azúcares añadidos","1 g",""],
-      ["Biotina","10,000 mcg",""]
-    ],
-    nota: "2 gomitas al día, preferiblemente con una comida. La biotina puede interferir con pruebas de laboratorio."
-  },
-  hierro: {
-    srv: "1 gomita masticable", srvs: "30 gomitas por envase",
-    filas: [
-      ["Calorías","15 kcal",""],
-      ["Grasa total","0.5 g","1%"],
-      ["Carbohidratos totales","4 g","1%"],
-      ["Azúcares totales","0 g",""],
-      ["Azúcar Alcohol","4 g",""],
-      ["Vitamina C (Ác. Ascórbico)","60 mg","67%"],
-      ["Hierro (fumarato ferroso)","45 mg","250%"],
-      ["Sodio","20 mg","1%"]
-    ],
-    nota: "Vía oral. Adultos: 1 gomita masticable al día."
-  },
-  multivit: {
-    srv: "4 gomitas", srvs: "22 porciones por envase",
-    filas: [
-      ["Calorías","10 kcal",""],
-      ["Grasa total","0 g","0%"],
-      ["Carbohidratos totales","1.5 g","1%"],
-      ["Azúcar","1 g",""],
-      ["Proteína","0 g","0%"],
-      ["Vitamina A (Retinol)","560 mcg","63%"],
-      ["Vitamina C","45 mg","50%"],
-      ["Vitamina D3","18.8 mcg","94%"],
-      ["Vitamina E","15 mg","100%"],
-      ["Vitamina B1 (Tiamina)","12 mg","250%"],
-      ["Vitamina B2","430 mcg","33%"],
-      ["Vitamina B3","5 mg","31%"],
-      ["Vitamina B6","500 mcg","29%"],
-      ["Ácido fólico","650 mcg","84%"],
-      ["Vitamina B12 (Metilcobalamina)","425 mcg","5833%"],
-      ["Biotina","150 mcg","500%"],
-      ["Ácido pantoténico","2.5 mg","50%"],
-      ["Calcio","1400 mcg","23%"],
-      ["Hierro (fumarato ferroso)","50 mg","63%"],
-      ["Yodo","38 mcg","25%"],
-      ["Magnesio","100 mg","24%"],
-      ["Zinc","11 mg","68%"],
-      ["Selenio","18 mcg","32%"],
-      ["Cobre","1 mg","56%"],
-      ["Manganeso","500 mcg","22%"],
-      ["Cromo","30 mcg","86%"],
-      ["Molibdeno","18.8 mcg","42%"]
-    ]
-  },
-  b12: {
-    srv: "3 gomitas masticables", srvs: "30 porciones por envase",
-    filas: [
-      ["Folato (200 mcg ác. fólico)","340 mcg DFE","85%"],
-      ["Vitamina B12 (metilcobalamina)","1,000 mcg","41,667%"]
-    ]
-  },
-  liquid: {
-    srv: "30 ml", srvs: "33 porciones por envase",
-    filas: [
-      ["Calorías","100 kcal",""],
-      ["Proteínas","20 g",""],
-      ["Grasa total","0.0 g",""],
-      ["Carbohidrato total","6.0 g",""],
-      ["Fibra","6 g",""],
-      ["Hierro","50 mg",""],
-      ["Calcio","1 mg",""],
-      ["Sodio","10 mg",""],
-      ["Potasio","20 mg",""],
-      ["Fósforo","30 mcg",""],
-      ["Biotina","20 mcg",""]
-    ],
-    nota: "Sin lactosa · 0% azúcar"
-  },
-  whey: {
-    srv: "3 Scoops (48g)", srvs: "31 servicios por envase",
-    filas: [
-      ["Calorías","176 kcal",""],
-      ["Proteína","30 g",""],
-      ["Grasas","2.0 g",""],
-      ["Grasas saturadas","1 g",""],
-      ["Carbohidratos","3.7 g",""],
-      ["Azúcares","1 g",""],
-      ["Fibra dietética","1 g",""],
-      ["Sodio","83 mg",""],
-      ["Ácido fólico","100 mcg","26%"],
-      ["Biotina","7.5 mcg","25%"],
-      ["Niacina","4.96 mg","45%"],
-      ["Vitamina A","252 mcg","44%"],
-      ["Vitamina B1","375 mcg","47%"],
-      ["Vitamina B2","425 mcg","51%"],
-      ["Vitamina B6","500 mcg","54%"],
-      ["Vitamina B12","1.5 mcg","71%"],
-      ["Vitamina C","20 mg","25%"],
-      ["Vitamina D","2.8 mcg","45%"],
-      ["Vitamina E","8.7 mg","68%"],
-      ["Vitamina K","6.25 mcg","8%"],
-      ["Calcio","286 mg","35%"],
-      ["Cobre","500 mcg","77%"],
-      ["Cromo","30 mcg","136%"],
-      ["Hierro","5.5 mg","26%"],
-      ["Magnesio","25 mg","10%"],
-      ["Manganeso","0.5 mg","22%"],
-      ["Selenio","5 mcg","12%"],
-      ["Yodo","37.5 mcg","38%"],
-      ["Zinc","3.75 mg","38%"]
-    ],
-    nota: "Sin azúcares añadidos · Sin colorantes artificiales · Sin gluten · Deslactosada"
-  },
-  lvl_pro: {
-    srv: "1 Scoop (40g)", srvs: "25 servicios por envase",
-    filas: [
-      ["Calorías","145–155 kcal",""],
-      ["Proteína","27 g","52%"],
-      ["Grasas totales","< 1 g","< 1.43%"],
-      ["Grasas Saturadas","0 g","0%"],
-      ["Sodio","130–135 mg",""],
-      ["Carbohidratos totales","2 g","0.7%"],
-      ["Vitamina A","160 mcg","17.8%"],
-      ["Vitamina C","20 mg","22.2%"],
-      ["Vitamina D","3 mcg","15%"],
-      ["Vitamina E","1.8 mg","12%"],
-      ["Vitamina B1","0.2 mg","16.7%"],
-      ["Vitamina B2","0.5 mg","38.5%"],
-      ["Vitamina B3","3 mg","18.8%"],
-      ["Vitamina B5","1 mg","20%"],
-      ["Vitamina B6","0.3 mg","15%"],
-      ["Vitamina B9","80 mcg","20%"],
-      ["Vitamina B12","1 mcg","41.7%"],
-      ["Biotina","6 mcg","20%"],
-      ["Calcio","200 mg","20%"],
-      ["Hierro","2.8 mg","15.6%"],
-      ["Magnesio","62 mg","15.5%"],
-      ["Zinc","2.8 mg","25.5%"],
-      ["Selenio","12 mcg","21.8%"],
-      ["Vitamina K","12 mcg","10%"],
-      ["Yodo","30 mcg","20%"],
-      ["Cobre","180 mcg","20%"],
-      ["Manganeso","0.6 mg","26.1%"],
-      ["Molibdeno","9 mcg","20%"]
-    ],
-    nota: "Endulzado con stevia natural · Sin azúcares añadidos · Sin gluten · Apto bariátrico"
-  },
-  lvl_col: {
-    srv: "1 Scoop (12g)", srvs: "41 servicios por envase",
-    filas: [
-      ["Calorías","40 kcal","2%"],
-      ["Proteína (colágeno)","9 g","18%"],
-      ["Grasas totales","0.1 g","0.1%"],
-      ["Grasas Saturadas","0 g","0%"],
-      ["Sodio","10 mg","0.4%"],
-      ["Carbohidratos totales","0.5 g","0.2%"],
-      ["Vitamina A","134.4 mcg","15%"],
-      ["Vitamina C","46.8 mg","52%"],
-      ["Vitamina D","2.5 mcg","17%"],
-      ["Vitamina E","10 mg","67%"],
-      ["Vitamina B1","0.2 mg","17%"],
-      ["Vitamina B2","0.2 mg","15%"],
-      ["Vitamina B3","2.5 mg","16%"],
-      ["Vitamina B5","0.8 mg","16%"],
-      ["Vitamina B6","0.2 mg","12%"],
-      ["Vitamina B9","67.2 mcg","17%"],
-      ["Vitamina B12","0.4 mcg","17%"],
-      ["Biotina","10 mcg","33%"],
-      ["Calcio","178 mg","18%"],
-      ["Hierro","2.5 mg","14%"],
-      ["Magnesio","55.1 mg","13%"],
-      ["Zinc","2.4 mg","22%"],
-      ["Selenio","10.1 mcg","18%"],
-      ["Vitamina K","10.1 mcg","8%"],
-      ["Yodo","25.2 mcg","17%"],
-      ["Cobre","151.2 mcg","17%"],
-      ["Manganeso","0.5 mg","22%"],
-      ["Molibdeno","7.6 mcg","17%"]
-    ],
-    nota: "Con colágeno hidrolizado, camu camu y arándano · Sin azúcares añadidos · Apto bariátrico"
-  },
-  lvl_fib: {
-    srv: "1 Scoop (10g)", srvs: "20 servicios por envase",
-    filas: [
-      ["Calorías","27 kcal","1.4%"],
-      ["Grasas totales","0 g","0%"],
-      ["Carbohidratos totales","6.2 g","2.3%"],
-      ["Fibra dietética","6.2 g","22.1%"],
-      ["Vitamina A","159.5 mcg","17.7%"],
-      ["Vitamina C","19.9 mg","22.1%"],
-      ["Vitamina D","3 mcg","15%"],
-      ["Vitamina E","1.8 mg","12%"],
-      ["Vitamina B1","0.2 mg","16.7%"],
-      ["Vitamina B2","0.2 mg","15.4%"],
-      ["Vitamina B3","3 mg","18.8%"],
-      ["Vitamina B5","1 mg","20%"],
-      ["Vitamina B6","0.3 mg","17.7%"],
-      ["Vitamina B9","79.8 mcg","20%"],
-      ["Vitamina B12","0.5 mcg","20.8%"],
-      ["Biotina","6 mcg","20%"],
-      ["Calcio","199.4 mg","15.3%"],
-      ["Hierro","2.8 mg","15.6%"],
-      ["Magnesio","61.8 mg","14.7%"],
-      ["Zinc","2.8 mg","25.5%"],
-      ["Selenio","12 mcg","21.8%"],
-      ["Vitamina K","12 mcg","10%"],
-      ["Yodo","29.9 mcg","19.9%"],
-      ["Cobre","179.5 mcg","19.9%"],
-      ["Manganeso","0.6 mg","26.1%"],
-      ["Molibdeno","9 mcg","20%"]
-    ],
-    nota: "Fibra inulina · Sabor manzana verde · Sin azúcares añadidos · Apto bariátrico"
-  }
-};
 
 const scores = {
   bp1:{v:9.0,t:'Élite'}, bp2:{v:8.9,t:'Premium'}, bp3:{v:8.7,t:'Premium'}, bp4:{v:9.8,t:'Élite'},
@@ -4140,260 +4285,9 @@ function renderRecomendados() {
   }).join('');
 }
 
-const productos = [
-  // OFERTA ESPECIAL
-  { id:"oferta1", tipo:"oferta", marcaTipo:"bn", cat:"oferta", destacado:true, marca:"Bari&Nutrition",
-    nombre:"2 Proteínas Líquidas",
-    desc:"Llévate 2 proteínas líquidas para tu recuperación post cirugía bariátrica. Sin lactosa, enriquecidas en fibra, aminoácidos, vitaminas y minerales.",
-    incluye:"Proteína líquida x2 · Sabores a elección: Maracumango o Fresa",
-    tags:["Sin lactosa","20g proteína","Post operatorio"],
-    precio:360, precioN:400, ahorro:40,
-    img: "img/popup-proteina.png",
-    seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
-    uso:"Consume según indicación de tu equipo médico. Ideal para la etapa post operatoria.", tn:null },
-
-  { id:"oferta2", tipo:"oferta", marcaTipo:"bn", cat:"oferta", destacado:true, fiestas:true, marca:"Bari&Nutrition",
-    nombre:"2 Proteínas en Polvo (Whey)",
-    desc:"Promo de julio: llévate 2 Whey Protein de 1.5kg. 30g de proteína por servicio, sin gluten, sin lactosa y 0% azúcar.",
-    incluye:"Whey Protein 1.5kg x2 · Sabores a elección: Vainilla o Chocolate",
-    tags:["Promo Julio","30g proteína","Sin lactosa"],
-    precio:520, precioN:560, ahorro:40,
-    img: "img/oferta-2whey.png",
-    seleccionSabor:[{label:"Whey Protein 1",sabores:["Vainilla","Chocolate"]},{label:"Whey Protein 2",sabores:["Vainilla","Chocolate"]}],
-    uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir según indicación de tu equipo médico.", tn: tn.whey },
-
-  // BARI&NUTRITION PACKS
-  { id:"bp1", tipo:"pack", marcaTipo:"bn", cat:"pack", marca:"Bari&Nutrition",
-    nombre:"Pack Proteína Líquida",
-    desc:"Combinación ideal para la etapa de transición líquida.",
-    incluye:"Proteína líquida x2 · Gomitas multivitamínicas x1 · Gomitas B12 + ácido fólico x1 · Fibra soluble x1",
-    tags:["Alta proteína","Fácil absorción","Vitaminas esenciales"],
-    precio:722, precioN:785, ahorro:63,
-    img: "img/bn-pack-inicial.png",
-    seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
-    uso:"Combina cada producto según indicación de tu equipo médico. Consulta las dosis en cada envase.", tn:null },
-
-  { id:"bp2", tipo:"pack", marcaTipo:"bn", cat:"pack", marca:"Bari&Nutrition",
-    nombre:"Pack Proteína en Polvo + Vitaminas",
-    desc:"Ideal cuando ya puedes consumir proteína en polvo. Cubre vitaminas y minerales esenciales.",
-    incluye:"Proteína en polvo x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1",
-    tags:["30g proteína","Hierro","Multivitamínico"],
-    precio:672, precioN:730, ahorro:58,
-    img: "img/bn-pack-polvo-vitaminas.png",
-    seleccionSabor:[{label:"Proteína en Polvo (Whey)",sabores:["Vainilla","Chocolate"]}],
-    uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
-
-  { id:"bp3", tipo:"pack", marcaTipo:"bn", cat:"pack", marca:"Bari&Nutrition",
-    nombre:"Pack Energía y Cabello",
-    desc:"Para quienes experimentan pérdida de cabello y quieren reforzar biotina y hierro.",
-    incluye:"Gomitas biotina x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1",
-    tags:["Biotina 10,000 mcg","Hierro 45mg","Cabello y uñas"],
-    precio:552, precioN:600, ahorro:48,
-    img: "img/bn-pack-energia-cabello.png",
-    uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
-
-  { id:"bp4", tipo:"pack", marcaTipo:"bn", cat:"pack", destacado:true, marca:"Bari&Nutrition",
-    nombre:"Pack Suplementación Completa",
-    desc:"El pack más completo de Bari&Nutrition. Cubre proteína líquida, proteína en polvo, vitaminas, hierro, biotina y fibra.",
-    incluye:"Proteína líquida x1 · Proteína en polvo x1 · Gomitas biotina x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1 · Fibra soluble x1",
-    tags:["7 productos","Ahorro máximo","Todo en uno"],
-    precio:1060, precioN:1165, ahorro:105,
-    img: "img/bn-pack-suplementacion-completa.png",
-    seleccionSabor:[{label:"Proteína Líquida",sabores:["Maracumango","Fresa"]},{label:"Proteína en Polvo (Whey)",sabores:["Vainilla","Chocolate"]}],
-    uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
-
-  // LVL DRINK PACKS
-  { id:"lp1", tipo:"pack", marcaTipo:"lvl", cat:"pack", destacado:true, marca:"LVL Drink",
-    nombre:"Pack Completo LVL",
-    desc:"El pack más completo de LVL Drink. Proteína, colágeno, fibra y shaker oficial en un solo pedido.",
-    incluye:"Proteína en Polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g · Shaker oficial",
-    tags:["4 productos","Shaker incluido","Apto bariátrico"],
-    precio:389, precioN:477, ahorro:88,
-    img: LVL+"pack-completo.jpg",
-    seleccionSabor:[{label:"Proteína en Polvo HIGH ISO",sabores:["Vainilla","Chocolate"]}],
-    uso:"Consulta las dosis individuales en cada envase.", tn:null },
-
-  { id:"lp2", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
-    nombre:"Pack Proteína + Colágeno + Shaker",
-    desc:"Proteína en Polvo HIGH ISO + Colágeno Hidrolizado SKINFINITY + Shaker oficial LVL.",
-    incluye:"Proteína en Polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Shaker oficial",
-    tags:["3 productos","Shaker incluido","Apto bariátrico"],
-    precio:309, precioN:368, ahorro:59,
-    img: LVL+"pack-prot-colageno.jpg",
-    seleccionSabor:[{label:"Proteína en Polvo HIGH ISO",sabores:["Vainilla","Chocolate"]}],
-    uso:"Consulta las dosis individuales en cada envase.", tn:null },
-
-  { id:"lp3", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
-    nombre:"Pack Proteína + Fibra + Shaker",
-    desc:"Proteína en Polvo HIGH ISO + Fibra Manzana Verde + Shaker oficial LVL.",
-    incluye:"Proteína en Polvo 1kg (sabor a elegir) · Fibra Manzana Verde 200g · Shaker oficial",
-    tags:["3 productos","Shaker incluido","Apto bariátrico"],
-    precio:269, precioN:349, ahorro:80,
-    img: LVL+"pack-prot-fibra.jpg",
-    seleccionSabor:[{label:"Proteína en Polvo HIGH ISO",sabores:["Vainilla","Chocolate"]}],
-    uso:"Consulta las dosis individuales en cada envase.", tn:null },
-
-  { id:"lp4", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
-    nombre:"Pack Colágeno + Fibra + Shaker",
-    desc:"Colágeno Hidrolizado SKINFINITY + Fibra Manzana Verde + Shaker oficial LVL.",
-    incluye:"Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g · Shaker oficial",
-    tags:["3 productos","Shaker incluido","Apto bariátrico"],
-    precio:179, precioN:238, ahorro:59,
-    img: LVL+"pack-colageno-fibra.jpg",
-    uso:"Consulta las dosis individuales en cada envase.", tn:null },
-
-  { id:"lp5", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
-    nombre:"Pack Doble Fibra + Shaker",
-    desc:"Dos potes de Fibra Manzana Verde + Shaker oficial LVL. Ideal para el cuidado intestinal.",
-    incluye:"Fibra Manzana Verde x2 (200g c/u) · Shaker oficial",
-    tags:["Doble fibra","Shaker incluido","Tránsito intestinal"],
-    precio:149, precioN:218, ahorro:69,
-    img: LVL+"pack-doble-fibra.jpg",
-    uso:"Disolver 1 scoop (10g) en 250ml de agua al día.", tn:null },
-
-  { id:"lp6", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
-    nombre:"Pack Doble Colágeno + Shaker",
-    desc:"Dos potes de Colágeno Hidrolizado SKINFINITY + Shaker oficial LVL.",
-    incluye:"Colágeno Hidrolizado x2 (500g c/u) · Shaker oficial",
-    tags:["Doble colágeno","Shaker incluido","Piel y cabello"],
-    precio:209, precioN:258, ahorro:49,
-    img: LVL+"pack-doble-colageno.jpg",
-    uso:"Disolver 1 scoop (12g) en 250ml de agua al día.", tn:null },
-
-  { id:"lp7", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
-    nombre:"Pack 2 Proteínas + Shaker",
-    desc:"Proteína Chocolate + Proteína Vainilla + Shaker oficial. Ambos sabores para variar.",
-    incluye:"Proteína Chocolate 1kg · Proteína Vainilla 1kg · Shaker oficial",
-    tags:["Ambos sabores","Shaker incluido","54g proteína/día"],
-    precio:399, precioN:479, ahorro:80,
-    img: LVL+"pack-2proteinas.jpg",
-    uso:"Disolver 1 scoop (40g) en 250ml de agua al día.", tn:null },
-
-  // BARI&NUTRITION INDIVIDUALES
-  { id:"bi1", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"polvo", destacado:true, marca:"Bari&Nutrition",
-    sabores:["Vainilla","Chocolate"], saborPredeterminado:"Vainilla",
-    nombre:"Whey Protein Vainilla 1.5kg",
-    desc:"Proteína en polvo hidrolizada a base de suero de leche deslactosada. 30g de proteína por servicio. Enriquecida con vitaminas y minerales.",
-    tags:["30g proteína","Sin gluten","Sin lactosa","Con biotina","0% azúcar"],
-    precio:280,
-    img: BN+"whey-vainilla.png",
-    uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir preferentemente como suplemento proteico según indicación médica.",
-    tn: tn.whey },
-
-  { id:"bi2", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"polvo", marca:"Bari&Nutrition",
-    sabores:["Vainilla","Chocolate"], saborPredeterminado:"Chocolate",
-    nombre:"Whey Protein Chocolate 1.5kg",
-    desc:"Proteína en polvo hidrolizada a base de suero de leche deslactosada. 30g de proteína por servicio. Enriquecida con vitaminas y minerales.",
-    tags:["30g proteína","Sin gluten","Sin lactosa","Con biotina","0% azúcar"],
-    precio:280,
-    img: BN+"whey-chocolate.png",
-    uso:"Disolver 3 scoops (48g) en 250ml de agua o leche.",
-    tn: tn.whey },
-
-  { id:"bi3", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"liquida", destacado:true, marca:"Bari&Nutrition",
-    sabores:["Fresa","Maracumango"], saborPredeterminado:"Fresa",
-    nombre:"Liquid Protein Fresa 1LT",
-    desc:"Proteína líquida lista para consumir. 20g de proteína por porción de 30ml. Sin lactosa, 0% azúcar. Enriquecida con fibra, aminoácidos, vitaminas y minerales.",
-    tags:["20g proteína","Sin lactosa","0% azúcar","Lista para tomar","50mg hierro"],
-    precio:200,
-    img: BN+"liquid-fresa.png",
-    uso:"Tomar 30ml por porción. Hasta 33 porciones por envase de 1 litro.",
-    tn: tn.liquid },
-
-  { id:"bi4", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"liquida", destacado:true, marca:"Bari&Nutrition",
-    sabores:["Maracumango","Fresa"], saborPredeterminado:"Maracumango",
-    nombre:"Liquid Protein Maracumango 1LT",
-    desc:"Proteína líquida lista para consumir. 20g de proteína por porción de 30ml. Sin lactosa, 0% azúcar. Enriquecida con fibra, aminoácidos, vitaminas y minerales.",
-    tags:["20g proteína","Sin lactosa","0% azúcar","Lista para tomar","50mg hierro"],
-    precio:200,
-    img: BN+"liquid-maracumango.png",
-    uso:"Tomar 30ml por porción. Hasta 33 porciones por envase de 1 litro.",
-    tn: tn.liquid },
-
-  { id:"bi5", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"biotina", formato:"gomitas", destacado:true, marca:"Bari&Nutrition",
-    nombre:"Gomitas Biotina 10,000mcg — 90 und",
-    desc:"Gomitas de glicerina sabor durazno. 10,000 mcg de biotina por porción. Apoya la salud del cabello, piel y uñas. Sin azúcares añadidos, sin colorantes artificiales.",
-    tags:["10,000 mcg biotina","Sabor durazno","Sin azúcares","Sin colorantes"],
-    precio:150,
-    img: BN+"gomita-biotina.png",
-    uso:"2 gomitas al día, preferiblemente con una comida. No exceda la dosis recomendada.",
-    tn: tn.biotina },
-
-  { id:"bi6", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"hierro", formato:"gomitas", marca:"Bari&Nutrition",
-    nombre:"Gomitas Hierro 45mg + Vitamina C — 30 und",
-    desc:"Gomitas de gelatina sabor naranja. 45mg de hierro (250% VD) + 60mg de vitamina C. La vitamina C potencia la absorción del hierro.",
-    tags:["45mg hierro","Vitamina C 60mg","250% VD","Sabor naranja","Sin azúcares"],
-    precio:150,
-    img: BN+"gomita-hierro.png",
-    uso:"1 gomita masticable al día. Vía oral.",
-    tn: tn.hierro },
-
-  { id:"bi7", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"multivit", formato:"gomitas", marca:"Bari&Nutrition",
-    nombre:"Gomitas Multivitamínico — 90 und",
-    desc:"Gomitas multisabor con 23 vitaminas y minerales esenciales. Fórmula completa para cubrir los requerimientos nutricionales post-quirúrgicos.",
-    tags:["23 vitaminas y minerales","Multisabor","Sin azúcares","Sin colorantes"],
-    precio:150,
-    img: BN+"gomita-multivit.png",
-    uso:"4 gomitas al día.",
-    tn: tn.multivit },
-
-  { id:"bi8", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"b12", formato:"gomitas", destacado:true, marca:"Bari&Nutrition",
-    nombre:"Gomitas B12 + Ácido Fólico — 90 und",
-    desc:"Gomitas sabor piña. 1,000 mcg de vitamina B12 como metilcobalamina (41,667% VD) + ácido fólico. Esencial en el post-operatorio bariátrico.",
-    tags:["1,000 mcg B12","41,667% VD","Ácido fólico","Sabor piña","Sin azúcares"],
-    precio:150,
-    img: BN+"gomita-b12.png",
-    uso:"3 gomitas masticables al día.",
-    tn: tn.b12 },
-
-  { id:"bi9", tipo:"bn", marcaTipo:"bn", cat:"colageno", subcat:"fibra", marca:"Bari&Nutrition",
-    nombre:"Fibra Soluble 320g",
-    desc:"Fibra soluble a base de maíz, de origen francés. Rápida absorción. Ayuda en el tratamiento del estreñimiento y mantiene la regularidad intestinal.",
-    tags:["Base de maíz","Origen francés","Rápida absorción","Sin azúcar","64 servicios"],
-    precio:85,
-    img: BN+"fibra.png",
-    uso:"1 scoop (5g) al día disuelto en agua o bebida de preferencia.",
-    tn: tn.fibra_bn },
-
-  // LVL DRINK INDIVIDUALES
-  { id:"li1", tipo:"lvl", marcaTipo:"lvl", cat:"proteina", subcat:"polvo", destacado:true, marca:"LVL Drink",
-    sabores:["Vainilla","Chocolate"], saborPredeterminado:"Vainilla",
-    nombre:"Proteína Vainilla HIGH ISO 1kg",
-    desc:"Proteína concentrada de suero de leche (WPC). 27g de proteína por porción. Endulzada con stevia natural, sin azúcares añadidos, sin gluten. Apta para nutrición bariátrica.",
-    tags:["27g proteína","Stevia natural","Sin gluten","Sin azúcares","Apto bariátrico"],
-    precio:209,
-    img: LVL+"proteina-vainilla.jpg",
-    uso:"Disolver 1 scoop (40g) en 250ml de agua. Consumir una vez al día.",
-    tn: tn.lvl_pro },
-
-  { id:"li2", tipo:"lvl", marcaTipo:"lvl", cat:"proteina", subcat:"polvo", destacado:true, marca:"LVL Drink",
-    sabores:["Vainilla","Chocolate"], saborPredeterminado:"Chocolate",
-    nombre:"Proteína Chocolate HIGH ISO 1kg",
-    desc:"Proteína concentrada de suero de leche (WPC). 27g de proteína por porción. Sabor a chocolate 100% cacao, endulzado con stevia natural. Sin azúcares añadidos, sin gluten.",
-    tags:["27g proteína","100% cacao","Stevia natural","Sin gluten","Apto bariátrico"],
-    precio:209,
-    img: LVL+"proteina-chocolate.jpg",
-    uso:"Disolver 1 scoop (40g) en 250ml de agua. Consumir una vez al día.",
-    tn: tn.lvl_pro },
-
-  { id:"li3", tipo:"lvl", marcaTipo:"lvl", cat:"colageno", subcat:"colageno", marca:"LVL Drink",
-    nombre:"Colágeno SKINFINITY 500g",
-    desc:"Colágeno hidrolizado con camu camu, arándano y 10,000 mcg de biotina. Para el cuidado de piel, cabello y uñas. Sabor natural arándano, sin azúcares añadidos.",
-    tags:["9g colágeno","10,000 mcg biotina","Camu camu","Sabor arándano","Apto bariátrico"],
-    precio:109,
-    img: LVL+"colageno.jpg",
-    uso:"Disolver 1 scoop (12g) en 250ml de agua al día. Se recomienda consumir en ayunas o antes de acostarse.",
-    tn: tn.lvl_col },
-
-  { id:"li4", tipo:"lvl", marcaTipo:"lvl", cat:"colageno", subcat:"fibra", marca:"LVL Drink",
-    nombre:"Fibra GET OUT Manzana Verde 200g",
-    desc:"Fibra natural de inulina. Mejora la digestión, promueve la salud intestinal y favorece la sensación de saciedad. Sabor manzana verde, sin azúcares añadidos.",
-    tags:["6g fibra","Fibra inulina","Sabor manzana verde","Sin azúcares","Apto bariátrico"],
-    precio:79,
-    img: LVL+"fibra.jpg",
-    uso:"Disolver 1 scoop (10g) en 250ml de agua al día.",
-    tn: tn.lvl_fib }
-];
+/* El catálogo (productos y tablas nutricionales) vive ahora en
+   zb-catalogo.js, cargado más arriba. Una sola fuente de verdad
+   para la tienda y para el Selector Inteligente. */
 
 // ---- MENU ----
 function abrirMenu() {
@@ -4539,8 +4433,159 @@ function tokenizar(qNormalizado) {
   return qNormalizado.split(/[^a-z0-9ñ]+/).filter(w => w && !STOPWORDS_BUSQUEDA.has(w));
 }
 
+/* ============================================================
+   FASE 3 — BÚSQUEDA AMPLIADA
+   ------------------------------------------------------------
+   Antes solo se buscaba en nombre, descripción, marca y tags.
+   Ahora el índice de cada producto incluye además:
+     · CATEGORÍA  ("vitaminas", "proteína", "colágeno", "pack"…)
+     · CIRUGÍA    ("manga", "bypass", "balón"…)
+     · ETAPA      ("primer mes", "post operatorio"…)
+     · INGREDIENTE (de la tabla nutricional: "hierro", "b12",
+                    "biotina", "colágeno"…)
+     · SINÓNIMOS que la gente escribe de verdad ("vitaminas"
+       para las gomitas, "estreñimiento" para la fibra).
+
+   Así "vitaminas para bypass" o "algo para el cabello"
+   devuelven resultados, que antes daban cero.
+
+   El índice se construye UNA vez por producto y se guarda en
+   caché: la búsqueda instantánea se dispara en cada tecla.
+   ============================================================ */
+
+/* Términos por categoría — el vocabulario del paciente. */
+const SINONIMOS_CAT = {
+  proteina:  'proteina proteinas whey suero aminoacidos batido shake',
+  vitaminas: 'vitamina vitaminas multivitaminico micronutrientes minerales suplemento gomitas gomita masticable',
+  colageno:  'colageno piel cabello uñas articulaciones fibra estreñimiento transito digestion',
+  pack:      'pack packs combo combos kit paquete',
+  oferta:    'oferta ofertas promocion descuento rebaja'
+};
+
+/* Etapas en las que suele aparecer cada familia, en palabras
+   que el paciente escribe en el buscador. */
+const SINONIMOS_FAMILIA = {
+  proteina_liquida: 'liquida liquido bebible listo para tomar primer mes post operatorio postoperatorio recien operado etapa liquidos',
+  proteina_polvo:   'polvo scoop batido blandos solidos mantenimiento tercer mes',
+  vitaminas:        'primer mes post operatorio mantenimiento diario',
+  colageno:         'mantenimiento largo plazo',
+  fibra:            'estreñimiento transito intestinal digestion blandos solidos',
+  pack:             'completo todo incluido etapa completa'
+};
+
+/* Todas las cirugías son término buscable: el paciente escribe
+   "para mi manga" o "bypass". No implica indicación clínica,
+   solo que el producto aparece en ese contexto. */
+const TERMINOS_CIRUGIA = 'manga gastrica bypass balon gastrico cirugia bariatrica bariatrico operacion';
+
+/* Ingredientes: se extraen de la tabla nutricional del propio
+   producto, así que no hay que mantener una lista aparte. */
+function ingredientesDe(p) {
+  if (!p.tn || !p.tn.filas) return '';
+  return p.tn.filas.map(f => f[0]).join(' ');
+}
+
+/* Misma clasificación por familia que usan productos-info.js
+   y el selector, para que los tres hablen el mismo idioma. */
+function familiaBusqueda(p) {
+  if (p.tipo === 'oferta') return /l[íi]quid/i.test(p.nombre) ? 'proteina_liquida' : 'proteina_polvo';
+  if (p.tipo === 'pack')   return 'pack';
+  if (p.cat === 'proteina') return /l[íi]quid/i.test(p.nombre) ? 'proteina_liquida' : 'proteina_polvo';
+  if (p.cat === 'vitaminas') return 'vitaminas';
+  if (p.cat === 'colageno')  return /fibra/i.test(p.nombre) ? 'fibra' : 'colageno';
+  return 'proteina_polvo';
+}
+
+const _cacheBusqueda = new Map();
+
+/* Índice POR CAMPOS con peso. Buscar "bypass" no puede devolver
+   los 26 productos por igual: el hierro y la B12 —que llevan esa
+   etiqueta— deben salir por delante de un pack cualquiera.
+   Por eso cada campo puntúa distinto y luego se ordena. */
+function indiceProducto(p) {
+  if (_cacheBusqueda.has(p.id)) return _cacheBusqueda.get(p.id);
+
+  const N = s => normalizar(String(s || '')).replace(/,/g, '');
+  let badges = '';
+  /* En try/catch porque BADGES_PRODUCTO se declara más abajo con
+     const: si se buscara antes de que el script termine, esto no
+     debe tumbar el buscador. */
+  try { badges = (BADGES_PRODUCTO[p.id] || []).join(' '); } catch (e) { badges = ''; }
+
+  const campos = [
+    { peso: 10, texto: N(p.nombre) },
+    { peso: 6,  texto: N((p.tags || []).join(' ') + ' ' + badges) },
+    { peso: 5,  texto: N(p.marca) },
+    { peso: 4,  texto: N(ingredientesDe(p)) },
+    { peso: 3,  texto: N(p.cat + ' ' + p.tipo + ' ' + (SINONIMOS_CAT[p.cat] || '')) },
+    { peso: 3,  texto: N(SINONIMOS_FAMILIA[familiaBusqueda(p)] || '') },
+    { peso: 2,  texto: N(p.desc + ' ' + (p.incluye || '')) },
+    /* Peso 1: todo el catálogo es bariátrico, así que estos
+       términos casi no deben influir en el orden. */
+    { peso: 1,  texto: N(TERMINOS_CIRUGIA) }
+  ];
+
+  const entrada = { campos: campos, todo: campos.map(c => c.texto).join(' ') };
+  _cacheBusqueda.set(p.id, entrada);
+  return entrada;
+}
+
+/* Texto plano — se mantiene por compatibilidad. */
 function textoBuscableProducto(p) {
-  return normalizar([p.nombre, p.desc, p.marca, ...(p.tags || [])].join(' ')).replace(/,/g, '');
+  return indiceProducto(p).todo;
+}
+
+/* Puntúa cuánto encaja un producto con la búsqueda.
+   0 = no coincide (le falta alguna palabra). */
+function puntuarProducto(p, tokens, q) {
+  const idx = indiceProducto(p);
+  const busca = tokens.length ? tokens : [q];
+  const nombre = idx.campos[0].texto;
+
+  let total = 0;
+  for (const t of busca) {
+    let mejor = 0;
+    for (const c of idx.campos) {
+      if (c.texto.includes(t)) mejor = Math.max(mejor, c.peso);
+    }
+    if (!mejor) return 0;            // exige TODAS las palabras
+    /* Bonus si el NOMBRE empieza por lo buscado: quien escribe
+       "colágeno" quiere el Colágeno SKINFINITY antes que un
+       "Pack Colágeno + Fibra", aunque ambos lleven la palabra. */
+    if (nombre.startsWith(t)) mejor += 5;
+    total += mejor;
+  }
+  return total;
+}
+
+function coincideProducto(p, tokens, q) {
+  return puntuarProducto(p, tokens, q) > 0;
+}
+
+/* Devuelve los productos ordenados por relevancia y descarta la
+   cola irrelevante: si algo encaja de verdad (por nombre o
+   etiqueta), no tiene sentido listar además todo lo que solo
+   coincide en "bariátrico". */
+function buscarProductos(q) {
+  const qn = normalizar(q.trim());
+  if (!qn) return [];
+  const tokens = tokenizar(qn);
+
+  /* A igual relevancia se respeta el ORDEN DEL CATÁLOGO, que ya
+     está curado (ofertas, packs, individuales). Ordenar por
+     precio hacía que una búsqueda amplia como "manga" abriera
+     con el producto más barato, que rara vez es el más útil. */
+  const conPuntaje = productos
+    .map((p, i) => ({ p: p, s: puntuarProducto(p, tokens, qn), i: i }))
+    .filter(x => x.s > 0)
+    .sort((a, b) => b.s - a.s || a.i - b.i);
+
+  if (!conPuntaje.length) return [];
+
+  /* Umbral relativo al mejor resultado. */
+  const tope = conPuntaje[0].s;
+  const minimo = tope >= 5 ? tope * 0.5 : 0;
+  return conPuntaje.filter(x => x.s >= minimo).map(x => x.p);
 }
 
 function coincideProducto(p, tokens, q) {
@@ -4574,10 +4619,11 @@ function mostrarSugerencias(q) {
     }
   });
 
-  // Sugerencias de producto: coincide si el nombre contiene todas las palabras buscadas (en cualquier orden)
+  // Sugerencias de producto, ORDENADAS POR RELEVANCIA:
+  // lo que coincide en el nombre o en una etiqueta va primero.
   const visto = new Set();
-  productos.forEach(p => {
-    if (coincideProducto(p, tokens, q) && !visto.has(p.nombre)) {
+  buscarProductos(q).forEach(p => {
+    if (!visto.has(p.nombre)) {
       visto.add(p.nombre);
       items.push({
         texto: p.nombre, etiqueta: p.marca,
@@ -6604,6 +6650,24 @@ function fichaBloque(titulo, icono, contenidoHTML) {
 function fichaHTML(p, d) {
   let html = '';
 
+  /* Etiquetas de etapa y cirugía (Fase 3): ubican el producto
+     de un vistazo, antes de leer nada. */
+  if ((d.etiquetasEtapa && d.etiquetasEtapa.length) ||
+      (d.etiquetasCirugia && d.etiquetasCirugia.length)) {
+    html += fichaBloque('Etapas y cirugías en las que suele aparecer',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 12 22l-9-9V3h10z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+      '<div class="ficha-etiquetas">' +
+        (d.etiquetasEtapa || []).map(e => `<span class="ficha-et et-etapa">${e}</span>`).join('') +
+        (d.etiquetasCirugia || []).map(c => `<span class="ficha-et et-cir">${c}</span>`).join('') +
+      '</div>');
+  }
+
+  if (d.descripcion) {
+    html += fichaBloque('Descripción',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>',
+      `<p class="ficha-txt">${d.descripcion}</p>`);
+  }
+
   html += fichaBloque('¿Para quién suele utilizarse?',
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>',
     `<p class="ficha-txt">${d.paraQuien}</p>`);
@@ -6656,6 +6720,29 @@ function fichaHTML(p, d) {
             <span class="ficha-rel-precio">S/ ${r.precio}</span>
           </span>
         </button>`).join('') +
+      '</div>');
+  }
+
+  /* Productos complementarios (Fase 3): de OTRA categoría, con
+     botón para agregar al carrito sin salir de la ficha. */
+  const comp = (d.complementarios || [])
+    .map(id => productos.find(x => x.id === id))
+    .filter(Boolean);
+  if (comp.length) {
+    html += fichaBloque('Suele combinarse con',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>',
+      '<div class="ficha-comp">' +
+        comp.map(c => `<div class="ficha-comp-item">
+          <img class="ficha-comp-img" src="${c.img}" alt="" loading="lazy" onclick="abrirModal('${c.id}')">
+          <div class="ficha-comp-txt" onclick="abrirModal('${c.id}')">
+            <div class="ficha-comp-nom">${c.nombre}</div>
+            <div class="ficha-comp-precio">S/ ${c.precio}</div>
+          </div>
+          <button class="ficha-comp-btn" type="button" onclick="agregarACotizacion('${c.id}',true)" title="Agregar al carrito">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar
+          </button>
+        </div>`).join('') +
       '</div>');
   }
 
@@ -6849,19 +6936,84 @@ function irAFaq() {
   };
 })();
 
-/* Permite llegar al BariBlog desde otra página con /?ver=blog
-   (lo usan las tarjetas del Centro de Recursos). */
+/* Entradas desde otras páginas mediante la URL:
+     /?ver=blog        → abre el BariBlog (Centro de Recursos)
+     /?producto=bi5    → abre la ficha de ese producto
+                         (lo usa "Ver producto" del selector) */
 (function () {
-  const ver = new URLSearchParams(location.search).get('ver');
+  const params = new URLSearchParams(location.search);
+  const ver = params.get('ver');
+  const prod = params.get('producto');
+
   if (ver === 'blog') {
     /* Tras el render inicial, para que el scroll caiga bien. */
     window.addEventListener('load', function () { mostrarBlog(); });
+  }
+
+  if (prod) {
+    window.addEventListener('load', function () {
+      if (productos.some(p => p.id === prod)) {
+        scrollProductos();
+        abrirModal(prod);
+      }
+    });
   }
 })();
 
 /* Arranque de las secciones nuevas. */
 renderizarTestimonios();
 iniciarFaq();
+
+/* ============================================================
+   FASE 3 — MICROINTERACCIONES
+   ------------------------------------------------------------
+   Todo por delegación de eventos: NO se modifica ninguna
+   función de la tienda (agregarACotizacion, toggleFavorito…).
+   Si este bloque se borrara, la tienda seguiría igual de
+   funcional; solo perdería la realimentación visual.
+   ============================================================ */
+(function () {
+  const SIN_MOVIMIENTO = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (SIN_MOVIMIENTO) return;
+
+  /* Aplica una clase de animación y la retira al terminar,
+     para que pueda volver a dispararse en el siguiente clic. */
+  function destello(el, clase) {
+    if (!el) return;
+    el.classList.remove(clase);
+    void el.offsetWidth;               // reinicia la animación
+    el.classList.add(clase);
+    el.addEventListener('animationend',
+      function () { el.classList.remove(clase); }, { once: true });
+  }
+
+  document.addEventListener('click', function (e) {
+    /* 1) Agregar al carrito — pulso + verde momentáneo */
+    const btnAdd = e.target.closest(
+      '.btn-agregar, .recom-btn, .ficha-comp-btn, .modal-cart-btn');
+    if (btnAdd) {
+      destello(btnAdd, 'zb-ok');
+      const badge = document.getElementById('floatBadge');
+      if (badge) destello(badge, 'zb-bote');
+    }
+
+    /* 2) Favorito — el corazón late */
+    const fav = e.target.closest('.fav-btn');
+    if (fav) destello(fav, 'zb-late');
+  }, true);   // captura: se anima aunque el handler original corte el evento
+
+  /* 3) Imagen del producto — fundido al cambiar de ficha.
+        Se engancha a abrirModal sin reescribirlo. */
+  const abrirOriginal = window.abrirModal;
+  if (typeof abrirOriginal === 'function') {
+    window.abrirModal = function () {
+      const r = abrirOriginal.apply(this, arguments);
+      destello(document.getElementById('mImg'), 'zb-cambio');
+      return r;
+    };
+  }
+})();
 
 /* ============================================================
    CAPA VISUAL — solo apariencia, no toca la lógica de la tienda

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuentra tu Suplemento Bariátrico | Selector Guiado — Zona Bariátrica</title>
+<meta name="description" content="Responde 3 preguntas —tipo de cirugía, tiempo transcurrido y qué buscas— y te mostramos qué suplementos del catálogo encajan con tu etapa. Herramienta educativa gratuita.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://zonabariatrica.com/encuentra-tu-suplemento">
+<meta property="og:title" content="Encuentra tu Suplemento Bariátrico — Zona Bariátrica">
+<meta property="og:description" content="3 preguntas y te mostramos los suplementos que encajan con tu cirugía y tu etapa. Gratis y sin registro.">
+<meta property="og:image" content="https://raw.githubusercontent.com/zonabariatrica/zonabariatrica1/main/img/logo-og.png">
+<meta property="og:url" content="https://zonabariatrica.com/encuentra-tu-suplemento">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zona Bariátrica">
+<meta property="og:locale" content="es_PE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Encuentra tu Suplemento Bariátrico">
+<meta name="twitter:description" content="3 preguntas y te mostramos los suplementos que encajan con tu cirugía y tu etapa.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/zonabariatrica/zonabariatrica1/main/img/logo-og.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DB7VQ9PWM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3DB7VQ9PWM');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://zonabariatrica.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Recursos Bariátricos", "item": "https://zonabariatrica.com/recursos"},
+    {"@type": "ListItem", "position": 3, "name": "Encuentra tu Suplemento", "item": "https://zonabariatrica.com/encuentra-tu-suplemento"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Encuentra tu Suplemento Bariátrico",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "url": "https://zonabariatrica.com/encuentra-tu-suplemento",
+  "inLanguage": "es",
+  "description": "Selector guiado que acota el catálogo de suplementos bariátricos según el tipo de cirugía, el tiempo transcurrido desde el procedimiento y el objetivo del usuario. Herramienta educativa: no recomienda tratamientos ni sustituye la indicación de un profesional de la salud.",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "PEN"},
+  "publisher": {"@type": "Organization", "name": "Zona Bariátrica", "url": "https://zonabariatrica.com"}
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="zb-herramientas.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="/">
+      <img src="img/logo-zb.png" alt="Zona Bariátrica">
+      <div>
+        <div class="logo-name">ZONA BARIÁTRICA</div>
+        <div class="logo-tagline">Suplementos Bariátricos</div>
+      </div>
+    </a>
+    <nav class="cats">
+      <a href="/">Tienda</a>
+      <a href="/recursos" class="active">Recursos</a>
+      <a href="/proteinas">Proteínas</a>
+      <a href="/vitaminas">Vitaminas</a>
+      <a href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
+      <a href="/packs">Packs</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="crumbs" aria-label="Ruta de navegación">
+  <a href="/">Inicio</a>
+  <span class="sep">/</span>
+  <a href="/recursos">Recursos</a>
+  <span class="sep">/</span>
+  <span aria-current="page">Encuentra tu Suplemento</span>
+</nav>
+
+<section class="pg-hero centrado">
+  <span class="pg-eyebrow">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    Selector guiado
+  </span>
+  <h1>Encuentra tu <em>suplemento</em></h1>
+  <p class="pg-lead">
+    Tres preguntas y te mostramos qué productos del catálogo encajan con tu etapa.
+    No te decimos qué tomar —eso lo indica tu profesional—, solo te ahorramos buscar entre todo.
+  </p>
+</section>
+
+<div class="sel-wrap" id="selector">
+
+  <div class="sel-progreso">
+    <div class="sel-pasos">
+      <span class="sel-paso-pin activo"></span>
+      <span class="sel-paso-pin"></span>
+      <span class="sel-paso-pin"></span>
+    </div>
+    <div class="sel-paso-txt">
+      <span id="selPasoTxt">Paso 1 de 3</span>
+      <button type="button" id="selReiniciar" class="sel-volver" style="padding:0">Empezar de nuevo</button>
+    </div>
+  </div>
+
+  <!-- PASO 1 · Procedimiento -->
+  <div class="sel-panel activo" data-paso="1">
+    <h2 class="sel-pregunta">¿Qué procedimiento te realizaste?</h2>
+    <p class="sel-ayuda">Nos sirve para ordenar los resultados según lo que suele vigilarse en cada técnica.</p>
+    <div class="sel-opciones tres">
+      <button type="button" class="sel-op" data-campo="cirugia" data-valor="manga">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2h8l-1 9a4 4 0 0 1-6 0z"/><path d="M12 11v11M8 22h8"/></svg>
+        </span>
+        <span class="sel-op-txt">
+          <span class="sel-op-tit">Manga Gástrica</span>
+          <span class="sel-op-sub">Técnica restrictiva</span>
+        </span>
+      </button>
+      <button type="button" class="sel-op" data-campo="cirugia" data-valor="bypass">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h6a4 4 0 0 1 4 4v8"/><path d="M14 6h6"/><path d="m17 3 3 3-3 3"/></svg>
+        </span>
+        <span class="sel-op-txt">
+          <span class="sel-op-tit">Bypass Gástrico</span>
+          <span class="sel-op-sub">Restricción y menor absorción</span>
+        </span>
+      </button>
+      <button type="button" class="sel-op" data-campo="cirugia" data-valor="balon">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="11" r="7"/><path d="M12 18v4M9 22h6"/></svg>
+        </span>
+        <span class="sel-op-txt">
+          <span class="sel-op-tit">Balón Gástrico</span>
+          <span class="sel-op-sub">Procedimiento temporal</span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- PASO 2 · Tiempo -->
+  <div class="sel-panel" data-paso="2">
+    <h2 class="sel-pregunta">¿Cuánto tiempo llevas desde tu procedimiento?</h2>
+    <p class="sel-ayuda">La etapa marca qué texturas se toleran, y eso cambia qué productos tienen sentido.</p>
+    <div class="sel-opciones tres">
+      <button type="button" class="sel-op" data-campo="etapa" data-valor="0-1">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6 5.4 6 10.1a6 6 0 0 1-12 0C6 8.1 12 2.7 12 2.7z"/></svg>
+        </span>
+        <span class="sel-op-txt">
+          <span class="sel-op-tit">Menos de 1 mes</span>
+          <span class="sel-op-sub">Etapa de líquidos</span>
+        </span>
+      </button>
+      <button type="button" class="sel-op" data-campo="etapa" data-valor="1-3">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </span>
+        <span class="sel-op-txt">
+          <span class="sel-op-tit">1 a 3 meses</span>
+          <span class="sel-op-sub">Purés y blandos</span>
+        </span>
+      </button>
+      <button type="button" class="sel-op" data-campo="etapa" data-valor="3+">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        </span>
+        <span class="sel-op-txt">
+          <span class="sel-op-tit">Más de 3 meses</span>
+          <span class="sel-op-sub">Sólidos y mantenimiento</span>
+        </span>
+      </button>
+    </div>
+    <div class="sel-nav">
+      <button type="button" class="sel-volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Volver
+      </button>
+    </div>
+  </div>
+
+  <!-- PASO 3 · Objetivo -->
+  <div class="sel-panel" data-paso="3">
+    <h2 class="sel-pregunta">¿Qué estás buscando?</h2>
+    <p class="sel-ayuda">Si no lo tienes claro, elige la última opción y te mostramos todo lo de tu etapa.</p>
+    <div class="sel-opciones tres">
+      <button type="button" class="sel-op" data-campo="objetivo" data-valor="proteina">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v4.5L5.5 15A4 4 0 0 0 9 21h6a4 4 0 0 0 3.5-6L14 6.5V2"/><path d="M9 2h6"/></svg>
+        </span>
+        <span class="sel-op-txt"><span class="sel-op-tit">Proteína</span></span>
+      </button>
+      <button type="button" class="sel-op" data-campo="objetivo" data-valor="vitaminas">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        </span>
+        <span class="sel-op-txt"><span class="sel-op-tit">Vitaminas</span></span>
+      </button>
+      <button type="button" class="sel-op" data-campo="objetivo" data-valor="fibra">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>
+        </span>
+        <span class="sel-op-txt"><span class="sel-op-tit">Fibra</span></span>
+      </button>
+      <button type="button" class="sel-op" data-campo="objetivo" data-valor="colageno">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+        <span class="sel-op-txt"><span class="sel-op-tit">Colágeno</span></span>
+      </button>
+      <button type="button" class="sel-op" data-campo="objetivo" data-valor="nose">
+        <span class="sel-op-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        </span>
+        <span class="sel-op-txt"><span class="sel-op-tit">No estoy seguro</span></span>
+      </button>
+    </div>
+    <div class="sel-nav">
+      <button type="button" class="sel-volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Volver
+      </button>
+    </div>
+  </div>
+
+  <!-- Resultados -->
+  <div class="sel-panel" id="selResultado" aria-live="polite"></div>
+
+</div>
+
+<section class="bloque gris" style="margin-top:56px">
+  <div class="bloque-header">
+    <h2>Cómo funciona este selector</h2>
+    <p class="bloque-sub">Para que sepas exactamente qué hace y qué no.</p>
+  </div>
+  <div class="zb-wrap" style="max-width:780px">
+    <div class="etapas" style="padding:0">
+      <div class="etapa">
+        <div class="etapa-num">1</div>
+        <h3>Filtra, no recomienda</h3>
+        <p>Lo único que hace es <strong>acotar el catálogo</strong>: de todos los productos te muestra
+        los que encajan con tu etapa y con lo que buscas. Funciona como el filtro de una tienda,
+        no como una consulta.</p>
+      </div>
+      <div class="etapa">
+        <div class="etapa-num">2</div>
+        <h3>La etapa manda</h3>
+        <p>El tiempo desde tu cirugía determina qué texturas se toleran. Por eso en el primer mes
+        verás proteína líquida y no proteína en polvo: no porque una sea mejor, sino porque
+        responde a un momento distinto.</p>
+      </div>
+      <div class="etapa">
+        <div class="etapa-num">3</div>
+        <h3>La cirugía solo ordena</h3>
+        <p>El tipo de procedimiento cambia el <strong>orden</strong> en que aparecen los productos,
+        no lo que se muestra. Decirte que algo "no es para tu cirugía" sería una afirmación
+        clínica, y eso le corresponde a tu médico.</p>
+      </div>
+      <div class="etapa">
+        <div class="etapa-num">4</div>
+        <h3>La última palabra es de tu profesional</h3>
+        <p>Qué suplemento tomar, en qué dosis y durante cuánto tiempo lo define tu médico o tu
+        nutricionista a partir de tus analíticas y tu historia. Este selector solo te ayuda
+        a llegar con las opciones ubicadas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cierre-cta">
+  <div class="cierre-cta-in">
+    <h2>¿Prefieres que te orienten?</h2>
+    <p>
+      Cuéntale a Zoe tu etapa y lo que te indicó tu nutricionista, y te ayuda a ubicar
+      los productos que encajan.
+    </p>
+    <div class="btn-fila centrado">
+      <a class="btn-zb btn-zb-wa" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Vengo%20del%20selector%20y%20quiero%20orientaci%C3%B3n." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Habla con Zoe
+      </a>
+      <a class="btn-zb btn-zb-outline" href="/">Ver todo el catálogo</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="links">
+    <a href="/">Tienda</a>
+    <a href="/recursos">Recursos</a>
+    <a href="/encuentra-tu-suplemento">Encuentra tu Suplemento</a>
+    <a href="/comparador-bariatrico">Comparador</a>
+    <a href="/calculadora-proteina">Calculadora de Proteína</a>
+    <a href="/calculadora-hidratacion">Calculadora de Hidratación</a>
+    <a href="/etapas-postoperatorias">Etapas Postoperatorias</a>
+  </div>
+  © 2026 Zona Bariátrica · Todos los derechos reservados · Lima, Perú · 📱 +51 961 841 069
+  <div class="fine">
+    La información publicada en esta sección tiene fines educativos y no constituye
+    indicación médica ni nutricional.
+  </div>
+</footer>
+
+<script src="zb-catalogo.js"></script>
+<script src="zb-selector.js"></script>
+<script src="zb-herramientas.js"></script>
+<script src="mejoras-ux.js"></script>
+</body>
+</html>

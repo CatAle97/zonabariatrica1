@@ -237,23 +237,101 @@
 
   };
 
+  /* --- 2b. COMPLEMENTARIOS (Fase 3) -----------------------
+     Qué suele acompañar a qué. Distinto de "relacionados":
+     relacionados = alternativas de la MISMA categoría;
+     complementarios = productos de OTRA categoría que suelen
+     usarse en conjunto. Por eso una proteína no sugiere otra
+     proteína, sino vitaminas, fibra o colágeno.
+
+     PARA EDITAR: cambia las categorías de cada familia. Los
+     productos concretos se eligen solos del catálogo.       */
+  var COMPLEMENTARIOS_POR_FAMILIA = {
+    proteina_liquida: ['vitaminas', 'colageno'],
+    proteina_polvo:   ['vitaminas', 'colageno'],
+    vitaminas:        ['proteina', 'colageno'],
+    colageno:         ['proteina', 'vitaminas'],
+    fibra:            ['proteina', 'vitaminas'],
+    pack:             ['proteina', 'vitaminas']
+  };
+
+  /* Etiquetas de cirugía por familia. Son informativas: dicen
+     en qué contextos suele aparecer el producto, no que esté
+     indicado ni contraindicado para una técnica concreta. */
+  var CIRUGIAS_POR_FAMILIA = {
+    proteina_liquida: ['Manga gástrica', 'Bypass gástrico', 'Balón gástrico'],
+    proteina_polvo:   ['Manga gástrica', 'Bypass gástrico', 'Balón gástrico'],
+    vitaminas:        ['Manga gástrica', 'Bypass gástrico'],
+    colageno:         ['Manga gástrica', 'Bypass gástrico', 'Balón gástrico'],
+    fibra:            ['Manga gástrica', 'Bypass gástrico', 'Balón gástrico'],
+    pack:             ['Manga gástrica', 'Bypass gástrico']
+  };
+
+  /* Etiquetas de etapa por familia — mismo criterio que usa el
+     Selector Inteligente (zb-selector.js). */
+  var ETAPAS_POR_FAMILIA = {
+    proteina_liquida: ['Primer mes', '1 a 3 meses', 'Más de 3 meses'],
+    proteina_polvo:   ['1 a 3 meses', 'Más de 3 meses'],
+    vitaminas:        ['Primer mes', '1 a 3 meses', 'Más de 3 meses'],
+    colageno:         ['Más de 3 meses'],
+    fibra:            ['1 a 3 meses', 'Más de 3 meses'],
+    pack:             ['1 a 3 meses', 'Más de 3 meses']
+  };
+
   /* --- 3. RESOLUCIÓN ---------------------------------------
-     Combina plantilla + ficha propia y calcula relacionados
-     y artículos si no se especificaron a mano.              */
+     Combina plantilla + ficha propia y calcula relacionados,
+     complementarios, etiquetas y artículos si no se
+     especificaron a mano.                                    */
   function info(p, catalogo) {
     if (!p) return null;
 
-    var base = PLANTILLAS[familiaDe(p)] || PLANTILLAS.proteina_polvo;
+    var fam = familiaDe(p);
+    var base = PLANTILLAS[fam] || PLANTILLAS.proteina_polvo;
     var propia = POR_PRODUCTO[p.id] || {};
 
     var d = {
+      descripcion: propia.descripcion || p.desc || '',
       paraQuien:  propia.paraQuien  || base.paraQuien,
       etapa:      propia.etapa      || base.etapa,
       beneficios: propia.beneficios || base.beneficios,
       consumo:    propia.consumo    || base.consumo,
       faq:        propia.faq        || base.faq,
-      leyenda:    LEYENDA
+      leyenda:    LEYENDA,
+      etiquetasCirugia: propia.etiquetasCirugia || CIRUGIAS_POR_FAMILIA[fam] || [],
+      etiquetasEtapa:   propia.etiquetasEtapa   || ETAPAS_POR_FAMILIA[fam]   || []
     };
+
+    /* Complementarios: de otras categorías, los más baratos de
+       cada una para que la suma no asuste. Máximo 3. */
+    var comp = propia.complementarios;
+    if (!comp && catalogo) {
+      var cats = COMPLEMENTARIOS_POR_FAMILIA[fam] || [];
+      comp = [];
+      cats.forEach(function (c) {
+        var candidatos = catalogo
+          .filter(function (o) {
+            return o.id !== p.id && o.cat === c &&
+                   o.tipo !== 'pack' && o.tipo !== 'oferta';
+          })
+          .sort(function (a, b) { return a.precio - b.precio; });
+        if (candidatos.length) comp.push(candidatos[0].id);
+        if (candidatos.length > 1 && cats.length === 1) comp.push(candidatos[1].id);
+      });
+      /* Se completa hasta 3 con lo más barato que quede. */
+      if (comp.length < 3 && catalogo) {
+        catalogo
+          .filter(function (o) {
+            return o.id !== p.id && o.cat !== p.cat &&
+                   o.tipo !== 'pack' && o.tipo !== 'oferta' &&
+                   comp.indexOf(o.id) === -1;
+          })
+          .sort(function (a, b) { return a.precio - b.precio; })
+          .slice(0, 3 - comp.length)
+          .forEach(function (o) { comp.push(o.id); });
+      }
+      comp = comp.slice(0, 3);
+    }
+    d.complementarios = comp || [];
 
     /* Productos relacionados: los de la misma categoría, sin
        repetir el actual. Máximo 4. Se puede forzar a mano con
