@@ -367,9 +367,15 @@
      ESTILOS
      ========================================================= */
   var CSS = ''
-    + '#zb-fab{position:fixed;bottom:24px;left:24px;z-index:998;width:60px;height:60px;border-radius:50%;'
-    + 'background:#16A34A;color:#fff;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.22);'
-    + 'display:flex;align-items:center;justify-content:center;font-size:26px;transition:transform .15s}'
+    + '#zb-fab{position:fixed;bottom:24px;left:24px;z-index:998;width:64px;height:64px;border-radius:50%;'
+    + 'background:#fff;color:#fff;border:2px solid #fff;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.22);'
+    + 'display:flex;align-items:center;justify-content:center;padding:0;'
+    + 'transition:transform .15s;-webkit-tap-highlight-color:transparent}'
+    /* La foto llena el botón; el recorte circular lo da el propio botón. */
+    + '.zb-fab-foto{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}'
+    /* Punto verde de "disponible": sugiere que hay alguien al otro lado. */
+    + '#zb-fab::after{content:"";position:absolute;right:2px;bottom:4px;width:14px;height:14px;'
+    + 'border-radius:50%;background:#16A34A;border:2.5px solid #fff}'
     + '#zb-fab:hover{transform:translateY(-2px)}'
     + '#zb-fab.oculto{display:none}'
     + '#zb-panel{position:fixed;bottom:24px;left:24px;z-index:999;width:350px;max-width:calc(100vw - 32px);'
@@ -395,7 +401,7 @@
     + '.zb-foot{padding:9px 14px;background:#fff;border-top:1px solid #E5E7EB;font-size:11px;'
     + 'color:#9CA3AF;text-align:center;line-height:1.4}'
     + '@media(max-width:520px){'
-    + '#zb-fab{bottom:16px;left:16px;width:54px;height:54px;font-size:23px}'
+    + '#zb-fab{bottom:16px;left:16px;width:58px;height:58px}'
     + '#zb-panel{bottom:0;left:0;width:100%;max-width:100%;height:100%;max-height:100%;border-radius:0}'
     + '}';
 
@@ -468,7 +474,9 @@
     style.textContent = CSS;
     document.head.appendChild(style);
 
-    fab = el('button', '', '💬');
+    /* La cara de Zoe en vez del emoji: pone rostro al asistente
+       y lo hace reconocible junto al resto del sitio. */
+    fab = el('button', '', '<img src="img/zoe.png" alt="Zoe" class="zb-fab-foto">');
     fab.id = 'zb-fab';
     fab.type = 'button';
     fab.setAttribute('aria-label', 'Abrir asistente de Zona Bariátrica');

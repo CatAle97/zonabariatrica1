@@ -60,7 +60,12 @@
   --t-fast:200ms var(--ease); --t-base:250ms var(--ease); --t-slow:300ms var(--ease);
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+/* Sin el recuadro azul que Android e iOS pintan al tocar.
+   La señal de pulsación la da el propio elemento (:active). */
+a, button, [role="button"], label, input, select, textarea {
+  -webkit-tap-highlight-color:transparent; -webkit-touch-callout:none;
+}
 html, body { overflow-x:clip; }
 body {
   font-family:var(--font); background:var(--surface); color:var(--text);
