@@ -1,0 +1,10 @@
+# Archivos temporales de prueba.
+# Todo lo que empiece por "__" son páginas que se crean para
+# comprobar el sitio en el navegador (tests, capturas, medidas).
+# No forman parte de la web y no deben publicarse.
+__*
+
+# Basura del sistema
+Thumbs.db
+desktop.ini
+.DS_Store
