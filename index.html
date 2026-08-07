@@ -6869,23 +6869,33 @@ function pintarFicha(p) {
      texto     (obligatorio)
      verificado(opcional) — true muestra el sello "Compra verificada"
    ============================================================ */
-const TESTIMONIOS = [
-  {
-    nombre: 'María', inicial: 'C.', ciudad: 'Lima',
-    foto: null, estrellas: 5, verificado: true,
-    texto: 'Después de mi manga no sabía qué proteína me caía bien. Me orientaron por WhatsApp según la etapa en la que estaba y por fin encontré una que tolero sin náuseas.'
-  },
-  {
-    nombre: 'Jorge', inicial: 'R.', ciudad: 'Arequipa',
-    foto: null, estrellas: 5, verificado: true,
-    texto: 'Pedí desde provincia y llegó por Shalom en el tiempo que me dijeron. El pack me salió más a cuenta que comprar cada cosa por separado.'
-  },
-  {
-    nombre: 'Lucía', inicial: 'M.', ciudad: 'Trujillo',
-    foto: null, estrellas: 5, verificado: false,
-    texto: 'Lo que más valoro es que entienden el proceso bariátrico. No te venden por vender: me dijeron qué me faltaba según lo que me indicó mi nutricionista.'
-  }
-];
+/* ============================================================
+   SECCIÓN OCULTA — a la espera de testimonios reales
+   ------------------------------------------------------------
+   Con la lista vacía, renderizarTestimonios() esconde la
+   sección entera: no queda ni el título ni un hueco en blanco.
+
+   PARA REACTIVARLA cuando tengas testimonios de verdad:
+   escribe uno o más dentro de los corchetes, con este formato:
+
+     { nombre: 'María', inicial: 'C.', ciudad: 'Lima',
+       foto: null, estrellas: 5, verificado: true,
+       texto: 'Lo que te escribió la paciente, tal cual.' },
+
+   Campos:
+     nombre     obligatorio
+     inicial    opcional — inicial del apellido ("C.")
+     ciudad     opcional
+     foto       opcional — 'img/testi-maria.jpg'; si es null se
+                muestra la inicial sobre un círculo azul
+     estrellas  de 1 a 5
+     texto      obligatorio — palabras de la persona
+     verificado true SOLO si de verdad compró. Pone el sello
+                "Compra verificada": no lo uses si no lo es.
+
+   Pide siempre permiso antes de publicar el nombre de alguien.
+   ============================================================ */
+const TESTIMONIOS = [];
 
 const ESTRELLA_SVG =
   '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>';
