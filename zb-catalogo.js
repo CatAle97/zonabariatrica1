@@ -391,6 +391,10 @@ const productos = [
     tags:["30g proteína","Sin gluten","Sin lactosa","Con biotina","0% azúcar"],
     precio:280,
     img: BN+"whey-chocolate.png",
+    /* Misma tabla nutricional que la de vainilla: los valores son
+       los mismos para los dos sabores (confirmado por Zona
+       Bariátrica). Por eso el archivo se llama "-vainilla". */
+    galeria: [BN+"whey-chocolate.png", "img/tn-whey-vainilla.jpg"],
     uso:"Disolver 3 scoops (48g) en 250ml de agua o leche.",
     tn: tn.whey },
 
