@@ -1166,6 +1166,11 @@ a.nav-link {
   line-height: 1.7; border-left: 3px solid var(--blue);
 }
 .modal-tags { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-bottom: var(--s-5); }
+/* Las etiquetas antiguas se conservan porque abrirModal() las
+   rellena, pero ya no se muestran: su contenido sale arriba como
+   chips. Sin esta regla, el "display:flex" de la línea anterior
+   gana al atributo hidden y aparecerían repetidas. */
+.modal-tags[hidden] { display: none !important; }
 .modal-tag {
   font-size: var(--fs-cap); background: var(--bg-soft); color: var(--text-muted);
   border-radius: var(--r-pill); padding: 5px 12px; border: 1px solid var(--border-light);
@@ -2961,6 +2966,44 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   border-bottom: none; background: transparent; padding: var(--s-3) 0 0;
 }
 
+/* --- GALERÍA (solo productos individuales) ---
+   Las miniaturas aparecen únicamente cuando hay más de una
+   foto. Hoy cada producto tiene una sola, así que no se ven;
+   en cuanto se añadan fotos al catálogo, salen solas. */
+.mp-thumbs {
+  display: flex; gap: 8px; margin-top: var(--s-3);
+  overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch;
+}
+.mp-thumbs::-webkit-scrollbar { height: 4px; }
+.mp-thumbs::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.mp-thumb {
+  flex: 0 0 62px; height: 62px; padding: 5px; cursor: pointer;
+  border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  background: var(--surface); transition: border-color var(--t-fast), transform var(--t-fast);
+}
+.mp-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.mp-thumb:hover { border-color: var(--text-light); transform: translateY(-2px); }
+.mp-thumb.activa { border-color: var(--blue); box-shadow: 0 0 0 2px var(--blue-ring); }
+.mp-thumb:focus-visible { outline: 3px solid var(--blue-ring); outline-offset: 2px; }
+
+/* --- Modo de uso compacto (ficha simple) --- */
+.mp-uso-card {
+  display: flex; align-items: center; gap: var(--s-3);
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--r); padding: var(--s-4); margin-top: var(--s-5);
+}
+.mp-uso-ico {
+  width: 38px; height: 38px; border-radius: var(--r-xs); flex: none;
+  background: var(--blue-light); color: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+}
+.mp-uso-ico svg { width: 19px; height: 19px; }
+.mp-uso-lbl {
+  font-size: 10.5px; font-weight: 700; color: var(--text-light);
+  text-transform: uppercase; letter-spacing: var(--tracking-caps); margin-bottom: 2px;
+}
+.mp-uso-txt { font-size: var(--fs-sm); line-height: 1.55; color: var(--text); }
+
 /* --- Encabezado del producto --- */
 .mp-marca {
   font-size: var(--fs-cap); font-weight: 600; color: var(--text-light);
@@ -4234,6 +4277,9 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <div class="modal-img-wrap" id="mImgWrap">
           <img id="mImg" class="modal-img" src="" alt="">
         </div>
+        <!-- Miniaturas: se rellenan desde JS y solo aparecen si el
+             producto tiene más de una foto. -->
+        <div class="mp-thumbs" id="mThumbs" style="display:none" role="group" aria-label="Fotos del producto"></div>
         <div class="zoom-controls">
           <span class="zoom-lbl"><svg class="ico ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
           <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1" oninput="aplicarZoom(this.value)" aria-label="Acercar la imagen">
@@ -5651,7 +5697,13 @@ function abrirModal(id) {
   tnBtn.setAttribute('aria-expanded', 'false');
   const tnSec = document.getElementById('mTnSec');
 
-  if (p.tn) {
+  /* La tabla escrita se retira de la vista cuando la galería
+     ya muestra la etiqueta en foto. Mientras no haya fotos, se
+     conserva en el acordeón: es información real del producto
+     y no debe quedarse sin ningún sitio donde consultarse. */
+  const galeriaCubreEtiqueta = esIndividual(p) && galeriaDe(p).length > 1;
+
+  if (p.tn && !galeriaCubreEtiqueta) {
     if (tnSec) tnSec.style.display = '';
     const t = p.tn;
     let tbl = `<table class="tn-table">
@@ -5680,6 +5732,7 @@ function abrirModal(id) {
   pintarFicha(p);
 
   /* Presentación de la ficha (solo visual, no cambia datos). */
+  pintarGaleria(p);
   pintarDatosClave(p);
   plegarDescripcion();
   pintarPasosUso(p);
@@ -7127,31 +7180,51 @@ function fichaHTML(p, d) {
      chips, así que aquí no se repiten. */
   let html = '';
 
-  /* ---- ¿ES PARA TI? (consolida varios bloques en uno) ---- */
-  const cirugias = d.etiquetasCirugia || [];
-  const etapas   = d.etiquetasEtapa || [];
-  const col = (titulo, items) => items.length
-    ? '<div><div class="mp-dato-tit">' + titulo + '</div>' +
-      items.map(x => '<div class="mp-check">' + ICO_CHECK_MINI + '<span>' + x + '</span></div>').join('') +
-      '</div>'
-    : '';
+  /* ============================================================
+     VISTA SIMPLE — solo productos individuales
+     ------------------------------------------------------------
+     Se OCULTAN de la vista (no se borran del sistema):
+       · "¿Es para ti?" — para-quién, cirugías y etapas
+       · "Beneficios" desarrollados
+     Esa información sigue en productos-info.js y se puede volver
+     a mostrar quitando este bloque.
 
-  html += '<div class="mp-sec">' +
-    '<div class="mp-sec-h">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>' +
-      '¿Es para ti?' +
-    '</div>' +
-    '<div class="mp-parati">' +
-      '<p class="mp-parati-txt">' + d.paraQuien + '</p>' +
-      '<div class="mp-parati-cols">' + col('Cirugías', cirugias) + col('Etapas', etapas) + '</div>' +
-      '<p class="mp-benef-txt" style="margin-top:14px">' + d.etapa + '</p>' +
-    '</div>' +
-  '</div>';
+     Se MANTIENEN, porque ayudan a decidir la compra:
+       · Preguntas frecuentes (cerradas)
+       · Suele combinarse con
+       · Productos relacionados
+       · Artículos del blog, al final y en pequeño
+     Packs y ofertas conservan la ficha completa.
+     ============================================================ */
+  const simple = esIndividual(p);
 
-  /* ---- BENEFICIOS en tarjetas ----
+  if (!simple) {
+    /* ---- ¿ES PARA TI? (consolida varios bloques en uno) ---- */
+    const cirugias = d.etiquetasCirugia || [];
+    const etapas   = d.etiquetasEtapa || [];
+    const col = (titulo, items) => items.length
+      ? '<div><div class="mp-dato-tit">' + titulo + '</div>' +
+        items.map(x => '<div class="mp-check">' + ICO_CHECK_MINI + '<span>' + x + '</span></div>').join('') +
+        '</div>'
+      : '';
+
+    html += '<div class="mp-sec">' +
+      '<div class="mp-sec-h">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>' +
+        '¿Es para ti?' +
+      '</div>' +
+      '<div class="mp-parati">' +
+        '<p class="mp-parati-txt">' + d.paraQuien + '</p>' +
+        '<div class="mp-parati-cols">' + col('Cirugías', cirugias) + col('Etapas', etapas) + '</div>' +
+        '<p class="mp-benef-txt" style="margin-top:14px">' + d.etapa + '</p>' +
+      '</div>' +
+    '</div>';
+  }
+
+  /* ---- BENEFICIOS en tarjetas (no en la vista simple) ----
      Cada beneficio se parte en título y detalle por la primera
      coma, solo si cae en un punto razonable. El texto no cambia. */
-  if (d.beneficios && d.beneficios.length) {
+  if (!simple && d.beneficios && d.beneficios.length) {
     html += '<div class="mp-sec">' +
       '<div class="mp-sec-h">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>' +
@@ -7266,22 +7339,97 @@ function fichaHTML(p, d) {
      · pasos de consumo         → p.uso, partido por frases
    ============================================================ */
 
-/* Chips de información clave, bajo el nombre. */
+/* ¿Es un producto individual? Los packs y las ofertas conservan
+   la ficha completa; solo los individuales usan la vista simple. */
+function esIndividual(p) {
+  return p && p.tipo !== 'pack' && p.tipo !== 'oferta';
+}
+
+/* Fotos del producto. Hoy cada uno tiene una sola imagen.
+   ------------------------------------------------------------
+   PARA AÑADIR MÁS FOTOS (posterior, tabla nutricional, etiqueta):
+   en zb-catalogo.js, añade al producto una lista "galeria":
+
+       galeria: ["img/bn-whey-vainilla.png",
+                 "img/bn-whey-vainilla-posterior.png",
+                 "img/bn-whey-vainilla-nutricional.png"],
+
+   Las miniaturas y el deslizamiento aparecen solos. No hay que
+   tocar nada más. */
+function galeriaDe(p) {
+  const lista = (p.galeria && p.galeria.length) ? p.galeria.slice() : [];
+  if (!lista.length) lista.push(p.img);
+  if (lista[0] !== p.img && lista.indexOf(p.img) === -1) lista.unshift(p.img);
+  return lista;
+}
+
+function pintarGaleria(p) {
+  const cont = document.getElementById('mThumbs');
+  const img = document.getElementById('mImg');
+  if (!cont || !img) return;
+
+  const fotos = galeriaDe(p);
+  /* Con una sola foto no hay galería que mostrar. */
+  if (fotos.length < 2) { cont.style.display = 'none'; cont.innerHTML = ''; return; }
+
+  cont.style.display = '';
+  cont.innerHTML = fotos.map((f, i) =>
+    `<button type="button" class="mp-thumb${i === 0 ? ' activa' : ''}"
+       onclick="verFoto(this, '${f.replace(/'/g, "\\'")}')"
+       aria-label="Ver foto ${i + 1} de ${fotos.length}">
+       <img src="${f}" alt="" loading="lazy">
+     </button>`).join('');
+}
+
+/* Cambia la foto grande. El zoom se reinicia para no arrastrar
+   el encuadre de la foto anterior. */
+function verFoto(btn, src) {
+  const img = document.getElementById('mImg');
+  if (!img) return;
+  img.src = src;
+  if (typeof resetZoom === 'function') resetZoom();
+  const cont = btn.parentElement;
+  cont.querySelectorAll('.mp-thumb').forEach(t => t.classList.remove('activa'));
+  btn.classList.add('activa');
+}
+
+/* Chips de información clave, bajo el nombre.
+   ------------------------------------------------------------
+   En INDIVIDUALES: una sola fila de características (máx. 6),
+   que es lo que ayuda a decidir la compra.
+   En PACKS y OFERTAS: se mantienen los grupos completos con
+   cirugías y etapas, como estaban. */
 function pintarDatosClave(p) {
   const cont = document.getElementById('mDatos');
   if (!cont) return;
 
   const info = window.ZB_PRODUCTO_INFO
     ? window.ZB_PRODUCTO_INFO.obtener(p, productos) : null;
-  const grupos = [];
 
+  /* --- Vista simple: solo características --- */
+  if (esIndividual(p)) {
+    const chips = [];
+    (p.tags || []).forEach(t => chips.push(t));
+    /* El formato y el sabor solo si existen de verdad. */
+    if (p.formato && chips.length < 6) chips.push(p.formato);
+    if (p.saborPredeterminado && chips.length < 6) chips.push(p.saborPredeterminado);
+
+    cont.innerHTML = chips.length
+      ? '<div class="mp-chips" style="margin-top:14px">' +
+          chips.slice(0, 6).map(c => `<span class="mp-chip car">${c}</span>`).join('') +
+        '</div>'
+      : '';
+    return;
+  }
+
+  /* --- Vista completa: packs y ofertas --- */
+  const grupos = [];
   if (info && info.etiquetasCirugia && info.etiquetasCirugia.length) {
     grupos.push({ tit: 'Compatible con', cls: 'cir', items: info.etiquetasCirugia });
   }
   if (info && info.etiquetasEtapa && info.etiquetasEtapa.length) {
     grupos.push({ tit: 'Etapa', cls: 'eta', items: info.etiquetasEtapa });
   }
-  /* Las características vienen de p.tags, tal cual están escritas. */
   if (p.tags && p.tags.length) {
     grupos.push({ tit: 'Características', cls: 'car', items: p.tags });
   }
@@ -7330,6 +7478,21 @@ function plegarDescripcion() {
 function pintarPasosUso(p) {
   const el = document.getElementById('mUso');
   if (!el || !p.uso) return;
+
+  /* INDIVIDUALES: una tarjeta pequeña con el modo de uso tal
+     cual lo indica el fabricante. Sin pasos numerados: ocupan
+     más alto y aquí lo que se busca es leerlo de un vistazo. */
+  if (esIndividual(p)) {
+    el.className = '';
+    el.style.display = '';
+    el.innerHTML =
+      '<div class="mp-uso-card">' +
+        '<span class="mp-uso-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l-1 9a4 4 0 0 1-6 0z"/><path d="M12 11v11M8 22h8"/></svg></span>' +
+        '<span><span class="mp-uso-lbl">Modo de uso</span>' +
+        '<span class="mp-uso-txt">' + p.uso + '</span></span>' +
+      '</div>';
+    return;
+  }
 
   const frases = p.uso.split(/\.\s+/).map(f => f.trim()).filter(Boolean);
   /* Con una sola frase no hay pasos que numerar: se deja el texto. */
