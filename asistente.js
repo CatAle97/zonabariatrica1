@@ -194,6 +194,31 @@
     + '.zb-rapida.wa{border-color:' + C.verdeWa + ';color:#128C4A}'
     + '.zb-rapida.wa:hover{background:#F0FDF4;border-color:' + C.verdeWa + ';color:#0E7038}'
 
+    /* ---------- BARRA DE ESCRITURA ----------
+       Ocupa todo el ancho, como la de WhatsApp. El textarea
+       necesita width:100% y min-width:0 sí o sí: sin eso se
+       queda en su ancho por defecto (unos 160 px) y parece un
+       recuadro diminuto perdido en la barra. */
+    + '.zb-input-wrap{display:flex;gap:8px;align-items:flex-end;padding:10px 12px;'
+    + 'background:#fff;border-top:1px solid ' + C.borde + ';flex-shrink:0}'
+    + '.zb-input{flex:1 1 auto;width:100%;min-width:0;box-sizing:border-box;'
+    + 'border:1.5px solid ' + C.borde + ';border-radius:22px;padding:11px 16px;'
+    + 'font-size:15px;font-family:inherit;color:' + C.texto + ';resize:none;'
+    + 'line-height:1.4;min-height:44px;max-height:104px;background:' + C.fondo + ';'
+    + 'overflow-y:auto;transition:border-color .2s ease,background .2s ease,box-shadow .2s ease}'
+    + '.zb-input:focus{outline:none;border-color:' + C.azul + ';background:#fff;'
+    + 'box-shadow:0 0 0 3px rgba(37,99,235,.10)}'
+    + '.zb-input::placeholder{color:' + C.tenue + '}'
+    + '.zb-enviar{flex:0 0 auto;width:44px;height:44px;border-radius:50%;border:none;'
+    + 'cursor:pointer;background:' + C.azul + ';color:#fff;display:flex;align-items:center;'
+    + 'justify-content:center;padding:0;'
+    + 'transition:background .2s ease,transform .2s ease,opacity .2s ease}'
+    + '.zb-enviar svg{width:19px;height:19px}'
+    + '.zb-enviar:hover{background:' + C.azulOsc + '}'
+    + '.zb-enviar:active{transform:scale(.94)}'
+    + '.zb-enviar:disabled{background:' + C.borde + ';color:' + C.tenue + ';cursor:default;transform:none}'
+    + '.zb-enviar:focus-visible{outline:3px solid rgba(37,99,235,.45);outline-offset:2px}'
+
     /* ---------- PIE ---------- */
     + '.zb-foot{padding:8px 14px;background:#fff;border-top:1px solid ' + C.borde + ';font-size:10.5px;'
     + 'color:' + C.tenue + ';text-align:center;line-height:1.45}'
@@ -268,7 +293,11 @@
 
   function normalizar(t) {
     return String(t || '').toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      /* La ñ se aparta antes de quitar tildes: si no, "año"
+         terminaría como "ano" y dejaría de reconocerse. */
+      .replace(/ñ/g, '')
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(//g, 'ñ')
       .replace(/[¿?¡!.,;:]/g, ' ')
       .replace(/\s+/g, ' ').trim();
   }
@@ -392,12 +421,39 @@
     else if (/bypass|by pass|baipas/.test(txt)) ctx.cirugia = 'bypass';
     else if (/balon/.test(txt)) ctx.cirugia = 'balon';
 
-    var m;
-    if ((m = txt.match(/(\d+)\s*(dia|dias)/)))       ctx.tiempo = +m[1] <= 7 ? '0-1s' : '1-4s';
-    else if ((m = txt.match(/(\d+)\s*(semana|semanas)/))) ctx.tiempo = +m[1] <= 1 ? '0-1s' : (+m[1] <= 4 ? '1-4s' : '1-3m');
-    else if ((m = txt.match(/(\d+)\s*(mes|meses)/)))  ctx.tiempo = +m[1] <= 3 ? '1-3m' : '3m+';
-    else if (/mas de 3 meses|mas de tres meses/.test(txt)) ctx.tiempo = '3m+';
-    else if (/recien operad|acabo de operar/.test(txt)) ctx.tiempo = '0-1s';
+    /* La gente escribe los tiempos de mil formas: "3 semanas",
+       "mes y medio", "un par de meses", "recién operada".
+       Se traducen todas a los mismos cuatro tramos. */
+    var PALABRAS = {
+      un: 1, una: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5, seis: 6,
+      siete: 7, ocho: 8, nueve: 9, diez: 10, quince: 15, veinte: 20
+    };
+
+    /* Convierte "tres" en 3; deja los dígitos como están. */
+    function numero(txtNum) {
+      if (!txtNum) return null;
+      if (/^\d+$/.test(txtNum)) return parseInt(txtNum, 10);
+      return PALABRAS[txtNum] != null ? PALABRAS[txtNum] : null;
+    }
+
+    var NUM = '(\\d+|un|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|quince|veinte)';
+    var m, n;
+
+    /* Casos sin número explícito, primero. */
+    if (/mes y medio|mes  y medio/.test(txt))                     { ctx.tiempo = '1-3m'; return; }
+    if (/recien operad|acabo de operar|me operaron ayer|hace poc/.test(txt)) { ctx.tiempo = '0-1s'; return; }
+    if (/mas de (3|tres) meses|mas de (6|seis) meses|hace mas de/.test(txt)) { ctx.tiempo = '3m+'; return; }
+    if (/mas de (un|1) año|un año|anios|años/.test(txt))          { ctx.tiempo = '3m+'; return; }
+    if (/(una|1) semana/.test(txt))                                { ctx.tiempo = '1-4s'; return; }
+    if (/(un|1) mes\b/.test(txt))                                  { ctx.tiempo = '1-3m'; return; }
+
+    if ((m = txt.match(new RegExp(NUM + '\\s*(dia|dias)')))) {
+      n = numero(m[1]); if (n != null) ctx.tiempo = n <= 7 ? '0-1s' : '1-4s';
+    } else if ((m = txt.match(new RegExp(NUM + '\\s*(semana|semanas)')))) {
+      n = numero(m[1]); if (n != null) ctx.tiempo = n <= 1 ? '0-1s' : (n <= 4 ? '1-4s' : '1-3m');
+    } else if ((m = txt.match(new RegExp(NUM + '\\s*(mes|meses)')))) {
+      n = numero(m[1]); if (n != null) ctx.tiempo = n <= 3 ? '1-3m' : '3m+';
+    }
   }
 
   var ETIQ_CIRUGIA = { manga: 'manga gástrica', bypass: 'bypass gástrico', balon: 'balón gástrico' };
@@ -500,10 +556,41 @@
   }
 
   /* Punto único de entrada de cada mensaje del usuario. */
+  /* Cuenta qué se suele usar en la etapa que indicó el usuario.
+     Si además sabemos la cirugía, se menciona para que note que
+     Zoe está siguiendo la conversación. */
+  function orientarPorEtapa(intencion) {
+    var K = window.ZOE_CONOCIMIENTO;
+    var e = K.POR_ETAPA[ctx.tiempo];
+    if (!e) return;
+
+    /* Si además preguntó por su cirugía, se explica primero
+       esa parte y luego lo de su etapa: así responde a las dos
+       cosas en un solo mensaje. */
+    var sobreCirugia = '';
+    if (intencion && ['manga', 'bypass', 'balon'].indexOf(intencion.intent) > -1) {
+      sobreCirugia = intencion.response + '<br><br>';
+    }
+
+    var intro = ctx.cirugia
+      ? 'Con ' + ETIQ_CIRUGIA[ctx.cirugia] + ' y ' + e.titulo + ':<br><br>'
+      : 'En ' + e.titulo + ':<br><br>';
+
+    responderZoe(sobreCirugia + intro + e.texto,
+      e.productos,
+      [{ texto: 'Ver precios', envia: 'precios' },
+       { texto: '💬 Hablar por WhatsApp', envia: 'whatsapp' }],
+      K.AVISO);
+  }
+
   function responder(mensaje) {
     var K = window.ZOE_CONOCIMIENTO;
     var txt = normalizar(mensaje);
     capturarContexto(txt);
+    /* Basta con que el mensaje MENCIONE un tiempo. Antes se
+       exigía que además cambiara de etapa, y entonces repetir
+       "3 semanas" tras "una semana" no respondía nada. */
+    var mencionaTiempo = /\bdia|dias|semana|semanas|\bmes\b|meses|año|años|recien operad|acabo de operar|hace poc/.test(txt);
 
     /* 1. Consulta médica → derivación, antes que nada. */
     if (esConsultaMedica(txt)) {
@@ -525,6 +612,21 @@
 
     /* 3. Detección de intención. */
     var it = detectar(txt);
+
+    /* 3b. Si el usuario dijo un tiempo y no preguntaba otra cosa
+       concreta, se le cuenta qué se suele usar en esa etapa.
+       Es lo que espera oír cuando dice "llevo 2 meses". */
+    /* Si ya sabemos la etapa, la orientación por etapa es la
+       respuesta más útil y se impone sobre las intenciones que
+       solo iban a preguntar por el tiempo. Sin esto, decir
+       "tengo manga y llevo mes y medio" respondía sobre la manga
+       y volvía a preguntar el tiempo que la persona acababa
+       de dar. */
+    var ABSORBE_ETAPA = ['saludo', 'manga', 'bypass', 'balon', 'etapas'];
+    if (mencionaTiempo && ctx.tiempo && (!it || ABSORBE_ETAPA.indexOf(it.intent) > -1)) {
+      orientarPorEtapa(it);
+      return;
+    }
 
     if (!it) {
       responderZoe(K.RESPUESTA_DESCONOCIDA, null,
@@ -635,7 +737,8 @@
     entrada.addEventListener('input', function () {
       btnEnviar.disabled = !entrada.value.trim();
       entrada.style.height = 'auto';
-      entrada.style.height = Math.min(entrada.scrollHeight, 88) + 'px';
+      /* Crece con el texto hasta el tope del CSS (104 px). */
+      entrada.style.height = Math.max(44, Math.min(entrada.scrollHeight, 104)) + 'px';
     });
     entrada.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); enviarDesdeCampo(); }

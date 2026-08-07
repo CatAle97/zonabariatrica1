@@ -73,12 +73,18 @@
     },
     {
       intent: 'proteina_polvo',
-      keywords: ['proteina en polvo', 'whey', 'polvo', 'scoop', 'batido', 'proteina de polvo'],
-      response: 'La <b>proteína en polvo</b> se disuelve en agua y aporta 30 g de proteína por servicio. ' +
-                'Sin lactosa y sin azúcar añadida.<br><br>' +
-                'Suele usarse cuando ya toleras texturas blandas o sólidas.<br><br>' +
-                '<b>S/ ' + P.whey + '</b> · Llevando 2: S/ ' + P.wheyPack,
-      productos: ['bi1', 'bi2'],
+      keywords: ['proteina en polvo', 'whey', 'polvo', 'scoop', 'batido', 'proteina de polvo', 'high iso'],
+      response: 'En proteína en polvo tienes <b>dos opciones</b>, las dos sin lactosa y sin azúcar añadida:<br><br>' +
+                '💪 <b>Whey Protein — Bari &amp; Nutrition</b> · 1.5 kg<br>' +
+                '30 g de proteína por servicio, con biotina. Vainilla o Chocolate.<br>' +
+                '<b>S/ ' + P.whey + '</b> · Llevando 2: S/ ' + P.wheyPack + '<br><br>' +
+                '💪 <b>HIGH ISO — LVL Drink</b> · 1 kg<br>' +
+                '27 g de proteína por servicio, endulzada con stevia. Vainilla o Chocolate.<br>' +
+                '<b>S/ ' + P.lvlProt + '</b><br><br>' +
+                'La de B&amp;N rinde más por envase; la de LVL tiene una entrada de precio más baja. ' +
+                'Ambas se usan en la misma etapa.',
+      followUp: '¿Te muestro las dos para comparar?',
+      productos: ['bi1', 'li1'],
       aviso: true
     },
     {
@@ -103,9 +109,11 @@
     {
       intent: 'fibra',
       keywords: ['fibra', 'estreñimiento', 'estrenimiento', 'no puedo ir al baño', 'transito', 'ir al baño', 'estreñida', 'estreñido'],
-      response: 'La <b>fibra</b> es un apoyo habitual cuando el tránsito se vuelve lento, algo frecuente al comer menos cantidad.<br><br>' +
+      response: 'La <b>fibra</b> es un apoyo habitual cuando el tránsito se vuelve lento, algo frecuente al comer menos cantidad. ' +
                 'Se disuelve en agua y no cambia el sabor de la bebida.<br><br>' +
-                'Fibra Soluble B&amp;N <b>S/ ' + P.fibraBN + '</b> · Fibra LVL <b>S/ ' + P.lvlFibra + '</b><br><br>' +
+                'Tienes dos opciones:<br><br>' +
+                '🌿 <b>Fibra Soluble — Bari &amp; Nutrition</b> · 320 g, sabor neutro<br><b>S/ ' + P.fibraBN + '</b><br><br>' +
+                '🍏 <b>GET OUT — LVL Drink</b> · 200 g, sabor manzana verde<br><b>S/ ' + P.lvlFibra + '</b><br><br>' +
                 'Conviene acompañarla de una buena hidratación durante el día.',
       productos: ['bi9', 'li4'],
       aviso: true
@@ -309,6 +317,50 @@
     }
   ];
 
+  /* =========================================================
+     ORIENTACIÓN POR ETAPA
+     ---------------------------------------------------------
+     Cuando el usuario dice cuánto tiempo lleva, Zoe le cuenta
+     QUÉ SE SUELE USAR en ese momento. No es una indicación:
+     es información general sobre la progresión habitual, que
+     es justo lo que la persona quiere saber.
+
+     Sigue sin decir dosis, cantidades ni "tú necesitas". Habla
+     de lo que "suele usarse", y siempre cierra recordando que
+     lo confirma el profesional.
+     ========================================================= */
+  var POR_ETAPA = {
+    '0-1s': {
+      titulo: 'los primeros días',
+      texto: 'En esta etapa lo habitual son <b>líquidos claros</b>, según lo que indique tu equipo médico. ' +
+             'La prioridad es la hidratación y la tolerancia, no la cantidad.<br><br>' +
+             'La suplementación suele empezar un poco más adelante, cuando se pasa a líquidos completos. ' +
+             'Si ya te indicaron algo, dime qué y te ubico el producto.',
+      productos: []
+    },
+    '1-4s': {
+      titulo: 'las primeras semanas',
+      texto: 'En esta etapa se suele trabajar con <b>proteína líquida</b>, porque se tolera mejor que cualquier textura sólida, ' +
+             'y es habitual que ya se incorporen las <b>vitaminas</b>.<br><br>' +
+             'Lo que más se usa en este momento:',
+      productos: ['bi3', 'bi4', 'bi7']
+    },
+    '1-3m': {
+      titulo: 'entre el primer y el tercer mes',
+      texto: 'Suele ser el momento en que se pasa de líquida a <b>proteína en polvo</b>, y en que las <b>vitaminas</b> ya forman parte de la rutina diaria. ' +
+             'Si aparece estreñimiento, también es cuando suele entrar la fibra.<br><br>' +
+             'Lo habitual en esta etapa:',
+      productos: ['bi1', 'li1', 'bi7', 'bi9']
+    },
+    '3m+': {
+      titulo: 'a partir del tercer mes',
+      texto: 'Aquí ya se entra en <b>mantenimiento</b>: se sostiene la proteína y la suplementación indicada a largo plazo. ' +
+             'Es también cuando más aparece la caída de cabello, y cuando suele incorporarse el colágeno.<br><br>' +
+             'Lo que más se usa en esta etapa:',
+      productos: ['bi1', 'li1', 'bi7', 'bi5', 'li3']
+    }
+  };
+
   /* --- Consultas médicas: derivación segura --------------
      Si el mensaje contiene algo de esto, Zoe no responde con
      contenido: deriva al profesional. Va por delante de
@@ -324,15 +376,21 @@
     'cuantos scoops debo', 'cuanto debo tomar', 'cuanta proteina debo', 'cuantas veces al dia'
   ];
 
+  /* TONO — importante:
+     Zoe nunca corta en seco. Reconoce lo que no sabe, dice
+     claramente en qué SÍ puede ayudar y ofrece una salida.
+     Nunca deja al usuario con un "no puedo" y punto. */
   var RESPUESTA_MEDICA =
-    'Eso es mejor revisarlo con tu médico o tu nutricionista: son quienes conocen tu caso, ' +
-    'tus analíticas y tu indicación.<br><br>' +
-    'Yo te puedo ayudar con información de productos, envíos, pagos y dudas generales del proceso.';
+    'Eso mejor lo revisas con tu médico o tu nutricionista: son quienes conocen tu caso, ' +
+    'tus analíticas y lo que te indicaron. No quisiera darte un dato que no encaje contigo.<br><br>' +
+    'Lo que sí puedo hacer es contarte <b>qué suplementos se suelen usar</b> en tu etapa ' +
+    'y ayudarte a ubicarlos.';
 
   var RESPUESTA_DESCONOCIDA =
-    'No quiero darte información incorrecta. Puedo ayudarte con productos, suplementación general, ' +
-    'etapas, pedidos y envíos.<br><br>' +
-    'Si tu consulta es médica o muy específica, lo mejor es revisarla con tu médico o nutricionista.';
+    'Esa no la tengo bien resuelta y prefiero no darte un dato equivocado.<br><br>' +
+    'Donde sí te ayudo bien es con <b>productos y precios</b>, <b>qué se suele usar en cada etapa</b>, ' +
+    '<b>envíos</b> y <b>formas de pago</b>. Pregúntame por ahí y te lo cuento.<br><br>' +
+    'Y si prefieres, te paso con el equipo y lo ven contigo.';
 
   /* --- Sugerencias iniciales (chips discretos) ----------- */
   var SUGERENCIAS = [
@@ -353,6 +411,7 @@
   };
 
   window.ZOE_CONOCIMIENTO = {
+    POR_ETAPA: POR_ETAPA,
     INTENCIONES: INTENCIONES,
     TEMAS_MEDICOS: TEMAS_MEDICOS,
     RESPUESTA_MEDICA: RESPUESTA_MEDICA,
