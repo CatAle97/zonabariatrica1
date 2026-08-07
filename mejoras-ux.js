@@ -179,20 +179,31 @@
   }
 
   /* El carrito flotante vive en la misma esquina: apilamos encima.
-     Si en esta página no hay carrito, Zoe baja al ras. */
+     Si en esta página no hay carrito, Zoe baja al ras.
+     Zoe también se aparta mientras haya un panel abierto encima
+     (carrito, ficha de producto o selector de sabor), para no
+     tapar su contenido. */
   function ubicarSobreCarrito(fab) {
     var carrito = document.getElementById('floatCot');
     if (!carrito) return;
 
+    /* Overlays que, abiertos, deben esconder a Zoe. */
+    var overlays = ['modalOverlay', 'spOverlay', 'cartOverlay']
+      .map(function (id) { return document.getElementById(id); })
+      .filter(Boolean);
+
+    var hayPanelAbierto = function () {
+      return overlays.some(function (o) { return o.classList.contains('open'); });
+    };
+
     var sincronizar = function () {
-      var oculto = carrito.style.display === 'none';
+      var carritoOculto = carrito.style.display === 'none';
       /* Alto real del carrito + separación de 16px. */
       var alto = carrito.offsetHeight || 60;
       document.documentElement.style.setProperty(
-        '--zb-zoe-bottom', oculto ? '24px' : (24 + alto + 16) + 'px'
+        '--zb-zoe-bottom', carritoOculto ? '24px' : (24 + alto + 16) + 'px'
       );
-      /* Cuando se abre el carrito/panel, Zoe se aparta. */
-      fab.classList.toggle('zb-zoe-off', oculto);
+      fab.classList.toggle('zb-zoe-off', carritoOculto || hayPanelAbierto());
     };
 
     sincronizar();
@@ -200,6 +211,10 @@
        lo escuchamos sin modificar esas funciones. */
     new MutationObserver(sincronizar)
       .observe(carrito, { attributes: true, attributeFilter: ['style'] });
+    overlays.forEach(function (o) {
+      new MutationObserver(sincronizar)
+        .observe(o, { attributes: true, attributeFilter: ['class'] });
+    });
     window.addEventListener('resize', sincronizar, { passive: true });
   }
 
