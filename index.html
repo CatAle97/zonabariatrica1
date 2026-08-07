@@ -51,6 +51,66 @@
   }
 }
 </script>
+<!-- Datos estructurados de las Preguntas Frecuentes.
+     Permite que Google muestre el acordeón como resultado enriquecido.
+     IMPORTANTE: si cambias una pregunta o respuesta en la sección FAQ
+     del cuerpo, cambia aquí el mismo texto — deben coincidir. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué suplementos necesito después de una manga gástrica o un bypass?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La base suele ser proteína, multivitamínico, hierro con vitamina C y vitamina B12. Después de la cirugía tu estómago absorbe menos, así que no sirve cualquier suplemento de farmacia: hace falta la presentación y la dosis correctas. La combinación exacta y las dosis las define tu médico o nutricionista."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuándo puedo empezar a tomar proteína después de la cirugía?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En las primeras semanas la mayoría de equipos médicos indica proteína líquida, porque se tolera mejor cuando todavía estás en dieta de líquidos. Más adelante, cuando ya pasas a blandos y sólidos, se suele cambiar a proteína en polvo. El momento del cambio lo marca tu equipo médico."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hacen envíos a provincias? ¿Cuánto demora?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Enviamos a todo el Perú: en Lima el costo depende del distrito, y a provincias despachamos vía Shalom. Los tiempos y el costo exacto se confirman por WhatsApp al cerrar el pedido, según la dirección."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué formas de pago aceptan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Aceptamos Yape e Izipay (tarjeta de débito o crédito). El pago con tarjeta tiene un recargo del 4% que se calcula automáticamente en el pedido. El carrito se arma en la web y se cierra por WhatsApp, donde se coordina el pago y la entrega."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Los productos son aptos si tengo intolerancia a la lactosa?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Varias de nuestras proteínas son sin lactosa y sin gluten, algo habitual después de la cirugía bariátrica. Cada producto indica su composición en la ficha, dentro de Información nutricional."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Ustedes me pueden decir qué tomar? ¿Dan indicación médica?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Zona Bariátrica es una tienda especializada y no reemplaza a tu médico ni a tu nutricionista. Orientamos sobre los productos: qué contiene cada uno, en qué etapa se suele usar y cuál encaja con la indicación que ya te dieron."
+      }
+    }
+  ]
+}
+</script>
 <!-- Open Graph para Facebook / WhatsApp / redes sociales -->
 <meta property="og:title" content="Zona Bariátrica — Suplementos Bariátricos" />
 <meta property="og:description" content="Encuentra los mejores suplementos bariátricos. Vitaminas, proteínas y packs diseñados para pacientes bariátricos." />
@@ -2090,6 +2150,321 @@ footer {
   transition: background 0.1s;
 }
 .user-dropdown-btn:hover { background: #FEF2F2; }
+
+/* ============================================================
+   FASE 1 — UX / UI / CONVERSIÓN
+   Todo lo de abajo usa EXCLUSIVAMENTE las variables del
+   design system de :root. No hay valores de color sueltos.
+   Bloques: 1) botones base  2) hero  3) badges de etapa
+            4) testimonios   5) FAQ   6) footer  7) consistencia
+   ============================================================ */
+
+/* --- 1. BOTONES BASE (reutilizables en toda la web) --------- */
+.btn-zb {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  padding: 13px 24px; border-radius: var(--r); border: 1.5px solid transparent;
+  font-family: var(--font); font-size: var(--fs-body); font-weight: 600;
+  line-height: 1; cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: background var(--t-base), border-color var(--t-base),
+              color var(--t-base), transform var(--t-base), box-shadow var(--t-base);
+}
+.btn-zb svg { width: 18px; height: 18px; flex: none; }
+.btn-zb:active { transform: translateY(0); }
+/* Primario — azul de marca, la acción que queremos que hagan */
+.btn-zb-primario { background: var(--blue); color: #fff; box-shadow: var(--shadow-sm); }
+.btn-zb-primario:hover {
+  background: var(--blue-hover); transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(37,99,235,0.28);
+}
+/* WhatsApp — verde reservado solo para este canal */
+.btn-zb-wa { background: var(--green-wa); color: #fff; box-shadow: var(--shadow-sm); }
+.btn-zb-wa:hover {
+  background: var(--green-wa-hover); transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(37,211,102,0.30);
+}
+/* Secundario — contorno, para acciones de apoyo */
+.btn-zb-outline {
+  background: var(--surface); color: var(--text); border-color: var(--border);
+}
+.btn-zb-outline:hover {
+  border-color: var(--text-light); background: var(--bg-soft); transform: translateY(-2px);
+}
+
+/* --- 2. HERO: propuesta de valor bajo el slider -------------- */
+.hero-intro {
+  background: linear-gradient(180deg, var(--blue-light) 0%, var(--surface) 100%);
+  border-bottom: 1px solid var(--border-light);
+  padding: var(--s-8) var(--gutter) var(--s-7);
+}
+.hero-intro-inner { max-width: 860px; margin: 0 auto; text-align: center; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--surface); border: 1px solid var(--blue-ring);
+  color: var(--blue); border-radius: var(--r-pill);
+  padding: 6px 14px; margin-bottom: var(--s-4);
+  font-size: var(--fs-cap); font-weight: 600;
+  text-transform: uppercase; letter-spacing: var(--tracking-caps);
+  box-shadow: var(--shadow-xs);
+}
+.hero-eyebrow svg { width: 13px; height: 13px; }
+.hero-titulo {
+  font-size: var(--fs-h1); line-height: var(--lh-h1); font-weight: 700;
+  color: var(--text); letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--s-4);
+}
+.hero-titulo em { font-style: normal; color: var(--blue); }
+.hero-sub {
+  font-size: 16px; line-height: 1.65; color: var(--text-muted);
+  max-width: 620px; margin: 0 auto var(--s-6);
+}
+.hero-ctas {
+  display: flex; gap: var(--s-3); justify-content: center;
+  flex-wrap: wrap; margin-bottom: var(--s-6);
+}
+/* Sellos de confianza: responden a "¿me puedo fiar de esta tienda?" */
+.hero-trust {
+  display: flex; gap: var(--s-6); justify-content: center; flex-wrap: wrap;
+  padding-top: var(--s-5); border-top: 1px solid var(--border);
+}
+.hero-trust-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: var(--fs-sm); font-weight: 500; color: var(--text-muted);
+}
+.hero-trust-item svg { width: 17px; height: 17px; color: var(--blue); flex: none; }
+@media (max-width: 700px) {
+  .hero-intro { padding: var(--s-7) var(--s-5) var(--s-6); }
+  .hero-titulo { font-size: 26px; }
+  .hero-sub { font-size: 14px; margin-bottom: var(--s-5); }
+  .hero-ctas { flex-direction: column; }
+  .hero-ctas .btn-zb { width: 100%; }
+  .hero-trust { gap: var(--s-3) var(--s-5); }
+  .hero-trust-item { font-size: 12px; }
+}
+
+/* --- 3. BADGES DE ETAPA en las tarjetas de producto ---------- */
+/* Pequeños, en gris sobrio, para no competir con precio ni CTA. */
+.card-badges {
+  display: flex; flex-wrap: wrap; gap: 5px;
+  margin: 0 0 var(--s-2);
+}
+.badge-etapa {
+  display: inline-flex; align-items: center;
+  font-size: 10px; font-weight: 600; line-height: 1;
+  padding: 4px 8px; border-radius: var(--r-pill);
+  background: var(--bg-soft); color: var(--text-muted);
+  border: 1px solid var(--border); white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+/* Cirugía → azul sutil. Es el dato que más busca el paciente. */
+.badge-etapa.et-cirugia {
+  background: var(--blue-light); color: var(--blue-dark); border-color: var(--blue-ring);
+}
+/* Momento del proceso → ámbar sutil */
+.badge-etapa.et-momento {
+  background: var(--warning-bg); color: var(--warning); border-color: var(--warning-br);
+}
+@media (max-width: 480px) {
+  .badge-etapa { font-size: 9px; padding: 3px 6px; }
+  .card-badges { gap: 4px; }
+}
+/* Badges dentro del modal de producto */
+.modal-badges-etapa { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--s-3); }
+
+/* --- 4. TESTIMONIOS ----------------------------------------- */
+.testi-section {
+  background: var(--bg); padding: var(--s-9) var(--gutter);
+  border-top: 1px solid var(--border-light);
+}
+.testi-inner { max-width: var(--maxw); margin: 0 auto; }
+.testi-header { text-align: center; margin-bottom: var(--s-7); }
+.testi-titulo {
+  font-size: var(--fs-h2); line-height: var(--lh-h2); font-weight: 700;
+  color: var(--text); letter-spacing: var(--tracking-tight); margin-bottom: var(--s-2);
+}
+.testi-sub { font-size: var(--fs-body); color: var(--text-muted); }
+.testi-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-5); max-width: 1040px; margin: 0 auto;
+}
+.testi-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-5);
+  display: flex; flex-direction: column; gap: var(--s-3);
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--t-base), box-shadow var(--t-base), border-color var(--t-base);
+}
+.testi-card:hover {
+  transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--border);
+}
+.testi-estrellas { display: flex; gap: 2px; color: #F59E0B; }
+.testi-estrellas svg { width: 15px; height: 15px; }
+.testi-texto {
+  font-size: var(--fs-body); line-height: 1.7; color: var(--text); flex: 1; margin: 0;
+}
+.testi-persona {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding-top: var(--s-3); border-top: 1px solid var(--border-light);
+}
+/* Avatar: usa foto si la hay; si no, la inicial sobre azul suave. */
+.testi-avatar {
+  width: 40px; height: 40px; border-radius: 50%; flex: none;
+  background: var(--blue-light); color: var(--blue-dark);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; overflow: hidden;
+}
+.testi-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.testi-nombre { font-size: var(--fs-sm); font-weight: 600; color: var(--text); line-height: 1.35; }
+.testi-meta { font-size: var(--fs-cap); color: var(--text-light); line-height: 1.35; }
+.testi-verificado {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: var(--fs-cap); font-weight: 600; color: var(--success);
+}
+.testi-verificado svg { width: 12px; height: 12px; }
+@media (max-width: 980px) {
+  .testi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .testi-section { padding: var(--s-7) var(--s-5); }
+  .testi-grid { grid-template-columns: 1fr; gap: var(--s-4); }
+  .testi-titulo { font-size: 21px; }
+}
+
+/* --- 5. FAQ (acordeón) -------------------------------------- */
+.faq-section { background: var(--surface); padding: var(--s-9) var(--gutter); }
+.faq-inner { max-width: 780px; margin: 0 auto; }
+.faq-header { text-align: center; margin-bottom: var(--s-7); }
+.faq-titulo {
+  font-size: var(--fs-h2); line-height: var(--lh-h2); font-weight: 700;
+  color: var(--text); letter-spacing: var(--tracking-tight); margin-bottom: var(--s-2);
+}
+.faq-sub { font-size: var(--fs-body); color: var(--text-muted); }
+.faq-lista { display: flex; flex-direction: column; gap: var(--s-3); }
+.faq-item {
+  border: 1px solid var(--border); border-radius: var(--r);
+  background: var(--surface); overflow: hidden;
+  transition: border-color var(--t-base), box-shadow var(--t-base);
+}
+.faq-item:hover { border-color: #D8DEE7; }
+.faq-item.abierto { border-color: var(--blue-ring); box-shadow: var(--shadow-sm); }
+.faq-pregunta {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-4); padding: var(--s-4) var(--s-5);
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: var(--font); font-size: var(--fs-h3); font-weight: 600;
+  color: var(--text); line-height: 1.45;
+  transition: color var(--t-fast);
+}
+.faq-pregunta:hover { color: var(--blue); }
+.faq-item.abierto .faq-pregunta { color: var(--blue); }
+.faq-chevron {
+  width: 20px; height: 20px; flex: none; color: var(--text-light);
+  transition: transform var(--t-base), color var(--t-base);
+}
+.faq-item.abierto .faq-chevron { transform: rotate(180deg); color: var(--blue); }
+/* Animación de apertura por grid-rows: sin alturas fijas en JS. */
+.faq-cuerpo {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows var(--t-slow) cubic-bezier(.16,1,.3,1);
+}
+.faq-item.abierto .faq-cuerpo { grid-template-rows: 1fr; }
+.faq-cuerpo-in { overflow: hidden; }
+.faq-respuesta {
+  padding: 0 var(--s-5) var(--s-5);
+  font-size: var(--fs-body); line-height: 1.75; color: var(--text-muted);
+}
+.faq-respuesta p { margin: 0 0 var(--s-3); }
+.faq-respuesta p:last-of-type { margin-bottom: var(--s-4); }
+.faq-respuesta strong { color: var(--text); font-weight: 600; }
+/* CTA al cierre de cada respuesta: recoge la duda que quedó */
+.faq-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: var(--r-pill);
+  background: var(--surface); border: 1.5px solid var(--green-wa);
+  color: var(--green-wa-hover); font-size: var(--fs-sm); font-weight: 600;
+  text-decoration: none; line-height: 1;
+  transition: background var(--t-base), color var(--t-base), transform var(--t-base);
+}
+.faq-cta:hover { background: var(--green-wa); color: #fff; transform: translateY(-2px); }
+.faq-cta svg { width: 15px; height: 15px; flex: none; }
+@media (max-width: 640px) {
+  .faq-section { padding: var(--s-7) var(--s-5); }
+  .faq-titulo { font-size: 21px; }
+  .faq-pregunta { padding: var(--s-4); font-size: 15px; }
+  .faq-respuesta { padding: 0 var(--s-4) var(--s-4); font-size: 13.5px; }
+}
+
+/* --- 6. FOOTER: jerarquía y columnas ------------------------ */
+/* Se agrega una columna de marca a la izquierda y se pasa a 4
+   columnas con anchos distintos, en vez de 3 iguales centradas. */
+.footer-inner {
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  justify-items: start; max-width: 1180px;
+  gap: var(--s-7) var(--s-6);
+}
+.footer-brand { max-width: 260px; }
+.footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: var(--s-3); }
+.footer-brand-logo img { width: 38px; height: 38px; object-fit: contain; border-radius: 8px; }
+.footer-brand-desc {
+  font-size: var(--fs-sm); line-height: 1.7; color: rgba(255,255,255,0.55);
+  margin-bottom: var(--s-4);
+}
+.footer-envios-badge { width: 100%; }
+.footer-bottom-inner {
+  max-width: 1180px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-4); flex-wrap: wrap;
+}
+.footer-bottom-links { display: flex; gap: var(--s-4); flex-wrap: wrap; }
+.footer-bottom-links a {
+  color: rgba(255,255,255,0.45); text-decoration: none;
+  transition: color var(--t-fast);
+}
+.footer-bottom-links a:hover { color: rgba(255,255,255,0.8); }
+@media (max-width: 980px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; max-width: none; }
+}
+@media (max-width: 700px) {
+  .footer-inner { grid-template-columns: 1fr; justify-items: start; }
+  .footer-brand { grid-column: auto; }
+  .footer-bottom-inner { flex-direction: column; text-align: center; }
+  .footer-bottom-links { justify-content: center; }
+}
+
+/* --- 7. CONSISTENCIA GLOBAL --------------------------------- */
+/* Foco visible y uniforme para teclado (accesibilidad + pulcritud).
+   Solo :focus-visible, así el ratón no dibuja anillos. */
+button:focus-visible, a:focus-visible,
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--blue-ring);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+/* Ningún elemento interactivo debe animar más lento que --t-slow. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* Tooltip del carrito: sale hacia la izquierda para no chocar con
+   el botón flotante "Habla con Zoe", que se apila justo encima. */
+.float-tooltip {
+  bottom: 50%; right: 72px; transform: translateY(50%);
+}
+.float-tooltip::after {
+  bottom: 50%; right: -12px; transform: translateY(50%);
+  border-top-color: transparent; border-left-color: var(--surface);
+}
+.float-tooltip::before {
+  bottom: 50%; right: -15px; transform: translateY(50%);
+  border-top-color: transparent; border-left-color: var(--border);
+}
+/* Secciones nuevas: ocultas mientras se ve BariBlog o Quiénes somos,
+   igual que hace el sitio con el catálogo. */
+.vista-inicio.oculta { display: none !important; }
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -2603,6 +2978,46 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   <div class="slider-dots" id="sliderDots"></div>
 </section>
 
+<!-- HERO: propuesta de valor + 2 llamados a la acción.
+     Vive junto al slider: se oculta y se muestra con él. -->
+<section class="hero-intro vista-inicio" id="heroIntro">
+  <div class="hero-intro-inner">
+    <span class="hero-eyebrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+      Especialistas en nutrición bariátrica
+    </span>
+    <h1 class="hero-titulo">Suplementos formulados para tu vida <em>después de la cirugía</em></h1>
+    <p class="hero-sub">
+      Proteínas, vitaminas y fibra con la absorción y las dosis que necesita un paciente
+      de manga gástrica, bypass o balón. Te acompañamos desde el primer mes.
+    </p>
+    <div class="hero-ctas">
+      <button class="btn-zb btn-zb-primario" onclick="filtrar('todos');scrollProductos()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Comprar suplementos
+      </button>
+      <a class="btn-zb btn-zb-wa" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Quiero%20orientaci%C3%B3n%20sobre%20qu%C3%A9%20suplementos%20me%20tocan." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Hablar con Zoe
+      </a>
+    </div>
+    <div class="hero-trust">
+      <div class="hero-trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Marcas especializadas en bariátrica
+      </div>
+      <div class="hero-trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 17h4V5H2v12h3M15 17h6v-5l-3-4h-3v9M6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+        Envíos a todo el Perú
+      </div>
+      <div class="hero-trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Asesoría sin costo por WhatsApp
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
 <!-- RECOMENDADOS -->
@@ -2966,8 +3381,169 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 </div>
 
 <!-- FOOTER -->
+<!-- ============================================================
+     TESTIMONIOS — "Lo que dicen nuestros pacientes"
+     Las tarjetas se dibujan desde el array TESTIMONIOS, más abajo
+     en el bloque de JavaScript. Para cambiarlos, edita ese array:
+     no hace falta tocar este HTML.
+     ============================================================ -->
+<section class="testi-section vista-inicio" id="testimonios-section">
+  <div class="testi-inner">
+    <div class="testi-header">
+      <h2 class="testi-titulo">Lo que dicen nuestros pacientes</h2>
+      <p class="testi-sub">Personas que ya pasaron por donde tú estás pasando.</p>
+    </div>
+    <div class="testi-grid" id="testiGrid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PREGUNTAS FRECUENTES — acordeón
+     HTML plano a propósito: así Google lo indexa sin depender
+     de JavaScript. El JSON-LD de FAQPage está en el <head>.
+     Para editar: cambia el texto de .faq-pregunta y .faq-respuesta,
+     y actualiza el mismo texto en el JSON-LD.
+     ============================================================ -->
+<section class="faq-section vista-inicio" id="faq-section">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <h2 class="faq-titulo">Preguntas frecuentes</h2>
+      <p class="faq-sub">Las dudas que más nos llegan por WhatsApp, respondidas.</p>
+    </div>
+    <div class="faq-lista" id="faqLista">
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Qué suplementos necesito después de una manga gástrica o un bypass?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in">
+          <div class="faq-respuesta">
+            <p>La base suele ser <strong>proteína, multivitamínico, hierro con vitamina C y vitamina B12</strong>. Después de la cirugía tu estómago absorbe menos, así que no sirve cualquier suplemento de farmacia: hace falta la presentación y la dosis correctas.</p>
+            <p>La combinación exacta y las dosis las define <strong>tu médico o nutricionista</strong>. Nosotros te ayudamos a encontrar los productos que cumplen con esa indicación.</p>
+            <a class="faq-cta" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Tengo%20una%20duda%20sobre%20qu%C3%A9%20suplementos%20necesito." target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              ¿No encontraste la respuesta? Habla con Zoe
+            </a>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Cuándo puedo empezar a tomar proteína después de la cirugía?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in">
+          <div class="faq-respuesta">
+            <p>En las primeras semanas la mayoría de equipos médicos indica <strong>proteína líquida</strong>, porque se tolera mejor cuando todavía estás en dieta de líquidos. Más adelante, cuando ya pasas a blandos y sólidos, se suele cambiar a <strong>proteína en polvo</strong>.</p>
+            <p>El momento del cambio lo marca tu equipo médico, no la etiqueta del producto.</p>
+            <a class="faq-cta" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Quiero%20saber%20qu%C3%A9%20prote%C3%ADna%20me%20toca%20seg%C3%BAn%20mi%20etapa." target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              ¿No encontraste la respuesta? Habla con Zoe
+            </a>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Hacen envíos a provincias? ¿Cuánto demora?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in">
+          <div class="faq-respuesta">
+            <p>Sí. Enviamos a <strong>todo el Perú</strong>: en Lima el costo depende del distrito, y a provincias despachamos <strong>vía Shalom</strong>.</p>
+            <p>Los tiempos y el costo exacto te los confirmamos por WhatsApp al momento de cerrar tu pedido, según tu dirección.</p>
+            <a class="faq-cta" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Quiero%20consultar%20el%20env%C3%ADo%20a%20mi%20ciudad." target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              ¿No encontraste la respuesta? Habla con Zoe
+            </a>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Qué formas de pago aceptan?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in">
+          <div class="faq-respuesta">
+            <p>Aceptamos <strong>Yape</strong> e <strong>Izipay</strong> (tarjeta de débito o crédito). El pago con tarjeta tiene un recargo del 4% que se calcula automáticamente en tu pedido.</p>
+            <p>Armas tu carrito en la web y lo cierras por WhatsApp: ahí coordinamos el pago y la entrega.</p>
+            <a class="faq-cta" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Tengo%20una%20consulta%20sobre%20el%20pago." target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              ¿No encontraste la respuesta? Habla con Zoe
+            </a>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Los productos son aptos si tengo intolerancia a la lactosa?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in">
+          <div class="faq-respuesta">
+            <p>Varias de nuestras proteínas son <strong>sin lactosa y sin gluten</strong> — es habitual tener intolerancia después de la cirugía. Cada producto indica su composición en la ficha, dentro de "Información nutricional".</p>
+            <p>Si no estás seguro, escríbenos y revisamos juntos la etiqueta antes de que compres.</p>
+            <a class="faq-cta" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Quiero%20consultar%20si%20un%20producto%20es%20apto%20para%20m%C3%AD." target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              ¿No encontraste la respuesta? Habla con Zoe
+            </a>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" type="button" aria-expanded="false">
+          <span>¿Ustedes me pueden decir qué tomar? ¿Dan indicación médica?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-cuerpo"><div class="faq-cuerpo-in">
+          <div class="faq-respuesta">
+            <p>No. Somos una tienda especializada, <strong>no reemplazamos a tu médico ni a tu nutricionista</strong>. Lo que sí hacemos es orientarte sobre los productos: qué contiene cada uno, en qué etapa se suele usar y cuál encaja con la indicación que ya te dieron.</p>
+            <p>Si todavía no tienes indicación, lo primero es hablar con tu equipo médico.</p>
+            <a class="faq-cta" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Ya%20tengo%20mi%20indicaci%C3%B3n%20m%C3%A9dica%20y%20quiero%20ayuda%20para%20elegir%20los%20productos." target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              ¿No encontraste la respuesta? Habla con Zoe
+            </a>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-inner">
+    <!-- Col 1: Marca — ancla la identidad y agrupa el dato de despacho -->
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <img src="img/logo-zb.png" alt="Zona Bariátrica">
+        <div>
+          <div class="footer-brand-name">ZONA BARIÁTRICA</div>
+          <div class="footer-tagline">Suplementos Bariátricos</div>
+        </div>
+      </div>
+      <p class="footer-brand-desc">
+        Suplementación especializada para pacientes de manga gástrica, bypass y balón.
+        Acompañamos cada etapa de tu proceso.
+      </p>
+      <div class="footer-col-title">Despacho y envíos</div>
+      <div class="footer-envios-badge">
+        <div style="flex:1">
+          <div class="ev-title">Envíos a todo el Perú</div>
+          <div class="ev-sub">Lima y provincias</div>
+        </div>
+        <div style="flex:0 0 auto;display:flex;align-items:center">
+          <img src="img/shalom.png" alt="Shalom Courier" style="height:42px;width:auto;object-fit:contain">
+        </div>
+      </div>
+    </div>
     <!-- Col 2: Navegación -->
     <div>
       <div class="footer-col-title">Navegación</div>
@@ -2976,8 +3552,9 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       <a class="footer-nav-link" href="#" onclick="filtrar('oferta');scrollProductos();return false;">Ofertas</a>
       <a class="footer-nav-link" href="#" onclick="mostrarBlog();return false;">BariBlog</a>
       <a class="footer-nav-link" href="#" onclick="mostrarNosotros();return false;">Quiénes somos</a>
+      <a class="footer-nav-link" href="#faq-section" onclick="irAFaq();return false;">Preguntas frecuentes</a>
     </div>
-    <!-- Col: Categorías (páginas indexables) -->
+    <!-- Col 3: Categorías (páginas indexables) -->
     <div>
       <div class="footer-col-title">Categorías</div>
       <a class="footer-nav-link" href="/proteinas">Proteínas</a>
@@ -2985,31 +3562,37 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       <a class="footer-nav-link" href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
       <a class="footer-nav-link" href="/packs">Packs</a>
     </div>
-    <!-- Col 3: Despacho y envíos -->
-    <div style="width:100%">
-      <div class="footer-col-title" style="text-align:center">Despacho y envíos</div>
-      <div class="footer-envios-badge" style="justify-content:center;min-width:260px;white-space:nowrap">
-        <div style="flex:1">
-          <div class="ev-title">Envíos a todo el Perú</div>
-          <div class="ev-sub">Lima y provincias</div>
-        </div>
-        <div style="flex:1;display:flex;justify-content:center;align-items:center">
-          <img src="img/shalom.png" alt="Shalom Courier" style="height:75px;width:auto;object-fit:contain">
-        </div>
-      </div>
-    </div>
-    <!-- Col 4: Contacto -->
+    <!-- Col 4: Contacto — con CTA directo a Zoe -->
     <div>
       <div class="footer-col-title">Contacto</div>
-      <div class="footer-contact-line" style="margin-bottom:12px">📱 <strong>+51 961 841 069</strong></div>
+      <div class="footer-contact-line" style="margin-bottom:6px">📱 <strong>+51 961 841 069</strong></div>
+      <div class="footer-contact-line" style="margin-bottom:14px;color:rgba(255,255,255,0.5);font-size:12px">
+        Zoe te atiende de lunes a sábado · 9 am a 8 pm
+      </div>
+      <a class="btn-zb btn-zb-wa" style="padding:10px 18px;font-size:13px;margin-bottom:16px"
+         href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Vengo%20de%20la%20web%20y%20quiero%20orientaci%C3%B3n."
+         target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Habla con Zoe
+      </a>
+      <div class="footer-col-title" style="margin-bottom:10px">Síguenos</div>
       <div class="footer-redes">
-        <a href="https://instagram.com/zonabariatricaof" target="_blank"><img src="img/instagram.png" alt="Instagram"></a>
-        <a href="https://www.tiktok.com/@zonabariatrica" target="_blank"><img src="img/tiktok.png" alt="TikTok"></a>
-        <a href="https://wa.me/51961841069" target="_blank"><img src="img/whatsapp.jpg" alt="WhatsApp" style="border-radius:6px"></a>
+        <a href="https://instagram.com/zonabariatricaof" target="_blank" aria-label="Instagram"><img src="img/instagram.png" alt="Instagram"></a>
+        <a href="https://www.tiktok.com/@zonabariatrica" target="_blank" aria-label="TikTok"><img src="img/tiktok.png" alt="TikTok"></a>
+        <a href="https://wa.me/51961841069" target="_blank" aria-label="WhatsApp"><img src="img/whatsapp.jpg" alt="WhatsApp" style="border-radius:6px"></a>
       </div>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 Zona Bariátrica · Todos los derechos reservados · Lima, Perú</div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span>© 2026 Zona Bariátrica · Todos los derechos reservados · Lima, Perú</span>
+      <span class="footer-bottom-links">
+        <a href="#faq-section" onclick="irAFaq();return false;">Preguntas frecuentes</a>
+        <a href="#" onclick="mostrarNosotros();return false;">Quiénes somos</a>
+        <a href="https://wa.me/51961841069" target="_blank" rel="noopener">Contacto</a>
+      </span>
+    </div>
+  </div>
 </footer>
 
 <script>
@@ -4211,6 +4794,79 @@ const ESCARAPELA_SVG = `<svg class="escarapela-badge" viewBox="0 0 64 84" aria-l
   <circle cx="32" cy="26" r="9" fill="#D91023"/>
 </svg>`;
 
+/* ============================================================
+   FASE 1 — BADGES DE ETAPA EN LAS TARJETAS
+   ------------------------------------------------------------
+   Debe quedar ANTES de cardHTML(): el catálogo se dibuja al
+   cargar la página y necesita estas constantes ya definidas.
+
+   PARA EDITAR: cambia la lista de cada producto en BADGES_PRODUCTO.
+   El texto se muestra tal cual. Los que estén en CIRUGIAS salen en
+   azul, "Primer mes" en ámbar y el resto en gris.
+   Si un producto no está en el mapa, se deduce una etiqueta a
+   partir de su categoría — así nunca queda una tarjeta rota.
+   ============================================================ */
+const CIRUGIAS = ['Manga Gástrica', 'Bypass Gástrico', 'Balón Gástrico'];
+
+const BADGES_PRODUCTO = {
+  // Ofertas
+  oferta1: ['Primer mes', 'Proteína'],
+  oferta2: ['Proteína'],
+  // Packs Bari & Nutrition
+  bp1: ['Primer mes', 'Proteína'],
+  bp2: ['Proteína', 'Vitaminas'],
+  bp3: ['Vitaminas'],
+  bp4: ['Bypass Gástrico', 'Vitaminas'],
+  // Packs LVL Drink
+  lp1: ['Proteína', 'Fibra'],
+  lp2: ['Proteína', 'Colágeno'],
+  lp3: ['Proteína', 'Fibra'],
+  lp4: ['Colágeno', 'Fibra'],
+  lp5: ['Fibra'],
+  lp6: ['Colágeno'],
+  lp7: ['Proteína'],
+  // Individuales Bari & Nutrition
+  bi1: ['Proteína'],
+  bi2: ['Proteína'],
+  bi3: ['Primer mes', 'Proteína'],
+  bi4: ['Primer mes', 'Proteína'],
+  bi5: ['Vitaminas'],
+  bi6: ['Bypass Gástrico', 'Vitaminas'],
+  bi7: ['Vitaminas'],
+  bi8: ['Bypass Gástrico', 'Vitaminas'],
+  bi9: ['Fibra'],
+  // Individuales LVL Drink
+  li1: ['Proteína'],
+  li2: ['Proteína'],
+  li3: ['Colágeno'],
+  li4: ['Fibra']
+};
+
+/* Respaldo por categoría cuando el producto no está en el mapa. */
+const BADGES_POR_CAT = {
+  proteina: ['Proteína'],
+  vitaminas: ['Vitaminas'],
+  colageno: ['Colágeno'],
+  pack: [],
+  oferta: []
+};
+
+function claseBadge(texto) {
+  if (CIRUGIAS.indexOf(texto) !== -1) return ' et-cirugia';
+  if (texto === 'Primer mes') return ' et-momento';
+  return '';
+}
+
+/* max = cuántos mostrar (2 en la tarjeta, 0 = todos, en el modal). */
+function badgesEtapaHTML(p, max) {
+  const lista = BADGES_PRODUCTO[p.id] || BADGES_POR_CAT[p.cat] || [];
+  if (!lista.length) return '';
+  const visibles = max ? lista.slice(0, max) : lista;
+  return '<div class="card-badges">' +
+    visibles.map(t => `<span class="badge-etapa${claseBadge(t)}">${t}</span>`).join('') +
+    '</div>';
+}
+
 function cardHTML(p) {
   const pack = p.tipo === 'pack';
   const oferta = p.tipo === 'oferta';
@@ -4225,6 +4881,7 @@ function cardHTML(p) {
       ${pack ? `<span class="badge-pack">PACK &nbsp;·&nbsp; ${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
       ${p.destacado && !pack && !oferta ? `<span class="badge-recomendado">${__('badge_recom')}</span>` : ''}
       <div class="nombre" onclick="abrirModal('${p.id}')" style="cursor:pointer">${p.nombre}</div>
+      ${badgesEtapaHTML(p, 2)}
       <span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>
       <div class="precio-area">
         <div class="precio">S/ ${p.precio}</div>
@@ -4255,7 +4912,17 @@ function abrirModal(id) {
     (p.tipo === 'pack'   ? ' <span class="badge-pack">PACK</span>' : '') +
     (p.tipo === 'oferta' ? ' <span class="badge-oferta">🔥 OFERTA · Ahorra S/ ' + p.ahorro + '</span>' : '');
 
-  document.getElementById('mNombre').textContent = p.nombre;
+  const nombreEl = document.getElementById('mNombre');
+  nombreEl.textContent = p.nombre;
+  /* Badges de etapa: en el modal se muestran todos, no solo 2.
+     Se borra el bloque anterior para que no se acumulen al reabrir. */
+  const badgesPrevios = document.getElementById('mBadgesEtapa');
+  if (badgesPrevios) badgesPrevios.remove();
+  const badgesHtml = badgesEtapaHTML(p, 0);
+  if (badgesHtml) {
+    nombreEl.insertAdjacentHTML('afterend',
+      badgesHtml.replace('class="card-badges"', 'id="mBadgesEtapa" class="card-badges modal-badges-etapa"'));
+  }
   document.getElementById('mDesc').textContent = p.desc;
 
   const incEl = document.getElementById('mIncluye');
@@ -5705,6 +6372,151 @@ document.addEventListener('click', (e) => {
 });
 
 /* ============================================================
+   FASE 1 — TESTIMONIOS
+   ------------------------------------------------------------
+   ⚠️ CONTENIDO DE EJEMPLO: reemplázalo por testimonios reales
+   antes de publicar. Campos de cada testimonio:
+     nombre    (obligatorio)
+     inicial   (opcional) — inicial del apellido, ej: "M."
+     ciudad    (opcional) — ej: "Arequipa"
+     foto      (opcional) — ruta, ej: "img/testi-maria.jpg".
+                            Si no hay foto se muestra la inicial.
+     estrellas (1 a 5)
+     texto     (obligatorio)
+     verificado(opcional) — true muestra el sello "Compra verificada"
+   ============================================================ */
+const TESTIMONIOS = [
+  {
+    nombre: 'María', inicial: 'C.', ciudad: 'Lima',
+    foto: null, estrellas: 5, verificado: true,
+    texto: 'Después de mi manga no sabía qué proteína me caía bien. Me orientaron por WhatsApp según la etapa en la que estaba y por fin encontré una que tolero sin náuseas.'
+  },
+  {
+    nombre: 'Jorge', inicial: 'R.', ciudad: 'Arequipa',
+    foto: null, estrellas: 5, verificado: true,
+    texto: 'Pedí desde provincia y llegó por Shalom en el tiempo que me dijeron. El pack me salió más a cuenta que comprar cada cosa por separado.'
+  },
+  {
+    nombre: 'Lucía', inicial: 'M.', ciudad: 'Trujillo',
+    foto: null, estrellas: 5, verificado: false,
+    texto: 'Lo que más valoro es que entienden el proceso bariátrico. No te venden por vender: me dijeron qué me faltaba según lo que me indicó mi nutricionista.'
+  }
+];
+
+const ESTRELLA_SVG =
+  '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>';
+
+const CHECK_SVG =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
+function testimonioHTML(t) {
+  const estrellas = ESTRELLA_SVG.repeat(Math.max(1, Math.min(5, t.estrellas || 5)));
+  const avatar = t.foto
+    ? `<img src="${t.foto}" alt="${t.nombre}">`
+    : (t.nombre || '?').charAt(0).toUpperCase();
+  /* Nombre + inicial + ciudad: solo se arma con lo que exista. */
+  const nombre = t.nombre + (t.inicial ? ' ' + t.inicial : '');
+  const meta = [t.ciudad].filter(Boolean).join(' · ');
+
+  return `<article class="testi-card">
+    <div class="testi-estrellas" role="img" aria-label="${t.estrellas || 5} de 5 estrellas">${estrellas}</div>
+    <p class="testi-texto">"${t.texto}"</p>
+    <div class="testi-persona">
+      <div class="testi-avatar">${avatar}</div>
+      <div>
+        <div class="testi-nombre">${nombre}</div>
+        ${meta ? `<div class="testi-meta">${meta}</div>` : ''}
+        ${t.verificado ? `<div class="testi-verificado">${CHECK_SVG}Compra verificada</div>` : ''}
+      </div>
+    </div>
+  </article>`;
+}
+
+function renderizarTestimonios() {
+  const grid = document.getElementById('testiGrid');
+  if (!grid) return;
+  /* Sin testimonios cargados, la sección entera se oculta:
+     mejor nada que un bloque vacío. */
+  const sec = document.getElementById('testimonios-section');
+  if (!TESTIMONIOS.length) { if (sec) sec.style.display = 'none'; return; }
+  grid.innerHTML = TESTIMONIOS.map(testimonioHTML).join('');
+  if (window.ZBUX) window.ZBUX.animar('.testi-card', 60);
+}
+
+/* ============================================================
+   FASE 1 — FAQ (acordeón)
+   Un solo panel abierto a la vez. La altura la anima el CSS
+   con grid-template-rows, así que aquí solo alternamos clases.
+   ============================================================ */
+function iniciarFaq() {
+  const lista = document.getElementById('faqLista');
+  if (!lista) return;
+
+  lista.querySelectorAll('.faq-pregunta').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const abierto = item.classList.contains('abierto');
+
+      lista.querySelectorAll('.faq-item.abierto').forEach(otro => {
+        otro.classList.remove('abierto');
+        otro.querySelector('.faq-pregunta').setAttribute('aria-expanded', 'false');
+      });
+
+      if (!abierto) {
+        item.classList.add('abierto');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+}
+
+/* Lleva a la sección de FAQ desde el footer, volviendo antes a la
+   vista de inicio si el usuario estaba en BariBlog o Quiénes somos. */
+function irAFaq() {
+  const faq = document.getElementById('faq-section');
+  if (!faq) return;
+  if (faq.classList.contains('oculta')) filtrar('todos');
+  const header = document.querySelector('header');
+  const offset = header ? header.offsetHeight + 8 : 8;
+  requestAnimationFrame(() => {
+    window.scrollTo({
+      top: faq.getBoundingClientRect().top + window.pageYOffset - offset,
+      behavior: 'smooth'
+    });
+  });
+}
+
+/* ============================================================
+   FASE 1 — VISIBILIDAD DE LAS SECCIONES NUEVAS
+   Hero, testimonios y FAQ pertenecen a la vista de inicio: se
+   ocultan igual que el catálogo cuando se entra a BariBlog o a
+   Quiénes somos. Se engancha a ocultarSlider()/mostrarSlider(),
+   que ya son los interruptores de esa vista.
+   ============================================================ */
+(function () {
+  const marcarInicio = (visible) => {
+    document.querySelectorAll('.vista-inicio')
+      .forEach(sec => sec.classList.toggle('oculta', !visible));
+  };
+
+  const ocultarOriginal = window.ocultarSlider;
+  const mostrarOriginal = window.mostrarSlider;
+
+  window.ocultarSlider = function () {
+    ocultarOriginal.apply(this, arguments);
+    marcarInicio(false);
+  };
+  window.mostrarSlider = function () {
+    mostrarOriginal.apply(this, arguments);
+    marcarInicio(true);
+  };
+})();
+
+/* Arranque de las secciones nuevas. */
+renderizarTestimonios();
+iniciarFaq();
+
+/* ============================================================
    CAPA VISUAL — solo apariencia, no toca la lógica de la tienda
    ============================================================ */
 
@@ -5751,5 +6563,7 @@ document.addEventListener('click', (e) => {
   if (cont) new MutationObserver(observar).observe(cont, { childList: true, subtree: true });
 })();
 </script>
+<script src="asistente.js"></script>
+<script src="mejoras-ux.js"></script>
 </body>
 </html>
