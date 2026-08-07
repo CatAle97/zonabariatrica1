@@ -931,7 +931,7 @@ a.nav-link {
 .cart-aviso {
   background: var(--warning-bg); border-bottom: 1px solid var(--warning-br);
   padding: var(--s-4) var(--s-5); font-size: 12.5px; color: var(--warning);
-  line-height: 1.65; font-weight: 500;
+  line-height: 1.7; font-weight: 500;
 }
 
 /* CHECKOUT */
@@ -2842,7 +2842,11 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
    3. Un poco más de aire entre elementos que se tocan, para que
       no se pulse el equivocado con el pulgar.
    ============================================================ */
-@media (max-width: 768px) {
+/* Se dispara por ANCHO o por tipo de puntero.
+   Una tablet de 1024 px es táctil pero no entra por ancho: con
+   "pointer: coarse" también recibe los objetivos de 44 px, que
+   es lo que de verdad importa cuando se navega con el dedo. */
+@media (max-width: 768px), (pointer: coarse) {
   /* 1 · Objetivo táctil */
   .btn-agregar, .btn-ver-sm, .filtro-chip, .blog-chip, .nav-link,
   .mega-item, .sug-item, .lang-option, .subfiltro-btn,
@@ -2877,23 +2881,34 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 }
 
 /* ------------------------------------------------------------
-   Carrito en móvil: más aire.
-   Con el ancho de un teléfono los textos quedaban pegados unos
-   a otros y el nombre del producto, partido en dos líneas, se
-   leía apelotonado.
+   Carrito: más aire en TODAS las pantallas.
+
+   OJO — esto NO va dentro de una media query a propósito.
+   El panel del carrito mide 400 px fijos en tablet y en
+   escritorio (solo pasa a pantalla completa por debajo de
+   600 px). Es decir: es igual de estrecho en una tablet que en
+   un móvil, así que el texto se apelotonaba igual. Si estas
+   reglas se limitaran a móvil, el problema seguiría vivo en
+   tablet y en escritorio.
+
+   Regla general para este panel: lo que dependa del ancho de la
+   COLUMNA va aquí; solo lo que dependa del ancho de la PANTALLA
+   va en la media query de abajo.
    ------------------------------------------------------------ */
+.cart-item { gap: var(--s-3); }
+.cart-item-nombre { line-height: 1.5; }
+.cart-item-precio { margin-top: 5px; }
+.cart-item-qty { margin-top: var(--s-3); }
+.cart-subtotal { margin-bottom: var(--s-3); }
+.cart-nota { margin-top: var(--s-4); line-height: 1.6; }
+
 @media (max-width: 640px) {
-  .cart-aviso { padding: var(--s-4); font-size: 12.5px; line-height: 1.7; }
+  .cart-aviso { padding: var(--s-4); }
   .cart-items { padding: 0 var(--s-4); }
-  .cart-item { gap: var(--s-3); padding: var(--s-4) 0; }
-  .cart-item-nombre { line-height: 1.5; }
-  .cart-item-precio { margin-top: 5px; }
-  .cart-item-qty { margin-top: var(--s-3); }
   .cart-footer { padding: var(--s-4) var(--s-4) var(--s-5); }
-  .cart-subtotal { margin-bottom: var(--s-3); }
-  /* La nota final queda por encima del botón del asistente,
-     que flota en esa misma esquina. */
-  .cart-nota { margin-top: var(--s-4); padding: 0 var(--s-6); line-height: 1.6; }
+  /* Solo en móvil: el asistente flota en esa misma esquina y
+     se comía la nota final. */
+  .cart-nota { padding: 0 var(--s-6); }
 }
 
 /* ------------------------------------------------------------

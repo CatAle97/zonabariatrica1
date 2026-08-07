@@ -592,7 +592,9 @@ footer .fine { font-size:var(--fs-cap); color:rgba(255,255,255,0.35); margin-top
    Mismo criterio que en la tienda: objetivo táctil de 44 px,
    inputs a 16 px para que iOS no haga zoom al enfocar, y algo
    más de aire entre elementos que se tocan. */
-@media (max-width: 768px) {
+/* Por ancho O por puntero: una tablet de 1024 px es táctil
+   aunque no entre por ancho. */
+@media (max-width: 768px), (pointer: coarse) {
   .btn-zb, .cmp-chip, .faq-pregunta, .sel-op, .sel-volver,
   .sel-card-btn, .rec-card, nav.cats a, footer .links a {
     min-height: 44px;
