@@ -380,6 +380,7 @@ const productos = [
     tags:["30g proteína","Sin gluten","Sin lactosa","Con biotina","0% azúcar"],
     precio:280,
     img: BN+"whey-vainilla.png",
+    galeria: [BN+"whey-vainilla.png", "img/tn-whey-vainilla.jpg"],
     uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir preferentemente como suplemento proteico según indicación médica.",
     tn: tn.whey },
 
@@ -400,6 +401,7 @@ const productos = [
     tags:["20g proteína","Sin lactosa","0% azúcar","Lista para tomar","50mg hierro"],
     precio:200,
     img: BN+"liquid-fresa.png",
+    galeria: [BN+"liquid-fresa.png", "img/tn-liquid-protein.jpg"],
     uso:"Tomar 30ml por porción. Hasta 33 porciones por envase de 1 litro.",
     tn: tn.liquid },
 
@@ -410,6 +412,7 @@ const productos = [
     tags:["20g proteína","Sin lactosa","0% azúcar","Lista para tomar","50mg hierro"],
     precio:200,
     img: BN+"liquid-maracumango.png",
+    galeria: [BN+"liquid-maracumango.png", "img/tn-liquid-protein.jpg"],
     uso:"Tomar 30ml por porción. Hasta 33 porciones por envase de 1 litro.",
     tn: tn.liquid },
 
@@ -419,6 +422,7 @@ const productos = [
     tags:["10,000 mcg biotina","Sabor durazno","Sin azúcares","Sin colorantes"],
     precio:150,
     img: BN+"gomita-biotina.png",
+    galeria: [BN+"gomita-biotina.png", "img/tn-biotina.jpg"],
     uso:"2 gomitas al día, preferiblemente con una comida. No exceda la dosis recomendada.",
     tn: tn.biotina },
 
@@ -428,6 +432,7 @@ const productos = [
     tags:["45mg hierro","Vitamina C 60mg","250% VD","Sabor naranja","Sin azúcares"],
     precio:150,
     img: BN+"gomita-hierro.png",
+    galeria: [BN+"gomita-hierro.png", "img/tn-hierro.jpg"],
     uso:"1 gomita masticable al día. Vía oral.",
     tn: tn.hierro },
 
@@ -437,6 +442,7 @@ const productos = [
     tags:["23 vitaminas y minerales","Multisabor","Sin azúcares","Sin colorantes"],
     precio:150,
     img: BN+"gomita-multivit.png",
+    galeria: [BN+"gomita-multivit.png", "img/tn-multivitaminico.jpg"],
     uso:"4 gomitas al día.",
     tn: tn.multivit },
 
@@ -446,6 +452,7 @@ const productos = [
     tags:["1,000 mcg B12","41,667% VD","Ácido fólico","Sabor piña","Sin azúcares"],
     precio:150,
     img: BN+"gomita-b12.png",
+    galeria: [BN+"gomita-b12.png", "img/tn-b12.jpg"],
     uso:"3 gomitas masticables al día.",
     tn: tn.b12 },
 
@@ -455,6 +462,7 @@ const productos = [
     tags:["Base de maíz","Origen francés","Rápida absorción","Sin azúcar","64 servicios"],
     precio:85,
     img: BN+"fibra.png",
+    galeria: [BN+"fibra.png", "img/tn-fibra.jpg"],
     uso:"1 scoop (5g) al día disuelto en agua o bebida de preferencia.",
     tn: tn.fibra_bn },
 
