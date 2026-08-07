@@ -225,9 +225,13 @@
 
     /* Secciones nuevas de esta fase. Si no existen en la página,
        animar() simplemente no hace nada. */
+    animar('.hero-intro-inner > *', 70);   // eyebrow, título, texto, CTAs
+    animar('.testi-header', 0);            // título de sección
     animar('.testi-card', 60);
+    animar('.faq-header', 0);              // título de sección
     animar('.faq-item', 45);
-    animar('.hero-intro-inner > *', 70);
+    /* Comodín: cualquier bloque futuro al que se le ponga esta clase
+       entra animado sin tocar código. */
     animar('.zb-anim-sec', 0);
   }
 
