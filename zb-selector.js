@@ -42,21 +42,34 @@
   }
 
   /* --- En qué etapas suele usarse cada familia ------------
-     Refleja la progresión habitual de texturas, no una pauta. */
+     Refleja la progresión habitual de texturas, no una pauta.
+
+     Los cuatro tramos son:
+       '0-1s'  menos de 1 semana   → líquidos claros
+       '1-4s'  de 1 a 4 semanas    → líquidos completos
+       '1-3m'  de 1 a 3 meses      → purés y blandos
+       '3m+'   más de 3 meses      → sólidos y mantenimiento
+
+     OJO con '0-1s': en los primeros días lo habitual son solo
+     líquidos claros por indicación médica, y la suplementación
+     todavía no ha empezado. Por eso NINGUNA familia lo incluye:
+     el selector responde con una explicación en vez de ofrecer
+     productos que en ese momento no corresponden. Sería más
+     cómodo mostrar algo, pero sería inexacto. */
   var ETAPAS_POR_FAMILIA = {
-    proteina_liquida: ['0-1', '1-3', '3+'],
-    proteina_polvo:   ['1-3', '3+'],
-    vitaminas:        ['0-1', '1-3', '3+'],
-    fibra:            ['1-3', '3+'],
-    colageno:         ['3+'],
-    pack:             ['1-3', '3+']
+    proteina_liquida: ['1-4s', '1-3m', '3m+'],
+    proteina_polvo:   ['1-3m', '3m+'],
+    vitaminas:        ['1-4s', '1-3m', '3m+'],
+    fibra:            ['1-3m', '3m+'],
+    colageno:         ['3m+'],
+    pack:             ['1-3m', '3m+']
   };
 
   /* Excepciones por producto. El pack de proteína líquida sí
-     encaja en el primer mes porque es líquido. */
+     encaja en las primeras semanas porque es líquido. */
   var ETAPAS_EXCEPCION = {
-    bp1: ['0-1', '1-3', '3+'],   // Pack Proteína Líquida
-    oferta1: ['0-1', '1-3', '3+']// Oferta 2 Proteínas Líquidas
+    bp1: ['1-4s', '1-3m', '3m+'],   // Pack Proteína Líquida
+    oferta1: ['1-4s', '1-3m', '3m+']// Oferta 2 Proteínas Líquidas
   };
 
   /* --- Objetivo que cubre cada familia -------------------- */
@@ -80,7 +93,23 @@
     balon:  { proteina: 1 }
   };
 
-  var ETIQUETA_ETAPA = { '0-1': 'Primer mes', '1-3': '1 a 3 meses', '3+': 'Más de 3 meses' };
+  var ETIQUETA_ETAPA = {
+    '0-1s': 'Menos de 1 semana',
+    '1-4s': '1 a 4 semanas',
+    '1-3m': '1 a 3 meses',
+    '3m+':  'Más de 3 meses'
+  };
+
+  /* Qué se explica cuando una etapa no tiene productos que le
+     correspondan. Solo ocurre en los primeros días. */
+  var SIN_PRODUCTOS = {
+    '0-1s': 'En los primeros días después del procedimiento lo habitual es ' +
+            'tomar únicamente <strong>líquidos claros</strong>, según lo que ' +
+            'indique tu equipo médico. La suplementación suele comenzar algo ' +
+            'más adelante, cuando se avanza a líquidos completos.<br><br>' +
+            'Por eso aquí no te mostramos productos: en esta etapa todavía no ' +
+            'corresponden. Si tienes dudas sobre tu caso, escríbele a Zoe.'
+  };
   var ETIQUETA_CIRUGIA = { manga: 'Manga gástrica', bypass: 'Bypass gástrico', balon: 'Balón gástrico' };
   var ETIQUETA_OBJETIVO = {
     proteina: 'Proteína', vitaminas: 'Vitaminas', fibra: 'Fibra',
@@ -97,7 +126,7 @@
 
   /* --- Filtrado ------------------------------------------- */
   function etapasDe(p) {
-    return ETAPAS_EXCEPCION[p.id] || ETAPAS_POR_FAMILIA[familiaDe(p)] || ['1-3', '3+'];
+    return ETAPAS_EXCEPCION[p.id] || ETAPAS_POR_FAMILIA[familiaDe(p)] || ['1-3m', '3m+'];
   }
 
   function filtrar(catalogo, sel) {
@@ -129,23 +158,47 @@
   var ICO_FLECHA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
   var ICO_WA = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>';
 
+  /* Recorta la descripción del catálogo a una línea o dos, sin
+     cortar palabras por la mitad. */
+  function resumen(texto, tope) {
+    texto = String(texto || '').trim();
+    if (texto.length <= tope) return texto;
+    var corte = texto.slice(0, tope);
+    var esp = corte.lastIndexOf(' ');
+    return (esp > 40 ? corte.slice(0, esp) : corte) + '…';
+  }
+
+  /* Cierre con Zoe: se muestra siempre bajo los resultados,
+     haya productos o no. Es la salida para quien sigue con
+     dudas después de ver el listado. */
+  function bloqueZoe() {
+    var msg = 'Hola Zoe 👋 Usé "¿Qué suplemento necesito?" y todavía tengo dudas.';
+    return '<div class="sel-zoe">' +
+      '<img class="sel-zoe-av" src="img/zoe.png" alt="" aria-hidden="true">' +
+      '<div class="sel-zoe-txt">' +
+        '<h3>¿Todavía tienes dudas?</h3>' +
+        '<p>Zoe puede ayudarte a encontrar el suplemento adecuado según tu etapa.</p>' +
+      '</div>' +
+      '<a class="sel-zoe-btn" target="_blank" rel="noopener" ' +
+        'href="https://wa.me/' + WA + '?text=' + encodeURIComponent(msg) + '">' +
+        ICO_WA + 'Hablar con Zoe</a>' +
+    '</div>';
+  }
+
   function tarjeta(p, sel) {
     /* "Ver producto" abre la ficha en la tienda con ?producto= */
     var url = '/?producto=' + encodeURIComponent(p.id);
-    var msg = 'Hola Zoe 👋 Vengo del selector de suplementos. Me interesa: ' + p.nombre;
     return '<article class="sel-card">' +
       '<img class="sel-card-img" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy">' +
       '<div class="sel-card-body">' +
         '<div class="sel-card-marca">' + p.marca + '</div>' +
         '<h3 class="sel-card-nom">' + p.nombre + '</h3>' +
+        '<p class="sel-card-desc">' + resumen(p.desc, 120) + '</p>' +
         '<div class="sel-card-tags">' +
           '<span class="sel-tag cirugia">' + ETIQUETA_CIRUGIA[sel.cirugia] + '</span>' +
           '<span class="sel-tag etapa">' + ETIQUETA_ETAPA[sel.etapa] + '</span>' +
         '</div>' +
-        '<div class="sel-card-precio">S/ ' + p.precio + '</div>' +
         '<a class="sel-card-btn" href="' + url + '">Ver producto' + ICO_FLECHA + '</a>' +
-        '<a class="sel-card-btn" style="background:var(--green-wa)" target="_blank" rel="noopener" ' +
-           'href="https://wa.me/' + WA + '?text=' + encodeURIComponent(msg) + '">' + ICO_WA + 'Hablar con Zoe</a>' +
       '</div>' +
     '</article>';
   }
@@ -217,7 +270,7 @@
       var salida = document.getElementById('selResultado');
       var lista = filtrar(catalogo, sel);
 
-      var resumen =
+      var chips =
         '<div class="sel-resumen">' +
           '<span class="sel-chip-res">' + ETIQUETA_CIRUGIA[sel.cirugia] + '</span>' +
           '<span class="sel-chip-res">' + ETIQUETA_ETAPA[sel.etapa] + '</span>' +
@@ -228,20 +281,38 @@
         '<div class="aviso" style="margin-bottom:24px">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
           '<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>' +
-          '<div>Esta información es únicamente educativa. Sigue siempre las indicaciones de tu ' +
-          'médico o nutricionista.<br><span style="font-weight:400">' + NOTA_CIRUGIA[sel.cirugia] + '</span></div>' +
+          '<div>La suplementación puede variar según cada paciente. Sigue siempre las ' +
+          'indicaciones de tu médico o nutricionista.' +
+          '<br><span style="font-weight:400">' + NOTA_CIRUGIA[sel.cirugia] + '</span></div>' +
         '</div>';
 
-      var cuerpo = lista.length
-        ? '<div class="sel-grid">' + lista.map(function (p) { return tarjeta(p, sel); }).join('') + '</div>'
-        : '<div class="sel-vacio">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>' +
-            '<div>No encontramos productos para esa combinación. Escríbele a Zoe y te orienta.</div></div>';
+      var cuerpo;
+      if (lista.length) {
+        cuerpo = '<div class="sel-grid">' +
+          lista.map(function (p) { return tarjeta(p, sel); }).join('') + '</div>';
+      } else if (SIN_PRODUCTOS[sel.etapa]) {
+        /* Etapa sin suplementación habitual: se explica por qué. */
+        cuerpo = '<div class="sel-explica">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>' +
+          '<div>' + SIN_PRODUCTOS[sel.etapa] + '</div></div>';
+      } else {
+        cuerpo = '<div class="sel-vacio">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>' +
+          '<div>No encontramos productos para esa combinación. Escríbele a Zoe y te orienta.</div></div>';
+      }
+
+      var titulo = lista.length
+        ? lista.length + (lista.length === 1 ? ' producto para tu etapa' : ' productos para tu etapa')
+        : 'Sobre tu etapa';
+      var bajada = lista.length
+        ? 'Estos son los que normalmente se utilizan según lo que nos indicaste.'
+        : 'Esto es lo que conviene que sepas ahora mismo.';
 
       salida.innerHTML =
-        '<h2 class="sel-pregunta">' + lista.length + (lista.length === 1 ? ' producto compatible' : ' productos compatibles') + '</h2>' +
-        '<p class="sel-ayuda">Filtrados por tu etapa y lo que buscas. No es una recomendación: es el catálogo acotado.</p>' +
-        resumen + aviso + cuerpo;
+        '<h2 class="sel-pregunta">' + titulo + '</h2>' +
+        '<p class="sel-ayuda">' + bajada + '</p>' +
+        chips + aviso + cuerpo + bloqueZoe();
 
       paneles.forEach(function (p) { p.classList.remove('activo'); });
       salida.classList.add('activo');

@@ -546,8 +546,55 @@ table.cmp td { color:var(--text-muted); }
    ocupar todo el botón. */
 .sel-card-btn svg { width: 15px; height: 15px; flex: none; }
 .sel-op-ico svg, .sel-chip-res svg { flex: none; }
+.sel-card-desc {
+  font-size: var(--fs-cap); color: var(--text-muted); line-height: 1.6;
+  flex: 1;
+}
 .sel-vacio { text-align: center; padding: var(--s-8) var(--s-5); color: var(--text-muted); }
 .sel-vacio svg { width: 42px; height: 42px; opacity: .45; margin-bottom: var(--s-3); }
+
+/* Etapa sin suplementación habitual: en vez de una lista vacía
+   se explica por qué todavía no corresponden productos. */
+.sel-explica {
+  display: flex; gap: var(--s-4); align-items: flex-start;
+  background: var(--blue-light); border: 1px solid var(--blue-ring);
+  border-radius: var(--r-md); padding: var(--s-5);
+  font-size: var(--fs-body); line-height: 1.75; color: var(--text);
+}
+.sel-explica svg { width: 22px; height: 22px; flex: none; color: var(--blue); margin-top: 2px; }
+.sel-explica strong { font-weight: 600; }
+
+/* Cierre con Zoe bajo los resultados. */
+.sel-zoe {
+  display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap;
+  margin-top: var(--s-6); padding: var(--s-5);
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.sel-zoe-av {
+  width: 54px; height: 54px; border-radius: 50%; flex: none; object-fit: cover;
+  border: 2px solid var(--surface); box-shadow: var(--shadow-sm);
+}
+.sel-zoe-txt { flex: 1; min-width: 180px; }
+.sel-zoe-txt h3 {
+  font-size: var(--fs-h3); font-weight: 600; color: var(--text);
+  letter-spacing: var(--tracking-tight); margin-bottom: 3px;
+}
+.sel-zoe-txt p { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.6; }
+.sel-zoe-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 20px; border-radius: var(--r); flex: none;
+  background: var(--green-wa); color: #fff; text-decoration: none;
+  font-size: var(--fs-sm); font-weight: 600; line-height: 1;
+  transition: background var(--t-base), transform var(--t-base);
+}
+.sel-zoe-btn svg { width: 16px; height: 16px; flex: none; }
+.sel-zoe-btn:hover { background: var(--green-wa-hover); transform: translateY(-2px); }
+@media (max-width: 560px) {
+  .sel-zoe { flex-direction: column; text-align: center; }
+  .sel-zoe-txt { min-width: 0; }
+  .sel-zoe-btn { width: 100%; }
+  .sel-explica { padding: var(--s-4); font-size: 13.5px; }
+}
 
 @media (max-width: 900px) { .sel-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 700px) {
