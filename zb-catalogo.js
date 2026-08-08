@@ -252,7 +252,7 @@ const productos = [
     incluye:"Proteína líquida x2 · Sabores a elección: Maracumango o Fresa",
     tags:["Sin lactosa","20g proteína","Post operatorio"],
     precio:360, precioN:400, ahorro:40,
-    img: "img/popup-proteina.png",
+    img: "img/popup-proteina.jpg",
     seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
     uso:"Consume según indicación de tu equipo médico. Ideal para la etapa post operatoria.", tn:null },
 
@@ -262,7 +262,7 @@ const productos = [
     incluye:"Whey Protein 1.5kg x2 · Sabores a elección: Vainilla o Chocolate",
     tags:["Promo Julio","30g proteína","Sin lactosa"],
     precio:520, precioN:560, ahorro:40,
-    img: "img/oferta-2whey.png",
+    img: "img/oferta-2whey.jpg",
     seleccionSabor:[{label:"Whey Protein 1",sabores:["Vainilla","Chocolate"]},{label:"Whey Protein 2",sabores:["Vainilla","Chocolate"]}],
     uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir según indicación de tu equipo médico.", tn: tn.whey },
 
@@ -273,7 +273,7 @@ const productos = [
     incluye:"Proteína líquida x2 · Gomitas multivitamínicas x1 · Gomitas B12 + ácido fólico x1 · Fibra soluble x1",
     tags:["Alta proteína","Fácil absorción","Vitaminas esenciales"],
     precio:722, precioN:785, ahorro:63,
-    img: "img/bn-pack-inicial.png",
+    img: "img/bn-pack-inicial.jpg",
     seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
     uso:"Combina cada producto según indicación de tu equipo médico. Consulta las dosis en cada envase.", tn:null },
 
@@ -283,7 +283,7 @@ const productos = [
     incluye:"Proteína en polvo x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1",
     tags:["30g proteína","Hierro","Multivitamínico"],
     precio:672, precioN:730, ahorro:58,
-    img: "img/bn-pack-polvo-vitaminas.png",
+    img: "img/bn-pack-polvo-vitaminas.jpg",
     seleccionSabor:[{label:"Proteína en Polvo (Whey)",sabores:["Vainilla","Chocolate"]}],
     uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
 
@@ -293,7 +293,7 @@ const productos = [
     incluye:"Gomitas biotina x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1",
     tags:["Biotina 10,000 mcg","Hierro 45mg","Cabello y uñas"],
     precio:552, precioN:600, ahorro:48,
-    img: "img/bn-pack-energia-cabello.png",
+    img: "img/bn-pack-energia-cabello.jpg",
     uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
 
   { id:"bp4", tipo:"pack", marcaTipo:"bn", cat:"pack", destacado:true, marca:"Bari&Nutrition",
@@ -302,7 +302,7 @@ const productos = [
     incluye:"Proteína líquida x1 · Proteína en polvo x1 · Gomitas biotina x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1 · Fibra soluble x1",
     tags:["7 productos","Ahorro máximo","Todo en uno"],
     precio:1060, precioN:1165, ahorro:105,
-    img: "img/bn-pack-suplementacion-completa.png",
+    img: "img/bn-pack-suplementacion-completa.jpg",
     seleccionSabor:[{label:"Proteína Líquida",sabores:["Maracumango","Fresa"]},{label:"Proteína en Polvo (Whey)",sabores:["Vainilla","Chocolate"]}],
     uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
 
@@ -380,8 +380,8 @@ const productos = [
     desc:"Proteína en polvo hidrolizada a base de suero de leche deslactosada. 30g de proteína por servicio. Enriquecida con vitaminas y minerales.",
     tags:["30g proteína","Sin gluten","Sin lactosa","Con biotina","0% azúcar"],
     precio:280,
-    img: BN+"whey-vainilla.png",
-    galeria: [BN+"whey-vainilla.png", "img/tn-whey-vainilla.jpg"],
+    img: BN+"whey-vainilla.jpg",
+    galeria: [BN+"whey-vainilla.jpg", "img/tn-whey-vainilla.jpg"],
     uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir preferentemente como suplemento proteico según indicación médica.",
     tn: tn.whey },
 
@@ -391,11 +391,11 @@ const productos = [
     desc:"Proteína en polvo hidrolizada a base de suero de leche deslactosada. 30g de proteína por servicio. Enriquecida con vitaminas y minerales.",
     tags:["30g proteína","Sin gluten","Sin lactosa","Con biotina","0% azúcar"],
     precio:280,
-    img: BN+"whey-chocolate.png",
+    img: BN+"whey-chocolate.jpg",
     /* Misma tabla nutricional que la de vainilla: los valores son
        los mismos para los dos sabores (confirmado por Zona
        Bariátrica). Por eso el archivo se llama "-vainilla". */
-    galeria: [BN+"whey-chocolate.png", "img/tn-whey-vainilla.jpg"],
+    galeria: [BN+"whey-chocolate.jpg", "img/tn-whey-vainilla.jpg"],
     uso:"Disolver 3 scoops (48g) en 250ml de agua o leche.",
     tn: tn.whey },
 
@@ -405,8 +405,8 @@ const productos = [
     desc:"Proteína líquida lista para consumir. 20g de proteína por porción de 30ml. Sin lactosa, 0% azúcar. Enriquecida con fibra, aminoácidos, vitaminas y minerales.",
     tags:["20g proteína","Sin lactosa","0% azúcar","Lista para tomar","50mg hierro"],
     precio:200,
-    img: BN+"liquid-fresa.png",
-    galeria: [BN+"liquid-fresa.png", "img/tn-liquid-protein.jpg"],
+    img: BN+"liquid-fresa.jpg",
+    galeria: [BN+"liquid-fresa.jpg", "img/tn-liquid-protein.jpg"],
     uso:"Tomar 30ml por porción. Hasta 33 porciones por envase de 1 litro.",
     tn: tn.liquid },
 
@@ -416,8 +416,8 @@ const productos = [
     desc:"Proteína líquida lista para consumir. 20g de proteína por porción de 30ml. Sin lactosa, 0% azúcar. Enriquecida con fibra, aminoácidos, vitaminas y minerales.",
     tags:["20g proteína","Sin lactosa","0% azúcar","Lista para tomar","50mg hierro"],
     precio:200,
-    img: BN+"liquid-maracumango.png",
-    galeria: [BN+"liquid-maracumango.png", "img/tn-liquid-protein.jpg"],
+    img: BN+"liquid-maracumango.jpg",
+    galeria: [BN+"liquid-maracumango.jpg", "img/tn-liquid-protein.jpg"],
     uso:"Tomar 30ml por porción. Hasta 33 porciones por envase de 1 litro.",
     tn: tn.liquid },
 
@@ -426,8 +426,8 @@ const productos = [
     desc:"Gomitas de glicerina sabor durazno. 10,000 mcg de biotina por porción. Apoya la salud del cabello, piel y uñas. Sin azúcares añadidos, sin colorantes artificiales.",
     tags:["10,000 mcg biotina","Sabor durazno","Sin azúcares","Sin colorantes"],
     precio:150,
-    img: BN+"gomita-biotina.png",
-    galeria: [BN+"gomita-biotina.png", "img/tn-biotina.jpg"],
+    img: BN+"gomita-biotina.jpg",
+    galeria: [BN+"gomita-biotina.jpg", "img/tn-biotina.jpg"],
     uso:"2 gomitas al día, preferiblemente con una comida. No exceda la dosis recomendada.",
     tn: tn.biotina },
 
@@ -436,8 +436,8 @@ const productos = [
     desc:"Gomitas de gelatina sabor naranja. 45mg de hierro (250% VD) + 60mg de vitamina C. La vitamina C potencia la absorción del hierro.",
     tags:["45mg hierro","Vitamina C 60mg","250% VD","Sabor naranja","Sin azúcares"],
     precio:150,
-    img: BN+"gomita-hierro.png",
-    galeria: [BN+"gomita-hierro.png", "img/tn-hierro.jpg"],
+    img: BN+"gomita-hierro.jpg",
+    galeria: [BN+"gomita-hierro.jpg", "img/tn-hierro.jpg"],
     uso:"1 gomita masticable al día. Vía oral.",
     tn: tn.hierro },
 
@@ -446,8 +446,8 @@ const productos = [
     desc:"Gomitas multisabor con 23 vitaminas y minerales esenciales. Fórmula completa para cubrir los requerimientos nutricionales post-quirúrgicos.",
     tags:["23 vitaminas y minerales","Multisabor","Sin azúcares","Sin colorantes"],
     precio:150,
-    img: BN+"gomita-multivit.png",
-    galeria: [BN+"gomita-multivit.png", "img/tn-multivitaminico.jpg"],
+    img: BN+"gomita-multivit.jpg",
+    galeria: [BN+"gomita-multivit.jpg", "img/tn-multivitaminico.jpg"],
     uso:"4 gomitas al día.",
     tn: tn.multivit },
 
@@ -456,8 +456,8 @@ const productos = [
     desc:"Gomitas sabor piña. 1,000 mcg de vitamina B12 como metilcobalamina (41,667% VD) + ácido fólico. Esencial en el post-operatorio bariátrico.",
     tags:["1,000 mcg B12","41,667% VD","Ácido fólico","Sabor piña","Sin azúcares"],
     precio:150,
-    img: BN+"gomita-b12.png",
-    galeria: [BN+"gomita-b12.png", "img/tn-b12.jpg"],
+    img: BN+"gomita-b12.jpg",
+    galeria: [BN+"gomita-b12.jpg", "img/tn-b12.jpg"],
     uso:"3 gomitas masticables al día.",
     tn: tn.b12 },
 
@@ -466,8 +466,8 @@ const productos = [
     desc:"Fibra soluble a base de maíz, de origen francés. Rápida absorción. Ayuda en el tratamiento del estreñimiento y mantiene la regularidad intestinal.",
     tags:["Base de maíz","Origen francés","Rápida absorción","Sin azúcar","64 servicios"],
     precio:85,
-    img: BN+"fibra.png",
-    galeria: [BN+"fibra.png", "img/tn-fibra.jpg"],
+    img: BN+"fibra.jpg",
+    galeria: [BN+"fibra.jpg", "img/tn-fibra.jpg"],
     uso:"1 scoop (5g) al día disuelto en agua o bebida de preferencia.",
     tn: tn.fibra_bn },
 
@@ -532,14 +532,14 @@ const productos = [
     nombre:"Multivitamínico Completo Tropical — 120 tabletas",
     desc:"Multivitamínico completo en tabletas masticables, sabor tropical. Envase de 120 tabletas. Escríbenos para conocer disponibilidad y precio.",
     tags:["120 tabletas","Masticables","Sabor tropical","Suplemento dietético"],
-    img: BF+"multivit-tropical.png" },
+    img: BF+"multivit-tropical.jpg" },
 
   { id:"bf2", tipo:"bf", marcaTipo:"bf", cat:"vitaminas", subcat:"multivit", formato:"tabletas", marca:"Bariatric Fusion",
     consultar:true,
     nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas",
     desc:"Multivitamínico completo en tabletas masticables, sabor bayas mixtas. Envase de 120 tabletas. Escríbenos para conocer disponibilidad y precio.",
     tags:["120 tabletas","Masticables","Sabor bayas mixtas","Suplemento dietético"],
-    img: BF+"multivit-bayas.png" }
+    img: BF+"multivit-bayas.jpg" }
 ];
 
 /* Se publica en window para que lo lean otras páginas
