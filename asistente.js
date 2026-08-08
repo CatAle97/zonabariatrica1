@@ -742,9 +742,14 @@
      Zoe orienta sobre el catálogo, no da indicaciones médicas.
 
      PARA CAMBIAR EL TEXTO O EL TIEMPO: las dos constantes de
-     aquí abajo. SALUDO_ESPERA está en milisegundos (8000 = 8s).
-     ========================================================= */
-  var SALUDO_ESPERA = 8000;
+     aquí abajo. SALUDO_ESPERA está en milisegundos.
+
+     Sale de entrada, nada más cargar la página, en escritorio,
+     tablet y móvil por igual. Los 250 ms no son una espera: son
+     el margen para que la página termine de pintarse, de forma
+     que la burbuja entre con su animación en vez de aparecer de
+     golpe a medio dibujar. En pantalla se percibe inmediato. */
+  var SALUDO_ESPERA = 250;
   var SALUDO_TEXTO =
     '<div class="zb-saludo-t">¡Hola! Soy Zoe 👋</div>' +
     'Puedo ayudarte a ver qué suplementos suelen usarse en tu etapa.' +
@@ -773,6 +778,12 @@
     /* No aparece si el chat ya está abierto ni si ya se mostró. */
     if (!saludo || saludoYaMostrado()) return;
     if (panel && panel.classList.contains('abierto')) return;
+    /* Se lee una medida del elemento para obligar al navegador a
+       fijar su estado inicial (invisible) antes de marcarlo como
+       visible. Sin esto, al salir tan pronto, algunos navegadores
+       agrupan los dos estados y la burbuja aparece de golpe en
+       lugar de entrar suave. */
+    void saludo.offsetWidth;
     saludo.classList.add('visible');
     document.body.classList.add('zb-con-saludo');
   }
