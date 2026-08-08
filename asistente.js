@@ -72,6 +72,35 @@
     + '.zb-fab-tip::before{content:"";position:absolute;left:-5px;top:50%;margin-top:-5px;'
     + 'border:5px solid transparent;border-right-color:' + C.texto + '}'
     + '#zb-fab:hover + .zb-fab-tip,#zb-fab:focus-visible + .zb-fab-tip{opacity:1;transform:translateX(0)}'
+    /* Mientras el saludo está en pantalla, la etiqueta de hover se
+       calla: si no, se pisan una encima de la otra. */
+    + 'body.zb-con-saludo .zb-fab-tip{display:none}'
+
+    /* ---------- SALUDO QUE APARECE SOLO ----------
+       Burbuja que sale a los pocos segundos, al lado del avatar,
+       para que quien llega sepa que puede preguntar. Se muestra
+       una vez por visita: si la cierran o abren el chat, no
+       vuelve a salir hasta la siguiente visita. */
+    + '#zb-saludo{position:fixed;bottom:30px;left:100px;z-index:997;max-width:270px;'
+    + 'background:#fff;border:1px solid ' + C.borde + ';border-radius:14px;'
+    + 'box-shadow:0 6px 20px rgba(16,24,40,.13);padding:13px 34px 13px 15px;'
+    + 'font-family:Inter,system-ui,-apple-system,sans-serif;font-size:13.5px;line-height:1.5;'
+    + 'color:' + C.texto + ';cursor:pointer;text-align:left;'
+    + 'opacity:0;transform:translateX(-8px) scale(.97);pointer-events:none;'
+    + 'transition:opacity .28s ease,transform .28s ease}'
+    + '#zb-saludo.visible{opacity:1;transform:translateX(0) scale(1);pointer-events:auto}'
+    /* Piquito que apunta al avatar. */
+    + '#zb-saludo::before{content:"";position:absolute;left:-7px;bottom:20px;width:12px;height:12px;'
+    + 'background:#fff;border-left:1px solid ' + C.borde + ';border-bottom:1px solid ' + C.borde + ';'
+    + 'transform:rotate(45deg)}'
+    + '#zb-saludo:hover{box-shadow:0 8px 24px rgba(16,24,40,.18)}'
+    + '.zb-saludo-t{font-weight:700;margin-bottom:2px}'
+    + '.zb-saludo-cta{color:' + C.azul + ';font-weight:600;margin-top:6px;display:block}'
+    /* La X cierra el saludo sin abrir el chat. */
+    + '#zb-saludo-x{position:absolute;top:5px;right:5px;width:24px;height:24px;border:0;'
+    + 'background:none;color:' + C.tenue + ';font-size:19px;line-height:1;cursor:pointer;'
+    + 'border-radius:6px;padding:0;display:flex;align-items:center;justify-content:center}'
+    + '#zb-saludo-x:hover{background:' + C.fondo + ';color:' + C.suave + '}'
 
     /* ---------- PANEL ---------- */
     + '#zb-panel{position:fixed;bottom:24px;left:24px;z-index:999;width:368px;max-width:calc(100vw - 32px);'
@@ -227,6 +256,14 @@
     + '@media(max-width:520px){'
     + '#zb-fab{bottom:16px;left:16px;width:58px;height:58px}'
     + '.zb-fab-tip{display:none}'
+    /* En el móvil no cabe al lado del avatar: el saludo se coloca
+       encima, ocupando el ancho de la pantalla menos los márgenes,
+       y el piquito pasa a apuntar hacia abajo. */
+    + '#zb-saludo{bottom:84px;left:16px;right:16px;max-width:none;'
+    + 'transform:translateY(8px) scale(.97)}'
+    + '#zb-saludo.visible{transform:translateY(0) scale(1)}'
+    + '#zb-saludo::before{left:20px;bottom:-7px;'
+    + 'border-left:1px solid ' + C.borde + ';border-bottom:1px solid ' + C.borde + '}'
     /* 100dvh sigue al teclado: el campo de escritura no queda tapado. */
     + '#zb-panel{bottom:0;left:0;width:100%;max-width:100%;height:100dvh;max-height:100dvh;'
     + 'border-radius:0;border:none}'
@@ -244,6 +281,7 @@
     + '@media(prefers-reduced-motion:reduce){'
     + '#zb-panel.abierto,#zb-panel.cerrando,.zb-fila,.zb-punto,.zb-dots i{animation:none!important}'
     + '#zb-fab,.zb-op,.zb-rapida,.zb-fab-tip{transition:none!important}'
+    + '#zb-saludo{transition:none!important}'
     + '}';
 
   /* =========================================================
@@ -694,7 +732,58 @@
     scrollAbajo();
   }
 
+  /* =========================================================
+     SALUDO AUTOMÁTICO
+     ---------------------------------------------------------
+     Mucha gente no sabe que el avatar es un chat: pasa de largo.
+     Esta burbuja sale sola a los pocos segundos y lo dice.
+
+     Es una invitación a preguntar, no una promesa de consulta:
+     Zoe orienta sobre el catálogo, no da indicaciones médicas.
+
+     PARA CAMBIAR EL TEXTO O EL TIEMPO: las dos constantes de
+     aquí abajo. SALUDO_ESPERA está en milisegundos (8000 = 8s).
+     ========================================================= */
+  var SALUDO_ESPERA = 8000;
+  var SALUDO_TEXTO =
+    '<div class="zb-saludo-t">¡Hola! Soy Zoe 👋</div>' +
+    'Puedo ayudarte a ver qué suplementos suelen usarse en tu etapa.' +
+    '<span class="zb-saludo-cta">Escríbeme, es gratis →</span>';
+
+  var saludo, saludoTimer;
+
+  /* Una vez por visita. Si la persona lo cierra o abre el chat,
+     no vuelve a salir: insistir molesta más de lo que suma. */
+  function saludoYaMostrado() {
+    try { return sessionStorage.getItem('zbSaludo') === '1'; } catch (e) { return false; }
+  }
+  function marcarSaludo() {
+    try { sessionStorage.setItem('zbSaludo', '1'); } catch (e) {}
+  }
+
+  function ocultarSaludo() {
+    if (!saludo) return;
+    saludo.classList.remove('visible');
+    document.body.classList.remove('zb-con-saludo');
+    marcarSaludo();
+    clearTimeout(saludoTimer);
+  }
+
+  function mostrarSaludo() {
+    /* No aparece si el chat ya está abierto ni si ya se mostró. */
+    if (!saludo || saludoYaMostrado()) return;
+    if (panel && panel.classList.contains('abierto')) return;
+    saludo.classList.add('visible');
+    document.body.classList.add('zb-con-saludo');
+  }
+
+  function programarSaludo() {
+    if (saludoYaMostrado()) return;
+    saludoTimer = setTimeout(mostrarSaludo, SALUDO_ESPERA);
+  }
+
   function abrir() {
+    ocultarSaludo();
     panel.classList.remove('cerrando');
     panel.classList.add('abierto');
     fab.classList.add('oculto');
@@ -765,6 +854,29 @@
     var tip = el('span', 'zb-fab-tip', 'Habla con Zoe');
     tip.setAttribute('aria-hidden', 'true');
     document.body.appendChild(tip);
+
+    /* Burbuja de saludo. Al tocarla se abre el chat; la X solo la
+       cierra. Es un div y no un botón porque lleva dentro otro
+       botón (la X), y un botón dentro de otro no es válido. */
+    saludo = el('div', '', SALUDO_TEXTO);
+    saludo.id = 'zb-saludo';
+    saludo.setAttribute('role', 'button');
+    saludo.setAttribute('tabindex', '0');
+    saludo.setAttribute('aria-label', 'Hola, soy Zoe. Escríbeme para ver qué suplementos suelen usarse en tu etapa.');
+    saludo.onclick = abrir;
+    saludo.onkeydown = function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); }
+    };
+
+    var sx = el('button', '', '&times;');
+    sx.id = 'zb-saludo-x';
+    sx.type = 'button';
+    sx.setAttribute('aria-label', 'Cerrar el saludo');
+    sx.onclick = function (e) { e.stopPropagation(); ocultarSaludo(); };
+    saludo.appendChild(sx);
+    document.body.appendChild(saludo);
+
+    programarSaludo();
 
     panel = el('div');
     panel.id = 'zb-panel';
