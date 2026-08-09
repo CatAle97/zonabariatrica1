@@ -578,17 +578,20 @@ a.nav-link {
   background: #1E40AF; transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(29,78,216,0.42);
 }
+/* Variante para banners con el texto centrado. */
+.hero-cta.hero-cta-centro { left: 50%; top: 66%; transform: translateX(-50%); }
+.hero-cta.hero-cta-centro:hover { transform: translateX(-50%) translateY(-2px); }
 /* En celular la tira de 1920x600 queda muy baja: un botón encima
    saldría microscópico y taparía los productos. Se baja debajo de
    la imagen, a tamaño real, donde sí se puede leer y tocar. */
 @media (max-width: 640px) {
   .slide.slide-hero { padding: 0 0 var(--s-6) !important; }
-  .hero-cta {
+  .hero-cta, .hero-cta.hero-cta-centro {
     position: static; display: flex; width: calc(100% - var(--s-8));
-    margin: var(--s-4) auto 0; justify-content: center;
+    margin: var(--s-4) auto 0; justify-content: center; transform: none;
     font-size: 13px; padding: 12px 18px; box-shadow: none;
   }
-  .hero-cta:hover { transform: none; }
+  .hero-cta:hover, .hero-cta.hero-cta-centro:hover { transform: none; }
 }
 
 /* Los banners de imagen suelen tener fondo claro, y las flechas y
@@ -3911,6 +3914,17 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
          alt="Zona Bariátrica — todo lo que necesitas después de tu cirugía bariátrica: suplementos especializados para cada etapa de tu transformación">
     <button class="hero-cta" onclick="filtrar('todos');scrollProductos()">
       Ver suplementos
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </button>
+  </div>
+
+  <!-- 0b · Banner proteínas (imagen 1920x600). Texto centrado,
+       así que el botón usa la variante centrada. -->
+  <div class="slide slide-hero">
+    <img src="img/banner-hero-2.jpg" width="1920" height="600" loading="lazy"
+         alt="Proteína para cada etapa — encuentra la opción que se adapte mejor a tu proceso bariátrico">
+    <button class="hero-cta hero-cta-centro" onclick="megaFiltrar('proteina',null)">
+      Ir a proteínas
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     </button>
   </div>
