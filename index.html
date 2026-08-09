@@ -553,12 +553,44 @@ a.nav-link {
    Se muestra COMPLETO, sin recortar: la imagen manda la altura
    y esta baja sola en pantallas angostas. Así el banner se ve
    exactamente igual a como se diseñó en Canva. */
-.slide.slide-hero { padding: 0 !important; min-height: 0; display: none; }
+.slide.slide-hero { padding: 0 !important; min-height: 0; display: none; position: relative; }
 .slide.slide-hero.active { display: block; }
 .slide.slide-hero img {
   width: 100%; height: auto; aspect-ratio: 1920 / 600;
   object-fit: cover; display: block;
 }
+/* Botón superpuesto al banner de imagen. Va en porcentajes y con
+   tamaños en vw para que quede siempre debajo del texto del banner,
+   sin importar el ancho de la pantalla. */
+.hero-cta {
+  position: absolute; left: 11.3%; top: 76%; z-index: 2;
+  display: inline-flex; align-items: center; gap: 0.55em;
+  background: #1D4ED8; color: #fff; border: none;
+  border-radius: var(--r, 10px);
+  padding: clamp(7px, 0.78vw, 14px) clamp(13px, 1.45vw, 26px);
+  font-family: var(--font); font-size: clamp(9.5px, 0.85vw, 15px);
+  font-weight: 600; line-height: 1; cursor: pointer; white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(29,78,216,0.32);
+  transition: transform var(--t-base), box-shadow var(--t-base), background var(--t-base);
+}
+.hero-cta svg { width: 1.05em; height: 1.05em; }
+.hero-cta:hover {
+  background: #1E40AF; transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(29,78,216,0.42);
+}
+/* En celular la tira de 1920x600 queda muy baja: un botón encima
+   saldría microscópico y taparía los productos. Se baja debajo de
+   la imagen, a tamaño real, donde sí se puede leer y tocar. */
+@media (max-width: 640px) {
+  .slide.slide-hero { padding: 0 0 var(--s-6) !important; }
+  .hero-cta {
+    position: static; display: flex; width: calc(100% - var(--s-8));
+    margin: var(--s-4) auto 0; justify-content: center;
+    font-size: 13px; padding: 12px 18px; box-shadow: none;
+  }
+  .hero-cta:hover { transform: none; }
+}
+
 /* Los banners de imagen suelen tener fondo claro, y las flechas y
    puntos del slider son blancos: sobre blanco desaparecen. Cuando
    el banner activo es una imagen, se oscurecen para que se vean. */
@@ -3868,10 +3900,19 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
        basta volver a añadir un <div class="slide slide-img">.
        ======================================================== -->
 
-  <!-- 0 · Banner principal (imagen 1920x600 hecha en Canva) -->
+  <!-- 0 · Banner principal (imagen 1920x600 hecha en Canva).
+       El botón NO viene dibujado en la imagen: va superpuesto en
+       HTML, colocado en porcentajes para que siga al texto del
+       banner cuando la imagen se achica. Así el texto del botón
+       es real (lo lee Google) y se puede cambiar sin volver a
+       Canva. Manda al mismo sitio que el menú "Suplementos". -->
   <div class="slide slide-hero active">
     <img src="img/banner-hero-1.jpg" width="1920" height="600" fetchpriority="high"
          alt="Zona Bariátrica — todo lo que necesitas después de tu cirugía bariátrica: suplementos especializados para cada etapa de tu transformación">
+    <button class="hero-cta" onclick="filtrar('todos');scrollProductos()">
+      Ver suplementos
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </button>
   </div>
 
   <!-- 1 · Proteína líquida -->
