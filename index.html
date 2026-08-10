@@ -581,17 +581,29 @@ a.nav-link {
 /* Variante para banners con el texto centrado. */
 .hero-cta.hero-cta-centro { left: 50%; top: 66%; transform: translateX(-50%); }
 .hero-cta.hero-cta-centro:hover { transform: translateX(-50%) translateY(-2px); }
+/* Variante verde/teal, para banners cuya paleta no es azul.
+   Va corrida a la derecha porque el globo del chat de Zoe flota
+   sobre la esquina inferior izquierda y taparía el botón. */
+.hero-cta.hero-cta-teal {
+  left: 32%; top: 76.5%; transform: translateX(-50%);
+  background: #0F766E; box-shadow: 0 6px 18px rgba(15,118,110,0.32);
+}
+.hero-cta.hero-cta-teal:hover { transform: translateX(-50%) translateY(-2px); }
+.hero-cta.hero-cta-teal:hover {
+  background: #115E59; box-shadow: 0 10px 24px rgba(15,118,110,0.42);
+  transform: translateX(-50%) translateY(-2px);
+}
 /* En celular la tira de 1920x600 queda muy baja: un botón encima
    saldría microscópico y taparía los productos. Se baja debajo de
    la imagen, a tamaño real, donde sí se puede leer y tocar. */
 @media (max-width: 640px) {
   .slide.slide-hero { padding: 0 0 var(--s-6) !important; }
-  .hero-cta, .hero-cta.hero-cta-centro {
+  .hero-cta, .hero-cta.hero-cta-centro, .hero-cta.hero-cta-teal {
     position: static; display: flex; width: calc(100% - var(--s-8));
     margin: var(--s-4) auto 0; justify-content: center; transform: none;
     font-size: 13px; padding: 12px 18px; box-shadow: none;
   }
-  .hero-cta:hover, .hero-cta.hero-cta-centro:hover { transform: none; }
+  .hero-cta:hover, .hero-cta.hero-cta-centro:hover, .hero-cta.hero-cta-teal:hover { transform: none; }
 }
 
 /* Los banners de imagen suelen tener fondo claro, y las flechas y
@@ -3925,6 +3937,18 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
          alt="Proteína para cada etapa — encuentra la opción que se adapte mejor a tu proceso bariátrico">
     <button class="hero-cta hero-cta-centro" onclick="megaFiltrar('proteina',null)">
       Ir a proteínas
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </button>
+  </div>
+
+  <!-- 0c · Banner vitaminas (imagen 1920x600). Texto a la izquierda
+       y paleta verde/teal: el botón usa la variante teal para no
+       meter un azul que no está en el diseño. -->
+  <div class="slide slide-hero">
+    <img src="img/banner-hero-3.jpg" width="1920" height="600" loading="lazy"
+         alt="Vitaminas que te acompañan — nutrientes esenciales para tu bienestar en cada etapa de tu proceso bariátrico">
+    <button class="hero-cta hero-cta-teal" onclick="megaFiltrar('vitaminas',null)">
+      Ir a vitaminas
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     </button>
   </div>
