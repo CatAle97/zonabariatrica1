@@ -559,6 +559,22 @@ a.nav-link {
   width: 100%; height: auto; aspect-ratio: 1920 / 600;
   object-fit: cover; display: block;
 }
+/* Área transparente sobre un botón que YA viene dibujado dentro de la
+   imagen: la hace clicable de verdad, sin superponer un segundo botón.
+   Los porcentajes se miden sobre la imagen concreta del banner. */
+.hero-hotspot {
+  position: absolute; z-index: 2;
+  left: 4.4%; top: 70.3%; width: 20.1%; height: 10%;
+  border-radius: var(--r-pill, 999px);
+  display: block; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* En pantallas táctiles el botón dibujado queda diminuto: se agranda
+   el área invisible hasta un objetivo cómodo. Solo cambia la zona
+   sensible al toque, no lo que se ve. */
+@media (max-width: 768px), (pointer: coarse) {
+  .hero-hotspot { min-height: 44px; }
+}
 /* Botón superpuesto al banner de imagen. Va en porcentajes y con
    tamaños en vw para que quede siempre debajo del texto del banner,
    sin importar el ancho de la pantalla. */
@@ -2630,98 +2646,11 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .home-rec-head h2 { font-size: 21px; }
 }
 
-/* ============================================================
-   FASE 3 — BANNERS DEL SLIDER (línea gráfica única)
-   ------------------------------------------------------------
-   Los 5 banners se construyen con ESTA plantilla, no con
-   imágenes sueltas: así comparten por definición composición,
-   tipografía, tamaños y espaciados. Lo único que cambia entre
-   uno y otro es el texto, la foto y el color de acento.
-
-   Ventaja frente a un PNG: se adaptan solos al móvil, el texto
-   es real (lo lee Google) y cambiar un precio es editar texto.
-
-   PARA AÑADIR UN BANNER: copia un bloque .slide.slide-zb del
-   HTML y cambia data-acento, textos e imágenes. El slider los
-   detecta solo — no hay que tocar JavaScript.
-   ============================================================ */
-.slide-zb { padding: 0 !important; display: none; }
-.slide-zb.active { display: block; }
-.zb-banner {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--s-6);
-  padding: var(--s-6) 80px; min-height: 210px; position: relative; overflow: hidden;
-}
-/* Halo de color: da identidad a cada banner sin salirse de la
-   paleta, porque siempre va sobre el mismo fondo oscuro. */
-.zb-banner::before {
-  content: ''; position: absolute; right: -6%; top: 50%;
-  width: 460px; height: 460px; transform: translateY(-50%);
-  background: radial-gradient(circle, var(--zb-acento, #2563EB) 0%, transparent 68%);
-  opacity: 0.30; pointer-events: none;
-}
-.slide-zb[data-acento="azul"]    .zb-banner { --zb-acento: #3B82F6; }
-.slide-zb[data-acento="celeste"] .zb-banner { --zb-acento: #06B6D4; }
-.slide-zb[data-acento="ambar"]   .zb-banner { --zb-acento: #F59E0B; }
-.slide-zb[data-acento="verde"]   .zb-banner { --zb-acento: #10B981; }
-.slide-zb[data-acento="violeta"] .zb-banner { --zb-acento: #8B5CF6; }
-
-.zb-banner-txt { flex: 1; min-width: 0; position: relative; z-index: 1; max-width: 560px; }
-.zb-banner-eyebrow {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 10.5px; font-weight: 700; letter-spacing: var(--tracking-caps);
-  text-transform: uppercase; color: #fff;
-  background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.20);
-  border-radius: var(--r-pill); padding: 5px 12px; margin-bottom: 14px;
-}
-.zb-banner-eyebrow svg { width: 12px; height: 12px; }
-.zb-banner-tit {
-  font-size: 30px; line-height: 1.15; font-weight: 700; color: #fff;
-  letter-spacing: var(--tracking-tight); margin-bottom: 10px;
-}
-.zb-banner-tit em { font-style: normal; color: var(--zb-acento, #3B82F6); }
-.zb-banner-sub {
-  font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.72);
-  margin-bottom: var(--s-5); max-width: 430px;
-}
-.zb-banner-cta {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: #fff; color: var(--text); border: none; border-radius: var(--r);
-  padding: 12px 22px; font-family: var(--font); font-size: var(--fs-sm);
-  font-weight: 600; cursor: pointer; line-height: 1;
-  transition: transform var(--t-base), box-shadow var(--t-base);
-}
-.zb-banner-cta svg { width: 15px; height: 15px; }
-.zb-banner-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.28); }
-
-/* Bloque de producto: siempre la misma altura y el mismo
-   solape, vengan una o dos fotos. */
-.zb-banner-img {
-  flex: none; display: flex; align-items: center; justify-content: flex-end;
-  position: relative; z-index: 1;
-}
-.zb-banner-img img {
-  height: 170px; width: auto; object-fit: contain;
-  filter: drop-shadow(0 18px 26px rgba(0,0,0,0.36));
-}
-.zb-banner-img img + img { margin-left: -34px; }
-
-@media (max-width: 900px) {
-  .zb-banner { padding: var(--s-5) var(--s-7); gap: var(--s-4); min-height: 180px; }
-  .zb-banner-tit { font-size: 23px; }
-  .zb-banner-img img { height: 132px; }
-}
-@media (max-width: 640px) {
-  .zb-banner {
-    flex-direction: column-reverse; text-align: center;
-    padding: var(--s-4) var(--s-5) var(--s-5); gap: var(--s-3); min-height: 0;
-  }
-  .zb-banner::before { right: 50%; transform: translate(50%,-50%); width: 300px; height: 300px; }
-  .zb-banner-txt { max-width: none; }
-  .zb-banner-sub { margin: 0 auto var(--s-4); font-size: 13px; }
-  .zb-banner-tit { font-size: 20px; }
-  .zb-banner-img img { height: 104px; }
-  .zb-banner-img img + img { margin-left: -26px; }
-}
+/* Los banners del slider son imagenes (1920x600) en .slide-hero.
+   Aqui vivia la plantilla HTML/CSS de los 5 banners de la Fase 3;
+   se retiro el 10-08-2026 al sustituirlos por los banners de Canva.
+   Si algun dia se quiere volver a un banner hecho con HTML, esta en
+   el historial de git (commit anterior a "banners de Canva"). */
 
 /* Transición suave de entrada. El slider solo alterna la clase
    .active, así que la animación se dispara al aparecer.
@@ -2958,7 +2887,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .btn-agregar, .btn-ver-sm, .filtro-chip, .blog-chip, .nav-link,
   .mega-item, .sug-item, .lang-option, .subfiltro-btn,
   .cart-qty-btn, .modal-cart-btn, .btn-checkout, .slider-arrow,
-  .faq-pregunta, .ficha-faq-q, .zb-banner-cta {
+  .faq-pregunta, .ficha-faq-q, .hero-cta {
     min-height: 44px;
   }
   .fav-btn, .slider-arrow, .search-clear {
@@ -3953,113 +3882,24 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     </button>
   </div>
 
-  <!-- 1 · Proteína líquida -->
-  <div class="slide slide-zb" data-acento="celeste">
-    <div class="zb-banner">
-      <div class="zb-banner-txt">
-        <span class="zb-banner-eyebrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6 5.4 6 10.1a6 6 0 0 1-12 0C6 8.1 12 2.7 12 2.7z"/></svg>
-          Proteína líquida
-        </span>
-        <h3 class="zb-banner-tit">Proteína <em>lista para tomar</em></h3>
-        <p class="zb-banner-sub">Sin lactosa y con 20 g de proteína por porción. Pensada para las primeras etapas, cuando todavía cuesta tolerar texturas.</p>
-        <button class="zb-banner-cta" onclick="megaFiltrar('proteina','liquida')">
-          Ver proteína líquida
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-      <div class="zb-banner-img">
-        <img src="img/bn-liquid-fresa.jpg" alt="Proteína líquida sabor fresa" loading="eager">
-        <img src="img/bn-liquid-maracumango.jpg" alt="Proteína líquida sabor maracumango" loading="eager">
-      </div>
-    </div>
+  <!-- 0d · Banner de envíos (1920x600, la misma proporción que los
+       tres anteriores). Es informativo y su diseño ya ocupa las dos
+       mitades, así que NO lleva botón superpuesto. -->
+  <div class="slide slide-hero">
+    <img src="img/banner-envios.jpg" width="1920" height="600" loading="lazy"
+         alt="Delivery a todo el Perú: enviamos a través de Shalom. Compra desde casa y recibe tu pedido en la agencia más cercana">
   </div>
 
-  <!-- 2 · Proteína en polvo -->
-  <div class="slide slide-zb" data-acento="azul">
-    <div class="zb-banner">
-      <div class="zb-banner-txt">
-        <span class="zb-banner-eyebrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v4.5L5.5 15A4 4 0 0 0 9 21h6a4 4 0 0 0 3.5-6L14 6.5V2"/><path d="M9 2h6"/></svg>
-          Proteína en polvo
-        </span>
-        <h3 class="zb-banner-tit">Whey sin lactosa, <em>0 % azúcar</em></h3>
-        <p class="zb-banner-sub">30 g de proteína por servicio. Para cuando ya toleras texturas blandas y sólidas, y en el mantenimiento a largo plazo.</p>
-        <button class="zb-banner-cta" onclick="megaFiltrar('proteina','polvo')">
-          Ver proteína en polvo
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-      <div class="zb-banner-img">
-        <img src="img/bn-whey-vainilla.jpg" alt="Whey protein sabor vainilla" loading="lazy">
-        <img src="img/bn-whey-chocolate.jpg" alt="Whey protein sabor chocolate" loading="lazy">
-      </div>
-    </div>
-  </div>
-
-  <!-- 3 · Vitaminas bariátricas -->
-  <div class="slide slide-zb" data-acento="ambar">
-    <div class="zb-banner">
-      <div class="zb-banner-txt">
-        <span class="zb-banner-eyebrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
-          Vitaminas bariátricas
-        </span>
-        <h3 class="zb-banner-tit">Tus vitaminas, <em>en gomitas</em></h3>
-        <p class="zb-banner-sub">Multivitamínico, hierro con vitamina C, B12 y biotina. En gomitas, para cuando cuesta tragar cápsulas.</p>
-        <button class="zb-banner-cta" onclick="filtrar('vitaminas');scrollProductos()">
-          Ver vitaminas
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-      <div class="zb-banner-img">
-        <img src="img/bn-gomita-multivit.jpg" alt="Gomitas multivitamínico" loading="lazy">
-        <img src="img/bn-gomita-biotina.jpg" alt="Gomitas de biotina" loading="lazy">
-      </div>
-    </div>
-  </div>
-
-  <!-- 4 · Fibra -->
-  <div class="slide slide-zb" data-acento="verde">
-    <div class="zb-banner">
-      <div class="zb-banner-txt">
-        <span class="zb-banner-eyebrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>
-          Fibra
-        </span>
-        <h3 class="zb-banner-tit">Fibra soluble, <em>sin alterar el sabor</em></h3>
-        <p class="zb-banner-sub">Se disuelve en agua y no cambia el sabor de tu bebida. Un apoyo habitual cuando el tránsito se vuelve más lento.</p>
-        <button class="zb-banner-cta" onclick="megaFiltrar('colageno','fibra')">
-          Ver fibra
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-      <div class="zb-banner-img">
-        <img src="img/bn-fibra.jpg" alt="Fibra soluble Bari&amp;Nutrition" loading="lazy">
-        <img src="img/lvl-fibra.jpg" alt="Fibra LVL Drink" loading="lazy">
-      </div>
-    </div>
-  </div>
-
-  <!-- 5 · Combos bariátricos -->
-  <div class="slide slide-zb" data-acento="violeta">
-    <div class="zb-banner">
-      <div class="zb-banner-txt">
-        <span class="zb-banner-eyebrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          Combos bariátricos
-        </span>
-        <h3 class="zb-banner-tit">Packs que <em>cubren tu etapa completa</em></h3>
-        <p class="zb-banner-sub">Proteína, vitaminas y fibra en una sola compra, a mejor precio que llevando cada producto por separado.</p>
-        <button class="zb-banner-cta" onclick="filtrar('pack');scrollProductos()">
-          Ver combos
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-      <div class="zb-banner-img">
-        <img src="img/bn-pack-suplementacion-completa.jpg" alt="Pack de suplementación completa" loading="lazy">
-      </div>
-    </div>
+  <!-- 0e · Banner de Zoe. La imagen ya trae DIBUJADO el boton "Habla
+       con Zoe", asi que en lugar de superponer otro boton se coloca
+       encima un area transparente (.hero-hotspot) que abre WhatsApp.
+       Sus porcentajes estan medidos sobre esta imagen concreta: si
+       algun dia se cambia el banner, hay que volver a medirlos. -->
+  <div class="slide slide-hero">
+    <img src="img/banner-zoe.jpg" width="1920" height="600" loading="lazy"
+         alt="Zoe te acompaña: resuelve tus dudas sobre nuestros productos, sus características y las etapas en las que suelen utilizarse">
+    <a class="hero-hotspot" href="https://wa.me/51961841069?text=Hola%2C%20quisiera%20una%20orientaci%C3%B3n%20sobre%20los%20suplementos"
+       target="_blank" rel="noopener" aria-label="Habla con Zoe por WhatsApp"></a>
   </div>
 
   <button class="slider-arrow prev" onclick="sliderMove(-1)" aria-label="Anterior"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
