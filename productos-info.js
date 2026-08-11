@@ -93,7 +93,7 @@
       faq: [
         { q: '¿Cuándo se pasa de proteína líquida a proteína en polvo?', r: 'Suele ocurrir cuando ya toleras texturas blandas, orientativamente a partir del segundo mes. El momento lo marca tu equipo médico, no la etiqueta del producto.' },
         { q: '¿Se puede mezclar con leche?', r: 'Depende de tu tolerancia y de la etapa en la que estés. Muchos pacientes bariátricos tienen intolerancia a la lactosa: consúltalo con tu nutricionista.' },
-        { q: '¿Cuántas medidas al día?', r: 'Depende de cuánta proteína cubras con la comida. Puedes usar nuestra calculadora de proteína como referencia educativa y confirmarlo en tu control.' }
+        { q: '¿Cuántas medidas al día?', r: 'Depende de cuánta proteína cubras con la comida. La cantidad exacta la define tu médico o nutricionista en tu control.' }
       ],
       articulos: ['suplementos', 'etapas']
     },
