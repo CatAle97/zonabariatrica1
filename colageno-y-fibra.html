@@ -42,6 +42,21 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"¿El colágeno reemplaza a la proteína?","acceptedAnswer":{"@type":"Answer","text":"No. El colágeno no aporta el perfil completo de aminoácidos que se busca con la proteína del post operatorio. Son suplementos con finalidades distintas y no se sustituyen entre sí."}},
+    {"@type":"Question","name":"¿Desde cuándo se puede tomar colágeno después de la cirugía?","acceptedAnswer":{"@type":"Answer","text":"Suele incorporarse cuando la suplementación esencial —proteína y micronutrientes— ya está cubierta. Consúltalo en tu control."}},
+    {"@type":"Question","name":"¿Por qué aparece estreñimiento después de la cirugía bariátrica?","acceptedAnswer":{"@type":"Answer","text":"Suele explicarse por la combinación de varios factores: mucho menos volumen de comida, por tanto menos fibra, y con frecuencia también menos líquido del recomendado. Es una de las molestias más habituales del post operatorio y conviene comentarla en tu control."}},
+    {"@type":"Question","name":"¿Cuánta agua hay que tomar con la fibra?","acceptedAnswer":{"@type":"Answer","text":"La fibra necesita líquido para funcionar bien. Suele recomendarse acompañarla de una hidratación adecuada durante el día: puedes ver un rango orientativo en nuestra calculadora de hidratación."}},
+    {"@type":"Question","name":"¿Se puede tomar la fibra junto con la proteína?","acceptedAnswer":{"@type":"Answer","text":"Suele recomendarse separarlas para no interferir en la tolerancia. La distribución concreta la define tu nutricionista."}},
+    {"@type":"Question","name":"¿El colágeno ayuda con la piel flácida tras bajar de peso?","acceptedAnswer":{"@type":"Answer","text":"Se asocia habitualmente al cuidado de la elasticidad de la piel durante la pérdida de peso, pero no es un tratamiento para la flacidez ni sustituye a una valoración médica. Cuánto influye depende de muchos factores personales."}},
+    {"@type":"Question","name":"¿Es necesaria la fibra si ya como verduras?","acceptedAnswer":{"@type":"Answer","text":"Depende de cuánto volumen toleres. Después de la cirugía suele ser difícil cubrir la fibra solo con alimentos: valóralo en tu control."}}
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
@@ -225,6 +240,9 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
   * { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
 }
 </style>
+<!-- Bloques de contenido educativo: compartido por las 4 categorias.
+     Va DESPUES del <style> para poder usar sus variables de :root. -->
+<link rel="stylesheet" href="zb-contenido.css">
 </head>
 <body>
 
@@ -243,6 +261,7 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
       <a href="/vitaminas">Vitaminas</a>
       <a href="/colageno-y-fibra" class="active">Colágeno &amp; Fibra</a>
       <a href="/packs">Packs</a>
+      <a href="/recursos">Recursos</a>
     </nav>
   </div>
 </header>
@@ -301,7 +320,126 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
 
 </div>
 
-<p class="aviso">Los suplementos no reemplazan una alimentación balanceada. Siempre consulta con tu médico o nutricionista antes de iniciar cualquier suplementación.</p>
+<!-- ============================================================
+     CONTENIDO EDUCATIVO — ver nota en proteinas.html.
+     Estilos en el CSS compartido de las 4 categorias.
+     ============================================================ -->
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-dos">
+  <span class="zb-eyebrow">Guía rápida</span>
+  <h2 id="tit-dos">Dos productos, dos problemas distintos</h2>
+  <p>
+    El colágeno y la fibra comparten categoría porque suelen aparecer en el mismo momento del
+    proceso, pero atienden cuestiones que no tienen nada que ver entre sí. Conviene no
+    confundirlos al momento de elegir.
+  </p>
+  <div class="zb-cols">
+    <div class="zb-box">
+      <h3>Colágeno: piel, cabello y uñas</h3>
+      <p>
+        Cuando la pérdida de peso es rápida, la piel es de las primeras cosas que lo acusa. El
+        colágeno hidrolizado se asocia habitualmente al cuidado de la piel, el cabello y las
+        uñas durante ese proceso, y suele acompañarse de biotina.
+      </p>
+      <span class="zb-cuando"><strong>Suele incorporarse:</strong> en etapas más avanzadas, cuando la suplementación esencial ya está cubierta.</span>
+    </div>
+    <div class="zb-box">
+      <h3>Fibra: tránsito intestinal</h3>
+      <p>
+        El estreñimiento es una de las molestias más frecuentes del post operatorio, y tiene una
+        explicación sencilla: al reducirse mucho el volumen de comida, también se reduce la
+        fibra que llega. La fibra soluble aporta ese componente en muy poco volumen.
+      </p>
+      <span class="zb-cuando"><strong>Suele incorporarse:</strong> a partir de blandos y sólidos, cuando el tránsito se vuelve más lento.</span>
+    </div>
+  </div>
+</section>
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-confusion">
+  <h2 id="tit-confusion">El error más común: creer que el colágeno reemplaza a la proteína</h2>
+  <p>
+    Es la confusión que más se repite, y vale la pena aclararla porque tiene consecuencias
+    reales en el post operatorio. El colágeno <strong>es</strong> una proteína, pero no aporta
+    el perfil completo de aminoácidos que se busca con la proteína del post operatorio. Son
+    suplementos con finalidades distintas y no se sustituyen entre sí.
+  </p>
+  <p>
+    Dicho simple: la proteína del post operatorio acompaña el cuidado de la masa muscular
+    durante la pérdida de peso; el colágeno se orienta al tejido de la piel, el cabello y las
+    articulaciones. Tomar colágeno no cubre el requerimiento de proteína, y por eso suele
+    incorporarse <em>además</em> de ella, nunca <em>en lugar</em> de ella. Puedes ver las
+    opciones de <a href="/proteinas">proteína para bariátricos</a> en su propia sección.
+  </p>
+  <div class="zb-nota">
+    Como toda la suplementación bariátrica, el orden de prioridades lo define tu equipo médico.
+    Lo habitual es cubrir primero proteína y micronutrientes, y sumar después lo demás.
+  </div>
+</section>
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-fibra">
+  <h2 id="tit-fibra">Lo que conviene saber sobre la fibra</h2>
+  <ul class="zb-lista">
+    <li><strong>Necesita líquido para funcionar.</strong> La fibra sin una hidratación adecuada puede resultar contraproducente. Si quieres una referencia orientativa, tenemos una <a href="/calculadora-hidratacion">calculadora de hidratación</a> gratuita.</li>
+    <li><strong>Suele separarse de la proteína.</strong> Para no interferir en la tolerancia, es habitual que se indique tomarlas en momentos distintos del día.</li>
+    <li><strong>No sustituye a las verduras</strong>, pero después de la cirugía suele ser difícil cubrir la fibra solo con alimentos por el volumen que eso requiere.</li>
+    <li><strong>Se disuelve sin alterar el sabor</strong> de la bebida, lo que facilita sostener el hábito a diario.</li>
+  </ul>
+</section>
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-faq">
+  <h2 id="tit-faq">Preguntas frecuentes sobre colágeno y fibra</h2>
+  <div class="zb-faq">
+    <details>
+      <summary>¿El colágeno reemplaza a la proteína?</summary>
+      <div class="zb-resp">No. El colágeno no aporta el perfil completo de aminoácidos que se busca con la proteína del post operatorio. Son suplementos con finalidades distintas y no se sustituyen entre sí.</div>
+    </details>
+    <details>
+      <summary>¿Desde cuándo se puede tomar colágeno?</summary>
+      <div class="zb-resp">Suele incorporarse cuando la suplementación esencial —proteína y micronutrientes— ya está cubierta. Consúltalo en tu control.</div>
+    </details>
+    <details>
+      <summary>¿Por qué aparece estreñimiento después de la cirugía?</summary>
+      <div class="zb-resp">Suele explicarse por la combinación de varios factores: mucho menos volumen de comida, por tanto menos fibra, y con frecuencia también menos líquido del recomendado. Es una de las molestias más habituales del post operatorio y conviene comentarla en tu control.</div>
+    </details>
+    <details>
+      <summary>¿Cuánta agua hay que tomar con la fibra?</summary>
+      <div class="zb-resp">La fibra necesita líquido para funcionar bien. Suele recomendarse acompañarla de una hidratación adecuada durante el día: puedes ver un rango orientativo en nuestra calculadora de hidratación.</div>
+    </details>
+    <details>
+      <summary>¿Se puede tomar la fibra junto con la proteína?</summary>
+      <div class="zb-resp">Suele recomendarse separarlas para no interferir en la tolerancia. La distribución concreta la define tu nutricionista.</div>
+    </details>
+    <details>
+      <summary>¿El colágeno ayuda con la piel flácida tras bajar de peso?</summary>
+      <div class="zb-resp">Se asocia habitualmente al cuidado de la elasticidad de la piel durante la pérdida de peso, pero no es un tratamiento para la flacidez ni sustituye a una valoración médica. Cuánto influye depende de muchos factores personales.</div>
+    </details>
+    <details>
+      <summary>¿Es necesaria la fibra si ya como verduras?</summary>
+      <div class="zb-resp">Depende de cuánto volumen toleres. Después de la cirugía suele ser difícil cubrir la fibra solo con alimentos: valóralo en tu control.</div>
+    </details>
+  </div>
+</section>
+
+<section class="zb-cont zb-recursos" aria-labelledby="tit-recursos">
+  <h2 id="tit-recursos">¿No sabes cuál te corresponde?</h2>
+  <p>Estas herramientas son gratuitas y te ayudan a llegar con las preguntas correctas a tu control.</p>
+  <div class="zb-links">
+    <a href="/encuentra-tu-suplemento">
+      <strong>¿Qué suplemento necesito?</strong>
+      <span>Responde tres preguntas sobre tu cirugía y tu etapa, y te mostramos qué se suele usar.</span>
+    </a>
+    <a href="/calculadora-hidratacion">
+      <strong>Calculadora de hidratación</strong>
+      <span>Un rango orientativo de agua al día según tu peso y tu actividad.</span>
+    </a>
+    <a href="/etapas-postoperatorias">
+      <strong>Etapas postoperatorias</strong>
+      <span>De líquidos claros a alimentación normal: qué caracteriza cada fase.</span>
+    </a>
+  </div>
+</section>
+
+<p class="aviso">Este contenido es educativo y no reemplaza la consulta con un profesional. Los suplementos no sustituyen una alimentación balanceada. Consumir únicamente bajo indicación de su médico o nutricionista.</p>
 
 <footer>
   <div class="links">
@@ -310,6 +448,8 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
     <a href="/vitaminas">Vitaminas</a>
     <a href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
     <a href="/packs">Packs</a>
+    <a href="/recursos">Recursos</a>
+    <a href="/encuentra-tu-suplemento">¿Qué suplemento necesito?</a>
   </div>
   © 2026 Zona Bariátrica · Todos los derechos reservados · Lima, Perú · 📱 +51 961 841 069
 </footer>

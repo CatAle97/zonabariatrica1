@@ -1,0 +1,327 @@
+/* =========================================================
+   ZONA BARIÁTRICA — Bloques de contenido de las páginas
+   de categoría (/proteinas, /vitaminas, /colageno-y-fibra,
+   /packs).
+   ---------------------------------------------------------
+   POR QUÉ EXISTE ESTE ARCHIVO
+   Las 4 páginas de categoría tienen su design system COPIADO
+   en su propio <style>. Para no duplicar por cuarta vez los
+   estilos de las secciones nuevas, todo lo de contenido vive
+   aquí, en un solo sitio. Se carga con <link> DESPUÉS del
+   <style> de cada página, así que puede usar sus variables
+   de :root (--blue, --s-5, --r-md…) sin redefinirlas.
+
+   NO metas aquí estilos de cabecera, tarjetas de producto ni
+   footer: eso sigue siendo propio de cada página.
+   ========================================================= */
+
+/* --- Contenedor común de las secciones de contenido ------ */
+.zb-cont {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.zb-cont + .zb-cont { margin-top: var(--s-8); }
+
+/* Separador superior: despega el contenido del catálogo */
+.zb-sec {
+  border-top: 1px solid var(--border-light);
+  padding-top: var(--s-8);
+}
+
+.zb-sec h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: var(--s-3);
+}
+.zb-sec > p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 760px;
+}
+.zb-sec > p + p { margin-top: var(--s-3); }
+
+.zb-eyebrow {
+  display: inline-block;
+  font-size: var(--fs-cap);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--blue);
+  background: var(--blue-light);
+  border-radius: var(--r-pill);
+  padding: 5px 12px;
+  margin-bottom: var(--s-3);
+}
+
+/* --- Tarjetas explicativas (2 o 3 por fila) -------------- */
+.zb-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--s-5);
+  margin-top: var(--s-6);
+}
+.zb-box {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-md);
+  padding: var(--s-5);
+  box-shadow: var(--shadow-xs);
+}
+.zb-box h3 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--s-2);
+  letter-spacing: -0.01em;
+}
+.zb-box p {
+  font-size: var(--fs-sm);
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+.zb-box p + p { margin-top: var(--s-2); }
+
+/* Etiqueta de "cuándo suele usarse" dentro de una tarjeta */
+.zb-cuando {
+  display: block;
+  margin-top: var(--s-3);
+  padding-top: var(--s-3);
+  border-top: 1px dashed var(--border);
+  font-size: 12.5px;
+  color: var(--text);
+}
+.zb-cuando strong { font-weight: 600; }
+
+/* --- Lista de puntos con check -------------------------- */
+.zb-lista { list-style: none; margin-top: var(--s-4); display: grid; gap: var(--s-3); }
+.zb-lista li {
+  position: relative;
+  padding-left: 28px;
+  font-size: var(--fs-sm);
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+.zb-lista li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 6px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--blue-light);
+  border: 1px solid #C7D9F8;
+}
+.zb-lista li::after {
+  content: "";
+  position: absolute;
+  left: 5px; top: 10px;
+  width: 5px; height: 8px;
+  border: solid var(--blue);
+  border-width: 0 1.8px 1.8px 0;
+  transform: rotate(45deg);
+}
+
+/* --- Tabla comparativa (se vuelve tarjetas en móvil) ----- */
+.zb-tabla-wrap { margin-top: var(--s-6); overflow-x: auto; }
+.zb-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  min-width: 520px;
+}
+.zb-tabla caption {
+  text-align: left;
+  font-size: 12.5px;
+  color: var(--text-light);
+  padding-bottom: var(--s-3);
+}
+.zb-tabla th, .zb-tabla td {
+  text-align: left;
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: top;
+  line-height: 1.7;
+}
+.zb-tabla thead th {
+  font-weight: 600;
+  color: var(--text);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.zb-tabla tbody th { font-weight: 600; color: var(--text); }
+.zb-tabla td { color: var(--text-muted); }
+.zb-tabla tbody tr:last-child th,
+.zb-tabla tbody tr:last-child td { border-bottom: none; }
+
+/* --- Preguntas frecuentes: <details> nativo, sin JS ------ */
+.zb-faq { margin-top: var(--s-6); display: grid; gap: var(--s-3); max-width: 860px; }
+.zb-faq details {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.zb-faq details[open] { border-color: #C7D9F8; box-shadow: var(--shadow-sm); }
+.zb-faq summary {
+  cursor: pointer;
+  list-style: none;
+  padding: var(--s-4) var(--s-5);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+}
+.zb-faq summary::-webkit-details-marker { display: none; }
+.zb-faq summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: 9px; height: 9px;
+  border: solid var(--text-light);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform var(--t-fast);
+}
+.zb-faq details[open] summary::after { transform: rotate(-135deg) translateY(-2px); }
+.zb-faq summary:hover { background: var(--bg); }
+.zb-faq .zb-resp {
+  padding: 0 var(--s-5) var(--s-5);
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 70ch;
+}
+
+/* --- Franja de enlaces a las herramientas ---------------- */
+.zb-recursos {
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-lg);
+  padding: var(--s-6);
+  margin-top: var(--s-6);
+}
+.zb-recursos h2 { margin-bottom: var(--s-2); }
+.zb-recursos > p { font-size: var(--fs-sm); color: var(--text-muted); max-width: 640px; }
+.zb-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--s-3);
+  margin-top: var(--s-5);
+}
+.zb-links a {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: var(--s-4);
+  text-decoration: none;
+  transition: border-color var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
+}
+.zb-links a:hover {
+  border-color: var(--blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.zb-links strong {
+  display: block;
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+  letter-spacing: -0.01em;
+}
+.zb-links span {
+  display: block;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* --- Nota legal al cierre de una sección ----------------- */
+.zb-nota {
+  margin-top: var(--s-5);
+  padding: var(--s-4) var(--s-5);
+  background: var(--bg);
+  border-left: 3px solid var(--border);
+  border-radius: var(--r-sm);
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--text-muted);
+  max-width: 760px;
+}
+
+/* --- Enlaces dentro del texto ---------------------------- */
+.zb-sec a:not(.zb-links a) {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  font-weight: 500;
+}
+.zb-sec a:not(.zb-links a):hover { color: var(--blue-hover); }
+
+/* --- Responsive ------------------------------------------ */
+@media (max-width: 768px) {
+  .zb-sec { padding-top: var(--s-7); }
+  .zb-cont + .zb-cont { margin-top: var(--s-7); }
+  .zb-recursos { padding: var(--s-5); }
+  .zb-faq summary { padding: var(--s-4); font-size: 14.5px; }
+  .zb-faq .zb-resp { padding: 0 var(--s-4) var(--s-4); }
+
+  /* La tabla pasa a tarjetas apiladas: cada fila es un bloque
+     y cada celda lleva delante su encabezado (data-th). */
+  .zb-tabla-wrap { overflow-x: visible; }
+  .zb-tabla { min-width: 0; display: block; }
+  /* Con la tabla en display:block, el caption pierde su ancho y se
+     rompe en una columna de una palabra por linea. Hay que forzarlo. */
+  .zb-tabla caption { display: block; width: 100%; }
+  .zb-tabla thead { display: none; }
+  .zb-tabla tbody, .zb-tabla tr, .zb-tabla th, .zb-tabla td { display: block; }
+  .zb-tabla tbody tr {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--r-md);
+    padding: var(--s-4);
+    margin-bottom: var(--s-3);
+    box-shadow: var(--shadow-xs);
+  }
+  .zb-tabla tbody th {
+    font-size: var(--fs-h3);
+    border-bottom: 1px solid var(--border-light);
+    padding: 0 0 var(--s-3);
+    margin-bottom: var(--s-3);
+  }
+  .zb-tabla tbody td { padding: 0 0 var(--s-3); border-bottom: none; }
+  .zb-tabla tbody td:last-child { padding-bottom: 0; }
+  .zb-tabla tbody td::before {
+    content: attr(data-th);
+    display: block;
+    font-size: var(--fs-cap);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-caps);
+    color: var(--text-light);
+    margin-bottom: 2px;
+  }
+}
+
+@media (max-width: 520px) {
+  .zb-cols { gap: var(--s-4); }
+  .zb-box { padding: var(--s-4); }
+}
+
+/* Objetivo táctil cómodo en móvil y en tablet */
+@media (max-width: 768px), (pointer: coarse) {
+  .zb-faq summary { min-height: 44px; }
+  .zb-links a { min-height: 44px; }
+}

@@ -52,6 +52,20 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"¿El pack sirve para cualquier etapa del post operatorio?","acceptedAnswer":{"@type":"Answer","text":"No todos. Cada pack está pensado para un momento del proceso: los que llevan proteína líquida se orientan a las primeras semanas, y los de proteína en polvo a etapas posteriores. Si no estás seguro de cuál te corresponde, consúltalo antes de comprar."}},
+    {"@type":"Question","name":"¿Se pueden cambiar productos dentro del pack?","acceptedAnswer":{"@type":"Answer","text":"Escríbenos por WhatsApp y vemos qué alternativas hay según lo que necesites."}},
+    {"@type":"Question","name":"¿Cuánto dura un pack de suplementos bariátricos?","acceptedAnswer":{"@type":"Answer","text":"Depende de la cantidad diaria que tengas indicada, que varía de una persona a otra. Como referencia, cada producto indica su contenido en el envase; la duración real se calcula sobre la pauta que te haya dado tu profesional."}},
+    {"@type":"Question","name":"¿Cada producto del pack se toma igual?","acceptedAnswer":{"@type":"Answer","text":"Cada producto mantiene su propia forma de consumo. Combínalos siguiendo la indicación de tu equipo médico y las instrucciones de cada envase. Algunos suelen separarse entre sí, como la fibra respecto de la proteína."}},
+    {"@type":"Question","name":"¿Conviene un pack si es mi primera compra?","acceptedAnswer":{"@type":"Answer","text":"Depende de si ya sabes qué toleras. Si nunca has probado un sabor, algunos pacientes prefieren empezar por unidades sueltas y pasar al pack una vez que saben cuál les gusta. Si ya tienes claro tu esquema, el pack es la opción más conveniente."}},
+    {"@type":"Question","name":"¿Hacen envíos a todo el Perú?","acceptedAnswer":{"@type":"Answer","text":"Sí, realizamos envíos a todo el Perú. Escríbenos por WhatsApp para coordinar el envío a tu ciudad y conocer los tiempos de entrega."}}
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
@@ -235,6 +249,9 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
   * { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
 }
 </style>
+<!-- Bloques de contenido educativo: compartido por las 4 categorias.
+     Va DESPUES del <style> para poder usar sus variables de :root. -->
+<link rel="stylesheet" href="zb-contenido.css">
 </head>
 <body>
 
@@ -253,6 +270,7 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
       <a href="/vitaminas">Vitaminas</a>
       <a href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
       <a href="/packs" class="active">Packs</a>
+      <a href="/recursos">Recursos</a>
     </nav>
   </div>
 </header>
@@ -461,7 +479,132 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
 
 </div>
 
-<p class="aviso">Los suplementos no reemplazan una alimentación balanceada. Siempre consulta con tu médico o nutricionista antes de iniciar cualquier suplementación.</p>
+<!-- ============================================================
+     CONTENIDO EDUCATIVO — ver nota en proteinas.html.
+     Estilos en el CSS compartido de las 4 categorias.
+     ============================================================ -->
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-elegir">
+  <span class="zb-eyebrow">Guía rápida</span>
+  <h2 id="tit-elegir">Cómo elegir el pack que te corresponde</h2>
+  <p>
+    Un pack no es simplemente varios productos juntos: cada combinación está pensada para un
+    momento del proceso. El criterio más útil para decidir no es el precio, sino
+    <strong>en qué etapa estás</strong> y <strong>qué es lo que todavía no tienes cubierto</strong>.
+  </p>
+
+  <div class="zb-tabla-wrap">
+    <table class="zb-tabla">
+      <caption>Orientación general. La combinación que te corresponde la confirma tu equipo médico.</caption>
+      <thead>
+        <tr>
+          <th scope="col">Si estás…</th>
+          <th scope="col">Lo que se suele priorizar</th>
+          <th scope="col">Tipo de pack</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">En el primer mes</th>
+          <td data-th="Se suele priorizar">Proteína en formato líquido y micronutrientes.</td>
+          <td data-th="Tipo de pack">Packs con proteína líquida.</td>
+        </tr>
+        <tr>
+          <th scope="row">Entre 1 y 3 meses</th>
+          <td data-th="Se suele priorizar">Transición a proteína en polvo, sosteniendo las vitaminas.</td>
+          <td data-th="Tipo de pack">Packs de proteína en polvo con vitaminas.</td>
+        </tr>
+        <tr>
+          <th scope="row">Pasados 3 meses</th>
+          <td data-th="Se suele priorizar">Mantenimiento y, si corresponde, colágeno o fibra.</td>
+          <td data-th="Tipo de pack">Packs completos o con colágeno y fibra.</td>
+        </tr>
+        <tr>
+          <th scope="row">Con caída de cabello</th>
+          <td data-th="Se suele priorizar">Revisar proteína y hierro; la biotina es un apoyo habitual.</td>
+          <td data-th="Tipo de pack">Packs que incluyen biotina.</td>
+        </tr>
+        <tr>
+          <th scope="row">Con tránsito lento</th>
+          <td data-th="Se suele priorizar">Fibra acompañada de buena hidratación.</td>
+          <td data-th="Tipo de pack">Packs que incluyen fibra.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Si no tienes claro en qué etapa te encuentras, la guía de
+    <a href="/etapas-postoperatorias">etapas postoperatorias</a> te ubica en pocos minutos.
+  </p>
+</section>
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-porque">
+  <h2 id="tit-porque">Por qué conviene comprar en pack</h2>
+  <ul class="zb-lista">
+    <li><strong>Sale más barato</strong> que comprar los mismos productos por separado.</li>
+    <li><strong>Reduce el riesgo de quedarte a medias.</strong> Es habitual empezar solo con la proteína y descubrir semanas después que faltaban los micronutrientes.</li>
+    <li><strong>Ayuda a la constancia</strong>, que es donde más se falla: tener todo en casa evita la interrupción entre pedido y pedido.</li>
+    <li><strong>Un solo envío</strong> en lugar de varios pedidos sueltos a lo largo del mes.</li>
+    <li><strong>Varios incluyen shaker</strong>, útil para preparar la proteína en polvo fuera de casa.</li>
+  </ul>
+  <div class="zb-nota">
+    Ningún pack sirve para todas las etapas. Si tienes dudas sobre cuál te corresponde,
+    escríbenos antes de comprar y lo revisamos contigo: es preferible eso a que termines con un
+    producto que todavía no puedes usar.
+  </div>
+</section>
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-faq">
+  <h2 id="tit-faq">Preguntas frecuentes sobre los packs</h2>
+  <div class="zb-faq">
+    <details>
+      <summary>¿El pack sirve para cualquier etapa?</summary>
+      <div class="zb-resp">No todos. Cada pack está pensado para un momento del proceso: los que llevan proteína líquida se orientan a las primeras semanas, y los de proteína en polvo a etapas posteriores. Si no estás seguro de cuál te corresponde, consúltalo antes de comprar.</div>
+    </details>
+    <details>
+      <summary>¿Se pueden cambiar productos dentro del pack?</summary>
+      <div class="zb-resp">Escríbenos por WhatsApp y vemos qué alternativas hay según lo que necesites.</div>
+    </details>
+    <details>
+      <summary>¿Cuánto dura un pack?</summary>
+      <div class="zb-resp">Depende de la cantidad diaria que tengas indicada, que varía de una persona a otra. Como referencia, cada producto indica su contenido en el envase; la duración real se calcula sobre la pauta que te haya dado tu profesional.</div>
+    </details>
+    <details>
+      <summary>¿Cada producto del pack se toma igual?</summary>
+      <div class="zb-resp">Cada producto mantiene su propia forma de consumo. Combínalos siguiendo la indicación de tu equipo médico y las instrucciones de cada envase. Algunos suelen separarse entre sí, como la fibra respecto de la proteína.</div>
+    </details>
+    <details>
+      <summary>¿Conviene un pack si es mi primera compra?</summary>
+      <div class="zb-resp">Depende de si ya sabes qué toleras. Si nunca has probado un sabor, algunos pacientes prefieren empezar por unidades sueltas y pasar al pack una vez que saben cuál les gusta. Si ya tienes claro tu esquema, el pack es la opción más conveniente.</div>
+    </details>
+    <details>
+      <summary>¿Hacen envíos a todo el Perú?</summary>
+      <div class="zb-resp">Sí, realizamos envíos a todo el Perú. Escríbenos por WhatsApp para coordinar el envío a tu ciudad y conocer los tiempos de entrega.</div>
+    </details>
+  </div>
+</section>
+
+<section class="zb-cont zb-recursos" aria-labelledby="tit-recursos">
+  <h2 id="tit-recursos">¿No sabes cuál te corresponde?</h2>
+  <p>Estas herramientas son gratuitas y te ayudan a llegar con las preguntas correctas a tu control.</p>
+  <div class="zb-links">
+    <a href="/encuentra-tu-suplemento">
+      <strong>¿Qué suplemento necesito?</strong>
+      <span>Responde tres preguntas sobre tu cirugía y tu etapa, y te mostramos qué se suele usar.</span>
+    </a>
+    <a href="/etapas-postoperatorias">
+      <strong>Etapas postoperatorias</strong>
+      <span>De líquidos claros a alimentación normal: qué caracteriza cada fase.</span>
+    </a>
+    <a href="/comparador-bariatrico">
+      <strong>Manga vs bypass vs balón</strong>
+      <span>Cómo funciona cada cirugía y qué suplementación suele acompañarla.</span>
+    </a>
+  </div>
+</section>
+
+<p class="aviso">Este contenido es educativo y no reemplaza la consulta con un profesional. Los suplementos no sustituyen una alimentación balanceada. Consumir únicamente bajo indicación de su médico o nutricionista.</p>
 
 <footer>
   <div class="links">
@@ -470,6 +613,8 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
     <a href="/vitaminas">Vitaminas</a>
     <a href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
     <a href="/packs">Packs</a>
+    <a href="/recursos">Recursos</a>
+    <a href="/encuentra-tu-suplemento">¿Qué suplemento necesito?</a>
   </div>
   © 2026 Zona Bariátrica · Todos los derechos reservados · Lima, Perú · 📱 +51 961 841 069
 </footer>

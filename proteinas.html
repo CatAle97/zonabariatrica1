@@ -47,7 +47,23 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"¿Por qué la proteína es la prioridad después de una cirugía bariátrica?","acceptedAnswer":{"@type":"Answer","text":"Porque durante la pérdida de peso rápida el organismo puede recurrir también a la masa muscular, no solo a la grasa. Sostener el aporte de proteína es una de las formas habituales de acompañar ese proceso. Además, con un estómago de volumen reducido resulta difícil cubrirla solo con comida, y de ahí que la suplementación sea tan común en el post operatorio."}},
+    {"@type":"Question","name":"¿Cuándo puedo empezar a tomar proteína después de la operación?","acceptedAnswer":{"@type":"Answer","text":"El momento de inicio lo define tu equipo médico. Lo habitual es incorporar la proteína líquida cuando se avanza de líquidos claros a líquidos completos, no antes. En los primeros días lo normal es mantenerse solo con líquidos claros."}},
+    {"@type":"Question","name":"¿Cuándo se pasa de proteína líquida a proteína en polvo?","acceptedAnswer":{"@type":"Answer","text":"Suele ocurrir cuando ya toleras texturas blandas, orientativamente a partir del segundo mes. El momento lo marca tu equipo médico, no la etiqueta del producto."}},
+    {"@type":"Question","name":"¿Sirve cualquier whey protein del gimnasio?","acceptedAnswer":{"@type":"Answer","text":"No todas encajan igual. Las proteínas pensadas para deportistas suelen presentarse en porciones de mayor volumen y muchas contienen lactosa o azúcares añadidos, dos cosas que después de la cirugía suelen tolerarse mal. Las formuladas para nutrición bariátrica buscan concentrar el aporte en el menor volumen posible. Cuál te conviene es una decisión que corresponde a tu nutricionista."}},
+    {"@type":"Question","name":"¿Se puede mezclar la proteína con leche?","acceptedAnswer":{"@type":"Answer","text":"Depende de tu tolerancia y de la etapa en la que estés. Muchos pacientes bariátricos desarrollan intolerancia a la lactosa después de la cirugía: consúltalo con tu nutricionista antes de hacerlo."}},
+    {"@type":"Question","name":"¿El colágeno reemplaza a la proteína?","acceptedAnswer":{"@type":"Answer","text":"No. El colágeno no aporta el perfil completo de aminoácidos que se busca con la proteína del post operatorio. Son suplementos con finalidades distintas y no se sustituyen entre sí."}},
+    {"@type":"Question","name":"¿La proteína sustituye una comida?","acceptedAnswer":{"@type":"Answer","text":"Es un suplemento, no un reemplazo de comida por sí solo. Su lugar dentro de tu plan lo define tu nutricionista."}}
+  ]
+}
+</script>
+<style>
 /* ============================================================
    DESIGN SYSTEM — Zona Bariátrica (páginas de categoría)
    Mismas variables que index.html: color, espacio 8px,
@@ -228,6 +244,9 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
   * { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
 }
 </style>
+<!-- Bloques de contenido educativo: compartido por las 4 categorías.
+     Va DESPUÉS del <style> para poder usar sus variables de :root. -->
+<link rel="stylesheet" href="zb-contenido.css">
 </head>
 <body>
 
@@ -246,6 +265,7 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
       <a href="/vitaminas">Vitaminas</a>
       <a href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
       <a href="/packs">Packs</a>
+      <a href="/recursos">Recursos</a>
     </nav>
   </div>
 </header>
@@ -349,7 +369,148 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
 
 </div>
 
-<p class="aviso">Los suplementos no reemplazan una alimentación balanceada. Siempre consulta con tu médico o nutricionista antes de iniciar cualquier suplementación.</p>
+<!-- ============================================================
+     CONTENIDO EDUCATIVO
+     Añadido el 10-08-2026 para dar sustancia a la página: antes
+     Google solo encontraba el hero y las fichas de producto.
+     Los textos siguen el mismo criterio que productos-info.js:
+     describen lo que SUELE hacerse, nunca prescriben.
+     Estilos en zb-contenido.css (compartido por las 4 categorías).
+     ============================================================ -->
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-formatos">
+  <span class="zb-eyebrow">Guía rápida</span>
+  <h2 id="tit-formatos">Proteína líquida o en polvo: en qué se diferencian</h2>
+  <p>
+    Las dos cubren lo mismo —aportar proteína cuando la comida sola no alcanza—, pero no se
+    usan en el mismo momento. La diferencia no está en la calidad, sino en la textura y en el
+    volumen que tu estómago tolera en cada etapa del post operatorio.
+  </p>
+
+  <div class="zb-tabla-wrap">
+    <table class="zb-tabla">
+      <caption>Comparación orientativa de los dos formatos disponibles en esta categoría.</caption>
+      <thead>
+        <tr>
+          <th scope="col">&nbsp;</th>
+          <th scope="col">Proteína líquida</th>
+          <th scope="col">Proteína en polvo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Presentación</th>
+          <td data-th="Proteína líquida">Botella lista para tomar, sin preparación.</td>
+          <td data-th="Proteína en polvo">Polvo que se disuelve en agua.</td>
+        </tr>
+        <tr>
+          <th scope="row">Cuándo suele usarse</th>
+          <td data-th="Proteína líquida">En las primeras semanas, mientras la alimentación es líquida.</td>
+          <td data-th="Proteína en polvo">Habitualmente a partir de la etapa de blandos y en el mantenimiento.</td>
+        </tr>
+        <tr>
+          <th scope="row">Volumen por toma</th>
+          <td data-th="Proteína líquida">Muy pequeño: porciones de unos 30 ml.</td>
+          <td data-th="Proteína en polvo">Mayor, porque necesita agua para disolverse.</td>
+        </tr>
+        <tr>
+          <th scope="row">Aporte por porción</th>
+          <td data-th="Proteína líquida">Alrededor de 20 g.</td>
+          <td data-th="Proteína en polvo">Entre 27 y 30 g según el producto.</td>
+        </tr>
+        <tr>
+          <th scope="row">Ventaja principal</th>
+          <td data-th="Proteína líquida">Suele tolerarse mejor cuando el estómago admite muy poco volumen.</td>
+          <td data-th="Proteína en polvo">Permite ajustar la cantidad y rinde más por envase.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    El paso de un formato al otro suele ocurrir cuando ya toleras texturas blandas,
+    orientativamente a partir del segundo mes. El momento exacto lo marca tu equipo médico
+    según cómo avanza tu recuperación, no la etiqueta del producto. Si quieres ubicarte,
+    puedes revisar las <a href="/etapas-postoperatorias">etapas postoperatorias</a> una por una.
+  </p>
+</section>
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-elegir">
+  <h2 id="tit-elegir">Qué se suele mirar antes de elegir una proteína</h2>
+  <p>
+    Después de un bypass gástrico o una manga gástrica el estómago admite muy poco volumen,
+    así que cada toma tiene que rendir. Estos son los puntos que suelen revisarse en la
+    etiqueta antes de decidir:
+  </p>
+  <ul class="zb-lista">
+    <li><strong>Gramos de proteína por porción.</strong> Es el dato que importa, más que el tamaño del envase. Conviene compararlo siempre con el volumen que tienes que tomar para conseguirlos.</li>
+    <li><strong>Sin lactosa.</strong> La intolerancia a la lactosa es frecuente después de la cirugía, incluso en quienes nunca la tuvieron antes.</li>
+    <li><strong>Sin azúcares añadidos.</strong> Ayuda a evitar molestias digestivas asociadas a las bebidas azucaradas en el post operatorio.</li>
+    <li><strong>Sabor y tolerancia.</strong> La mejor proteína es la que realmente vas a poder tomar todos los días. Si un sabor te cansa, la constancia se cae.</li>
+    <li><strong>Formato acorde a tu etapa.</strong> Una proteína excelente en polvo no sirve de nada si todavía estás en fase líquida.</li>
+    <li><strong>La indicación de tu equipo.</strong> La cantidad diaria que te corresponde se define en tu control, a partir de tus analíticas y tu evolución.</li>
+  </ul>
+  <div class="zb-nota">
+    En esta categoría encontrarás proteína de <strong>Bari&amp;Nutrition</strong> —línea formulada
+    específicamente para nutrición bariátrica— y de <strong>LVL Drink</strong>, apta para
+    bariátricos y endulzada con stevia. Todas sin lactosa y sin azúcares añadidos.
+  </div>
+</section>
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-faq">
+  <h2 id="tit-faq">Preguntas frecuentes sobre la proteína bariátrica</h2>
+  <div class="zb-faq">
+    <details>
+      <summary>¿Por qué la proteína es la prioridad después de una cirugía bariátrica?</summary>
+      <div class="zb-resp">Porque durante la pérdida de peso rápida el organismo puede recurrir también a la masa muscular, no solo a la grasa. Sostener el aporte de proteína es una de las formas habituales de acompañar ese proceso. Además, con un estómago de volumen reducido resulta difícil cubrirla solo con comida, y de ahí que la suplementación sea tan común en el post operatorio.</div>
+    </details>
+    <details>
+      <summary>¿Cuándo puedo empezar a tomar proteína después de la operación?</summary>
+      <div class="zb-resp">El momento de inicio lo define tu equipo médico. Lo habitual es incorporar la proteína líquida cuando se avanza de líquidos claros a líquidos completos, no antes. En los primeros días lo normal es mantenerse solo con líquidos claros.</div>
+    </details>
+    <details>
+      <summary>¿Cuándo se pasa de proteína líquida a proteína en polvo?</summary>
+      <div class="zb-resp">Suele ocurrir cuando ya toleras texturas blandas, orientativamente a partir del segundo mes. El momento lo marca tu equipo médico, no la etiqueta del producto.</div>
+    </details>
+    <details>
+      <summary>¿Sirve cualquier whey protein del gimnasio?</summary>
+      <div class="zb-resp">No todas encajan igual. Las proteínas pensadas para deportistas suelen presentarse en porciones de mayor volumen y muchas contienen lactosa o azúcares añadidos, dos cosas que después de la cirugía suelen tolerarse mal. Las formuladas para nutrición bariátrica buscan concentrar el aporte en el menor volumen posible. Cuál te conviene es una decisión que corresponde a tu nutricionista.</div>
+    </details>
+    <details>
+      <summary>¿Se puede mezclar con leche?</summary>
+      <div class="zb-resp">Depende de tu tolerancia y de la etapa en la que estés. Muchos pacientes bariátricos desarrollan intolerancia a la lactosa después de la cirugía: consúltalo con tu nutricionista antes de hacerlo.</div>
+    </details>
+    <details>
+      <summary>¿El colágeno reemplaza a la proteína?</summary>
+      <div class="zb-resp">No. El colágeno no aporta el perfil completo de aminoácidos que se busca con la proteína del post operatorio. Son suplementos con finalidades distintas y no se sustituyen entre sí.</div>
+    </details>
+    <details>
+      <summary>¿La proteína sustituye una comida?</summary>
+      <div class="zb-resp">Es un suplemento, no un reemplazo de comida por sí solo. Su lugar dentro de tu plan lo define tu nutricionista.</div>
+    </details>
+  </div>
+</section>
+
+<section class="zb-cont zb-recursos" aria-labelledby="tit-recursos">
+  <h2 id="tit-recursos">¿No sabes cuál te corresponde?</h2>
+  <p>Estas herramientas son gratuitas y te ayudan a llegar con las preguntas correctas a tu control.</p>
+  <div class="zb-links">
+    <a href="/encuentra-tu-suplemento">
+      <strong>¿Qué suplemento necesito?</strong>
+      <span>Responde tres preguntas sobre tu cirugía y tu etapa, y te mostramos qué se suele usar.</span>
+    </a>
+    <a href="/etapas-postoperatorias">
+      <strong>Etapas postoperatorias</strong>
+      <span>De líquidos claros a alimentación normal: qué caracteriza cada fase.</span>
+    </a>
+    <a href="/comparador-bariatrico">
+      <strong>Manga vs bypass vs balón</strong>
+      <span>Cómo funciona cada cirugía y qué suplementación suele acompañarla.</span>
+    </a>
+  </div>
+</section>
+
+<p class="aviso">Este contenido es educativo y no reemplaza la consulta con un profesional. Los suplementos no sustituyen una alimentación balanceada. Consumir únicamente bajo indicación de su médico o nutricionista.</p>
 
 <footer>
   <div class="links">
@@ -358,6 +519,8 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
     <a href="/vitaminas">Vitaminas</a>
     <a href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
     <a href="/packs">Packs</a>
+    <a href="/recursos">Recursos</a>
+    <a href="/encuentra-tu-suplemento">¿Qué suplemento necesito?</a>
   </div>
   © 2026 Zona Bariátrica · Todos los derechos reservados · Lima, Perú · 📱 +51 961 841 069
 </footer>

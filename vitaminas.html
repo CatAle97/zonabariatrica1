@@ -43,6 +43,22 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"¿Por cuánto tiempo se toman las vitaminas después de la cirugía bariátrica?","acceptedAnswer":{"@type":"Answer","text":"En las técnicas quirúrgicas la suplementación suele mantenerse a largo plazo. La duración exacta y las dosis las determina tu equipo médico según tus analíticas de control."}},
+    {"@type":"Question","name":"¿Por qué la B12 es tan importante después de un bypass gástrico?","acceptedAnswer":{"@type":"Answer","text":"Parte de la absorción de la B12 ocurre en el tramo del estómago e intestino que la cirugía modifica, por eso suele requerir suplementación sostenida y controles periódicos."}},
+    {"@type":"Question","name":"¿Se pueden tomar varias vitaminas juntas?","acceptedAnswer":{"@type":"Answer","text":"Algunos micronutrientes compiten entre sí en la absorción —el caso más conocido es el del calcio con el hierro— y por eso suele indicarse separarlos. La combinación y los horarios que te corresponden los define tu profesional."}},
+    {"@type":"Question","name":"¿Cómo sé si necesito hierro?","acceptedAnswer":{"@type":"Answer","text":"Se determina con analíticas. No se debe iniciar ni suspender por cuenta propia, porque tanto la falta como el exceso tienen consecuencias."}},
+    {"@type":"Question","name":"¿La biotina detiene la caída del cabello?","acceptedAnswer":{"@type":"Answer","text":"La caída post operatoria suele responder a varios factores a la vez —pérdida de peso rápida, déficit de proteína y de hierro, entre otros—. La biotina es uno de los apoyos habituales, pero no actúa sola. Revísalo con tu nutricionista."}},
+    {"@type":"Question","name":"¿La biotina puede alterar mis análisis de laboratorio?","acceptedAnswer":{"@type":"Answer","text":"Sí. La biotina en dosis altas puede alterar algunos análisis, sobre todo los de tiroides. Avisa siempre en el laboratorio que la estás tomando."}},
+    {"@type":"Question","name":"¿Las gomitas reemplazan las pastillas que me recetaron?","acceptedAnswer":{"@type":"Answer","text":"No necesariamente. Antes de sustituir cualquier suplemento indicado, revísalo con quien lleva tu seguimiento."}},
+    {"@type":"Question","name":"¿Sirven las vitaminas comunes de farmacia para un paciente bariátrico?","acceptedAnswer":{"@type":"Answer","text":"El punto no es la marca, sino que las cantidades y la forma de presentación se ajusten a lo que tu situación requiere, algo que después de una cirugía bariátrica suele ser distinto a lo habitual. Esa valoración le corresponde a tu equipo médico."}}
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
@@ -226,6 +242,9 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
   * { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
 }
 </style>
+<!-- Bloques de contenido educativo: compartido por las 4 categorias.
+     Va DESPUES del <style> para poder usar sus variables de :root. -->
+<link rel="stylesheet" href="zb-contenido.css">
 </head>
 <body>
 
@@ -244,6 +263,7 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
       <a href="/vitaminas" class="active">Vitaminas</a>
       <a href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
       <a href="/packs">Packs</a>
+      <a href="/recursos">Recursos</a>
     </nav>
   </div>
 </header>
@@ -317,7 +337,148 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
 
 </div>
 
-<p class="aviso">Los suplementos no reemplazan una alimentación balanceada. Siempre consulta con tu médico o nutricionista antes de iniciar cualquier suplementación.</p>
+<!-- ============================================================
+     CONTENIDO EDUCATIVO — ver nota en proteinas.html.
+     Estilos en zb-contenido.css (compartido por las 4 categorías).
+     ============================================================ -->
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-porque">
+  <span class="zb-eyebrow">Guía rápida</span>
+  <h2 id="tit-porque">Por qué la suplementación acompaña al paciente bariátrico</h2>
+  <p>
+    Después de una manga gástrica o un bypass gástrico se juntan dos circunstancias. La primera
+    es de volumen: el estómago admite porciones muy pequeñas, así que resulta difícil llegar a
+    los micronutrientes solo con comida. La segunda es de absorción: en las técnicas que
+    modifican el recorrido del intestino, como el bypass, parte del tramo donde se absorben
+    ciertos nutrientes queda fuera de circulación.
+  </p>
+  <p>
+    Por eso el seguimiento bariátrico incluye analíticas periódicas y por eso la suplementación
+    suele mantenerse a largo plazo. <strong>Qué necesitas, en qué cantidad y por cuánto tiempo
+    se determina con tus análisis</strong>, no por lo que le funcionó a otra persona.
+  </p>
+</section>
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-cual">
+  <h2 id="tit-cual">Qué cubre cada una de nuestras gomitas</h2>
+  <p>
+    Cada presentación apunta a un micronutriente distinto de los que suelen controlarse en el
+    seguimiento post operatorio. Esta es una orientación general para que entiendas qué es cada
+    cosa antes de tu consulta:
+  </p>
+  <div class="zb-cols">
+    <div class="zb-box">
+      <h3>B12 + Ácido Fólico</h3>
+      <p>
+        Parte de la absorción de la vitamina B12 ocurre justamente en el tramo del estómago e
+        intestino que la cirugía modifica. Es uno de los valores que más se vigila después de
+        un bypass gástrico.
+      </p>
+      <span class="zb-cuando"><strong>Control habitual en:</strong> bypass gástrico, y también manga gástrica según el seguimiento.</span>
+    </div>
+    <div class="zb-box">
+      <h3>Hierro + Vitamina C</h3>
+      <p>
+        Aparecen juntos porque la vitamina C favorece la absorción del hierro. Suele indicarse
+        separarlo del calcio, que compite con él. Si te hace falta o no se determina con
+        analíticas: no se inicia ni se suspende por cuenta propia.
+      </p>
+      <span class="zb-cuando"><strong>Control habitual en:</strong> bypass gástrico y manga gástrica.</span>
+    </div>
+    <div class="zb-box">
+      <h3>Biotina 10.000 mcg</h3>
+      <p>
+        Es el apoyo más buscado cuando aparece la caída del cabello, algo frecuente entre el
+        tercer y el sexto mes. Conviene saber que esa caída suele responder a varios factores a
+        la vez, así que la biotina no actúa sola.
+      </p>
+      <span class="zb-cuando"><strong>Suele consultarse:</strong> a partir del tercer mes.</span>
+    </div>
+    <div class="zb-box">
+      <h3>Multivitamínico</h3>
+      <p>
+        Cubre de forma general el conjunto de vitaminas y minerales, en lugar de apuntar a uno
+        solo. Es la base sobre la que después se añade lo que tus análisis indiquen.
+      </p>
+      <span class="zb-cuando"><strong>Suele usarse:</strong> de forma sostenida desde las primeras semanas.</span>
+    </div>
+  </div>
+</section>
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-gomitas">
+  <h2 id="tit-gomitas">Por qué en gomitas y no en cápsulas</h2>
+  <p>
+    En el post operatorio tragar cápsulas grandes puede resultar incómodo, y con un volumen
+    gástrico reducido cualquier molestia hace que se abandone la rutina. El formato masticable
+    resuelve ese punto concreto: la mejor suplementación no es la más completa sobre el papel,
+    sino la que realmente se toma todos los días.
+  </p>
+  <ul class="zb-lista">
+    <li><strong>Sin azúcares añadidos</strong>, a diferencia de la mayoría de gomitas de venta general.</li>
+    <li><strong>Fáciles de sostener en el tiempo</strong>, que es donde suele fallar la adherencia.</li>
+    <li><strong>Presentación pensada para el volumen reducido</strong> del post operatorio.</li>
+    <li><strong>Cómodas para separar tomas</strong> cuando tu profesional indica repartir los micronutrientes a lo largo del día.</li>
+  </ul>
+</section>
+
+<section class="zb-cont zb-sec" aria-labelledby="tit-faq">
+  <h2 id="tit-faq">Preguntas frecuentes sobre las vitaminas bariátricas</h2>
+  <div class="zb-faq">
+    <details>
+      <summary>¿Por cuánto tiempo se toman las vitaminas después de la cirugía?</summary>
+      <div class="zb-resp">En las técnicas quirúrgicas la suplementación suele mantenerse a largo plazo. La duración exacta y las dosis las determina tu equipo médico según tus analíticas de control.</div>
+    </details>
+    <details>
+      <summary>¿Por qué la B12 es tan importante después de un bypass?</summary>
+      <div class="zb-resp">Parte de la absorción de la B12 ocurre en el tramo del estómago e intestino que la cirugía modifica, por eso suele requerir suplementación sostenida y controles periódicos.</div>
+    </details>
+    <details>
+      <summary>¿Se pueden tomar varias vitaminas juntas?</summary>
+      <div class="zb-resp">Algunos micronutrientes compiten entre sí en la absorción —el caso más conocido es el del calcio con el hierro— y por eso suele indicarse separarlos. La combinación y los horarios que te corresponden los define tu profesional.</div>
+    </details>
+    <details>
+      <summary>¿Cómo sé si necesito hierro?</summary>
+      <div class="zb-resp">Se determina con analíticas. No se debe iniciar ni suspender por cuenta propia, porque tanto la falta como el exceso tienen consecuencias.</div>
+    </details>
+    <details>
+      <summary>¿La biotina detiene la caída del cabello?</summary>
+      <div class="zb-resp">La caída post operatoria suele responder a varios factores a la vez —pérdida de peso rápida, déficit de proteína y de hierro, entre otros—. La biotina es uno de los apoyos habituales, pero no actúa sola. Revísalo con tu nutricionista.</div>
+    </details>
+    <details>
+      <summary>¿La biotina puede alterar mis análisis de laboratorio?</summary>
+      <div class="zb-resp">Sí. La biotina en dosis altas puede alterar algunos análisis, sobre todo los de tiroides. Avisa siempre en el laboratorio que la estás tomando.</div>
+    </details>
+    <details>
+      <summary>¿Estas gomitas reemplazan las pastillas que me recetaron?</summary>
+      <div class="zb-resp">No necesariamente. Antes de sustituir cualquier suplemento indicado, revísalo con quien lleva tu seguimiento.</div>
+    </details>
+    <details>
+      <summary>¿Sirven las vitaminas comunes de farmacia?</summary>
+      <div class="zb-resp">El punto no es la marca, sino que las cantidades y la forma de presentación se ajusten a lo que tu situación requiere, algo que después de una cirugía bariátrica suele ser distinto a lo habitual. Esa valoración le corresponde a tu equipo médico.</div>
+    </details>
+  </div>
+</section>
+
+<section class="zb-cont zb-recursos" aria-labelledby="tit-recursos">
+  <h2 id="tit-recursos">¿No sabes cuál te corresponde?</h2>
+  <p>Estas herramientas son gratuitas y te ayudan a llegar con las preguntas correctas a tu control.</p>
+  <div class="zb-links">
+    <a href="/encuentra-tu-suplemento">
+      <strong>¿Qué suplemento necesito?</strong>
+      <span>Responde tres preguntas sobre tu cirugía y tu etapa, y te mostramos qué se suele usar.</span>
+    </a>
+    <a href="/comparador-bariatrico">
+      <strong>Manga vs bypass vs balón</strong>
+      <span>Cómo funciona cada cirugía y qué seguimiento suele acompañarla.</span>
+    </a>
+    <a href="/etapas-postoperatorias">
+      <strong>Etapas postoperatorias</strong>
+      <span>De líquidos claros a alimentación normal: qué caracteriza cada fase.</span>
+    </a>
+  </div>
+</section>
+
+<p class="aviso">Este contenido es educativo y no reemplaza la consulta con un profesional. Los suplementos no sustituyen una alimentación balanceada. Consumir únicamente bajo indicación de su médico o nutricionista.</p>
 
 <footer>
   <div class="links">
@@ -326,6 +487,8 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
     <a href="/vitaminas">Vitaminas</a>
     <a href="/colageno-y-fibra">Colágeno &amp; Fibra</a>
     <a href="/packs">Packs</a>
+    <a href="/recursos">Recursos</a>
+    <a href="/encuentra-tu-suplemento">¿Qué suplemento necesito?</a>
   </div>
   © 2026 Zona Bariátrica · Todos los derechos reservados · Lima, Perú · 📱 +51 961 841 069
 </footer>
