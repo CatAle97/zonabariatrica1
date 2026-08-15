@@ -1,0 +1,269 @@
+/* =========================================================
+   ZONA BARIÁTRICA — Fichas de producto (/producto/<slug>)
+   ---------------------------------------------------------
+   Estilos EXCLUSIVOS de las páginas de producto. Se carga
+   DESPUÉS de zb-herramientas.css y zb-contenido.css para
+   poder usar sus variables de :root sin redefinirlas.
+
+   Las páginas se generan con un script (ver el generador en
+   el scratchpad): NO se editan a mano una por una. Si hay que
+   cambiar el aspecto de las 26 fichas, se cambia AQUÍ.
+
+   No meter aquí estilos de cabecera, footer ni de las
+   herramientas: esos viven en zb-herramientas.css.
+   ========================================================= */
+
+/* --- Bloque principal: imagen + panel de compra ---------- */
+.pr-top {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--s-6, 32px) var(--gutter, 32px) var(--s-4, 16px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-7, 40px);
+  align-items: start;
+}
+
+.pr-foto {
+  background: #fff;
+  border: 1px solid var(--border, #E5E7EB);
+  border-radius: var(--r-md, 18px);
+  padding: var(--s-5, 24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-xs, 0 1px 2px rgba(16, 24, 40, .05));
+}
+.pr-foto img {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.pr-marca {
+  font-size: var(--fs-cap, 11.5px);
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted, #6B7280);
+  margin-bottom: var(--s-2, 8px);
+}
+
+.pr-panel h1 {
+  font-size: var(--fs-h1, 34px);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  margin: 0 0 var(--s-3, 12px);
+  color: var(--dark, #111827);
+}
+
+.pr-desc {
+  font-size: var(--fs-body, 14px);
+  line-height: 1.65;
+  color: var(--text-muted, #6B7280);
+  margin: 0 0 var(--s-4, 16px);
+}
+
+/* Etiquetas cortas del producto (tags del catálogo) */
+.pr-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2, 8px);
+  margin-bottom: var(--s-4, 16px);
+  padding: 0;
+  list-style: none;
+}
+.pr-tags li {
+  font-size: var(--fs-cap, 11.5px);
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--bg, #F5F7FA);
+  border: 1px solid var(--border, #E5E7EB);
+  color: var(--text-muted, #6B7280);
+}
+
+/* --- Precio ---------------------------------------------- */
+.pr-precio {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-3, 12px);
+  margin-bottom: var(--s-4, 16px);
+}
+.pr-precio-hoy {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--dark, #111827);
+}
+.pr-precio-antes {
+  font-size: var(--fs-h3, 17px);
+  color: var(--text-muted, #6B7280);
+  text-decoration: line-through;
+}
+.pr-ahorro {
+  font-size: var(--fs-cap, 11.5px);
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  color: #047857;
+}
+.pr-consultar {
+  font-size: var(--fs-h3, 17px);
+  font-weight: 600;
+  color: var(--text-muted, #6B7280);
+  margin-bottom: var(--s-4, 16px);
+}
+
+/* --- Botones de la ficha --------------------------------- */
+.pr-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3, 12px);
+  margin-bottom: var(--s-4, 16px);
+}
+.pr-acciones .btn-zb { flex: 1 1 200px; justify-content: center; }
+
+/* Datos de envío / pago, en texto pequeño bajo los botones */
+.pr-meta {
+  display: grid;
+  gap: var(--s-2, 8px);
+  padding-top: var(--s-4, 16px);
+  border-top: 1px solid var(--border, #E5E7EB);
+}
+.pr-meta div {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2, 8px);
+  font-size: var(--fs-sm, 13px);
+  color: var(--text-muted, #6B7280);
+  line-height: 1.5;
+}
+.pr-meta svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin-top: 2px;
+  color: var(--blue, #2563EB);
+}
+
+/* --- Etiquetas informativas de cirugía y etapa ----------- */
+.pr-etiquetas { display: grid; gap: var(--s-3, 12px); }
+.pr-etiquetas-fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2, 8px);
+}
+.pr-etiquetas-tit {
+  font-size: var(--fs-sm, 13px);
+  font-weight: 600;
+  color: var(--dark, #111827);
+  margin-right: var(--s-1, 4px);
+}
+.pr-chip {
+  font-size: var(--fs-cap, 11.5px);
+  font-weight: 500;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1D4ED8;
+}
+.pr-chip-etapa {
+  background: #FFF7ED;
+  border-color: #FED7AA;
+  color: #C2410C;
+}
+
+/* --- Rejilla de productos relacionados ------------------- */
+.pr-rel {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: var(--s-4, 16px);
+}
+.pr-rel a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid var(--border, #E5E7EB);
+  border-radius: var(--r-md, 18px);
+  overflow: hidden;
+  transition: transform var(--t-fast, 200ms),
+              box-shadow var(--t-fast, 200ms);
+}
+.pr-rel a:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md, 0 8px 20px rgba(16, 24, 40, .08));
+}
+.pr-rel img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: var(--bg, #F5F7FA);
+  padding: var(--s-3, 12px);
+}
+.pr-rel-body { padding: var(--s-3, 12px); display: grid; gap: 4px; }
+.pr-rel-marca {
+  font-size: var(--fs-cap, 11.5px);
+  color: var(--text-muted, #6B7280);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 600;
+}
+.pr-rel-nom {
+  font-size: var(--fs-sm, 13px);
+  font-weight: 600;
+  color: var(--dark, #111827);
+  line-height: 1.35;
+}
+.pr-rel-precio {
+  font-size: var(--fs-body, 14px);
+  font-weight: 700;
+  color: var(--dark, #111827);
+  margin-top: 2px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   Se verifica en 390 / 768 / 1024 / 1440 (regla de paridad
+   entre dispositivos: lo que se arregla debe quedar igual en
+   móvil, tablet y escritorio).
+   ========================================================= */
+
+/* Tablet: la ficha pasa a una sola columna antes de que la
+   imagen y el panel queden demasiado estrechos. */
+@media (max-width: 900px) {
+  .pr-top {
+    grid-template-columns: 1fr;
+    gap: var(--s-5, 24px);
+    padding-top: var(--s-4, 16px);
+  }
+  .pr-foto { padding: var(--s-4, 16px); }
+  .pr-foto img { max-width: 340px; }
+  .pr-panel h1 { font-size: 27px; }
+}
+
+@media (max-width: 600px) {
+  .pr-top { padding-left: 16px; padding-right: 16px; }
+  .pr-panel h1 { font-size: 23px; }
+  .pr-precio-hoy { font-size: 27px; }
+  .pr-acciones { gap: 10px; }
+  .pr-acciones .btn-zb { flex: 1 1 100%; }
+  .pr-rel { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .pr-rel-body { padding: 12px; }
+}
+
+/* Objetivo táctil de 44px. Se usa (pointer: coarse) además
+   del ancho porque una tablet de 1024px es táctil pero no
+   entra por media query de ancho. */
+@media (max-width: 768px), (pointer: coarse) {
+  .pr-acciones .btn-zb { min-height: 44px; }
+  .pr-rel a { min-height: 44px; }
+}

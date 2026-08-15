@@ -542,7 +542,62 @@ const productos = [
     img: BF+"multivit-bayas.jpg" }
 ];
 
+/* =========================================================
+   SLUGS DE LAS FICHAS DE PRODUCTO (/producto/<slug>)
+   ---------------------------------------------------------
+   Cada producto con ficha propia tiene aquí su dirección web.
+   Es la ÚNICA fuente de verdad: la usan tanto el generador de
+   las fichas como la tienda para enlazarlas.
+
+   NO SE CAMBIAN NUNCA una vez publicados. Si se renombra un
+   producto, el slug se queda como está: cambiarlo borra todo
+   el posicionamiento que esa dirección haya ganado en Google.
+
+   AL AÑADIR UN PRODUCTO NUEVO: agregar aquí su slug y volver
+   a ejecutar el generador de fichas.
+
+   Las ofertas (oferta1, oferta2) NO llevan ficha a propósito:
+   son promociones con caducidad y duplican productos que ya
+   tienen la suya.
+   ========================================================= */
+const slugs = {
+  bp1: "pack-proteina-liquida",
+  bp2: "pack-proteina-polvo-vitaminas",
+  bp3: "pack-energia-y-cabello",
+  bp4: "pack-suplementacion-completa",
+  lp1: "pack-completo-lvl",
+  lp2: "pack-proteina-colageno-shaker",
+  lp3: "pack-proteina-fibra-shaker",
+  lp4: "pack-colageno-fibra-shaker",
+  lp5: "pack-doble-fibra-shaker",
+  lp6: "pack-doble-colageno-shaker",
+  lp7: "pack-2-proteinas-shaker",
+  bi1: "whey-protein-vainilla",
+  bi2: "whey-protein-chocolate",
+  bi3: "proteina-liquida-fresa",
+  bi4: "proteina-liquida-maracumango",
+  bi5: "gomitas-biotina",
+  bi6: "gomitas-hierro-vitamina-c",
+  bi7: "gomitas-multivitaminico",
+  bi8: "gomitas-b12-acido-folico",
+  bi9: "fibra-soluble",
+  li1: "proteina-vainilla-high-iso",
+  li2: "proteina-chocolate-high-iso",
+  li3: "colageno-skinfinity",
+  li4: "fibra-get-out-manzana-verde",
+  bf1: "multivitaminico-tropical-tabletas",
+  bf2: "multivitaminico-bayas-tabletas"
+};
+
+/* Devuelve la dirección de la ficha de un producto, o null si
+   ese producto no tiene ficha (las ofertas). */
+function urlProducto(id) {
+  return slugs[id] ? "/producto/" + slugs[id] : null;
+}
+
 /* Se publica en window para que lo lean otras páginas
    (el selector) sin depender del scope del script. */
 window.ZB_CATALOGO = productos;
 window.ZB_TN = tn;
+window.ZB_SLUGS = slugs;
+window.ZB_URL_PRODUCTO = urlProducto;

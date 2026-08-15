@@ -2703,6 +2703,25 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 }
 .ficha-leyenda svg { width: 14px; height: 14px; flex: none; margin-top: 2px; }
 
+/* Enlace del modal a la página propia del producto.
+   El panel del modal es igual de estrecho en tablet y en
+   escritorio, así que estos estilos van en la regla base y NO
+   dentro de una media query. */
+.ficha-completa {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
+  margin-top: var(--s-4); padding: 13px var(--s-4);
+  background: var(--blue-light); border: 1px solid #BFDBFE;
+  border-radius: var(--r-sm);
+  font-size: var(--fs-sm); font-weight: 600; color: var(--blue-dark);
+  text-decoration: none; line-height: 1.4;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.ficha-completa:hover { background: #E0EBFF; border-color: var(--blue); }
+.ficha-completa svg { width: 16px; height: 16px; flex: none; }
+@media (max-width: 768px), (pointer: coarse) {
+  .ficha-completa { min-height: 44px; }
+}
+
 /* FAQ compacto dentro del modal */
 .ficha-faq { display: flex; flex-direction: column; gap: var(--s-2); }
 .ficha-faq-item { border: 1px solid var(--border); border-radius: var(--r-sm); overflow: hidden; }
@@ -7643,8 +7662,24 @@ function pintarFicha(p) {
   const d = window.ZB_PRODUCTO_INFO.obtener(p, productos);
   if (!d) { cont.style.display = 'none'; return; }
 
-  cont.innerHTML = fichaHTML(p, d);
+  cont.innerHTML = fichaHTML(p, d) + enlaceFichaHTML(p);
   cont.style.display = '';
+}
+
+/* Enlace a la página propia del producto (/producto/<slug>).
+   Cada producto tiene desde 2026-08-14 una página real e
+   indexable; este enlace la conecta con el modal para que el
+   cliente pueda verla, compartirla o guardarla.
+
+   Devuelve cadena vacía si el producto no tiene ficha (las
+   ofertas), así que no hace falta comprobar nada al llamarlo. */
+function enlaceFichaHTML(p) {
+  const url = window.ZB_URL_PRODUCTO && window.ZB_URL_PRODUCTO(p.id);
+  if (!url) return '';
+  return `<a class="ficha-completa" href="${url}">
+    Ver la página completa de este producto
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>`;
 }
 
 /* ============================================================
