@@ -120,6 +120,17 @@
   margin-bottom: var(--s-4, 16px);
 }
 
+/* Aclaración de por qué no se puede comprar todavía. Va debajo
+   del "Próximamente" y ocupa el hueco que dejaría el precio. */
+.pr-nota-stock {
+  font-size: var(--fs-sm, 13px);
+  line-height: 1.6;
+  color: var(--text-muted, #6B7280);
+  max-width: 46ch;
+  margin: calc(-1 * var(--s-2, 8px)) 0 var(--s-4, 16px);
+}
+.pr-nota-stock a { color: var(--blue, #2563EB); font-weight: 600; }
+
 /* --- Botones de la ficha --------------------------------- */
 .pr-acciones {
   display: flex;

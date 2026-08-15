@@ -817,7 +817,7 @@ a.nav-link {
 .card.oferta .precio { color: var(--danger); }
 
 /* --- BADGES: pasteles, máx. una por tarjeta --- */
-.badge-oferta, .badge-pack, .badge-recomendado, .badge-nuevo {
+.badge-oferta, .badge-pack, .badge-recomendado, .badge-nuevo, .badge-proximo {
   font-size: 10.5px; font-weight: 600; text-transform: uppercase;
   padding: 5px 11px; border-radius: var(--r-pill);
   display: inline-flex; align-items: center; width: fit-content;
@@ -828,6 +828,9 @@ a.nav-link {
 .badge-pack        { color: var(--success); background: var(--success-bg); border-color: var(--success-br); }
 .badge-nuevo       { color: var(--blue);    background: var(--blue-light); border-color: #BFDBFE; }
 .badge-recomendado { color: var(--text-muted); background: var(--bg-soft); border-color: var(--border); }
+/* Stock anunciado que todavía no llega. En ámbar: ni urgencia de
+   oferta (rojo) ni disponibilidad (verde) — es una espera. */
+.badge-proximo     { color: var(--warning); background: var(--warning-bg); border-color: var(--warning-br); }
 
 .escarapela-badge {
   position: absolute; top: 10px; left: 10px; z-index: 2;
@@ -5638,9 +5641,27 @@ function sinPrecio(p) {
   return !!(p && (p.consultar || p.precio == null));
 }
 
+/* Productos anunciados que todavía no tienen stock.
+   ------------------------------------------------------------
+   Se marcan con "proximamente:true" en zb-catalogo.js y se dejan
+   SIN precio, así sinPrecio() ya los mantiene fuera del carrito.
+   Lo único que cambia respecto a "Consultar precio" son los
+   textos: se anuncia la llegada y el botón sirve para que el
+   cliente pida el aviso, no para comprar. */
+function esProximo(p) {
+  return !!(p && p.proximamente);
+}
+
+/* Etiqueta que ocupa el lugar del precio. */
+function textoSinPrecio(p) {
+  return esProximo(p) ? 'Próximamente' : 'Consultar precio';
+}
+
 function enlaceConsulta(p) {
-  return 'https://wa.me/' + WA + '?text=' +
-    encodeURIComponent('Hola Zoe 👋 Quiero consultar el precio de: ' + p.nombre);
+  const texto = esProximo(p)
+    ? 'Hola Zoe 👋 Avísame cuando llegue: ' + p.nombre
+    : 'Hola Zoe 👋 Quiero consultar el precio de: ' + p.nombre;
+  return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(texto);
 }
 
 function consultarPrecio(id, e) {
@@ -5664,13 +5685,14 @@ function cardHTML(p) {
     <div class="card-body">
       ${oferta ? `<span class="badge-oferta">🔥 OFERTA &nbsp;·&nbsp; ${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
       ${pack ? `<span class="badge-pack">PACK &nbsp;·&nbsp; ${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
-      ${p.destacado && !pack && !oferta ? `<span class="badge-recomendado">${__('badge_recom')}</span>` : ''}
+      ${esProximo(p) ? `<span class="badge-proximo">Próximamente</span>` : ''}
+      ${p.destacado && !pack && !oferta && !esProximo(p) ? `<span class="badge-recomendado">${__('badge_recom')}</span>` : ''}
       <div class="nombre" onclick="abrirModal('${p.id}')" style="cursor:pointer">${p.nombre}</div>
       ${badgesEtapaHTML(p, 2)}
       <span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>
       <div class="precio-area">
         ${consultar
-          ? `<div class="precio precio-consultar">Consultar precio</div>`
+          ? `<div class="precio precio-consultar">${textoSinPrecio(p)}</div>`
           : `<div class="precio">S/ ${p.precio}</div>
         ${p.precioN ? `<div class="precio-normal">S/ ${p.precioN}</div>` : ''}
         ${(p.ahorro && !pack && !oferta) ? `<span class="precio-ahorro">−S/ ${p.ahorro}</span>` : ''}`}
@@ -5678,7 +5700,7 @@ function cardHTML(p) {
       <div class="card-btns">
         <button class="btn-ver-sm" onclick="abrirModal('${p.id}')">${__('btn_ver')}</button>
         ${consultar
-          ? `<button class="btn-agregar btn-consultar" onclick="consultarPrecio('${p.id}',event)">Consultar</button>`
+          ? `<button class="btn-agregar btn-consultar" onclick="consultarPrecio('${p.id}',event)">${esProximo(p) ? 'Avísame' : 'Consultar'}</button>`
           : `<button class="btn-agregar" onclick="agregarACotizacion('${p.id}',true)">+ ${__('btn_agregar')}</button>`}
       </div>
     </div>
@@ -5699,7 +5721,8 @@ function abrirModal(id) {
   document.getElementById('mBadges').innerHTML =
     `<span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>` +
     (p.tipo === 'pack'   ? ' <span class="badge-pack">PACK</span>' : '') +
-    (p.tipo === 'oferta' ? ' <span class="badge-oferta">🔥 OFERTA · Ahorra S/ ' + p.ahorro + '</span>' : '');
+    (p.tipo === 'oferta' ? ' <span class="badge-oferta">🔥 OFERTA · Ahorra S/ ' + p.ahorro + '</span>' : '') +
+    (esProximo(p) ? ' <span class="badge-proximo">Próximamente</span>' : '');
 
   const nombreEl = document.getElementById('mNombre');
   nombreEl.textContent = p.nombre;
@@ -5728,8 +5751,11 @@ function abrirModal(id) {
   const consultar = sinPrecio(p);
   let ph;
   if (consultar) {
-    ph = `<div class="modal-precio precio-consultar">Consultar precio</div>
-          <div class="modal-precio-nota">Producto recién llegado. Escríbenos por WhatsApp y te confirmamos precio y disponibilidad.</div>`;
+    const nota = esProximo(p)
+      ? 'Este producto todavía no está disponible. Escríbenos por WhatsApp y te avisamos apenas llegue el stock.'
+      : 'Producto recién llegado. Escríbenos por WhatsApp y te confirmamos precio y disponibilidad.';
+    ph = `<div class="modal-precio precio-consultar">${textoSinPrecio(p)}</div>
+          <div class="modal-precio-nota">${nota}</div>`;
   } else {
     ph = `<div class="modal-precio" style="${esOferta ? 'color:#DC2626' : ''}">S/ ${p.precio}</div>`;
     if (p.precioN) ph += `<div class="modal-precio-normal">S/ ${p.precioN}</div>`;
@@ -7596,7 +7622,7 @@ function pintarBarraCompra(p) {
   const consultar = sinPrecio(p);
 
   if (val) {
-    val.textContent = consultar ? 'Consultar' : 'S/ ' + p.precio;
+    val.textContent = consultar ? (esProximo(p) ? 'Próximamente' : 'Consultar') : 'S/ ' + p.precio;
     val.classList.toggle('precio-consultar', consultar);
   }
 

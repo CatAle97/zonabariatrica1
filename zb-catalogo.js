@@ -242,6 +242,44 @@ const tn = {
       ["Molibdeno","9 mcg","20%"]
     ],
     nota: "Fibra inulina · Sabor manzana verde · Sin azúcares añadidos · Apto bariátrico"
+  },
+  /* Bariatric Fusion multivitamínico masticable. La MISMA tabla
+     sirve para los dos sabores (tropical y bayas mixtas): entre
+     ellos cambia el saborizante, no la fórmula. Transcrita de la
+     etiqueta del envase importado (Formulations SAS INC. dba
+     Bariatric Fusion, EE. UU. · distribuye Farmawell S.A.C.). */
+  bf_multivit: {
+    srv: "1 tableta masticable", srvs: "120 porciones por envase",
+    filas: [
+      ["Calorías","5",""],
+      ["Grasa total","0 g","0%"],
+      ["Carbohidratos totales","1.5 g","<1%"],
+      ["Azúcar","1 g",""],
+      ["Proteína total","0 g","0%"],
+      ["Vitamina A (retinol acetato)","560 mcg RAE","63%"],
+      ["Vitamina C (ácido ascórbico)","45 mg","50%"],
+      ["Vitamina D3 (colecalciferol)","18.8 mcg","94%"],
+      ["Vitamina E (acetato de DL-alfa tocoferil)","15 mg","100%"],
+      ["Vitamina B1 (tiamina)","3 mg","250%"],
+      ["Vitamina B2 (riboflavina)","430 mcg","33%"],
+      ["Vitamina B3 (niacinamida)","5 mg","31%"],
+      ["Vitamina B6 (5-fosfato de piridoxal)","500 mcg","29%"],
+      ["Folato (200 mcg ácido fólico)","335 mcg DFE","84%"],
+      ["Vitamina B12 (metilcobalamina)","140 mcg","5,833%"],
+      ["Biotina","150 mcg","500%"],
+      ["Ácido pantoténico (D-pantotenato de calcio)","2.5 mg","50%"],
+      ["Calcio (citrato y carbonato)","300 mg","23%"],
+      ["Hierro (fumarato ferroso)","11.3 mg","63%"],
+      ["Yodo (yoduro de potasio)","38 mcg","25%"],
+      ["Magnesio (óxido de magnesio)","100 mg","24%"],
+      ["Zinc (quelato aminoácido)","7.5 mg","68%"],
+      ["Selenio (quelato aminoácido)","18 mcg","32%"],
+      ["Cobre (quelato aminoácido)","500 mcg","56%"],
+      ["Manganeso (quelato aminoácido)","500 mcg","22%"],
+      ["Cromo (quelato aminoácido)","30 mcg","86%"],
+      ["Molibdeno (quelato)","18.8 mcg","42%"]
+    ],
+    nota: "Vía oral. Adultos: 1 tableta masticable al día; no exceder la dosis recomendada. Libre de lácteos, gluten, soya, maní, frutos secos, huevo, mariscos y pescado; sin conservantes, saborizantes, colorantes ni endulzantes artificiales. Conservar en lugar fresco y seco, a no más de 30 °C. Los complementos alimenticios no deben utilizarse como sustitutos de una dieta variada y equilibrada."
   }
 };
 const productos = [
@@ -265,6 +303,23 @@ const productos = [
     img: "img/oferta-2whey.jpg",
     seleccionSabor:[{label:"Whey Protein 1",sabores:["Vainilla","Chocolate"]},{label:"Whey Protein 2",sabores:["Vainilla","Chocolate"]}],
     uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir según indicación de tu equipo médico.", tn: tn.whey },
+
+  /* Oferta de los multivitamínicos Bariatric Fusion (14-08-2026).
+     Va SOLO en bayas mixtas porque el sabor tropical todavía es
+     "próximamente" (ver bf1 más abajo). CUANDO LLEGUE EL TROPICAL:
+     cambiar el nombre a "2 Multivitamínicos Bariatric Fusion",
+     ajustar "incluye" y descomentar la línea seleccionSabor para
+     que el cliente elija cada frasco, como en las otras ofertas. */
+  { id:"oferta3", tipo:"oferta", marcaTipo:"bf", cat:"oferta", destacado:true, marca:"Bariatric Fusion",
+    nombre:"2 Multivitamínicos Bayas Mixtas",
+    desc:"Llévate 2 envases del multivitamínico completo de Bariatric Fusion. 120 tabletas masticables cada uno: a razón de 1 al día, los dos envases cubren unos 8 meses de suplementación.",
+    incluye:"Multivitamínico Completo Bayas Mixtas — 120 tabletas x2",
+    tags:["240 tabletas en total","1 al día","Marca americana","Sin gluten"],
+    precio:560, precioN:580, ahorro:20,
+    img: BF+"multivit-bayas.jpg",
+    // seleccionSabor:[{label:"Multivitamínico 1",sabores:["Bayas mixtas","Tropical"]},{label:"Multivitamínico 2",sabores:["Bayas mixtas","Tropical"]}],
+    uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
+    tn: tn.bf_multivit },
 
   // BARI&NUTRITION PACKS
   { id:"bp1", tipo:"pack", marcaTipo:"bn", cat:"pack", marca:"Bari&Nutrition",
@@ -514,32 +569,40 @@ const productos = [
     uso:"Disolver 1 scoop (10g) en 250ml de agua al día.",
     tn: tn.lvl_fib },
 
-  /* BARIATRIC FUSION — recién llegados, todavía sin precio.
+  /* BARIATRIC FUSION — información cargada el 14-08-2026.
      ---------------------------------------------------------
-     Llevan "consultar:true": mientras esa línea esté, la tienda
-     muestra "Consultar precio" y el botón manda a WhatsApp en
-     lugar de agregarlos al carrito. Así se ven y generan
-     consultas sin romper el total del pedido.
+     BAYAS MIXTAS (bf2): a la venta, S/290. Antes llevaba
+     "consultar:true"; al ponerle precio pasó a venderse como
+     cualquier otro producto — la función sinPrecio() de
+     index.html lo detecta sola.
 
-     CUANDO TENGAS EL PRECIO: borra la línea consultar:true y
-     escribe precio:XXX — con eso pasan a venderse como
-     cualquier otro producto, sin tocar nada más.
+     TROPICAL (bf1): "proximamente:true". Es stock que todavía
+     no llega. Se queda SIN la línea "precio" a propósito:
+     sinPrecio() devuelve true y por eso NO entra al carrito ni
+     descuadra el total. La tienda le muestra "Próximamente" y
+     un botón que avisa por WhatsApp, no de agregar.
+     CUANDO LLEGUE EL STOCK: borrar "proximamente:true" y
+     escribir precio:290. Con eso vuelve solo a la normalidad.
 
-     No llevan "uso" ni "tn" porque el envase no indica dosis
-     ni tabla; se agregan cuando llegue la información oficial. */
+     La tabla nutricional (tn.bf_multivit) es la misma para los
+     dos: cambia el sabor, no la fórmula. */
   { id:"bf1", tipo:"bf", marcaTipo:"bf", cat:"vitaminas", subcat:"multivit", formato:"tabletas", marca:"Bariatric Fusion",
-    consultar:true,
+    proximamente:true,
     nombre:"Multivitamínico Completo Tropical — 120 tabletas",
-    desc:"Multivitamínico completo en tabletas masticables, sabor tropical. Envase de 120 tabletas. Escríbenos para conocer disponibilidad y precio.",
-    tags:["120 tabletas","Masticables","Sabor tropical","Suplemento dietético"],
-    img: BF+"multivit-tropical.jpg" },
+    desc:"Multivitamínico completo en tabletas masticables, sabor tropical. Envase de 120 tabletas de Bariatric Fusion, marca estadounidense especializada en pacientes bariátricos. Una tableta al día cubre el perfil completo de vitaminas y minerales.",
+    tags:["120 tabletas","Masticables","Sabor tropical","1 al día","Sin gluten"],
+    img: BF+"multivit-tropical.jpg",
+    uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
+    tn: tn.bf_multivit },
 
-  { id:"bf2", tipo:"bf", marcaTipo:"bf", cat:"vitaminas", subcat:"multivit", formato:"tabletas", marca:"Bariatric Fusion",
-    consultar:true,
+  { id:"bf2", tipo:"bf", marcaTipo:"bf", cat:"vitaminas", subcat:"multivit", formato:"tabletas", destacado:true, marca:"Bariatric Fusion",
     nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas",
-    desc:"Multivitamínico completo en tabletas masticables, sabor bayas mixtas. Envase de 120 tabletas. Escríbenos para conocer disponibilidad y precio.",
-    tags:["120 tabletas","Masticables","Sabor bayas mixtas","Suplemento dietético"],
-    img: BF+"multivit-bayas.jpg" }
+    desc:"Multivitamínico completo en tabletas masticables, sabor bayas mixtas. Envase de 120 tabletas de Bariatric Fusion, marca estadounidense especializada en pacientes bariátricos. Una tableta al día cubre el perfil completo de vitaminas y minerales.",
+    tags:["120 tabletas","Masticables","Sabor bayas mixtas","1 al día","Sin gluten"],
+    precio:290,
+    img: BF+"multivit-bayas.jpg",
+    uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
+    tn: tn.bf_multivit }
 ];
 
 /* =========================================================

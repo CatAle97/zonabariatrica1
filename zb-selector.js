@@ -134,6 +134,10 @@
       /* Las ofertas duplican productos del catálogo: se dejan
          fuera para no mostrar lo mismo dos veces. */
       if (p.tipo === 'oferta') return false;
+      /* Lo que aún no tiene stock tampoco se recomienda: esta
+         sección orienta sobre qué usar hoy, y ofrecer algo que
+         no se puede conseguir es una recomendación en falso. */
+      if (p.proximamente) return false;
       if (etapasDe(p).indexOf(sel.etapa) === -1) return false;
 
       var obj = OBJETIVO_POR_FAMILIA[familiaDe(p)];
