@@ -748,14 +748,19 @@
      tablet y móvil por igual. Los 250 ms no son una espera: son
      el margen para que la página termine de pintarse, de forma
      que la burbuja entre con su animación en vez de aparecer de
-     golpe a medio dibujar. En pantalla se percibe inmediato. */
+     golpe a medio dibujar. En pantalla se percibe inmediato.
+
+     SALUDO_DURACION es el tiempo que la burbuja se queda en
+     pantalla antes de irse sola: 5 segundos, igual en escritorio
+     y en móvil. Lo justo para leerla sin que estorbe la página. */
   var SALUDO_ESPERA = 250;
+  var SALUDO_DURACION = 5000;
   var SALUDO_TEXTO =
     '<div class="zb-saludo-t">¡Hola! Soy Zoe 👋</div>' +
     'Puedo ayudarte a ver qué suplementos suelen usarse en tu etapa.' +
     '<span class="zb-saludo-cta">Escríbeme, es gratis →</span>';
 
-  var saludo, saludoTimer;
+  var saludo, saludoTimer, saludoCierreTimer;
 
   /* Una vez por visita. Si la persona lo cierra o abre el chat,
      no vuelve a salir: insistir molesta más de lo que suma. */
@@ -772,6 +777,7 @@
     document.body.classList.remove('zb-con-saludo');
     marcarSaludo();
     clearTimeout(saludoTimer);
+    clearTimeout(saludoCierreTimer);
   }
 
   function mostrarSaludo() {
@@ -786,6 +792,11 @@
     void saludo.offsetWidth;
     saludo.classList.add('visible');
     document.body.classList.add('zb-con-saludo');
+    /* Se va sola a los 5 segundos. Se sale con la misma animación
+       que la X, así que la página queda limpia sin que la persona
+       tenga que cerrar nada. */
+    clearTimeout(saludoCierreTimer);
+    saludoCierreTimer = setTimeout(ocultarSaludo, SALUDO_DURACION);
   }
 
   function programarSaludo() {
