@@ -259,7 +259,8 @@
     /* En el móvil no cabe al lado del avatar: el saludo se coloca
        encima, ocupando el ancho de la pantalla menos los márgenes,
        y el piquito pasa a apuntar hacia abajo. */
-    + '#zb-saludo{bottom:84px;left:16px;right:16px;max-width:none;'
+    + '#zb-saludo{display:none}'
+    + '#zb-saludo-oculto{bottom:84px;left:16px;right:16px;max-width:none;'
     + 'transform:translateY(8px) scale(.97)}'
     + '#zb-saludo.visible{transform:translateY(0) scale(1)}'
     + '#zb-saludo::before{left:20px;bottom:-7px;'
