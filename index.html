@@ -3369,6 +3369,9 @@ a, button, [role="button"], label, summary, input, select, textarea {
    fijo ya no tapa el título de destino. */
 section[id], .productos-header { scroll-margin-top: 78px; }
 
+/* La lupa es solo para el celular: en escritorio no existe. */
+.btn-lupa { display: none; }
+
 @media (max-width: 640px) {
 
   /* --- 1 · HEADER: el buscador se recoge al bajar -----------
@@ -3475,6 +3478,29 @@ section[id], .productos-header { scroll-margin-top: 78px; }
 .btn-carrito .float-tooltip {
   top: calc(100% + 10px); right: 0; bottom: auto; left: auto;
   transform: none;
+}
+
+/* El favorito de la barra fija comparte el peso visual del
+   antiguo botón de WhatsApp, pero en el estilo de la marca. */
+.mp-barra-fav {
+  flex: none; width: 46px; height: 46px; border-radius: var(--r-sm);
+  background: var(--surface); color: var(--text-muted);
+  border: 1px solid var(--border); cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+}
+.mp-barra-fav svg { width: 21px; height: 21px; }
+.mp-barra-fav.activo { color: #EF4444; border-color: #FCA5A5; background: #FEF2F2; }
+.mp-barra-fav.activo svg { fill: #EF4444; }
+
+/* Con la lupa y el carrito en el header, el nombre de la marca
+   ya no cabía y se cortaba en "ZONA…". Al bajar se queda solo
+   el logo ZB, que es lo que identifica de un vistazo. */
+@media (max-width: 640px) {
+  /* A 13px el nombre no entraba y se cortaba en "ZONA BARIÁT…". */
+  .logo-name { font-size: 12px !important; letter-spacing: -0.02em; }
+  header.scrolled .logo-name { display: none; }
+  .header-actions { gap: 6px !important; }
 }
 </style>
 <!-- Meta Pixel Code -->
@@ -4504,9 +4530,9 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <div class="mp-barra-precio-val" id="mBarraPrecio">—</div>
       </div>
       <button class="mp-barra-btn" onclick="agregarDesdeModalCot()">Agregar al carrito</button>
-      <a class="mp-barra-wa" id="mBarraWA" href="#" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-      </a>
+      <button class="mp-barra-fav" id="mBarraFav" type="button" onclick="favDesdeModal(event)" aria-label="Guardar en favoritos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -4831,22 +4857,22 @@ function __(key) { return (T[currentLang] && T[currentLang][key]) || T.es[key] |
 
 function toggleLangMenu(e) {
   e.stopPropagation();
-  document.getElementById('langMenu').classList.toggle('open');
+  const m = document.getElementById('langMenu'); if (m) m.classList.toggle('open');
 }
 document.addEventListener('click', function(e) {
-  if (!e.target.closest('.lang-wrap')) document.getElementById('langMenu').classList.remove('open');
+  if (!e.target.closest('.lang-wrap')) { const m = document.getElementById('langMenu'); if (m) m.classList.remove('open'); }
 });
 
 function cambiarIdioma(lang) {
   currentLang = lang;
   const codes = {es:'ES',en:'EN',de:'DE',it:'IT',pt:'PT',fr:'FR'};
-  document.getElementById('langLabel').textContent = codes[lang];
+  const _lbl = document.getElementById('langLabel'); if (_lbl) _lbl.textContent = codes[lang];
   document.querySelectorAll('.lang-option').forEach(b => b.classList.toggle('active', b.onclick.toString().includes("'"+lang+"'")));
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = __(el.dataset.i18n); });
   document.getElementById('searchInput').placeholder = __('search_ph');
   const sel = document.getElementById('ordenSelect');
   if (sel) { sel.options[0].text = __('sort_default'); sel.options[1].text = __('sort_asc'); sel.options[2].text = __('sort_desc'); }
-  document.getElementById('langMenu').classList.remove('open');
+  { const m = document.getElementById('langMenu'); if (m) m.classList.remove('open'); }
   renderizar(currentCat, null);
   actualizarCartUI();
 }
@@ -6244,18 +6270,12 @@ function calcularDescuentoJulio() {
 
 function actualizarCartUI() {
   const total = carrito.reduce((s, i) => s + i.qty, 0);
-  const sub = calcularSubtotal() - calcularDescuentoJulio();
   const badge = document.getElementById('floatBadge');
-  badge.textContent = total > 0 ? total + ' · S/' + sub : '0';
-  badge.classList.toggle('visible', total > 0);
-  if (total > 0) {
-    badge.style.width = 'auto';
-    badge.style.borderRadius = '10px';
-    badge.style.padding = '0 6px';
-  } else {
-    badge.style.width = '20px';
-    badge.style.borderRadius = '50%';
-    badge.style.padding = '0';
+  /* En el header el contador es un círculo pequeño: muestra solo
+     cuántos productos hay. El monto se ve al abrir el carrito. */
+  if (badge) {
+    badge.textContent = total > 99 ? '99+' : String(total);
+    badge.classList.toggle('visible', total > 0);
   }
   renderizarCartItems();
 }
@@ -7738,7 +7758,7 @@ function pintarPasosUso(p) {
    de WhatsApp que ya calculó abrirModal(). */
 function pintarBarraCompra(p) {
   const val = document.getElementById('mBarraPrecio');
-  const wa = document.getElementById('mBarraWA');
+  /* el enlace de WhatsApp se retiró de la barra: solo carrito y favorito */
   const consultar = sinPrecio(p);
 
   if (val) {
@@ -7748,12 +7768,6 @@ function pintarBarraCompra(p) {
 
   /* Arma su propio enlace en vez de copiar el de #mWA: ese aún
      conserva el href del producto anterior cuando se pinta la barra. */
-  if (wa) {
-    wa.href = consultar
-      ? enlaceConsulta(p)
-      : 'https://wa.me/' + WA + '?text=' +
-        encodeURIComponent('Hola! Quiero pedir: ' + p.nombre + ' — S/ ' + p.precio);
-  }
 }
 
 /* El corazón del modal refleja el estado real de favoritos. */
@@ -7764,6 +7778,8 @@ function sincronizarFavModal(p) {
   btn.classList.toggle('activo', activo);
   btn.querySelector('span').textContent = activo ? 'Guardado' : 'Favorito';
   btn.setAttribute('aria-pressed', String(activo));
+  const bf = document.getElementById('mBarraFav');
+  if (bf) { bf.classList.toggle('activo', activo); bf.setAttribute('aria-pressed', String(activo)); }
 }
 
 /* Usa la MISMA función de favoritos del catálogo: no se duplica
@@ -7979,19 +7995,6 @@ function irAFaq() {
   };
 })();
 
-/* Buscador en celular: al bajar, el buscador se recoge para dejar
-   sitio al producto. La lupa del header lo vuelve a abrir y se
-   cierra sola cuando el cliente termina de escribir. */
-function abrirBusquedaMovil() {
-  const header = document.querySelector('header');
-  const input  = document.getElementById('searchInput');
-  if (!header || !input) return;
-  header.classList.add('buscando');
-  setTimeout(function () { input.focus(); }, 180);
-  input.addEventListener('blur', function () {
-    setTimeout(function () { header.classList.remove('buscando'); }, 120);
-  }, { once: true });
-}
 
 /* Entradas desde otras páginas mediante la URL:
      /?ver=blog        → abre el BariBlog (Centro de Recursos)

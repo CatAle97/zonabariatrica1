@@ -1,0 +1,98 @@
+/* ============================================================
+   ZONA BARIÁTRICA — Vista de celular para las páginas de
+   categoría (Proteínas, Vitaminas, Colágeno & Fibra, Packs).
+
+   Antes cada producto ocupaba pantalla y media: el cliente veía
+   uno solo y tenía que arrastrar mucho para comparar. Aquí pasa
+   a dos por fila, con la misma información pero medida para una
+   pantalla de celular.
+
+   Va en archivo aparte a propósito: las fichas de producto
+   comparten zb-contenido.css y no deben verse afectadas.
+   ============================================================ */
+
+@media (max-width: 640px) {
+
+  /* --- Rejilla: dos productos por fila --------------------- */
+  .grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px 10px !important;
+    padding: 14px var(--gutter) 40px !important;
+  }
+
+  .card img { height: 132px !important; padding: 10px 8px 2px; object-fit: contain; }
+  .card-body { padding: 10px 11px 12px !important; gap: 6px; }
+
+  /* Nombre a dos líneas fijas: así las tarjetas de una misma
+     fila quedan parejas y el precio siempre cae a la misma altura. */
+  .card-body h2 {
+    font-size: 13.5px !important; line-height: 1.35; min-height: 2.7em;
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  /* La descripción completa se queda en el HTML (Google la sigue
+     leyendo); en pantalla se muestran las dos primeras líneas. */
+  .card-body .desc {
+    font-size: 11.5px !important; line-height: 1.45; margin: 0;
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  /* De las etiquetas solo entran las dos primeras: el resto es
+     ruido en una tarjeta de 170 px. */
+  .tags { gap: 4px; }
+  .tags .tag { font-size: 10px; padding: 3px 7px; }
+  .tags .tag:nth-child(n+3) { display: none; }
+
+  .precio { font-size: 19px !important; }
+
+  /* Botones apilados: WhatsApp manda, "Ver producto" acompaña. */
+  .acciones { flex-direction: column; gap: 6px; }
+  .acciones .btn-wa,
+  .acciones .btn-tienda {
+    width: 100%; justify-content: center;
+    font-size: 12px; padding: 0 8px; min-height: 42px;
+  }
+  .acciones .btn-wa svg { width: 15px; height: 15px; }
+
+  /* --- Cabecera: fondo sólido -------------------------------
+     Con el fondo translúcido se veía el producto por debajo y
+     los nombres quedaban ilegibles al desplazarse. */
+  header { background: #fff !important; }
+
+  /* --- Texto de entrada: más corto en pantalla -------------- */
+  .hero { padding: 20px var(--gutter) 8px !important; }
+  .hero p { font-size: 14px !important; line-height: 1.65; }
+}
+
+/* Celulares angostos (iPhone SE y similares) */
+@media (max-width: 380px) {
+  .card img { height: 116px !important; }
+  .precio { font-size: 17.5px !important; }
+  .card-body h2 { font-size: 12.5px !important; }
+}
+
+/* --- Packs: el detalle de "Incluye" ------------------------
+   En los packs grandes esa lista llegaba a ocho líneas y
+   empujaba el precio fuera de la pantalla. En celular se
+   muestran las tres primeras; el detalle completo sigue en la
+   ficha del pack. */
+@media (max-width: 640px) {
+  .card-body .incluye {
+    font-size: 11.5px !important; line-height: 1.5;
+    padding: 8px 10px !important; margin: 0;
+    display: -webkit-box; -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  /* "Pedir por WhatsApp" se partía en dos líneas dentro de la
+     tarjeta angosta. */
+  .acciones .btn-wa { font-size: 11px; gap: 5px; }
+  .acciones .btn-wa span { white-space: nowrap; }
+  .acciones .btn-tienda { font-size: 11.5px; }
+
+  /* El ahorro y el precio tachado, en una sola línea. */
+  .precio-old { font-size: 12.5px !important; }
+  .ahorro { font-size: 10.5px !important; padding: 2px 7px !important; }
+}
