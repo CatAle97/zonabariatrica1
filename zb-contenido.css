@@ -325,3 +325,47 @@
   .zb-faq summary { min-height: 44px; }
   .zb-links a { min-height: 44px; }
 }
+
+/* --- Bloque SEO bajo el catálogo (25-08-2026) --------------
+   Texto corto que refuerza la palabra clave de la categoría y
+   enlaza con las otras dos. Deliberadamente discreto: tamaño
+   pequeño y color apagado para que no compita con las tarjetas
+   ni empuje los productos hacia abajo en móvil. */
+.zb-seo {
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  padding-bottom: 0;
+  border-top: 1px solid var(--border-light);
+}
+.zb-seo h2 {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text);
+  margin-bottom: var(--s-2);
+}
+.zb-seo p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-muted);
+  max-width: 760px;
+}
+.zb-seo .zb-seo-links {
+  margin-top: var(--s-3);
+  font-size: 14px;
+}
+.zb-seo .zb-seo-links a {
+  color: var(--blue);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.zb-seo .zb-seo-links a:hover {
+  color: var(--blue-hover);
+  border-bottom-color: currentColor;
+}
+.zb-seo .zb-seo-links span { color: var(--text-light); margin: 0 6px; }
+
+@media (max-width: 768px), (pointer: coarse) {
+  .zb-seo .zb-seo-links a { display: inline-block; padding: 6px 0; }
+}
