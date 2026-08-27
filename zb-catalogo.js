@@ -284,7 +284,8 @@ const tn = {
 };
 const productos = [
   // OFERTA ESPECIAL
-  { id:"oferta1", tipo:"oferta", marcaTipo:"bn", cat:"oferta", destacado:true, marca:"Bari&Nutrition",
+  { id:"oferta1", tipo:"oferta", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"oferta", destacado:true, marca:"Bari&Nutrition",
     nombre:"Pack x2 Proteínas Líquidas",
     desc:"Llévate 2 proteínas líquidas para tu recuperación post cirugía bariátrica. Sin lactosa, enriquecidas en fibra, aminoácidos, vitaminas y minerales.",
     incluye:"Proteína líquida x2 · Sabores a elección: Maracumango o Fresa",
@@ -294,7 +295,8 @@ const productos = [
     seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
     uso:"Consume según indicación de tu equipo médico. Ideal para la etapa post operatoria.", tn:null },
 
-  { id:"oferta2", tipo:"oferta", marcaTipo:"bn", cat:"oferta", destacado:true, fiestas:true, marca:"Bari&Nutrition",
+  { id:"oferta2", tipo:"oferta", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"oferta", destacado:true, fiestas:true, marca:"Bari&Nutrition",
     nombre:"Pack x2 Proteínas Whey",
     desc:"Promo de julio: llévate 2 Whey Protein de 1.5kg. 30g de proteína por servicio, sin gluten, sin lactosa y 0% azúcar.",
     incluye:"Whey Protein 1.5kg x2 · Sabores a elección: Vainilla o Chocolate",
@@ -310,7 +312,8 @@ const productos = [
      ajustar "incluye" y descomentar la línea seleccionSabor para
      que el cliente elija el sabor de cada frasco, como en las otras
      ofertas. El nombre ya no menciona el sabor, no hay que tocarlo. */
-  { id:"oferta3", tipo:"oferta", marcaTipo:"bf", cat:"oferta", destacado:true, marca:"Bariatric Fusion",
+  { id:"oferta3", tipo:"oferta", marcaTipo:"bf",
+    brand:"Bariatric Fusion", eligibleForBnQuantityDiscount:false, cat:"oferta", destacado:true, marca:"Bariatric Fusion",
     nombre:"Pack x2 Multivitamínicos Bariatric Fusion",
     desc:"Llévate 2 envases del multivitamínico completo de Bariatric Fusion. 120 tabletas masticables cada uno: a razón de 1 al día, los dos envases cubren unos 8 meses de suplementación.",
     incluye:"Multivitamínico Completo Bayas Mixtas — 120 tabletas x2",
@@ -322,7 +325,8 @@ const productos = [
     tn: tn.bf_multivit },
 
   // BARI&NUTRITION PACKS
-  { id:"bp1", tipo:"pack", marcaTipo:"bn", cat:"pack", marca:"Bari&Nutrition",
+  { id:"bp1", tipo:"pack", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"Bari&Nutrition",
     nombre:"Pack Proteína Líquida",
     desc:"Combinación ideal para la etapa de transición líquida.",
     incluye:"Proteína líquida x2 · Gomitas multivitamínicas x1 · Gomitas B12 + ácido fólico x1 · Fibra soluble x1",
@@ -332,7 +336,8 @@ const productos = [
     seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
     uso:"Combina cada producto según indicación de tu equipo médico. Consulta las dosis en cada envase.", tn:null },
 
-  { id:"bp2", tipo:"pack", marcaTipo:"bn", cat:"pack", marca:"Bari&Nutrition",
+  { id:"bp2", tipo:"pack", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"Bari&Nutrition",
     nombre:"Pack Proteína en Polvo + Vitaminas",
     desc:"Ideal cuando ya puedes consumir proteína en polvo. Cubre vitaminas y minerales esenciales.",
     incluye:"Proteína en polvo x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1",
@@ -342,7 +347,8 @@ const productos = [
     seleccionSabor:[{label:"Proteína en Polvo (Whey)",sabores:["Vainilla","Chocolate"]}],
     uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
 
-  { id:"bp3", tipo:"pack", marcaTipo:"bn", cat:"pack", marca:"Bari&Nutrition",
+  { id:"bp3", tipo:"pack", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"Bari&Nutrition",
     nombre:"Pack Energía y Cabello",
     desc:"Para quienes experimentan pérdida de cabello y quieren reforzar biotina y hierro.",
     incluye:"Gomitas biotina x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1",
@@ -351,7 +357,8 @@ const productos = [
     img: "img/bn-pack-energia-cabello.jpg",
     uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
 
-  { id:"bp4", tipo:"pack", marcaTipo:"bn", cat:"pack", destacado:true, marca:"Bari&Nutrition",
+  { id:"bp4", tipo:"pack", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"pack", destacado:true, marca:"Bari&Nutrition",
     nombre:"Pack Suplementación Completa",
     desc:"El pack más completo de Bari&Nutrition. Cubre proteína líquida, proteína en polvo, vitaminas, hierro, biotina y fibra.",
     incluye:"Proteína líquida x1 · Proteína en polvo x1 · Gomitas biotina x1 · Gomitas multivitamínicas x1 · Gomitas hierro + vit C x1 · Gomitas B12 + ácido fólico x1 · Fibra soluble x1",
@@ -362,7 +369,8 @@ const productos = [
     uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
 
   // LVL DRINK PACKS
-  { id:"lp1", tipo:"pack", marcaTipo:"lvl", cat:"pack", destacado:true, marca:"LVL Drink",
+  { id:"lp1", tipo:"pack", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"pack", destacado:true, marca:"LVL Drink",
     nombre:"Pack Completo LVL",
     desc:"El pack más completo de LVL Drink. Proteína, colágeno, fibra y shaker oficial en un solo pedido.",
     incluye:"Proteína en Polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g · Shaker oficial",
@@ -372,7 +380,8 @@ const productos = [
     seleccionSabor:[{label:"Proteína en Polvo HIGH ISO",sabores:["Vainilla","Chocolate"]}],
     uso:"Consulta las dosis individuales en cada envase.", tn:null },
 
-  { id:"lp2", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+  { id:"lp2", tipo:"pack", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"LVL Drink",
     nombre:"Pack Proteína + Colágeno + Shaker",
     desc:"Proteína en Polvo HIGH ISO + Colágeno Hidrolizado SKINFINITY + Shaker oficial LVL.",
     incluye:"Proteína en Polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Shaker oficial",
@@ -382,7 +391,8 @@ const productos = [
     seleccionSabor:[{label:"Proteína en Polvo HIGH ISO",sabores:["Vainilla","Chocolate"]}],
     uso:"Consulta las dosis individuales en cada envase.", tn:null },
 
-  { id:"lp3", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+  { id:"lp3", tipo:"pack", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"LVL Drink",
     nombre:"Pack Proteína + Fibra + Shaker",
     desc:"Proteína en Polvo HIGH ISO + Fibra Manzana Verde + Shaker oficial LVL.",
     incluye:"Proteína en Polvo 1kg (sabor a elegir) · Fibra Manzana Verde 200g · Shaker oficial",
@@ -392,7 +402,8 @@ const productos = [
     seleccionSabor:[{label:"Proteína en Polvo HIGH ISO",sabores:["Vainilla","Chocolate"]}],
     uso:"Consulta las dosis individuales en cada envase.", tn:null },
 
-  { id:"lp4", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+  { id:"lp4", tipo:"pack", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"LVL Drink",
     nombre:"Pack Colágeno + Fibra + Shaker",
     desc:"Colágeno Hidrolizado SKINFINITY + Fibra Manzana Verde + Shaker oficial LVL.",
     incluye:"Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g · Shaker oficial",
@@ -401,7 +412,8 @@ const productos = [
     img: LVL+"pack-colageno-fibra.jpg",
     uso:"Consulta las dosis individuales en cada envase.", tn:null },
 
-  { id:"lp5", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+  { id:"lp5", tipo:"pack", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"LVL Drink",
     nombre:"Pack Doble Fibra + Shaker",
     desc:"Dos potes de Fibra Manzana Verde + Shaker oficial LVL. Ideal para el cuidado intestinal.",
     incluye:"Fibra Manzana Verde x2 (200g c/u) · Shaker oficial",
@@ -410,7 +422,8 @@ const productos = [
     img: LVL+"pack-doble-fibra.jpg",
     uso:"Disolver 1 scoop (10g) en 250ml de agua al día.", tn:null },
 
-  { id:"lp6", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+  { id:"lp6", tipo:"pack", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"LVL Drink",
     nombre:"Pack Doble Colágeno + Shaker",
     desc:"Dos potes de Colágeno Hidrolizado SKINFINITY + Shaker oficial LVL.",
     incluye:"Colágeno Hidrolizado x2 (500g c/u) · Shaker oficial",
@@ -419,7 +432,8 @@ const productos = [
     img: LVL+"pack-doble-colageno.jpg",
     uso:"Disolver 1 scoop (12g) en 250ml de agua al día.", tn:null },
 
-  { id:"lp7", tipo:"pack", marcaTipo:"lvl", cat:"pack", marca:"LVL Drink",
+  { id:"lp7", tipo:"pack", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"LVL Drink",
     nombre:"Pack 2 Proteínas + Shaker",
     desc:"Proteína Chocolate + Proteína Vainilla + Shaker oficial. Ambos sabores para variar.",
     incluye:"Proteína Chocolate 1kg · Proteína Vainilla 1kg · Shaker oficial",
@@ -429,7 +443,8 @@ const productos = [
     uso:"Disolver 1 scoop (40g) en 250ml de agua al día.", tn:null },
 
   // BARI&NUTRITION INDIVIDUALES
-  { id:"bi1", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"polvo", destacado:true, marca:"Bari&Nutrition",
+  { id:"bi1", tipo:"bn", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"proteina", subcat:"polvo", destacado:true, marca:"Bari&Nutrition",
     sabores:["Vainilla","Chocolate"], saborPredeterminado:"Vainilla",
     nombre:"Whey Protein Vainilla 1.5kg",
     desc:"Proteína en polvo hidrolizada a base de suero de leche deslactosada. 30g de proteína por servicio. Enriquecida con vitaminas y minerales.",
@@ -440,7 +455,8 @@ const productos = [
     uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir preferentemente como suplemento proteico según indicación médica.",
     tn: tn.whey },
 
-  { id:"bi2", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"polvo", marca:"Bari&Nutrition",
+  { id:"bi2", tipo:"bn", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"proteina", subcat:"polvo", marca:"Bari&Nutrition",
     sabores:["Vainilla","Chocolate"], saborPredeterminado:"Chocolate",
     nombre:"Whey Protein Chocolate 1.5kg",
     desc:"Proteína en polvo hidrolizada a base de suero de leche deslactosada. 30g de proteína por servicio. Enriquecida con vitaminas y minerales.",
@@ -454,7 +470,8 @@ const productos = [
     uso:"Disolver 3 scoops (48g) en 250ml de agua o leche.",
     tn: tn.whey },
 
-  { id:"bi3", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"liquida", destacado:true, marca:"Bari&Nutrition",
+  { id:"bi3", tipo:"bn", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"proteina", subcat:"liquida", destacado:true, marca:"Bari&Nutrition",
     sabores:["Fresa","Maracumango"], saborPredeterminado:"Fresa",
     nombre:"Liquid Protein Fresa 1LT",
     desc:"Proteína líquida lista para consumir. 20g de proteína por porción de 30ml. Sin lactosa, 0% azúcar. Enriquecida con fibra, aminoácidos, vitaminas y minerales.",
@@ -465,7 +482,8 @@ const productos = [
     uso:"Tomar 30ml por porción. Hasta 33 porciones por envase de 1 litro.",
     tn: tn.liquid },
 
-  { id:"bi4", tipo:"bn", marcaTipo:"bn", cat:"proteina", subcat:"liquida", destacado:true, marca:"Bari&Nutrition",
+  { id:"bi4", tipo:"bn", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"proteina", subcat:"liquida", destacado:true, marca:"Bari&Nutrition",
     sabores:["Maracumango","Fresa"], saborPredeterminado:"Maracumango",
     nombre:"Liquid Protein Maracumango 1LT",
     desc:"Proteína líquida lista para consumir. 20g de proteína por porción de 30ml. Sin lactosa, 0% azúcar. Enriquecida con fibra, aminoácidos, vitaminas y minerales.",
@@ -476,7 +494,8 @@ const productos = [
     uso:"Tomar 30ml por porción. Hasta 33 porciones por envase de 1 litro.",
     tn: tn.liquid },
 
-  { id:"bi5", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"biotina", formato:"gomitas", destacado:true, marca:"Bari&Nutrition",
+  { id:"bi5", tipo:"bn", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"vitaminas", subcat:"biotina", formato:"gomitas", destacado:true, marca:"Bari&Nutrition",
     nombre:"Gomitas Biotina 10,000mcg — 90 und",
     desc:"Gomitas de glicerina sabor durazno. 10,000 mcg de biotina por porción. Apoya la salud del cabello, piel y uñas. Sin azúcares añadidos, sin colorantes artificiales.",
     tags:["10,000 mcg biotina","Sabor durazno","Sin azúcares","Sin colorantes"],
@@ -486,7 +505,8 @@ const productos = [
     uso:"2 gomitas al día, preferiblemente con una comida. No exceda la dosis recomendada.",
     tn: tn.biotina },
 
-  { id:"bi6", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"hierro", formato:"gomitas", marca:"Bari&Nutrition",
+  { id:"bi6", tipo:"bn", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"vitaminas", subcat:"hierro", formato:"gomitas", marca:"Bari&Nutrition",
     nombre:"Gomitas Hierro 45mg + Vitamina C — 30 und",
     desc:"Gomitas de gelatina sabor naranja. 45mg de hierro (250% VD) + 60mg de vitamina C. La vitamina C potencia la absorción del hierro.",
     tags:["45mg hierro","Vitamina C 60mg","250% VD","Sabor naranja","Sin azúcares"],
@@ -496,7 +516,8 @@ const productos = [
     uso:"1 gomita masticable al día. Vía oral.",
     tn: tn.hierro },
 
-  { id:"bi7", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"multivit", formato:"gomitas", marca:"Bari&Nutrition",
+  { id:"bi7", tipo:"bn", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"vitaminas", subcat:"multivit", formato:"gomitas", marca:"Bari&Nutrition",
     nombre:"Gomitas Multivitamínico — 90 und",
     desc:"Gomitas multisabor con 23 vitaminas y minerales esenciales. Fórmula completa para cubrir los requerimientos nutricionales post-quirúrgicos.",
     tags:["23 vitaminas y minerales","Multisabor","Sin azúcares","Sin colorantes"],
@@ -506,7 +527,8 @@ const productos = [
     uso:"4 gomitas al día.",
     tn: tn.multivit },
 
-  { id:"bi8", tipo:"bn", marcaTipo:"bn", cat:"vitaminas", subcat:"b12", formato:"gomitas", destacado:true, marca:"Bari&Nutrition",
+  { id:"bi8", tipo:"bn", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"vitaminas", subcat:"b12", formato:"gomitas", destacado:true, marca:"Bari&Nutrition",
     nombre:"Gomitas B12 + Ácido Fólico — 90 und",
     desc:"Gomitas sabor piña. 1,000 mcg de vitamina B12 como metilcobalamina (41,667% VD) + ácido fólico. Esencial en el post-operatorio bariátrico.",
     tags:["1,000 mcg B12","41,667% VD","Ácido fólico","Sabor piña","Sin azúcares"],
@@ -516,7 +538,8 @@ const productos = [
     uso:"3 gomitas masticables al día.",
     tn: tn.b12 },
 
-  { id:"bi9", tipo:"bn", marcaTipo:"bn", cat:"colageno", subcat:"fibra", marca:"Bari&Nutrition",
+  { id:"bi9", tipo:"bn", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"colageno", subcat:"fibra", marca:"Bari&Nutrition",
     nombre:"Fibra Soluble 320g",
     desc:"Fibra soluble a base de maíz, de origen francés. Rápida absorción. Ayuda en el tratamiento del estreñimiento y mantiene la regularidad intestinal.",
     tags:["Base de maíz","Origen francés","Rápida absorción","Sin azúcar","64 servicios"],
@@ -527,7 +550,8 @@ const productos = [
     tn: tn.fibra_bn },
 
   // LVL DRINK INDIVIDUALES
-  { id:"li1", tipo:"lvl", marcaTipo:"lvl", cat:"proteina", subcat:"polvo", destacado:true, marca:"LVL Drink",
+  { id:"li1", tipo:"lvl", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", destacado:true, marca:"LVL Drink",
     sabores:["Vainilla","Chocolate"], saborPredeterminado:"Vainilla",
     nombre:"Proteína Vainilla HIGH ISO 1kg",
     desc:"Proteína concentrada de suero de leche (WPC). 27g de proteína por porción. Endulzada con stevia natural, sin azúcares añadidos, sin gluten. Apta para nutrición bariátrica.",
@@ -538,7 +562,8 @@ const productos = [
     uso:"Disolver 1 scoop (40g) en 250ml de agua. Consumir una vez al día.",
     tn: tn.lvl_pro },
 
-  { id:"li2", tipo:"lvl", marcaTipo:"lvl", cat:"proteina", subcat:"polvo", destacado:true, marca:"LVL Drink",
+  { id:"li2", tipo:"lvl", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", destacado:true, marca:"LVL Drink",
     sabores:["Vainilla","Chocolate"], saborPredeterminado:"Chocolate",
     nombre:"Proteína Chocolate HIGH ISO 1kg",
     desc:"Proteína concentrada de suero de leche (WPC). 27g de proteína por porción. Sabor a chocolate 100% cacao, endulzado con stevia natural. Sin azúcares añadidos, sin gluten.",
@@ -549,7 +574,8 @@ const productos = [
     uso:"Disolver 1 scoop (40g) en 250ml de agua. Consumir una vez al día.",
     tn: tn.lvl_pro },
 
-  { id:"li3", tipo:"lvl", marcaTipo:"lvl", cat:"colageno", subcat:"colageno", marca:"LVL Drink",
+  { id:"li3", tipo:"lvl", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"colageno", subcat:"colageno", marca:"LVL Drink",
     nombre:"Colágeno SKINFINITY 500g",
     desc:"Colágeno hidrolizado con camu camu, arándano y 10,000 mcg de biotina. Para el cuidado de piel, cabello y uñas. Sabor natural arándano, sin azúcares añadidos.",
     tags:["9g colágeno","10,000 mcg biotina","Camu camu","Sabor arándano","Apto bariátrico"],
@@ -559,7 +585,8 @@ const productos = [
     uso:"Disolver 1 scoop (12g) en 250ml de agua al día. Se recomienda consumir en ayunas o antes de acostarse.",
     tn: tn.lvl_col },
 
-  { id:"li4", tipo:"lvl", marcaTipo:"lvl", cat:"colageno", subcat:"fibra", marca:"LVL Drink",
+  { id:"li4", tipo:"lvl", marcaTipo:"lvl",
+    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"colageno", subcat:"fibra", marca:"LVL Drink",
     nombre:"Fibra GET OUT Manzana Verde 200g",
     desc:"Fibra natural de inulina. Mejora la digestión, promueve la salud intestinal y favorece la sensación de saciedad. Sabor manzana verde, sin azúcares añadidos.",
     tags:["6g fibra","Fibra inulina","Sabor manzana verde","Sin azúcares","Apto bariátrico"],
@@ -586,7 +613,8 @@ const productos = [
 
      La tabla nutricional (tn.bf_multivit) es la misma para los
      dos: cambia el sabor, no la fórmula. */
-  { id:"bf1", tipo:"bf", marcaTipo:"bf", cat:"vitaminas", subcat:"multivit", formato:"tabletas", marca:"Bariatric Fusion",
+  { id:"bf1", tipo:"bf", marcaTipo:"bf",
+    brand:"Bariatric Fusion", eligibleForBnQuantityDiscount:false, cat:"vitaminas", subcat:"multivit", formato:"tabletas", marca:"Bariatric Fusion",
     proximamente:true,
     nombre:"Multivitamínico Completo Tropical — 120 tabletas",
     desc:"Multivitamínico completo en tabletas masticables, sabor tropical. Envase de 120 tabletas de Bariatric Fusion, marca estadounidense especializada en pacientes bariátricos. Una tableta al día cubre el perfil completo de vitaminas y minerales.",
@@ -595,15 +623,42 @@ const productos = [
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit },
 
-  { id:"bf2", tipo:"bf", marcaTipo:"bf", cat:"vitaminas", subcat:"multivit", formato:"tabletas", destacado:true, marca:"Bariatric Fusion",
+  { id:"bf2", tipo:"bf", marcaTipo:"bf",
+    brand:"Bariatric Fusion", eligibleForBnQuantityDiscount:false, cat:"vitaminas", subcat:"multivit", formato:"tabletas", destacado:true, marca:"Bariatric Fusion",
     nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas",
     desc:"Multivitamínico completo en tabletas masticables, sabor bayas mixtas. Envase de 120 tabletas de Bariatric Fusion, marca estadounidense especializada en pacientes bariátricos. Una tableta al día cubre el perfil completo de vitaminas y minerales.",
     tags:["120 tabletas","Masticables","Sabor bayas mixtas","1 al día","Sin gluten"],
     precio:290,
-    img: "img/oferta-2multivit.jpg",
+    img: BF+"multivit-bayas.jpg",
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit }
 ];
+
+/* =========================================================
+   REGLAS COMERCIALES POR PRODUCTO
+   ---------------------------------------------------------
+   Dos propiedades por producto mandan sobre el descuento por
+   cantidad de Bari&Nutrition (ver DESCUENTO_BN en index.html):
+
+     brand                        -> marca comercial
+     eligibleForBnQuantityDiscount -> si suma para el descuento
+
+   Solo los INDIVIDUALES B&N suman. Los packs y las ofertas 2x
+   ya traen su propio precio especial, y las otras marcas
+   (LVL Drink, Bariatric Fusion) no participan.
+
+   Esta red de seguridad rellena las dos propiedades si algún
+   producto nuevo se agrega sin ellas, para que nunca quede un
+   producto sin regla. Si las pones a mano en el producto,
+   mandan las tuyas. */
+productos.forEach(p => {
+  if (p.brand === undefined) {
+    p.brand = { bn: 'B&N', lvl: 'LVL Drink', bf: 'Bariatric Fusion' }[p.marcaTipo] || p.marca;
+  }
+  if (p.eligibleForBnQuantityDiscount === undefined) {
+    p.eligibleForBnQuantityDiscount = (p.marcaTipo === 'bn' && p.tipo === 'bn');
+  }
+});
 
 /* =========================================================
    SLUGS DE LAS FICHAS DE PRODUCTO (/producto/<slug>)

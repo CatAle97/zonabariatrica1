@@ -3617,9 +3617,15 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     <div class="cart-empty" data-i18n="cart_empty">Tu carrito está vacío.<br>Agrega productos para comenzar.</div>
   </div>
   <div id="cartAhorro" style="display:none;background:#f0fdf4;border-top:1px solid #bbf7d0;padding:10px 18px;font-size:12.5px;color:#15803d;font-weight:500;line-height:1.5"></div>
+  <!-- Progreso del descuento B&N: cuánto falta para el siguiente tramo -->
+  <div id="cartProgresoBN" style="display:none;background:var(--blue-light);border-top:1px solid #BFDBFE;padding:10px 18px;font-size:12.5px;color:var(--blue);font-weight:600;line-height:1.5"></div>
   <div class="cart-footer" id="cartFooter" style="display:none">
+    <div id="cartSubtotalFila" style="display:none;justify-content:space-between;font-size:13px;color:var(--text-muted);margin-bottom:6px;">
+      <span>Subtotal</span>
+      <span id="cartSubtotalVal">S/ 0</span>
+    </div>
     <div id="cartDescuentoFila" style="display:none;justify-content:space-between;font-size:13px;font-weight:600;color:#15803d;margin-bottom:8px;">
-      <span id="cartDescuentoLabel">Descuento Julio Bariátrico</span>
+      <span id="cartDescuentoLabel">Descuento B&amp;N</span>
       <span id="cartDescuentoVal">-S/ 0</span>
     </div>
     <div class="cart-subtotal">
@@ -3723,7 +3729,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
           <span>Subtotal</span><span id="formSubtotal">S/ 0</span>
         </div>
         <div id="formDescuentoFila" style="display:none;justify-content:space-between;font-size:13px;font-weight:600;color:#15803d;margin-bottom:4px;">
-          <span id="formDescuentoLabel">Descuento Julio Bariátrico</span><span id="formDescuentoVal">-S/ 0</span>
+          <span id="formDescuentoLabel">Descuento B&amp;N</span><span id="formDescuentoVal">-S/ 0</span>
         </div>
         <div id="formRecargoFila" style="display:none;justify-content:space-between;font-size:13px;color:#dc2626;margin-bottom:4px;">
           <span>Recargo tarjeta (4%)</span><span id="formRecargoVal">S/ 0.00</span>
@@ -3759,7 +3765,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <span id="resumenSubtotal">S/ 0</span>
       </div>
       <div id="resumenDescuentoFila" style="display:none;justify-content:space-between;font-size:13px;font-weight:600;color:#15803d;padding:3px 0;">
-        <span id="resumenDescuentoLabel">Descuento Julio Bariátrico</span>
+        <span id="resumenDescuentoLabel">Descuento B&amp;N</span>
         <span id="resumenDescuentoVal">-S/ 0</span>
       </div>
       <div id="resumenRecargoFila" style="display:none;justify-content:space-between;font-size:13px;color:#dc2626;padding:3px 0;">
@@ -6238,40 +6244,61 @@ function calcularSubtotal() {
   }, 0);
 }
 
-/* ── PROMO JULIO BARIÁTRICO 2026 ──────────────────────────────
-   Descuento automático sobre productos individuales Bari&Nutrition.
-   NO aplica a: LVL Drink, packs armados, ni ofertas 2x (esas ya
-   traen su propio precio especial y no se acumulan).
-   Se apaga sola al terminar julio 2026 — no hay que tocar nada. */
-const PROMO_JULIO = {
-  nombre: 'Descuento Julio Bariátrico',
-  desde: '2026-07-01',
-  hasta: '2026-07-31',
-  tramos: [ { min: 3, desc: 25 }, { min: 2, desc: 15 } ]
+/* ── DESCUENTO B&N POR CANTIDAD ────────────────────────────────
+   Descuento fijo en soles (nunca porcentaje) según cuántas
+   UNIDADES individuales Bari&Nutrition hay en el carrito:
+
+       2 unidades  ->  -S/ 15
+       3 unidades  ->  -S/ 25
+       4 o más     ->  -S/ 40   (de ahí no sube)
+
+   Quién suma y quién no lo decide la propiedad
+   eligibleForBnQuantityDiscount de cada producto (zb-catalogo.js),
+   nunca el nombre. Los packs y las ofertas 2x ya traen su precio
+   especial: no suman y no se acumulan descuentos. Las otras marcas
+   (LVL Drink, Bariatric Fusion) tampoco participan.
+
+   El descuento no se anuncia en la página: se aplica solo en el
+   carrito. La promoción se comunica por publicidad.
+
+   PARA CAMBIAR LOS MONTOS: edita solo DESCUENTO_BN. El carrito, el
+   resumen de pago y el mensaje de WhatsApp leen de aquí, así que se
+   actualizan solos. */
+const DESCUENTO_BN = {
+  nombre: 'Descuento B&N',
+  tramos: [ { min: 4, desc: 40 }, { min: 3, desc: 25 }, { min: 2, desc: 15 } ]
 };
 
-function promoJulioVigente() {
-  const hoy = new Date();
-  const f = hoy.getFullYear() + '-' +
-            String(hoy.getMonth() + 1).padStart(2, '0') + '-' +
-            String(hoy.getDate()).padStart(2, '0');
-  return f >= PROMO_JULIO.desde && f <= PROMO_JULIO.hasta;
-}
-
-// Solo tipo "bn" = individuales Bari&Nutrition. Los packs son tipo "pack"
-// y las ofertas 2x son tipo "oferta", así que quedan fuera por definición.
-function contarUnidadesBNIndividuales() {
-  return carrito.reduce((s, i) => {
+/* Suma las unidades elegibles. Cuenta cantidades reales, no líneas
+   del carrito: una whey con cantidad 2 son 2 unidades. */
+function contarUnidadesBN(items) {
+  const lista = items || carrito;
+  return lista.reduce((n, i) => {
     const p = productos.find(x => x.id === i.id);
-    return s + (p && p.tipo === 'bn' ? i.qty : 0);
+    return n + (p && p.eligibleForBnQuantityDiscount ? i.qty : 0);
   }, 0);
 }
 
-function calcularDescuentoJulio() {
-  if (!promoJulioVigente()) return 0;
-  const u = contarUnidadesBNIndividuales();
-  const tramo = PROMO_JULIO.tramos.find(t => u >= t.min);
+/* ÚNICA función que calcula el descuento: todo lo demás la llama. */
+function calcularDescuentoBN(items) {
+  const u = contarUnidadesBN(items);
+  const tramo = DESCUENTO_BN.tramos.find(t => u >= t.min);
   return tramo ? tramo.desc : 0;
+}
+
+/* Mensaje de progreso del carrito: cuánto ahorra ya y cuánto le
+   falta para el siguiente tramo. Los montos salen de DESCUENTO_BN. */
+function mensajeProgresoBN() {
+  const u = contarUnidadesBN();
+  if (u === 0) return '';
+  const actual = calcularDescuentoBN();
+  const orden = DESCUENTO_BN.tramos.slice().sort((a, b) => a.min - b.min);
+  const siguiente = orden.find(t => t.min > u);
+  if (!siguiente) return '¡Ahorras S/' + actual + ' en tu compra de productos B&N!';
+  const faltan = siguiente.min - u;
+  const yaAhorras = actual > 0 ? '¡Ahorras S/' + actual + '! ' : '';
+  return yaAhorras + 'Agrega ' + faltan + ' producto' + (faltan > 1 ? 's' : '') +
+         ' B&N más y ahorra S/' + siguiente.desc;
 }
 
 function actualizarCartUI() {
@@ -6301,19 +6328,37 @@ function renderizarCartItems() {
     el.innerHTML = '<div class="cart-empty" data-i18n="cart_empty">Tu carrito está vacío.<br>Agrega productos para comenzar.</div>';
     footer.style.display = 'none';
     document.getElementById('cartAhorro').style.display = 'none';
+    document.getElementById('cartProgresoBN').style.display = 'none';
     return;
   }
   footer.style.display = 'block';
-  const descJulio = calcularDescuentoJulio();
+  const descBN = calcularDescuentoBN();
+  const sub = calcularSubtotal();
   const descFila = document.getElementById('cartDescuentoFila');
-  if (descJulio > 0) {
+  const subFila = document.getElementById('cartSubtotalFila');
+  if (descBN > 0) {
     descFila.style.display = 'flex';
-    document.getElementById('cartDescuentoLabel').textContent = PROMO_JULIO.nombre;
-    document.getElementById('cartDescuentoVal').textContent = '-S/ ' + descJulio;
+    document.getElementById('cartDescuentoLabel').textContent = DESCUENTO_BN.nombre;
+    document.getElementById('cartDescuentoVal').textContent = '-S/ ' + descBN;
+    /* Con descuento se muestra el subtotal aparte, para que se vea
+       de dónde sale el total: subtotal − descuento. */
+    subFila.style.display = 'flex';
+    document.getElementById('cartSubtotalVal').textContent = 'S/ ' + sub;
   } else {
     descFila.style.display = 'none';
+    subFila.style.display = 'none';
   }
-  subtotalEl.textContent = 'S/ ' + (calcularSubtotal() - descJulio);
+  subtotalEl.textContent = 'S/ ' + (sub - descBN);
+
+  /* Mensaje de progreso: se recalcula en cada cambio del carrito. */
+  const progEl = document.getElementById('cartProgresoBN');
+  const progMsg = mensajeProgresoBN();
+  if (progMsg) {
+    progEl.style.display = 'block';
+    progEl.textContent = progMsg;
+  } else {
+    progEl.style.display = 'none';
+  }
 
   const totalAhorro = calcularAhorro();
   const ahorroEl = document.getElementById('cartAhorro');
@@ -6448,8 +6493,8 @@ function actualizarTotalForm() {
   const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
   const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
   const sub = calcularSubtotal();
-  const descJulio = calcularDescuentoJulio();
-  const base = sub - descJulio;
+  const descBN = calcularDescuentoBN();
+  const base = sub - descBN;
   const traslado = esProv ? 10 : 0;
   const recargoFila = document.getElementById('formRecargoFila');
   const recargoVal = document.getElementById('formRecargoVal');
@@ -6459,10 +6504,10 @@ function actualizarTotalForm() {
   const labelIzipay = document.getElementById('formLabelIzipay');
   subtotalEl.textContent = 'S/ ' + sub;
   const descFila = document.getElementById('formDescuentoFila');
-  if (descJulio > 0) {
+  if (descBN > 0) {
     descFila.style.display = 'flex';
-    document.getElementById('formDescuentoLabel').textContent = PROMO_JULIO.nombre;
-    document.getElementById('formDescuentoVal').textContent = '-S/ ' + descJulio;
+    document.getElementById('formDescuentoLabel').textContent = DESCUENTO_BN.nombre;
+    document.getElementById('formDescuentoVal').textContent = '-S/ ' + descBN;
   } else {
     descFila.style.display = 'none';
   }
@@ -6522,18 +6567,18 @@ function mostrarResumenPago() {
 
 function actualizarMetodoPago() {
   const metodo = document.querySelector('input[name="metodoPago"]:checked').value;
-  const descJulio = calcularDescuentoJulio();
-  const base = calcularSubtotal() - descJulio;
+  const descBN = calcularDescuentoBN();
+  const base = calcularSubtotal() - descBN;
   const recargoFila = document.getElementById('resumenRecargoFila');
   const recargoVal = document.getElementById('resumenRecargoVal');
   const totalEl = document.getElementById('resumenTotal');
   const labelYape = document.getElementById('labelYape');
   const labelIzipay = document.getElementById('labelIzipay');
   const descFila = document.getElementById('resumenDescuentoFila');
-  if (descJulio > 0) {
+  if (descBN > 0) {
     descFila.style.display = 'flex';
-    document.getElementById('resumenDescuentoLabel').textContent = PROMO_JULIO.nombre;
-    document.getElementById('resumenDescuentoVal').textContent = '-S/ ' + descJulio;
+    document.getElementById('resumenDescuentoLabel').textContent = DESCUENTO_BN.nombre;
+    document.getElementById('resumenDescuentoVal').textContent = '-S/ ' + descBN;
   } else {
     descFila.style.display = 'none';
   }
@@ -6577,15 +6622,15 @@ function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo, zona
     return linea;
   }).join('\n');
   const sub = calcularSubtotal();
-  const descJulio = calcularDescuentoJulio();
-  const base = sub - descJulio;
+  const descBN = calcularDescuentoBN();
+  const base = sub - descBN;
   const esProv = zona === 'provincia';
   const traslado = esProv ? 10 : 0;
   const esTarjeta = metodo === 'tarjeta';
   const recargo = esTarjeta ? Math.round((base + traslado) * 0.04 * 100) / 100 : 0;
   const total = base + traslado + recargo;
   const lineaTraslado = esProv ? `🚚 Traslado y embalaje (Shalom): S/ 10\n` : '';
-  const lineaDescuento = descJulio > 0 ? `🎁 ${PROMO_JULIO.nombre}: -S/ ${descJulio}\n` : '';
+  const lineaDescuento = descBN > 0 ? `🎁 ${DESCUENTO_BN.nombre}: -S/ ${descBN}\n` : '';
   let msg;
   if (esTarjeta) {
     msg =
