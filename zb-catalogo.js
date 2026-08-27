@@ -285,38 +285,38 @@ const tn = {
 const productos = [
   // OFERTA ESPECIAL
   { id:"oferta1", tipo:"oferta", marcaTipo:"bn", cat:"oferta", destacado:true, marca:"Bari&Nutrition",
-    nombre:"2 Proteínas Líquidas",
+    nombre:"Pack x2 Proteínas Líquidas",
     desc:"Llévate 2 proteínas líquidas para tu recuperación post cirugía bariátrica. Sin lactosa, enriquecidas en fibra, aminoácidos, vitaminas y minerales.",
     incluye:"Proteína líquida x2 · Sabores a elección: Maracumango o Fresa",
     tags:["Sin lactosa","20g proteína","Post operatorio"],
     precio:360, precioN:400, ahorro:40,
-    img: "img/popup-proteina.jpg",
+    img: "img/oferta-2liquidas.jpg",
     seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
     uso:"Consume según indicación de tu equipo médico. Ideal para la etapa post operatoria.", tn:null },
 
   { id:"oferta2", tipo:"oferta", marcaTipo:"bn", cat:"oferta", destacado:true, fiestas:true, marca:"Bari&Nutrition",
-    nombre:"2 Proteínas en Polvo (Whey)",
+    nombre:"Pack x2 Proteínas Whey",
     desc:"Promo de julio: llévate 2 Whey Protein de 1.5kg. 30g de proteína por servicio, sin gluten, sin lactosa y 0% azúcar.",
     incluye:"Whey Protein 1.5kg x2 · Sabores a elección: Vainilla o Chocolate",
     tags:["Promo Julio","30g proteína","Sin lactosa"],
     precio:520, precioN:560, ahorro:40,
-    img: "img/oferta-2whey.jpg",
+    img: "img/oferta-2whey-limpia.jpg",
     seleccionSabor:[{label:"Whey Protein 1",sabores:["Vainilla","Chocolate"]},{label:"Whey Protein 2",sabores:["Vainilla","Chocolate"]}],
     uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir según indicación de tu equipo médico.", tn: tn.whey },
 
   /* Oferta de los multivitamínicos Bariatric Fusion (14-08-2026).
      Va SOLO en bayas mixtas porque el sabor tropical todavía es
      "próximamente" (ver bf1 más abajo). CUANDO LLEGUE EL TROPICAL:
-     cambiar el nombre a "2 Multivitamínicos Bariatric Fusion",
      ajustar "incluye" y descomentar la línea seleccionSabor para
-     que el cliente elija cada frasco, como en las otras ofertas. */
+     que el cliente elija el sabor de cada frasco, como en las otras
+     ofertas. El nombre ya no menciona el sabor, no hay que tocarlo. */
   { id:"oferta3", tipo:"oferta", marcaTipo:"bf", cat:"oferta", destacado:true, marca:"Bariatric Fusion",
-    nombre:"2 Multivitamínicos Bayas Mixtas",
+    nombre:"Pack x2 Multivitamínicos Bariatric Fusion",
     desc:"Llévate 2 envases del multivitamínico completo de Bariatric Fusion. 120 tabletas masticables cada uno: a razón de 1 al día, los dos envases cubren unos 8 meses de suplementación.",
     incluye:"Multivitamínico Completo Bayas Mixtas — 120 tabletas x2",
     tags:["240 tabletas en total","1 al día","Marca americana","Sin gluten"],
     precio:560, precioN:580, ahorro:20,
-    img: BF+"multivit-bayas.jpg",
+    img: "img/oferta-2multivit.jpg",
     // seleccionSabor:[{label:"Multivitamínico 1",sabores:["Bayas mixtas","Tropical"]},{label:"Multivitamínico 2",sabores:["Bayas mixtas","Tropical"]}],
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit },
@@ -600,7 +600,7 @@ const productos = [
     desc:"Multivitamínico completo en tabletas masticables, sabor bayas mixtas. Envase de 120 tabletas de Bariatric Fusion, marca estadounidense especializada en pacientes bariátricos. Una tableta al día cubre el perfil completo de vitaminas y minerales.",
     tags:["120 tabletas","Masticables","Sabor bayas mixtas","1 al día","Sin gluten"],
     precio:290,
-    img: BF+"multivit-bayas.jpg",
+    img: "img/oferta-2multivit.jpg",
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit }
 ];
