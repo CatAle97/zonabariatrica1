@@ -306,21 +306,20 @@ const productos = [
     seleccionSabor:[{label:"Whey Protein 1",sabores:["Vainilla","Chocolate"]},{label:"Whey Protein 2",sabores:["Vainilla","Chocolate"]}],
     uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir según indicación de tu equipo médico.", tn: tn.whey },
 
-  /* Oferta de los multivitamínicos Bariatric Fusion (14-08-2026).
-     Va SOLO en bayas mixtas porque el sabor tropical todavía es
-     "próximamente" (ver bf1 más abajo). CUANDO LLEGUE EL TROPICAL:
-     ajustar "incluye" y descomentar la línea seleccionSabor para
-     que el cliente elija el sabor de cada frasco, como en las otras
-     ofertas. El nombre ya no menciona el sabor, no hay que tocarlo. */
+  /* Oferta de los multivitamínicos Bariatric Fusion.
+     Actualizada el 04-09-2026: llegó el stock del sabor tropical,
+     así que el pack ya deja elegir el sabor de cada frasco
+     (seleccionSabor). Precios nuevos: S/280 la unidad y S/550 el
+     pack de 2 (antes S/290 y S/560). */
   { id:"oferta3", tipo:"oferta", marcaTipo:"bf",
     brand:"Bariatric Fusion", eligibleForBnQuantityDiscount:false, cat:"oferta", destacado:true, marca:"Bariatric Fusion",
     nombre:"Pack x2 Multivitamínicos Bariatric Fusion",
     desc:"Llévate 2 envases del multivitamínico completo de Bariatric Fusion. 120 tabletas masticables cada uno: a razón de 1 al día, los dos envases cubren unos 8 meses de suplementación.",
-    incluye:"Multivitamínico Completo Bayas Mixtas — 120 tabletas x2",
+    incluye:"Multivitamínico Completo — 120 tabletas x2 · Sabores a elección: Bayas mixtas o Tropical",
     tags:["240 tabletas en total","1 al día","Marca americana","Sin gluten"],
-    precio:560, precioN:580, ahorro:20,
+    precio:550, precioN:560, ahorro:10,
     img: "img/oferta-2multivit.jpg",
-    // seleccionSabor:[{label:"Multivitamínico 1",sabores:["Bayas mixtas","Tropical"]},{label:"Multivitamínico 2",sabores:["Bayas mixtas","Tropical"]}],
+    seleccionSabor:[{label:"Multivitamínico 1",sabores:["Bayas mixtas","Tropical"]},{label:"Multivitamínico 2",sabores:["Bayas mixtas","Tropical"]}],
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit },
 
@@ -596,29 +595,26 @@ const productos = [
     uso:"Disolver 1 scoop (10g) en 250ml de agua al día.",
     tn: tn.lvl_fib },
 
-  /* BARIATRIC FUSION — información cargada el 14-08-2026.
+  /* BARIATRIC FUSION — actualizado el 04-09-2026.
      ---------------------------------------------------------
-     BAYAS MIXTAS (bf2): a la venta, S/290. Antes llevaba
-     "consultar:true"; al ponerle precio pasó a venderse como
-     cualquier otro producto — la función sinPrecio() de
-     index.html lo detecta sola.
+     Los DOS sabores están a la venta a S/280 cada uno (antes
+     S/290). El tropical (bf1) ya llegó al stock: se le quitó
+     "proximamente:true" y se le puso precio, así que entra al
+     carrito como cualquier otro producto.
 
-     TROPICAL (bf1): "proximamente:true". Es stock que todavía
-     no llega. Se queda SIN la línea "precio" a propósito:
-     sinPrecio() devuelve true y por eso NO entra al carrito ni
-     descuadra el total. La tienda le muestra "Próximamente" y
-     un botón que avisa por WhatsApp, no de agregar.
-     CUANDO LLEGUE EL STOCK: borrar "proximamente:true" y
-     escribir precio:290. Con eso vuelve solo a la normalidad.
+     Si algún sabor se queda sin stock: borrar su línea "precio"
+     y poner "proximamente:true". La función sinPrecio() de
+     index.html lo detecta sola y muestra "Próximamente" con un
+     botón de aviso por WhatsApp en lugar del de agregar.
 
      La tabla nutricional (tn.bf_multivit) es la misma para los
      dos: cambia el sabor, no la fórmula. */
   { id:"bf1", tipo:"bf", marcaTipo:"bf",
     brand:"Bariatric Fusion", eligibleForBnQuantityDiscount:false, cat:"vitaminas", subcat:"multivit", formato:"tabletas", marca:"Bariatric Fusion",
-    proximamente:true,
     nombre:"Multivitamínico Completo Tropical — 120 tabletas",
     desc:"Multivitamínico completo en tabletas masticables, sabor tropical. Envase de 120 tabletas de Bariatric Fusion, marca estadounidense especializada en pacientes bariátricos. Una tableta al día cubre el perfil completo de vitaminas y minerales.",
     tags:["120 tabletas","Masticables","Sabor tropical","1 al día","Sin gluten"],
+    precio:280,
     img: BF+"multivit-tropical.jpg",
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit },
@@ -628,7 +624,7 @@ const productos = [
     nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas",
     desc:"Multivitamínico completo en tabletas masticables, sabor bayas mixtas. Envase de 120 tabletas de Bariatric Fusion, marca estadounidense especializada en pacientes bariátricos. Una tableta al día cubre el perfil completo de vitaminas y minerales.",
     tags:["120 tabletas","Masticables","Sabor bayas mixtas","1 al día","Sin gluten"],
-    precio:290,
+    precio:280,
     img: BF+"multivit-bayas.jpg",
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit }
