@@ -359,7 +359,18 @@ header.scrolled {
   padding: var(--s-4) var(--gutter);
   transition: padding var(--t-slow);
 }
-header.scrolled .header-inner { padding-top: var(--s-3); padding-bottom: var(--s-3); }
+/* Antes el header cambiaba de alto al bajar y la página "temblaba".
+   Ahora mantiene su alto y lo que se recoge es el buscador, que libera
+   pantalla en el celular sin mover el contenido de golpe. */
+header.scrolled .search-bar {
+  max-height: 0; opacity: 0; overflow: hidden;
+  padding-top: 0; padding-bottom: 0;
+  transition: max-height var(--t-slow), opacity var(--t-slow), padding var(--t-slow);
+}
+.search-bar {
+  max-height: 120px; opacity: 1;
+  transition: max-height var(--t-slow), opacity var(--t-slow), padding var(--t-slow);
+}
 .hamburger {
   background: none; border: none; color: var(--text);
   cursor: pointer; display: none; flex-shrink: 0;
@@ -553,7 +564,9 @@ a.nav-link {
    Se muestra COMPLETO, sin recortar: la imagen manda la altura
    y esta baja sola en pantallas angostas. Así el banner se ve
    exactamente igual a como se diseñó en Canva. */
-.slide.slide-hero { padding: 0 !important; min-height: 0; display: none; position: relative; }
+/* Fondo claro mientras la imagen del banner carga: antes se veía un
+   bloque azul oscuro vacío y parecía que la web estaba rota. */
+.slide.slide-hero { padding: 0 !important; min-height: 0; display: none; position: relative; background: #FAF6F2; }
 .slide.slide-hero.active { display: block; }
 .slide.slide-hero img {
   width: 100%; height: auto; aspect-ratio: 1920 / 600;
@@ -3372,7 +3385,7 @@ a, button, [role="button"], label, summary, input, select, textarea {
 
 /* Al saltar a una sección desde un chip o el menú, el header
    fijo ya no tapa el título de destino. */
-section[id], .productos-header { scroll-margin-top: 78px; }
+section[id], .productos-header { scroll-margin-top: 92px; }
 
 /* La lupa es solo para el celular: en escritorio no existe. */
 .btn-lupa { display: none; }
@@ -3483,6 +3496,8 @@ section[id], .productos-header { scroll-margin-top: 78px; }
 .btn-carrito .float-tooltip {
   top: calc(100% + 10px); right: 0; bottom: auto; left: auto;
   transform: none;
+  /* Quedaba cortado por detrás de la barra de búsqueda. */
+  z-index: 120;
 }
 
 /* El favorito de la barra fija comparte el peso visual del
@@ -3525,6 +3540,10 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
+<!-- El banner principal es lo primero que ve el visitante: se pide con
+     prioridad máxima para que no aparezca el bloque vacío mientras carga. -->
+<link rel="preload" as="image" href="img/banner-hero-1.jpg" fetchpriority="high">
 </head>
 <body>
 
@@ -3629,16 +3648,14 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       <span id="cartDescuentoVal">-S/ 0</span>
     </div>
     <div class="cart-subtotal">
-      <span data-i18n="cart_total">Total estimado</span>
+      <span data-i18n="cart_total">Total productos</span>
       <span class="cart-subtotal-val" id="cartSubtotal">S/ 0</span>
     </div>
-    <button class="btn-checkout" onclick="abrirModalEnvio()" style="background:var(--blue);display:flex;align-items:center;justify-content:center;gap:8px">
+    <button class="btn-checkout" onclick="irAlCheckout()" style="background:var(--blue);display:flex;align-items:center;justify-content:center;gap:8px">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.529 5.858L.057 23.5l5.805-1.48A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.368l-.36-.214-3.444.878.908-3.334-.235-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
       <span data-i18n="cart_enviar_btn">REALIZAR MI PEDIDO</span>
     </button>
-    <button onclick="vaciarCarrito()" style="width:100%;margin-top:8px;background:transparent;border:1.5px solid #FCA5A5;color:#DC2626;font-weight:600;font-size:13px;padding:9px 14px;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
-      <svg class="ico ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg><span>BORRAR PEDIDO</span>
-    </button>
+    <button onclick="vaciarCarrito()" style="width:100%;margin-top:10px;background:none;border:none;color:var(--text-muted);font-weight:500;font-size:12px;padding:4px;cursor:pointer;font-family:inherit;text-decoration:underline;">Vaciar carrito</button>
     <div class="cart-nota">El pago y delivery se coordinan por WhatsApp</div>
   </div>
 </div>
@@ -3668,23 +3685,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     <p style="text-align:center;margin-bottom:20px;font-size:13px;color:var(--text-muted);">Ingresa tus datos y elige cómo pagar.</p>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Nombre completo *</label>
-        <input id="clienteNombre" type="text" placeholder="Tu nombre y apellido" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">DNI *</label>
-        <input id="clienteDNI" type="text" placeholder="12345678" maxlength="8" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Dirección *</label>
-        <input id="clienteDireccion" type="text" placeholder="Calle, número, referencia" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Distrito / Ciudad *</label>
-        <input id="clienteDistrito" type="text" placeholder="Ej: Miraflores, Trujillo..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">¿Dónde te encuentras? *</label>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">¿A dónde te lo enviamos? *</label>
         <div style="display:flex;gap:8px;">
           <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 13px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);" id="zonaLimaLabel">
             <input type="radio" name="zonaEnvio" value="lima" checked onchange="actualizarZona()" style="accent-color:var(--blue);width:15px;height:15px;">
@@ -3695,13 +3696,30 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
             <span style="font-size:13px;font-weight:600;color:var(--text);">Provincia</span>
           </label>
         </div>
+        <div id="entregaDetalle" style="margin-top:8px;padding:9px 12px;background:var(--blue-light);border-radius:var(--r-sm);font-size:12px;color:var(--text);line-height:1.5;"></div>
         <div id="avisoTraslado" style="display:none;margin-top:8px;padding:9px 12px;background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:var(--r-sm);font-size:12px;color:#92400E;font-weight:500;">
           📦 Se agregará <strong>S/ 10</strong> por traslado y embalaje a agencia Shalom.
         </div>
       </div>
       <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Correo electrónico *</label>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Nombre completo *</label>
+        <input id="clienteNombre" type="text" placeholder="Tu nombre y apellido" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Dirección *</label>
+        <input id="clienteDireccion" type="text" placeholder="Calle, número, referencia" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Distrito / Ciudad *</label>
+        <input id="clienteDistrito" type="text" placeholder="Ej: Miraflores, Trujillo..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Correo <span style="font-weight:500;text-transform:none;">— opcional, para enviarte el comprobante</span></label>
         <input id="clienteCorreo" type="email" placeholder="tucorreo@ejemplo.com" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">DNI <span style="font-weight:500;text-transform:none;">— opcional, solo si necesitas boleta</span></label>
+        <input id="clienteDNI" type="text" placeholder="12345678" maxlength="8" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
       </div>
       <div>
         <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">Método de pago *</label>
@@ -3737,15 +3755,18 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <div id="formTrasladoFila" style="display:none;justify-content:space-between;font-size:13px;color:#92400E;margin-bottom:4px;">
           <span>Traslado y embalaje</span><span>S/ 10.00</span>
         </div>
+        <div id="formEnvioFila" style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);margin-bottom:4px;">
+          <span>Envío</span><span id="formEnvioVal" style="font-weight:600;">Se confirma por WhatsApp</span>
+        </div>
         <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:700;color:var(--blue);border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">
-          <span>Total a pagar</span><span id="formTotal">S/ 0</span>
+          <span>Total <span style="font-weight:500;font-size:12px;">(sin delivery)</span></span><span id="formTotal">S/ 0</span>
         </div>
       </div>
     </div>
-    <div style="margin-top:14px;background:#FFFBEB;border-left:3px solid #F59E0B;border-radius:var(--r-sm);padding:10px 13px;font-size:12px;color:#92400E;line-height:1.5;">
-      ⚠️ El costo de entrega no está incluido en el total. Se calculará según tu ubicación y se confirmará antes del envío.
+    <div style="margin-top:14px;background:#F0FDF4;border-left:3px solid #16A34A;border-radius:var(--r-sm);padding:10px 13px;font-size:12px;color:#166534;line-height:1.5;">
+      ✅ <strong>No pagas nada ahora.</strong> Te escribimos por WhatsApp con el costo exacto del envío y recién ahí decides si confirmas.
     </div>
-    <button class="cot-confirm-btn" onclick="enviarConDatos()" style="margin-top:16px;">Confirmar pedido</button>
+    <button class="cot-confirm-btn" onclick="enviarConDatos()" style="margin-top:16px;">Enviar mi pedido por WhatsApp</button>
     <button onclick="cerrarDatosCliente()" style="width:100%;margin-top:8px;background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;padding:6px;font-family:inherit;">Cancelar</button>
   </div>
 </div>
@@ -4857,11 +4878,11 @@ function actualizarCorazones() {
 // ---- i18n ----
 let currentLang = 'es';
 const T = {
-  es:{ topbar1:'Envíos a todo el Perú · Lima y provincias', topbar2:'Bienestar en cada etapa de tu vida bariátrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTODOS DE PAGO', cart_enviar_btn:'REALIZAR MI PEDIDO', envio_titulo:'¿Dónde te enviamos tu pedido?', envio_step2_lima:'Lima — Costo según distrito', envio_step2_prov:'Provincias — Vía Shalom', envio_btn_send:'REALIZAR MI PEDIDO', envio_btn_back:'Seguir comprando', envio_cambiar:'← Cambiar destino', nav_suplementos:'Suplementos', nav_ofertas:'OFERTAS', search_ph:'Busca tu suplemento — proteína, biotina, colágeno…', sort_default:'Ordenar por', sort_asc:'Precio: menor a mayor', sort_desc:'Precio: mayor a menor', cart_title:'Mi Carrito', cart_empty:'Tu carrito está vacío.\nAgrega productos para comenzar.', cart_total:'Total estimado', cart_enviar:'Enviar por WhatsApp', btn_ver:'Ver', btn_agregar:'Agregar', btn_agregar_modal:'+ Agregar al carrito', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Compartir este producto', pack_ahorra:'Ahorra', badge_recom:'Recomendado', recom_titulo:'También te puede interesar', recom_sub:'Seleccionados para cada etapa de tu proceso bariátrico', sec_proteinas:'Proteínas', sec_vitaminas:'Vitaminas', sec_colageno:'Colágeno', sec_ofertas:'Packs y Ofertas', sec_packs:'Packs', tit_todos:'Suplementos', tit_proteinas:'Proteínas', tit_vitaminas:'Vitaminas & Minerales', tit_colageno:'Colágeno & Fibra', tit_ofertas:'Las mejores ofertas para ti', tit_packs:'Packs Bariátricos', mega_proteinas:'Proteínas', mega_vitaminas:'Vitaminas & Minerales', mega_colageno:'Colágeno & Fibra', mega_packs:'Packs', mega_polvo:'Polvo', mega_liquida:'Líquida', mega_biotina:'Biotina', mega_hierro:'Hierro + Vit. C', mega_multivit:'Multivitamínico', mega_b12:'B12 + Ác. Fólico', mega_colageno_sub:'Colágeno', mega_fibra:'Fibra', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos', potencia:'Potencia Bariátrica' },
+  es:{ topbar1:'Envíos a todo el Perú · Lima y provincias', topbar2:'Bienestar en cada etapa de tu vida bariátrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTODOS DE PAGO', cart_enviar_btn:'REALIZAR MI PEDIDO', envio_titulo:'¿Dónde te enviamos tu pedido?', envio_step2_lima:'Lima — Costo según distrito', envio_step2_prov:'Provincias — Vía Shalom', envio_btn_send:'REALIZAR MI PEDIDO', envio_btn_back:'Seguir comprando', envio_cambiar:'← Cambiar destino', nav_suplementos:'Suplementos', nav_ofertas:'OFERTAS', search_ph:'Busca tu suplemento — proteína, biotina, colágeno…', sort_default:'Ordenar por', sort_asc:'Precio: menor a mayor', sort_desc:'Precio: mayor a menor', cart_title:'Mi Carrito', cart_empty:'Tu carrito está vacío.\nAgrega productos para comenzar.', cart_total:'Total productos', cart_enviar:'Enviar por WhatsApp', btn_ver:'Ver', btn_agregar:'Agregar', btn_agregar_modal:'+ Agregar al carrito', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Compartir este producto', pack_ahorra:'Ahorra', badge_recom:'Recomendado', recom_titulo:'También te puede interesar', recom_sub:'Seleccionados para cada etapa de tu proceso bariátrico', sec_proteinas:'Proteínas', sec_vitaminas:'Vitaminas', sec_colageno:'Colágeno', sec_ofertas:'Packs y Ofertas', sec_packs:'Packs', tit_todos:'Suplementos', tit_proteinas:'Proteínas', tit_vitaminas:'Vitaminas & Minerales', tit_colageno:'Colágeno & Fibra', tit_ofertas:'Las mejores ofertas para ti', tit_packs:'Packs Bariátricos', mega_proteinas:'Proteínas', mega_vitaminas:'Vitaminas & Minerales', mega_colageno:'Colágeno & Fibra', mega_packs:'Packs', mega_polvo:'Polvo', mega_liquida:'Líquida', mega_biotina:'Biotina', mega_hierro:'Hierro + Vit. C', mega_multivit:'Multivitamínico', mega_b12:'B12 + Ác. Fólico', mega_colageno_sub:'Colágeno', mega_fibra:'Fibra', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos', potencia:'Potencia Bariátrica' },
   en:{ topbar1:'Shipping across Peru · Lima and provinces', topbar2:'Wellness at every stage of your bariatric life', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'PAYMENT METHODS', cart_enviar_btn:'PLACE MY ORDER', envio_titulo:'Where do we ship your order?', envio_step2_lima:'Lima — Costo según distrito', envio_step2_prov:'Provinces — Via Shalom', envio_btn_send:'PLACE MY ORDER', envio_btn_back:'Keep shopping', envio_cambiar:'← Change destination', nav_suplementos:'Supplements', nav_ofertas:'OFFERS', search_ph:'Search product... (e.g: protein, biotin, collagen, pack)', sort_default:'Sort by', sort_asc:'Price: low to high', sort_desc:'Price: high to low', cart_title:'My Cart', cart_empty:'Your cart is empty.\nAdd products to get started.', cart_total:'Estimated total', cart_enviar:'Send via WhatsApp', btn_ver:'View', btn_agregar:'Add', btn_agregar_modal:'+ Add to cart', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Share this product', pack_ahorra:'Save', badge_recom:'Recommended', recom_titulo:'You might also like', recom_sub:'Selected for each stage of your bariatric journey', sec_proteinas:'Proteins', sec_vitaminas:'Vitamins', sec_colageno:'Collagen', sec_ofertas:'Packs & Offers', sec_packs:'Packs', tit_todos:'Supplements', tit_proteinas:'Proteins', tit_vitaminas:'Vitamins & Minerals', tit_colageno:'Collagen & Fiber', tit_ofertas:'Best offers for you', tit_packs:'Bariatric Packs', mega_proteinas:'Proteins', mega_vitaminas:'Vitamins & Minerals', mega_colageno:'Collagen & Fiber', mega_packs:'Packs', mega_polvo:'Powder', mega_liquida:'Liquid', mega_biotina:'Biotin', mega_hierro:'Iron + Vit. C', mega_multivit:'Multivitamin', mega_b12:'B12 + Folic Acid', mega_colageno_sub:'Collagen', mega_fibra:'Fiber', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Specialized supplements for bariatric patients', potencia:'Bariatric Power' },
   de:{ topbar1:'Lieferung in ganz Peru · Lima und Provinzen', topbar2:'Wohlbefinden in jeder Phase Ihres bariatrischen Lebens', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'ZAHLUNGSMETHODEN', cart_enviar_btn:'BESTELLUNG AUFGEBEN', envio_titulo:'Wohin liefern wir Ihre Bestellung?', envio_step2_lima:'Lima — Lieferung S/ 8.00', envio_step2_prov:'Provinzen — Über Shalom', envio_btn_send:'BESTELLUNG AUFGEBEN', envio_btn_back:'Weiter einkaufen', envio_cambiar:'← Ziel ändern', nav_suplementos:'Supplemente', nav_ofertas:'ANGEBOTE', search_ph:'Produkt suchen... (z.B.: Protein, Biotin, Kollagen)', sort_default:'Sortieren nach', sort_asc:'Preis: aufsteigend', sort_desc:'Preis: absteigend', cart_title:'Mein Warenkorb', cart_empty:'Ihr Warenkorb ist leer.\nFügen Sie Produkte hinzu.', cart_total:'Geschätzter Gesamtbetrag', cart_enviar:'Per WhatsApp senden', btn_ver:'Ansehen', btn_agregar:'Hinzufügen', btn_agregar_modal:'+ In den Warenkorb', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Teilen', pack_ahorra:'Sparen', badge_recom:'Empfohlen', recom_titulo:'Das könnte Ihnen gefallen', recom_sub:'Ausgewählt für jede Phase Ihres bariatrischen Prozesses', sec_proteinas:'Proteine', sec_vitaminas:'Vitamine', sec_colageno:'Kollagen', sec_ofertas:'Packs & Angebote', sec_packs:'Pakete', tit_todos:'Supplemente', tit_proteinas:'Proteine', tit_vitaminas:'Vitamine & Mineralien', tit_colageno:'Kollagen & Ballaststoffe', tit_ofertas:'Beste Angebote für Sie', tit_packs:'Bariatrische Pakete', mega_proteinas:'Proteine', mega_vitaminas:'Vitamine & Mineralien', mega_colageno:'Kollagen & Ballaststoffe', mega_packs:'Pakete', mega_polvo:'Pulver', mega_liquida:'Flüssig', mega_biotina:'Biotin', mega_hierro:'Eisen + Vit. C', mega_multivit:'Multivitamin', mega_b12:'B12 + Folsäure', mega_colageno_sub:'Kollagen', mega_fibra:'Ballaststoffe', mega_packs_bn:'Pakete Bari & Nut.', mega_packs_lvl:'Pakete LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Spezialisierte Supplemente für bariatrische Patienten', potencia:'Bariatrische Kraft' },
   it:{ topbar1:'Spedizioni in tutto il Perù · Lima e province', topbar2:'Benessere in ogni fase della tua vita bariatrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'METODI DI PAGAMENTO', cart_enviar_btn:'EFFETTUA IL MIO ORDINE', envio_titulo:'Dove spediamo il tuo ordine?', envio_step2_lima:'Lima — Consegna S/ 8.00', envio_step2_prov:'Province — Via Shalom', envio_btn_send:'EFFETTUA IL MIO ORDINE', envio_btn_back:'Continua ad acquistare', envio_cambiar:'← Cambia destinazione', nav_suplementos:'Integratori', nav_ofertas:'OFFERTE', search_ph:'Cerca prodotto... (es: proteina, biotina, collagene)', sort_default:'Ordina per', sort_asc:'Prezzo: crescente', sort_desc:'Prezzo: decrescente', cart_title:'Il mio carrello', cart_empty:'Il tuo carrello è vuoto.\nAggiungi prodotti per iniziare.', cart_total:'Totale stimato', cart_enviar:'Invia su WhatsApp', btn_ver:'Vedi', btn_agregar:'Aggiungi', btn_agregar_modal:'+ Aggiungi al carrello', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Condividi', pack_ahorra:'Risparmia', badge_recom:'Consigliato', recom_titulo:'Potrebbe interessarti', recom_sub:'Selezionati per ogni fase del percorso bariatrico', sec_proteinas:'Proteine', sec_vitaminas:'Vitamine', sec_colageno:'Collagene', sec_ofertas:'Pacchi e Offerte', sec_packs:'Pacchi', tit_todos:'Integratori', tit_proteinas:'Proteine', tit_vitaminas:'Vitamine & Minerali', tit_colageno:'Collagene & Fibra', tit_ofertas:'Le migliori offerte per te', tit_packs:'Pacchi Bariatrici', mega_proteinas:'Proteine', mega_vitaminas:'Vitamine & Minerali', mega_colageno:'Collagene & Fibra', mega_packs:'Pacchi', mega_polvo:'Polvere', mega_liquida:'Liquida', mega_biotina:'Biotina', mega_hierro:'Ferro + Vit. C', mega_multivit:'Multivitaminico', mega_b12:'B12 + Acido Folico', mega_colageno_sub:'Collagene', mega_fibra:'Fibra', mega_packs_bn:'Pacchi Bari & Nut.', mega_packs_lvl:'Pacchi LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Integratori specializzati per pazienti bariatrici', potencia:'Potenza Bariatrica' },
-  pt:{ topbar1:'Envios para todo o Peru · Lima e províncias', topbar2:'Bem-estar em cada etapa da sua vida bariátrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTODOS DE PAGAMENTO', cart_enviar_btn:'REALIZAR MEU PEDIDO', envio_titulo:'Para onde enviamos seu pedido?', envio_step2_lima:'Lima — Entrega S/ 8.00', envio_step2_prov:'Províncias — Via Shalom', envio_btn_send:'REALIZAR MEU PEDIDO', envio_btn_back:'Continuar comprando', envio_cambiar:'← Mudar destino', nav_suplementos:'Suplementos', nav_ofertas:'OFERTAS', search_ph:'Buscar produto... (ex: proteína, biotina, colágeno)', sort_default:'Ordenar por', sort_asc:'Preço: menor para maior', sort_desc:'Preço: maior para menor', cart_title:'Meu Carrinho', cart_empty:'Seu carrinho está vazio.\nAdicione produtos para começar.', cart_total:'Total estimado', cart_enviar:'Enviar pelo WhatsApp', btn_ver:'Ver', btn_agregar:'Adicionar', btn_agregar_modal:'+ Adicionar ao carrinho', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Compartilhar', pack_ahorra:'Economize', badge_recom:'Recomendado', recom_titulo:'Você também pode gostar', recom_sub:'Selecionados para cada etapa do seu processo bariátrico', sec_proteinas:'Proteínas', sec_vitaminas:'Vitaminas', sec_colageno:'Colágeno', sec_ofertas:'Pacotes e Ofertas', sec_packs:'Pacotes', tit_todos:'Suplementos', tit_proteinas:'Proteínas', tit_vitaminas:'Vitaminas & Minerais', tit_colageno:'Colágeno & Fibra', tit_ofertas:'As melhores ofertas para você', tit_packs:'Pacotes Bariátricos', mega_proteinas:'Proteínas', mega_vitaminas:'Vitaminas & Minerais', mega_colageno:'Colágeno & Fibra', mega_packs:'Pacotes', mega_polvo:'Pó', mega_liquida:'Líquida', mega_biotina:'Biotina', mega_hierro:'Ferro + Vit. C', mega_multivit:'Multivitamínico', mega_b12:'B12 + Ác. Fólico', mega_colageno_sub:'Colágeno', mega_fibra:'Fibra', mega_packs_bn:'Pacotes Bari & Nut.', mega_packs_lvl:'Pacotes LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos', potencia:'Potência Bariátrica' },
+  pt:{ topbar1:'Envios para todo o Peru · Lima e províncias', topbar2:'Bem-estar em cada etapa da sua vida bariátrica', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTODOS DE PAGAMENTO', cart_enviar_btn:'REALIZAR MEU PEDIDO', envio_titulo:'Para onde enviamos seu pedido?', envio_step2_lima:'Lima — Entrega S/ 8.00', envio_step2_prov:'Províncias — Via Shalom', envio_btn_send:'REALIZAR MEU PEDIDO', envio_btn_back:'Continuar comprando', envio_cambiar:'← Mudar destino', nav_suplementos:'Suplementos', nav_ofertas:'OFERTAS', search_ph:'Buscar produto... (ex: proteína, biotina, colágeno)', sort_default:'Ordenar por', sort_asc:'Preço: menor para maior', sort_desc:'Preço: maior para menor', cart_title:'Meu Carrinho', cart_empty:'Seu carrinho está vazio.\nAdicione produtos para começar.', cart_total:'Total productos', cart_enviar:'Enviar pelo WhatsApp', btn_ver:'Ver', btn_agregar:'Adicionar', btn_agregar_modal:'+ Adicionar ao carrinho', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Compartilhar', pack_ahorra:'Economize', badge_recom:'Recomendado', recom_titulo:'Você também pode gostar', recom_sub:'Selecionados para cada etapa do seu processo bariátrico', sec_proteinas:'Proteínas', sec_vitaminas:'Vitaminas', sec_colageno:'Colágeno', sec_ofertas:'Pacotes e Ofertas', sec_packs:'Pacotes', tit_todos:'Suplementos', tit_proteinas:'Proteínas', tit_vitaminas:'Vitaminas & Minerais', tit_colageno:'Colágeno & Fibra', tit_ofertas:'As melhores ofertas para você', tit_packs:'Pacotes Bariátricos', mega_proteinas:'Proteínas', mega_vitaminas:'Vitaminas & Minerais', mega_colageno:'Colágeno & Fibra', mega_packs:'Pacotes', mega_polvo:'Pó', mega_liquida:'Líquida', mega_biotina:'Biotina', mega_hierro:'Ferro + Vit. C', mega_multivit:'Multivitamínico', mega_b12:'B12 + Ác. Fólico', mega_colageno_sub:'Colágeno', mega_fibra:'Fibra', mega_packs_bn:'Pacotes Bari & Nut.', mega_packs_lvl:'Pacotes LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suplementos especializados para pacientes bariátricos', potencia:'Potência Bariátrica' },
   fr:{ topbar1:'Livraison dans tout le Pérou · Lima et provinces', topbar2:'Bien-être à chaque étape de votre vie bariatrique', topbar3:'WhatsApp: +51 961 841 069', pagos_titulo:'MÉTHODES DE PAIEMENT', cart_enviar_btn:'PASSER MA COMMANDE', envio_titulo:'Où livrons-nous votre commande?', envio_step2_lima:'Lima — Livraison S/ 8.00', envio_step2_prov:'Provinces — Via Shalom', envio_btn_send:'PASSER MA COMMANDE', envio_btn_back:'Continuer mes achats', envio_cambiar:'← Changer la destination', nav_suplementos:'Suppléments', nav_ofertas:'OFFRES', search_ph:'Rechercher un produit... (ex: protéine, biotine, collagène)', sort_default:'Trier par', sort_asc:'Prix: croissant', sort_desc:'Prix: décroissant', cart_title:'Mon Panier', cart_empty:'Votre panier est vide.\nAjoutez des produits pour commencer.', cart_total:'Total estimé', cart_enviar:'Envoyer par WhatsApp', btn_ver:'Voir', btn_agregar:'Ajouter', btn_agregar_modal:'+ Ajouter au panier', modal_consultar:'Habla con Zoe', modal_compartir:'🔗 Partager', pack_ahorra:'Économisez', badge_recom:'Recommandé', recom_titulo:'Vous pourriez aussi aimer', recom_sub:'Sélectionnés pour chaque étape de votre parcours bariatrique', sec_proteinas:'Protéines', sec_vitaminas:'Vitamines', sec_colageno:'Collagène', sec_ofertas:'Packs et Offres', sec_packs:'Packs', tit_todos:'Suppléments', tit_proteinas:'Protéines', tit_vitaminas:'Vitamines & Minéraux', tit_colageno:'Collagène & Fibres', tit_ofertas:'Meilleures offres pour vous', tit_packs:'Packs Bariatriques', mega_proteinas:'Protéines', mega_vitaminas:'Vitamines & Minéraux', mega_colageno:'Collagène & Fibres', mega_packs:'Packs', mega_polvo:'Poudre', mega_liquida:'Liquide', mega_biotina:'Biotine', mega_hierro:'Fer + Vit. C', mega_multivit:'Multivitamine', mega_b12:'B12 + Acide Folique', mega_colageno_sub:'Collagène', mega_fibra:'Fibres', mega_packs_bn:'Packs Bari & Nut.', mega_packs_lvl:'Packs LVL Drink', footer_rights:'© 2025 Zona Bariátrica — Suppléments spécialisés pour les patients bariatriques', potencia:'Puissance Bariatrique' }
 };
 function __(key) { return (T[currentLang] && T[currentLang][key]) || T.es[key] || key; }
@@ -6374,7 +6395,7 @@ function renderizarCartItems() {
     if (!p) return '';
     const ahorroItem = p.ahorro ? `<div class="cart-item-ahorro">🏷️ Ahorras S/ ${p.ahorro * item.qty}</div>` : '';
     return `<div class="cart-item">
-      <img class="cart-item-img" src="${p.img}" alt="${p.nombre}" loading="lazy" decoding="async" onerror="this.style.background='#eee'">
+      <img class="cart-item-img" src="${p.img}" alt="${p.nombre}" decoding="async" onerror="this.style.background='#eee'">
       <div class="cart-item-info">
         <div class="cart-item-nombre">${p.nombre}</div>
         ${item.notas ? `<div class="cart-item-notas">${item.notas}</div>` : ''}
@@ -6460,10 +6481,27 @@ function cerrarModalEnvio() {
   document.getElementById('envioModal').classList.remove('open');
 }
 
+// Texto de tiempos de entrega según la hora actual (antes era un modal aparte)
+function textoEntregaLima() {
+  const h = new Date().getHours() + new Date().getMinutes() / 60;
+  const d = new Date().getDay(); // 0 = domingo
+  if (d === 0) return '🚚 <strong>Entrega el lunes.</strong> Atendemos de lunes a sábado, 9:00 AM – 8:00 PM.';
+  if (h < 12) return '🚚 <strong>Entrega HOY</strong> entre 3:00 PM y 8:00 PM.';
+  if (h < 20) return '🚚 <strong>Entrega MAÑANA</strong> entre 10:00 AM y 1:00 PM.';
+  return '🚚 <strong>Entrega MAÑANA</strong> entre 3:00 PM y 8:00 PM.';
+}
+
+// Abre el checkout directo desde el carrito (antes pasaba por 2 pantallas extra)
+async function irAlCheckout() {
+  if (!carrito.length) return;
+  cerrarCarrito();
+  await confirmarEnvio();
+}
+
 async function confirmarEnvio() {
   cerrarModalEnvio();
   document.querySelectorAll('input[name="formMetodoPago"]').forEach(r => { r.checked = r.value === 'yape'; });
-  actualizarTotalForm();
+  actualizarZona();
   // Auto-rellenar con datos del perfil si hay sesión
   const { data: { session } } = await supa.auth.getSession();
   if (session) {
@@ -6480,6 +6518,12 @@ async function confirmarEnvio() {
 
 function actualizarZona() {
   const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
+  const det = document.getElementById('entregaDetalle');
+  if (det) det.innerHTML = esProv
+    ? '📦 Llega en <strong>2 a 5 días hábiles</strong> a la agencia Shalom más cercana a ti.'
+    : textoEntregaLima();
+  const envioVal = document.getElementById('formEnvioVal');
+  if (envioVal) envioVal.textContent = esProv ? 'Se paga en agencia Shalom' : 'Se confirma por WhatsApp';
   document.getElementById('avisoTraslado').style.display = esProv ? 'block' : 'none';
   document.getElementById('formTrasladoFila').style.display = esProv ? 'flex' : 'none';
   document.getElementById('zonaLimaLabel').style.borderColor = esProv ? 'var(--border)' : 'var(--blue)';
@@ -6542,8 +6586,8 @@ function enviarConDatos() {
   const correo = document.getElementById('clienteCorreo').value.trim();
   const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
   const zona = document.querySelector('input[name="zonaEnvio"]:checked')?.value || 'lima';
-  if (!nombre || !dni || !direccion || !distrito || !correo) {
-    alert('Por favor completa todos los campos.');
+  if (!nombre || !direccion || !distrito) {
+    alert('Necesitamos tu nombre, dirección y distrito para coordinar la entrega.');
     return;
   }
   cerrarDatosCliente();
@@ -6630,14 +6674,16 @@ function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo, zona
   const recargo = esTarjeta ? Math.round((base + traslado) * 0.04 * 100) / 100 : 0;
   const total = base + traslado + recargo;
   const lineaTraslado = esProv ? `🚚 Traslado y embalaje (Shalom): S/ 10\n` : '';
+  const lineaDNI = dni ? `🪪 DNI: ${dni}\n` : '';
+  const lineaCorreo = correo ? `📧 Correo: ${correo}\n` : '';
   const lineaDescuento = descBN > 0 ? `🎁 ${DESCUENTO_BN.nombre}: -S/ ${descBN}\n` : '';
   let msg;
   if (esTarjeta) {
     msg =
       `🛒 NUEVO PEDIDO — Zona Bariátrica\n\n` +
       `👤 Cliente: ${nombre}\n` +
-      `🪪 DNI: ${dni}\n` +
-      `📧 Correo: ${correo}\n` +
+      `${lineaDNI}` +
+      `${lineaCorreo}` +
       `📍 Dirección: ${direccion} — ${distrito} (${esProv ? 'PROVINCIA' : 'LIMA'})\n\n` +
       `📦 PRODUCTOS:\n${lineas}\n\n` +
       `${lineaDescuento}` +
@@ -6649,8 +6695,8 @@ function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo, zona
     msg =
       `🛒 NUEVO PEDIDO — Zona Bariátrica\n\n` +
       `👤 Cliente: ${nombre}\n` +
-      `🪪 DNI: ${dni}\n` +
-      `📧 Correo: ${correo}\n` +
+      `${lineaDNI}` +
+      `${lineaCorreo}` +
       `📍 Dirección: ${direccion} — ${distrito} (${esProv ? 'PROVINCIA' : 'LIMA'})\n\n` +
       `📦 PRODUCTOS:\n${lineas}\n\n` +
       `${lineaDescuento}` +
@@ -6731,10 +6777,19 @@ function sliderMove(dir) { sliderGoTo(sliderIdx + dir); }
   slides.forEach((_, i) => {
     const d = document.createElement('button');
     d.className = 'slider-dot' + (i === 0 ? ' active' : '');
-    d.onclick = () => sliderGoTo(i);
+    d.onclick = () => { pararAuto(); sliderGoTo(i); };
     dc.appendChild(d);
   });
-  setInterval(() => sliderMove(1), 4000);
+  // El banner rotaba cada 4s y mareaba. Ahora va a 7s, se pausa cuando
+  // el visitante pone el mouse encima y se detiene del todo si él mismo
+  // cambia de banner (ya eligió qué quiere ver, no se lo movemos más).
+  const lento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let timer = lento ? null : setInterval(() => sliderMove(1), 7000);
+  window.pararAuto = function () { if (timer) { clearInterval(timer); timer = null; } };
+  const cont = document.querySelector('.promo-slider');
+  if (cont && timer) {
+    cont.addEventListener('mouseenter', () => { if (timer) { clearInterval(timer); timer = null; } });
+  }
 })();
 
 function aplicarOrden() {
