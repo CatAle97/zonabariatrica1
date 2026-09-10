@@ -83,7 +83,7 @@
                 '27 g de proteína por servicio, endulzada con stevia. Vainilla o Chocolate.<br>' +
                 '<b>S/ ' + P.lvlProt + '</b><br><br>' +
                 '💪 <b>Whey Protein Isolate — Nutrifath</b> · 1 kg<br>' +
-                'Proteína aislada con vitaminas y minerales. <b>Sabor neutro</b>: se mezcla con agua o se suma a lo que ya preparas sin cambiarle el gusto.<br>' +
+                '23 g de proteína por porción de 25 g, con vitaminas y minerales. <b>Sabor neutro</b>: se mezcla con agua o se suma a lo que ya preparas sin cambiarle el gusto.<br>' +
                 '<b>S/ ' + P.nfIsolate + '</b> · Llevando 2: S/ ' + P.nfIsolatePack + '<br><br>' +
                 'La de B&amp;N rinde más por envase, la de LVL tiene la entrada de precio más baja ' +
                 'y la de Nutrifath es la opción si los sabores dulces te cansan. ' +

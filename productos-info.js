@@ -238,8 +238,8 @@
     nf1: { // Whey Protein Isolate Nutrifath — sabor neutro
       paraQuien: 'Suele utilizarse en pacientes bariátricos que necesitan completar su aporte diario de proteína y prefieren un polvo sin sabor, ya sea porque los sabores dulces les cansan o porque quieren sumarlo a comidas que ya preparan.',
       beneficios: [
-        'Proteína aislada (Whey Protein Isolate): un filtrado adicional deja un polvo más puro en proteína por gramo',
-        'Rica en aminoácidos de cadena ramificada (BCAA): leucina, isoleucina y valina',
+        'Proteína aislada (Whey Protein Isolate): 23 g de proteína por porción de 25 g',
+        '5,306 mg de aminoácidos de cadena ramificada (BCAA) por porción: leucina, isoleucina y valina',
         'Enriquecida con vitaminas del complejo B, biotina, hierro, calcio y zinc',
         'Sabor neutro: no cambia el gusto de aquello con lo que se mezcla',
         'Sin gluten y sin lactosa'

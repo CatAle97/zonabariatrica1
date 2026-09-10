@@ -249,6 +249,45 @@ const tn = {
      ellos cambia el saborizante, no la fórmula. Transcrita de la
      etiqueta del envase importado (Formulations SAS INC. dba
      Bariatric Fusion, EE. UU. · distribuye Farmawell S.A.C.). */
+  /* Transcrita de la etiqueta del envase (foto del 09-09-2026).
+     La etiqueta declara por porción de 25g y por 100g, y NO
+     declara % de valor diario: por eso la tercera columna va
+     vacía y sale como "—".
+
+     El aminograma completo (18 aminoácidos) vive en la ficha
+     estática /producto/whey-protein-isolate-nutrifath. Aquí van
+     los BCAA, la glutamina y todas las vitaminas y minerales,
+     que es lo que se consulta al comparar productos.
+
+     "Aminoácidos totales 23.4 g" es la SUMA de los 18 valores
+     del aminograma, no una línea impresa en la etiqueta. */
+  nf_isolate: {
+    srv: "1 porción (25g, 1 cuchara)", srvs: "40 porciones por envase",
+    filas: [
+      ["Aminoácidos totales (suma del aminograma)","23.4 g",""],
+      ["BCAA totales","5,306 mg",""],
+      ["Leucina (BCAA)","2,410 mg",""],
+      ["Isoleucina (BCAA)","1,543 mg",""],
+      ["Valina (BCAA)","1,353 mg",""],
+      ["Glutamina","4,059 mg",""],
+      ["Tiamina (B1)","1 mg",""],
+      ["Riboflavina (B2)","0.5 mg",""],
+      ["Niacina (B3)","0.5 mg",""],
+      ["Ácido pantoténico (B5)","2.5 mg",""],
+      ["Piridoxina (B6)","0.8 mg",""],
+      ["Ácido fólico (B9)","200 mcg",""],
+      ["Metilcobalamina (B12)","100 mcg",""],
+      ["Biotina","75 mcg",""],
+      ["Hierro","1 mg",""],
+      ["Calcio","120 mg",""],
+      ["Potasio","230 mg",""],
+      ["Magnesio","100 mg",""],
+      ["Zinc","4.2 mg",""],
+      ["Selenio","18 mcg",""]
+    ],
+    nota: "Valores por porción de 25g transcritos de la etiqueta del envase; la etiqueta no declara % de valor diario. Vía oral: 1 porción al día disuelta en 200 a 300ml de agua. Fabricado en una instalación que también procesa leche, soya, trigo, huevo, maní, frutos secos, pescado y mariscos. No recomendado para personas con alergia a los lácteos. Almacenar a no más de 30 °C."
+  },
+
   bf_multivit: {
     srv: "1 tableta masticable", srvs: "120 porciones por envase",
     filas: [
@@ -332,11 +371,11 @@ const productos = [
     nombre:"Pack x2 Whey Protein Isolate Nutrifath",
     desc:"Llévate 2 envases de 1000g del Whey Protein Isolate de Nutrifath Bariatric. Proteína aislada con vitaminas y minerales, sabor neutro: a razón de 1 porción al día, los dos envases cubren unos 80 días de suplementación.",
     incluye:"Whey Protein Isolate 1000g x2 · Sabor neutro",
-    tags:["2000g en total","Whey Isolate","Sin gluten","Sin lactosa"],
+    tags:["2000g en total","23g proteína","Sabor neutro","Sin lactosa"],
     precio:580, precioN:590, ahorro:10,
     img: "img/oferta-2nutrifath.jpg",
     uso:"Vía oral. Adultos: 1 porción (25g, 1 cuchara) al día disuelta en 200-300ml de agua.",
-    tn: null },
+    tn: tn.nf_isolate },
 
   // BARI&NUTRITION PACKS
   { id:"bp1", tipo:"pack", marcaTipo:"bn",
@@ -652,15 +691,13 @@ const productos = [
   { id:"nf1", tipo:"nf", marcaTipo:"nf",
     brand:"Nutrifath", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", destacado:true, marca:"Nutrifath",
     nombre:"Whey Protein Isolate 1000g — Sabor Neutro",
-    desc:"Proteína aislada de suero (Whey Protein Isolate) enriquecida con vitaminas y minerales, formulada para pacientes bariátricos. Sabor neutro: se mezcla con agua o se suma a cualquier preparación sin cambiarle el gusto.",
-    tags:["Whey Isolate","1000g","Sabor neutro","Sin gluten","Sin lactosa"],
+    desc:"Proteína aislada de suero (Whey Protein Isolate) con 23g de proteína por porción de 25g, enriquecida con vitaminas y minerales. Sabor neutro: se mezcla con agua o se suma a cualquier preparación sin cambiarle el gusto.",
+    tags:["23g proteína","Sabor neutro","Sin lactosa","Sin gluten","0% azúcar"],
     precio:295,
     img: NF+"whey-isolate.jpg",
+    galeria: [NF+"whey-isolate.jpg", "img/tn-nutrifath.jpg"],
     uso:"Vía oral. Adultos: 1 porción (25g, 1 cuchara) al día disuelta en 200-300ml de agua.",
-    /* tn en null a propósito: todavía no tenemos foto de la etiqueta
-       real del envase con los gramos por porción. Cuando llegue, se
-       crea tn.nf_isolate y se enlaza aquí y en oferta4. */
-    tn: null }
+    tn: tn.nf_isolate }
 ];
 
 /* =========================================================
