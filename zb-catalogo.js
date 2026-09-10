@@ -15,6 +15,7 @@
 const BN = "img/bn-";
 const LVL = "img/lvl-";
 const BF = "img/bf-";
+const NF = "img/nf-";
 
 const tn = {
   fibra_bn: {
@@ -323,6 +324,20 @@ const productos = [
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit },
 
+  /* Oferta por cantidad del Whey Isolate de Nutrifath (10-09-2026).
+     La unidad cuesta S/295; llevando 2 salen a S/290 cada una.
+     Sabor neutro, así que no lleva seleccionSabor. */
+  { id:"oferta4", tipo:"oferta", marcaTipo:"nf",
+    brand:"Nutrifath", eligibleForBnQuantityDiscount:false, cat:"oferta", destacado:true, marca:"Nutrifath",
+    nombre:"Pack x2 Whey Protein Isolate Nutrifath",
+    desc:"Llévate 2 envases de 1000g del Whey Protein Isolate de Nutrifath Bariatric. Proteína aislada con vitaminas y minerales, sabor neutro: a razón de 1 porción al día, los dos envases cubren unos 80 días de suplementación.",
+    incluye:"Whey Protein Isolate 1000g x2 · Sabor neutro",
+    tags:["2000g en total","Whey Isolate","Sin gluten","Sin lactosa"],
+    precio:580, precioN:590, ahorro:10,
+    img: "img/oferta-2nutrifath.jpg",
+    uso:"Vía oral. Adultos: 1 porción (25g, 1 cuchara) al día disuelta en 200-300ml de agua.",
+    tn: null },
+
   // BARI&NUTRITION PACKS
   { id:"bp1", tipo:"pack", marcaTipo:"bn",
     brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"Bari&Nutrition",
@@ -627,7 +642,25 @@ const productos = [
     precio:280,
     img: BF+"multivit-bayas.jpg",
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
-    tn: tn.bf_multivit }
+    tn: tn.bf_multivit },
+
+  // NUTRIFATH
+  /* Alta del 10-09-2026. Marca nueva en la tienda: Nutrifath.
+     Sabor neutro (sin sabores a elegir) y no participa del
+     descuento por cantidad de B&N — su oferta por cantidad es
+     el pack x2 (oferta4). */
+  { id:"nf1", tipo:"nf", marcaTipo:"nf",
+    brand:"Nutrifath", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", destacado:true, marca:"Nutrifath",
+    nombre:"Whey Protein Isolate 1000g — Sabor Neutro",
+    desc:"Proteína aislada de suero (Whey Protein Isolate) enriquecida con vitaminas y minerales, formulada para pacientes bariátricos. Sabor neutro: se mezcla con agua o se suma a cualquier preparación sin cambiarle el gusto.",
+    tags:["Whey Isolate","1000g","Sabor neutro","Sin gluten","Sin lactosa"],
+    precio:295,
+    img: NF+"whey-isolate.jpg",
+    uso:"Vía oral. Adultos: 1 porción (25g, 1 cuchara) al día disuelta en 200-300ml de agua.",
+    /* tn en null a propósito: todavía no tenemos foto de la etiqueta
+       real del envase con los gramos por porción. Cuando llegue, se
+       crea tn.nf_isolate y se enlaza aquí y en oferta4. */
+    tn: null }
 ];
 
 /* =========================================================
@@ -700,7 +733,8 @@ const slugs = {
   li3: "colageno-skinfinity",
   li4: "fibra-get-out-manzana-verde",
   bf1: "multivitaminico-tropical-tabletas",
-  bf2: "multivitaminico-bayas-tabletas"
+  bf2: "multivitaminico-bayas-tabletas",
+  nf1: "whey-protein-isolate-nutrifath"
 };
 
 /* Devuelve la dirección de la ficha de un producto, o null si

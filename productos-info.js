@@ -233,6 +233,23 @@
         { q: '¿Cuánta agua hay que tomar con la fibra?', r: 'La fibra necesita líquido para funcionar bien. Suele recomendarse acompañarla de una hidratación adecuada durante el día: puedes ver un rango orientativo en nuestra calculadora de hidratación.' },
         { q: '¿Se puede tomar todos los días?', r: 'La frecuencia la indica tu nutricionista según tu tránsito y tu alimentación.' }
       ]
+    },
+
+    nf1: { // Whey Protein Isolate Nutrifath — sabor neutro
+      paraQuien: 'Suele utilizarse en pacientes bariátricos que necesitan completar su aporte diario de proteína y prefieren un polvo sin sabor, ya sea porque los sabores dulces les cansan o porque quieren sumarlo a comidas que ya preparan.',
+      beneficios: [
+        'Proteína aislada (Whey Protein Isolate): un filtrado adicional deja un polvo más puro en proteína por gramo',
+        'Rica en aminoácidos de cadena ramificada (BCAA): leucina, isoleucina y valina',
+        'Enriquecida con vitaminas del complejo B, biotina, hierro, calcio y zinc',
+        'Sabor neutro: no cambia el gusto de aquello con lo que se mezcla',
+        'Sin gluten y sin lactosa'
+      ],
+      consumo: 'El envase indica 1 porción (25g, una cuchara medidora) al día por vía oral, disuelta en 200 a 300ml de agua. La cantidad que te corresponde a ti la define tu médico o tu nutricionista.',
+      faq: [
+        { q: '¿Qué diferencia hay entre una proteína aislada y una concentrada?', r: 'La proteína aislada pasa por un filtrado adicional que retira buena parte de la grasa y la lactosa, por lo que queda un polvo más puro en proteína por gramo. Cuál te conviene a ti lo define tu equipo médico según tu tolerancia y tus controles.' },
+        { q: '¿A qué sabe si es sabor neutro?', r: 'Prácticamente a nada. Al no llevar saborizante se puede disolver en agua o sumar a caldos, yogur o preparaciones sin cambiarles el gusto, algo útil cuando los sabores dulces cansan tras la cirugía.' },
+        { q: '¿Cuánto dura un envase de 1000g?', r: 'A razón de una porción de 25g al día, un envase rinde unos 40 días. Si tu indicación es de más de una porción diaria, durará proporcionalmente menos.' }
+      ]
     }
 
   };

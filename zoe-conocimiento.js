@@ -33,7 +33,8 @@
     liquida: 200, liquidaPack: 360,
     gomitas: 150,
     fibraBN: 85,
-    lvlProt: 209, lvlColag: 109, lvlFibra: 79
+    lvlProt: 209, lvlColag: 109, lvlFibra: 79,
+    nfIsolate: 295, nfIsolatePack: 580
   };
 
   var AVISO = 'La indicación puede variar según cada paciente. ' +
@@ -74,17 +75,21 @@
     {
       intent: 'proteina_polvo',
       keywords: ['proteina en polvo', 'whey', 'polvo', 'scoop', 'batido', 'proteina de polvo', 'high iso'],
-      response: 'En proteína en polvo tienes <b>dos opciones</b>, las dos sin lactosa y sin azúcar añadida:<br><br>' +
+      response: 'En proteína en polvo tienes <b>tres opciones</b>, todas sin lactosa y sin azúcar añadida:<br><br>' +
                 '💪 <b>Whey Protein — Bari &amp; Nutrition</b> · 1.5 kg<br>' +
                 '30 g de proteína por servicio, con biotina. Vainilla o Chocolate.<br>' +
                 '<b>S/ ' + P.whey + '</b> · Llevando 2: S/ ' + P.wheyPack + '<br><br>' +
                 '💪 <b>HIGH ISO — LVL Drink</b> · 1 kg<br>' +
                 '27 g de proteína por servicio, endulzada con stevia. Vainilla o Chocolate.<br>' +
                 '<b>S/ ' + P.lvlProt + '</b><br><br>' +
-                'La de B&amp;N rinde más por envase; la de LVL tiene una entrada de precio más baja. ' +
-                'Ambas se usan en la misma etapa.',
-      followUp: '¿Te muestro las dos para comparar?',
-      productos: ['bi1', 'li1'],
+                '💪 <b>Whey Protein Isolate — Nutrifath</b> · 1 kg<br>' +
+                'Proteína aislada con vitaminas y minerales. <b>Sabor neutro</b>: se mezcla con agua o se suma a lo que ya preparas sin cambiarle el gusto.<br>' +
+                '<b>S/ ' + P.nfIsolate + '</b> · Llevando 2: S/ ' + P.nfIsolatePack + '<br><br>' +
+                'La de B&amp;N rinde más por envase, la de LVL tiene la entrada de precio más baja ' +
+                'y la de Nutrifath es la opción si los sabores dulces te cansan. ' +
+                'Las tres se usan en la misma etapa.',
+      followUp: '¿Te muestro las tres para comparar?',
+      productos: ['bi1', 'li1', 'nf1'],
       aviso: true
     },
     {
@@ -350,14 +355,14 @@
       texto: 'Suele ser el momento en que se pasa de líquida a <b>proteína en polvo</b>, y en que las <b>vitaminas</b> ya forman parte de la rutina diaria. ' +
              'Si aparece estreñimiento, también es cuando suele entrar la fibra.<br><br>' +
              'Lo habitual en esta etapa:',
-      productos: ['bi1', 'li1', 'bi7', 'bi9']
+      productos: ['bi1', 'li1', 'nf1', 'bi7', 'bi9']
     },
     '3m+': {
       titulo: 'a partir del tercer mes',
       texto: 'Aquí ya se entra en <b>mantenimiento</b>: se sostiene la proteína y la suplementación indicada a largo plazo. ' +
              'Es también cuando más aparece la caída de cabello, y cuando suele incorporarse el colágeno.<br><br>' +
              'Lo que más se usa en esta etapa:',
-      productos: ['bi1', 'li1', 'bi7', 'bi5', 'li3']
+      productos: ['bi1', 'li1', 'nf1', 'bi7', 'bi5', 'li3']
     }
   };
 
