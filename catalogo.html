@@ -151,6 +151,7 @@ ul { list-style:none; }
 .sello-oferta { background:var(--verde); color:var(--blanco); }
 .sello-nuevo { background:var(--azul); color:var(--blanco); }
 .info { padding:16px; display:flex; flex-direction:column; gap:12px; flex:1; }
+.marca { font-size:var(--fs-xs); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--texto-3); margin-bottom:-8px; }
 .nombre { font-size:var(--fs-h3); line-height:1.25; font-weight:700; }
 .precios { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; }
 .precio { font-size:var(--fs-precio); font-weight:800; color:var(--azul-osc); line-height:1; }
@@ -173,6 +174,19 @@ ul { list-style:none; }
 .incluye li { display:flex; gap:8px; align-items:flex-start; }
 .incluye .icono { width:20px; height:20px; color:var(--verde); margin-top:1px; }
 .incluye-titulo { font-size:var(--fs-xs); font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); }
+
+/* Aviso de descuento por cantidad */
+.promo {
+  margin-top:16px; background:var(--verde-claro); border:2px solid var(--verde-borde);
+  border-radius:var(--radio); padding:16px;
+}
+.promo h3 { font-size:var(--fs-h3); font-weight:800; color:var(--verde-osc); display:flex; align-items:center; gap:8px; }
+.promo h3 .icono { color:var(--verde); }
+.promo ul { margin-top:12px; display:grid; gap:8px; }
+.promo li { display:flex; justify-content:space-between; gap:12px; font-size:var(--fs-sm); font-weight:600;
+  background:var(--blanco); border:1px solid var(--verde-borde); border-radius:var(--radio-sm); padding:10px 14px; }
+.promo li b { color:var(--verde-osc); }
+.promo p { font-size:var(--fs-xs); color:var(--texto-2); margin-top:10px; }
 
 /* Aviso cuando una sección aún no tiene productos */
 .vacio { padding:24px; text-align:center; color:var(--texto-3); font-size:var(--fs-sm);
@@ -281,6 +295,17 @@ ul { list-style:none; }
       <a href="#nuevos"><svg class="icono"><use href="#i-nuevo"/></svg>Nuevos ingresos</a>
       <a href="#packs" class="destacado"><svg class="icono"><use href="#i-pack"/></svg><span>Packs y Ofertas<small>Ahorra comprando en pack</small></span></a>
     </div>
+
+    <!-- Descuento por cantidad (solo Bari&Nutrition) -->
+    <div class="promo">
+      <h3><svg class="icono"><use href="#i-pack"/></svg>Mientras más llevas, menos pagas</h3>
+      <ul>
+        <li>2 productos Bari&amp;Nutrition <b>−S/ 15</b></li>
+        <li>3 productos Bari&amp;Nutrition <b>−S/ 25</b></li>
+        <li>4 o más productos Bari&amp;Nutrition <b>−S/ 40</b></li>
+      </ul>
+      <p>El descuento se aplica solo a productos Bari&amp;Nutrition. No se suma a los packs ni a las ofertas x2.</p>
+    </div>
   </section>
 
   <!-- 5. SECCIONES DE PRODUCTOS
@@ -289,7 +314,7 @@ ul { list-style:none; }
   <section class="seccion" id="proteinas">
     <div class="sec-cab">
       <h2><svg class="icono"><use href="#i-proteina"/></svg>Proteínas</h2>
-      <p>Frase corta de la categoría.</p>
+      <p>Líquida lista para tomar o en polvo, según la etapa en la que estés.</p>
     </div>
     <div class="grilla" data-lista="proteinas"></div>
   </section>
@@ -297,7 +322,7 @@ ul { list-style:none; }
   <section class="seccion" id="vitaminas">
     <div class="sec-cab">
       <h2><svg class="icono"><use href="#i-vitamina"/></svg>Vitaminas</h2>
-      <p>Frase corta de la categoría.</p>
+      <p>Gomitas y tabletas masticables para la suplementación de todos los días.</p>
     </div>
     <div class="grilla" data-lista="vitaminas"></div>
   </section>
@@ -305,7 +330,7 @@ ul { list-style:none; }
   <section class="seccion" id="fibra-colageno">
     <div class="sec-cab">
       <h2><svg class="icono"><use href="#i-hoja"/></svg>Fibra y Colágeno</h2>
-      <p>Frase corta de la categoría.</p>
+      <p>Para el cuidado intestinal y el soporte de piel, cabello y uñas.</p>
     </div>
     <div class="grilla" data-lista="fibraColageno"></div>
   </section>
@@ -313,7 +338,7 @@ ul { list-style:none; }
   <section class="seccion" id="packs">
     <div class="sec-cab">
       <h2><svg class="icono"><use href="#i-pack"/></svg>Packs y Ofertas</h2>
-      <p>Frase corta sobre el ahorro de los packs.</p>
+      <p>Llévate dos y paga menos que comprándolos por separado.</p>
     </div>
     <div class="grilla" data-lista="packs" data-tipo="pack"></div>
   </section>
@@ -367,27 +392,58 @@ ul { list-style:none; }
    ========================================================= */
 const WHATSAPP = "51961841069";
 
+/* Productos sueltos. Se definen una vez y se reutilizan en las
+   secciones de abajo (por eso los nuevos ingresos no se reescriben). */
+const P = {
+  liquidaFresa: { marca:"Bari&Nutrition", nombre:"Proteína Líquida Fresa 1 L", precio:200,
+    foto:"img/cat-liquid-fresa.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar"] },
+  liquidaMaracumango: { marca:"Bari&Nutrition", nombre:"Proteína Líquida Maracumango 1 L", precio:200,
+    foto:"img/cat-liquid-maracumango.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar"] },
+  wheyVainilla: { marca:"Bari&Nutrition", nombre:"Proteína en Polvo Vainilla 1.5 kg", precio:280,
+    foto:"img/cat-whey-vainilla.jpg", chips:["30 g proteína","Deslactosada","0% azúcar"] },
+  wheyChocolate: { marca:"Bari&Nutrition", nombre:"Proteína en Polvo Chocolate 1.5 kg", precio:280,
+    foto:"img/cat-whey-chocolate.jpg", chips:["30 g proteína","Deslactosada","0% azúcar"] },
+  isolate: { marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295,
+    foto:"img/nf-whey-isolate.jpg", nuevo:true, chips:["23 g proteína","Sabor neutro","Sin lactosa"] },
+
+  multivit: { marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150,
+    foto:"img/cat-gomita-multivit.jpg", chips:["120 gomitas","Multisabor","Sin azúcar añadida"] },
+  b12: { marca:"Bari&Nutrition", nombre:"B12 + Ácido Fólico en Gomitas — 90 und", precio:150,
+    foto:"img/cat-gomita-b12.jpg", chips:["90 gomitas","Sabor piña","Sin azúcar añadida"] },
+  hierro: { marca:"Bari&Nutrition", nombre:"Hierro 45 mg + Vitamina C en Gomitas — 30 und", precio:150,
+    foto:"img/cat-gomita-hierro.jpg", chips:["45 mg hierro","Con vitamina C","Sabor naranja"] },
+  biotina: { marca:"Bari&Nutrition", nombre:"Biotina 10,000 mcg en Gomitas — 90 und", precio:150,
+    foto:"img/cat-gomita-biotina.jpg", chips:["10,000 mcg","90 gomitas","Sabor durazno"] },
+  bfBayas: { marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas", precio:280,
+    foto:"img/cat-bf-bayas.jpg", chips:["120 tabletas","Masticables","1 al día"] },
+  bfTropical: { marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Tropical — 120 tabletas", precio:280,
+    foto:"img/cat-bf-tropical.jpg", chips:["120 tabletas","Masticables","1 al día"] },
+
+  colageno: { marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150,
+    foto:"img/cat-colageno-bn.jpg", nuevo:true, chips:["Con calcio + vitamina D","Sabor arándano","500 g"] },
+  fibra: { marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85,
+    foto:"img/cat-fibra.jpg", chips:["320 g","A base de maíz","Rápida absorción"] }
+};
+
 const CATALOGO = {
-  proteinas: [
-    { nombre:"Producto de ejemplo con nombre largo de dos líneas", precio:280, foto:"",
-      chips:["Primer mes","Sin lactosa","20 g proteína"] },
-    { nombre:"Producto de ejemplo en oferta", precio:199, precioAntes:229, foto:"",
-      chips:["Sin azúcar","30 g proteína"] }
-  ],
-  vitaminas: [
-    { nombre:"Producto de ejemplo", precio:95, foto:"", chips:["Diario","Gomitas"] }
-  ],
-  fibraColageno: [
-    { nombre:"Producto de ejemplo", precio:120, foto:"", chips:["Sin sabor"] }
-  ],
+  proteinas: [P.liquidaFresa, P.liquidaMaracumango, P.wheyVainilla, P.wheyChocolate, P.isolate],
+  vitaminas: [P.multivit, P.b12, P.hierro, P.biotina, P.bfBayas, P.bfTropical],
+  fibraColageno: [P.colageno, P.fibra],
   packs: [
-    { nombre:"Pack de ejemplo", precio:450, precioAntes:520, foto:"",
-      incluye:["1 Proteína en polvo","1 Multivitamínico","1 Fibra"],
-      chips:["Primer mes"] }
+    { marca:"Bari&Nutrition", nombre:"Pack x2 Proteínas Líquidas", precio:360, precioAntes:400,
+      foto:"img/oferta-2liquidas.jpg",
+      incluye:["2 Proteínas Líquidas de 1 L","Sabores a elegir: fresa o maracumango"] },
+    { marca:"Bari&Nutrition", nombre:"Pack x2 Proteínas en Polvo", precio:520, precioAntes:560,
+      foto:"img/oferta-2whey-limpia.jpg",
+      incluye:["2 Proteínas en Polvo de 1.5 kg","Sabores a elegir: vainilla o chocolate"] },
+    { marca:"Bariatric Fusion", nombre:"Pack x2 Multivitamínicos", precio:550, precioAntes:560,
+      foto:"img/oferta-2multivit.jpg",
+      incluye:["2 envases de 120 tabletas","Sabores a elegir: bayas mixtas o tropical"] },
+    { marca:"Nutrifath", nombre:"Pack x2 Whey Protein Isolate", precio:580, precioAntes:590,
+      foto:"img/oferta-2nutrifath.jpg",
+      incluye:["2 envases de 1 kg","Sabor neutro"] }
   ],
-  nuevos: [
-    { nombre:"Producto nuevo de ejemplo", precio:150, foto:"", nuevo:true, chips:["Recién llegado"] }
-  ]
+  nuevos: [P.isolate, P.colageno]
 };
 
 /* ---------- Mensajes de WhatsApp ---------- */
@@ -427,6 +483,8 @@ function precios(p, conAhorro = true) {
   return html + '</div>';
 }
 
+function marca(p) { return p.marca ? '<div class="marca">' + esc(p.marca) + '</div>' : ""; }
+
 function chips(lista) {
   if (!lista || !lista.length) return "";
   return '<ul class="chips">' + lista.slice(0, 3).map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>';
@@ -441,7 +499,7 @@ function botonComprar(p, seccion) {
 function tarjetaProducto(p, seccion) {
   return '<article class="tarjeta">' + foto(p) +
     '<div class="info">' +
-      '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
+      marca(p) + '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
       precios(p) + chips(p.chips) + botonComprar(p, seccion) +
     '</div></article>';
 }
@@ -455,7 +513,7 @@ function tarjetaPack(p, seccion) {
     : "";
   return '<article class="tarjeta pack">' + cinta + foto(p, false) +
     '<div class="info">' +
-      '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
+      marca(p) + '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
       incluye + precios(p, !cinta) + chips(p.chips) + botonComprar(p, seccion) +
     '</div></article>';
 }
