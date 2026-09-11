@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catálogo | Zona Bariátrica</title>
-<meta name="description" content="Catálogo de suplementos para pacientes bariátricos. Proteínas, vitaminas, fibra, colágeno y packs. Pide fácil por WhatsApp.">
-<!-- WIREFRAME: noindex mientras el contenido sea de ejemplo. Quitar al cargar los productos reales. -->
+<meta name="description" content="Catálogo de suplementos bariátricos. Arma tu lista y pide tu cotización por WhatsApp.">
+<!-- noindex A PROPÓSITO: es el enlace para compartir, no una página de buscador.
+     Si Google la indexa, compite con /proteinas, /vitaminas, etc. -->
 <meta name="robots" content="noindex, follow">
 <link rel="canonical" href="https://zonabariatrica.com/catalogo">
 <meta name="theme-color" content="#2563EB">
 <!-- Vista previa al compartir por WhatsApp / Facebook -->
 <meta property="og:title" content="Catálogo Zona Bariátrica">
-<meta property="og:description" content="Suplementos para tu vida después de la cirugía. Pide por WhatsApp.">
+<meta property="og:description" content="Arma tu lista y pide tu cotización por WhatsApp.">
 <meta property="og:image" content="https://zonabariatrica.com/img/logo-og.png">
 <meta property="og:url" content="https://zonabariatrica.com/catalogo">
 <meta property="og:type" content="website">
@@ -25,10 +26,10 @@
 </script>
 <style>
 /* =========================================================
-   CATÁLOGO WHATSAPP — Mobile first
-   Todo el diseño sale de estas variables. Para cambiar un
-   color o un tamaño, se cambia AQUÍ y afecta a toda la página.
-   Sin fuentes externas (usa la del celular) para cargar rápido.
+   CATÁLOGO PARA COTIZAR — Mobile first
+   Aquí NO se compra: el cliente arma su lista y la manda
+   por WhatsApp. Todo el diseño sale de estas variables.
+   Sin fuentes externas, para que cargue rápido con datos.
    ========================================================= */
 :root {
   --azul:#2563EB; --azul-osc:#1E40AF; --azul-claro:#EFF6FF; --azul-borde:#BFDBFE;
@@ -38,12 +39,12 @@
 
   --fuente:system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --fs-base:17px; --fs-sm:15px; --fs-xs:13px;
-  --fs-h1:30px; --fs-h2:25px; --fs-h3:19px; --fs-precio:28px;
+  --fs-h2:24px; --fs-h3:19px; --fs-precio:26px;
 
-  --lado:16px;          /* margen lateral */
+  --lado:16px;
   --radio:16px; --radio-sm:10px; --pill:999px;
-  --btn-alto:56px;      /* botones grandes para el dedo */
-  --nav-alto:60px;      /* barra de categorías fija */
+  --btn-alto:52px;
+  --nav-alto:60px;
   --sombra:0 1px 3px rgba(16,24,40,.08);
 }
 
@@ -53,49 +54,47 @@ html, body { overflow-x:clip; }
 body {
   font-family:var(--fuente); font-size:var(--fs-base); line-height:1.45;
   color:var(--texto); background:var(--fondo);
-  padding-bottom:96px; /* espacio para que el botón flotante no tape nada */
+  padding-bottom:100px; /* espacio para el botón flotante */
   -webkit-tap-highlight-color:transparent;
 }
+body.bloqueado { overflow:hidden; } /* con el cotizador abierto */
 img { max-width:100%; display:block; }
 a { color:inherit; text-decoration:none; }
 ul { list-style:none; }
+button { font:inherit; cursor:pointer; border:0; background:none; color:inherit; }
 :focus-visible { outline:3px solid var(--azul); outline-offset:2px; }
 .envoltura { max-width:1080px; margin:0 auto; padding-inline:var(--lado); }
 .icono { width:24px; height:24px; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 
-/* ---------- 1. CABECERA ---------- */
+/* ---------- CABECERA ---------- */
 .cab { background:var(--blanco); border-bottom:1px solid var(--borde); }
-.cab .envoltura { display:flex; align-items:center; gap:10px; height:64px; }
-.cab img { width:40px; height:40px; object-fit:contain; }
-.cab-marca { font-weight:800; font-size:17px; letter-spacing:.02em; color:var(--azul-osc); }
-.cab-sub { font-size:var(--fs-xs); color:var(--texto-3); }
-.cab-tienda { margin-left:auto; font-size:var(--fs-sm); font-weight:600; color:var(--azul); padding:10px 4px; }
+.cab .envoltura { display:flex; align-items:center; gap:12px; height:66px; }
+.cab img { width:42px; height:42px; object-fit:contain; }
+.cab-marca { font-size:var(--fs-xs); font-weight:700; color:var(--texto-3); letter-spacing:.06em; }
+.cab-titulo { font-size:22px; font-weight:800; letter-spacing:.04em; color:var(--azul-osc); line-height:1.1; }
 
-/* ---------- 2. PORTADA ---------- */
-.portada { background:var(--azul); color:var(--blanco); padding-block:36px 40px; }
-.portada h1 { font-size:var(--fs-h1); line-height:1.15; font-weight:800; }
-.portada p { font-size:18px; margin-top:12px; opacity:.95; }
-.portada .btn { margin-top:24px; }
-.confianza { margin-top:24px; display:grid; gap:10px; font-size:var(--fs-sm); font-weight:600; }
-.confianza li { display:flex; align-items:center; gap:10px; }
-.confianza .icono { width:22px; height:22px; color:#BBF7D0; }
-
-/* ---------- BOTONES (componente) ---------- */
-.btn {
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  width:100%; min-height:var(--btn-alto); padding:0 20px;
-  border:0; border-radius:var(--radio-sm); cursor:pointer;
-  font:inherit; font-size:18px; font-weight:700; text-align:center;
+/* ---------- 4 CUADROS DE CATEGORÍA ---------- */
+.mosaico { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding-top:20px; }
+.mosaico a {
+  display:flex; flex-direction:column; justify-content:center; gap:10px;
+  min-height:110px; padding:16px; border-radius:var(--radio);
+  background:var(--blanco); border:1px solid var(--borde); box-shadow:var(--sombra);
+  font-size:18px; font-weight:700; line-height:1.2;
 }
-.btn-blanco { background:var(--blanco); color:var(--azul-osc); }
-.btn-wa { background:var(--verde); color:var(--blanco); }
-.btn-wa:active { background:var(--verde-osc); }
-.btn-wa svg { width:24px; height:24px; fill:currentColor; }
+.mosaico .icono { width:30px; height:30px; color:var(--azul); }
 
-/* ---------- 3. BARRA DE CATEGORÍAS (fija arriba) ---------- */
+/* ---------- AVISO DE DESCUENTO (una sola línea de texto) ---------- */
+.promo {
+  margin-top:14px; background:var(--verde-claro); border:1px solid var(--verde-borde);
+  border-radius:var(--radio); padding:14px 16px; font-size:var(--fs-sm);
+}
+.promo b { color:var(--verde-osc); }
+.promo span { display:block; color:var(--texto-2); font-size:var(--fs-xs); margin-top:4px; }
+
+/* ---------- BARRA DE CATEGORÍAS (fija arriba) ---------- */
 .nav-cat {
   position:sticky; top:0; z-index:20; background:var(--blanco);
-  border-bottom:1px solid var(--borde);
+  border-bottom:1px solid var(--borde); margin-top:24px;
 }
 .nav-cat ul {
   display:flex; gap:8px; height:var(--nav-alto); align-items:center;
@@ -110,350 +109,294 @@ ul { list-style:none; }
 }
 .nav-cat a.activo { background:var(--azul); border-color:var(--azul); color:var(--blanco); }
 
-/* ---------- SECCIONES (componente) ---------- */
-.seccion { padding-block:40px 8px; scroll-margin-top:var(--nav-alto); }
-.sec-cab { margin-bottom:20px; }
-.sec-cab h2 { font-size:var(--fs-h2); line-height:1.2; font-weight:800; display:flex; align-items:center; gap:10px; }
-.sec-cab h2 .icono { color:var(--azul); width:28px; height:28px; }
-.sec-cab p { font-size:var(--fs-sm); color:var(--texto-2); margin-top:6px; }
+/* ---------- SECCIONES ---------- */
+.seccion { padding-block:32px 4px; scroll-margin-top:var(--nav-alto); }
+.seccion h2 { font-size:var(--fs-h2); font-weight:800; display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+.seccion h2 .icono { color:var(--azul); width:28px; height:28px; }
 
-/* ---------- 4. MOSAICO DE CATEGORÍAS ---------- */
-.mosaico { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.mosaico a {
-  display:flex; flex-direction:column; justify-content:center; gap:10px;
-  min-height:112px; padding:16px; border-radius:var(--radio);
-  background:var(--blanco); border:1px solid var(--borde); box-shadow:var(--sombra);
-  font-size:18px; font-weight:700; line-height:1.2;
-}
-.mosaico .icono { width:32px; height:32px; color:var(--azul); }
-.mosaico a.destacado { grid-column:1 / -1; flex-direction:row; align-items:center; min-height:84px;
-  background:var(--verde-claro); border-color:var(--verde-borde); }
-.mosaico a.destacado .icono { color:var(--verde-osc); }
-.mosaico a.destacado small { display:block; font-size:var(--fs-sm); font-weight:600; color:var(--verde-osc); margin-top:2px; }
-
-/* ---------- 5. TARJETA DE PRODUCTO (componente) ---------- */
+/* ---------- TARJETA DE PRODUCTO ---------- */
 .grilla { display:grid; grid-template-columns:1fr; gap:16px; }
 .tarjeta {
   background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio);
   overflow:hidden; box-shadow:var(--sombra); display:flex; flex-direction:column;
 }
+.tarjeta.oferta { border:2px solid var(--verde); }
+.cinta { background:var(--verde); color:var(--blanco); text-align:center; font-size:17px; font-weight:800; padding:9px 16px; }
 .foto { position:relative; aspect-ratio:4 / 3; background:var(--blanco); border-bottom:1px solid var(--borde); }
 .foto img { width:100%; height:100%; object-fit:contain; padding:12px; }
-.foto-vacia { /* se ve mientras no haya foto real */
-  width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
-  background:var(--gris); color:var(--texto-3); font-size:var(--fs-sm); font-weight:600;
-}
-.foto-vacia .icono { width:48px; height:48px; stroke-width:1.5; }
-.sello { /* etiqueta sobre la foto: Oferta / Nuevo */
+.sello {
   position:absolute; top:12px; left:12px; padding:6px 12px; border-radius:var(--pill);
   font-size:var(--fs-xs); font-weight:800; letter-spacing:.04em; text-transform:uppercase;
+  background:var(--azul); color:var(--blanco);
 }
-.sello-oferta { background:var(--verde); color:var(--blanco); }
-.sello-nuevo { background:var(--azul); color:var(--blanco); }
 .info { padding:16px; display:flex; flex-direction:column; gap:12px; flex:1; }
 .marca { font-size:var(--fs-xs); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--texto-3); margin-bottom:-8px; }
 .nombre { font-size:var(--fs-h3); line-height:1.25; font-weight:700; }
+.incluye { display:grid; gap:6px; font-size:var(--fs-sm); color:var(--texto-2); }
+.incluye li { display:flex; gap:8px; align-items:flex-start; }
+.incluye .icono { width:20px; height:20px; color:var(--verde); margin-top:1px; }
 .precios { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; }
 .precio { font-size:var(--fs-precio); font-weight:800; color:var(--azul-osc); line-height:1; }
 .antes { font-size:var(--fs-sm); color:var(--texto-3); text-decoration:line-through; }
-.ahorro { font-size:var(--fs-sm); font-weight:700; color:var(--verde-osc); }
 .chips { display:flex; flex-wrap:wrap; gap:8px; }
 .chips li {
   padding:6px 12px; border-radius:var(--pill); font-size:var(--fs-xs); font-weight:700;
   background:var(--azul-claro); color:var(--azul-osc); border:1px solid var(--azul-borde);
 }
-.info .btn { margin-top:auto; }
 
-/* ---------- 6. TARJETA DE PACK (componente destacado) ---------- */
-.tarjeta.pack { border:2px solid var(--verde); }
-.cinta { /* franja de ahorro, lo primero que se ve */
-  background:var(--verde); color:var(--blanco); text-align:center;
-  font-size:18px; font-weight:800; padding:10px 16px;
+/* ---------- BOTÓN AGREGAR / CONTADOR ---------- */
+.acciones { margin-top:auto; }
+.btn-agregar {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; min-height:var(--btn-alto); border-radius:var(--radio-sm);
+  background:var(--azul); color:var(--blanco); font-size:17px; font-weight:700;
 }
-.incluye { display:grid; gap:8px; font-size:var(--fs-sm); color:var(--texto-2); }
-.incluye li { display:flex; gap:8px; align-items:flex-start; }
-.incluye .icono { width:20px; height:20px; color:var(--verde); margin-top:1px; }
-.incluye-titulo { font-size:var(--fs-xs); font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-3); }
+.btn-agregar:active { background:var(--azul-osc); }
+.contador { display:flex; align-items:center; justify-content:space-between; gap:12px;
+  border:2px solid var(--azul); border-radius:var(--radio-sm); min-height:var(--btn-alto); padding:0 6px; }
+.contador button { width:46px; height:46px; border-radius:8px; font-size:24px; font-weight:800; color:var(--azul-osc); }
+.contador button:active { background:var(--azul-claro); }
+.contador .cant { font-size:17px; font-weight:700; }
+.contador .cant small { display:block; font-size:var(--fs-xs); font-weight:600; color:var(--texto-3); }
 
-/* Aviso de descuento por cantidad */
-.promo {
-  margin-top:16px; background:var(--verde-claro); border:2px solid var(--verde-borde);
-  border-radius:var(--radio); padding:16px;
+/* ---------- BOTÓN FLOTANTE = COTIZADOR ---------- */
+.flotante {
+  position:fixed; left:16px; right:16px; bottom:16px; bottom:calc(16px + env(safe-area-inset-bottom));
+  z-index:30; max-width:520px; margin:0 auto;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  height:60px; border-radius:var(--pill);
+  background:var(--verde); color:var(--blanco); font-size:18px; font-weight:800;
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
 }
-.promo h3 { font-size:var(--fs-h3); font-weight:800; color:var(--verde-osc); display:flex; align-items:center; gap:8px; }
-.promo h3 .icono { color:var(--verde); }
-.promo ul { margin-top:12px; display:grid; gap:8px; }
-.promo li { display:flex; justify-content:space-between; gap:12px; font-size:var(--fs-sm); font-weight:600;
-  background:var(--blanco); border:1px solid var(--verde-borde); border-radius:var(--radio-sm); padding:10px 14px; }
-.promo li b { color:var(--verde-osc); }
-.promo p { font-size:var(--fs-xs); color:var(--texto-2); margin-top:10px; }
-
-/* Aviso cuando una sección aún no tiene productos */
-.vacio { padding:24px; text-align:center; color:var(--texto-3); font-size:var(--fs-sm);
-  border:2px dashed var(--borde); border-radius:var(--radio); }
-
-/* ---------- 7. CIERRE ---------- */
-.cierre { margin-top:40px; background:var(--blanco); border-top:1px solid var(--borde); padding-block:32px; text-align:center; }
-.cierre h2 { font-size:22px; font-weight:800; }
-.cierre p { font-size:var(--fs-sm); color:var(--texto-2); margin:8px 0 20px; }
-.cierre .legal { font-size:var(--fs-xs); color:var(--texto-3); margin:20px 0 0; }
-.cierre a.link { display:inline-block; margin-top:16px; padding:10px; color:var(--azul); font-weight:700; font-size:var(--fs-sm); }
-
-/* ---------- 8. BOTÓN FLOTANTE DE WHATSAPP ---------- */
-.wa-flotante {
-  position:fixed; right:16px; bottom:16px; bottom:calc(16px + env(safe-area-inset-bottom)); z-index:30;
-  display:flex; align-items:center; gap:8px; height:60px; padding:0 22px 0 18px;
-  border-radius:var(--pill); background:var(--verde); color:var(--blanco);
-  font-size:17px; font-weight:800; box-shadow:0 4px 14px rgba(0,0,0,.22);
-}
-.wa-flotante svg { width:28px; height:28px; fill:currentColor; }
-/* En celular: solo el círculo con el logo, para no tapar los botones de compra */
-@media (max-width:599px) {
-  .wa-flotante { width:60px; padding:0; justify-content:center; font-size:0; }
-  .wa-flotante svg { width:32px; height:32px; }
+/* El icono de lista se dibuja con línea, no relleno (el de WhatsApp sí es relleno) */
+.flotante svg { width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; }
+.flotante .globo {
+  min-width:28px; height:28px; padding:0 8px; border-radius:var(--pill);
+  background:var(--blanco); color:var(--verde-osc); font-size:var(--fs-sm); font-weight:800;
+  display:flex; align-items:center; justify-content:center;
 }
 
-/* ---------- Pantallas más grandes (tablet / PC) ---------- */
+/* ---------- PANEL DEL COTIZADOR ---------- */
+/* OJO: .panel usa display:flex, que le gana al hidden del navegador.
+   Sin esta regla el cotizador se ve abierto siempre. */
+[hidden] { display:none !important; }
+.fondo-panel { position:fixed; inset:0; background:rgba(17,24,39,.5); z-index:40; }
+.panel {
+  position:fixed; left:0; right:0; bottom:0; z-index:41;
+  background:var(--fondo); border-radius:20px 20px 0 0;
+  max-height:88vh; display:flex; flex-direction:column;
+  max-width:560px; margin:0 auto; box-shadow:0 -4px 24px rgba(0,0,0,.2);
+}
+.panel-cab { display:flex; align-items:center; gap:12px; padding:16px var(--lado);
+  background:var(--blanco); border-bottom:1px solid var(--borde); border-radius:20px 20px 0 0; }
+.panel-cab h2 { font-size:var(--fs-h3); font-weight:800; flex:1; }
+.panel-cab button { width:44px; height:44px; border-radius:var(--pill); font-size:26px; color:var(--texto-2); }
+.panel-lista { overflow-y:auto; padding:var(--lado); display:grid; gap:12px; flex:1; -webkit-overflow-scrolling:touch; }
+.linea { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio-sm); padding:12px; display:flex; gap:12px; }
+.linea img { width:64px; height:64px; object-fit:contain; flex-shrink:0; }
+.linea-datos { flex:1; min-width:0; }
+.linea-nombre { font-size:var(--fs-sm); font-weight:700; line-height:1.3; }
+.linea-precio { font-size:var(--fs-sm); color:var(--texto-2); margin-top:2px; }
+.linea-pie { display:flex; align-items:center; gap:10px; margin-top:10px; }
+.linea-pie button { width:40px; height:40px; border:1px solid var(--borde); border-radius:8px; font-size:20px; font-weight:800; }
+.linea-pie .n { font-size:var(--fs-sm); font-weight:800; min-width:20px; text-align:center; }
+.linea-quitar { margin-left:auto; font-size:var(--fs-xs); font-weight:700; color:var(--texto-3); text-decoration:underline; padding:10px 4px; width:auto !important; height:auto !important; border:0 !important; }
+.vacio { text-align:center; color:var(--texto-3); font-size:var(--fs-sm); padding:32px 16px; }
+.panel-pie { background:var(--blanco); border-top:1px solid var(--borde); padding:var(--lado);
+  padding-bottom:calc(var(--lado) + env(safe-area-inset-bottom)); display:grid; gap:10px; }
+.cuenta { display:flex; justify-content:space-between; font-size:var(--fs-sm); color:var(--texto-2); }
+.cuenta.dcto { color:var(--verde-osc); font-weight:700; }
+.cuenta.total { font-size:var(--fs-h3); font-weight:800; color:var(--texto); }
+.aviso-dcto { background:var(--verde-claro); border:1px solid var(--verde-borde); border-radius:var(--radio-sm);
+  padding:10px 12px; font-size:var(--fs-xs); color:var(--verde-osc); font-weight:600; }
+.btn-cotizar {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  width:100%; min-height:58px; border-radius:var(--radio-sm);
+  background:var(--verde); color:var(--blanco); font-size:19px; font-weight:800;
+}
+.btn-cotizar[aria-disabled="true"] { background:var(--borde); color:var(--texto-3); pointer-events:none; }
+.btn-cotizar svg { width:26px; height:26px; fill:currentColor; }
+.nota-pie { font-size:var(--fs-xs); color:var(--texto-3); text-align:center; }
+
+/* ---------- PIE ---------- */
+footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--borde); padding-block:24px; text-align:center; }
+footer p { font-size:var(--fs-xs); color:var(--texto-3); }
+
+/* ---------- Pantallas grandes ---------- */
 @media (min-width:600px) {
-  :root { --lado:24px; --fs-h1:36px; }
+  :root { --lado:24px; }
   .grilla { grid-template-columns:1fr 1fr; }
   .mosaico { grid-template-columns:repeat(4, 1fr); }
-  .mosaico a.destacado { grid-column:auto; flex-direction:column; align-items:flex-start; }
-  .confianza { grid-template-columns:repeat(3, auto); justify-content:start; gap:12px 28px; }
-  .portada .btn { width:auto; display:inline-flex; padding:0 32px; }
 }
-@media (min-width:960px) {
-  .grilla { grid-template-columns:repeat(3, 1fr); }
-  .mosaico { grid-template-columns:repeat(5, 1fr); }
-}
+@media (min-width:960px) { .grilla { grid-template-columns:repeat(3, 1fr); } }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
 </style>
 </head>
 <body>
 
-<!-- Iconos: se definen UNA vez y se reutilizan con <use href="#i-..."> -->
+<!-- Iconos: se definen una vez y se reutilizan con <use> -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-proteina" viewBox="0 0 24 24"><path d="M8 2h8"/><path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/></symbol>
   <symbol id="i-vitamina" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></symbol>
   <symbol id="i-hoja" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
-  <symbol id="i-pack" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C9.5 3 11 5 12 8c1-3 2.5-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
   <symbol id="i-nuevo" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
-  <symbol id="i-camion" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62L18.3 9.38a1 1 0 0 0-.78-.38H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
-  <symbol id="i-foto" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></symbol>
+  <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
+  <symbol id="i-lista" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></symbol>
   <symbol id="i-wa" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41Z"/></symbol>
 </svg>
 
-<!-- 1. CABECERA -->
 <header class="cab">
   <div class="envoltura">
-    <img src="img/logo-zb.png" alt="" width="40" height="40">
+    <img src="img/logo-zb.png" alt="Zona Bariátrica" width="42" height="42">
     <div>
       <div class="cab-marca">ZONA BARIÁTRICA</div>
-      <div class="cab-sub">Catálogo</div>
+      <div class="cab-titulo">CATÁLOGO</div>
     </div>
-    <a class="cab-tienda" href="/">Ir a la tienda</a>
   </div>
 </header>
 
-<!-- 2. PORTADA -->
-<section class="portada">
-  <div class="envoltura">
-    <h1>Suplementos para tu vida después de la cirugía</h1>
-    <p>Elige tu producto y pídelo por WhatsApp.</p>
-    <a class="btn btn-blanco" href="#categorias">Ver suplementos</a>
-    <ul class="confianza">
-      <li><svg class="icono"><use href="#i-camion"/></svg>Envíos a Lima y provincias</li>
-      <li><svg class="icono"><use href="#i-check"/></svg>Paga con Yape o tarjeta</li>
-      <li><svg class="icono"><use href="#i-check"/></svg>Te asesoramos por WhatsApp</li>
-    </ul>
-  </div>
-</section>
+<div class="envoltura">
+  <!-- 4 cuadros -->
+  <nav class="mosaico">
+    <a href="#proteinas"><svg class="icono"><use href="#i-proteina"/></svg>Proteínas</a>
+    <a href="#vitaminas"><svg class="icono"><use href="#i-vitamina"/></svg>Vitaminas</a>
+    <a href="#fibra-colageno"><svg class="icono"><use href="#i-hoja"/></svg>Fibra y Colágeno</a>
+    <a href="#nuevos"><svg class="icono"><use href="#i-nuevo"/></svg>Nuevos ingresos</a>
+  </nav>
 
-<!-- 3. BARRA DE CATEGORÍAS (se queda fija al bajar) -->
+  <!-- Descuento por cantidad -->
+  <div class="promo">
+    <b>2 productos B&amp;N −S/ 15 · 3 −S/ 25 · 4 o más −S/ 40</b>
+    <span>Se descuenta solo en productos Bari&amp;Nutrition. No aplica a las ofertas x2.</span>
+  </div>
+</div>
+
+<!-- Barra que se queda fija al bajar -->
 <nav class="nav-cat" aria-label="Categorías">
   <ul>
     <li><a href="#proteinas">Proteínas</a></li>
     <li><a href="#vitaminas">Vitaminas</a></li>
     <li><a href="#fibra-colageno">Fibra y Colágeno</a></li>
-    <li><a href="#packs">Packs y Ofertas</a></li>
     <li><a href="#nuevos">Nuevos ingresos</a></li>
   </ul>
 </nav>
 
 <main class="envoltura">
-
-  <!-- 4. MOSAICO DE CATEGORÍAS -->
-  <section class="seccion" id="categorias">
-    <div class="sec-cab">
-      <h2>¿Qué estás buscando?</h2>
-    </div>
-    <div class="mosaico">
-      <a href="#proteinas"><svg class="icono"><use href="#i-proteina"/></svg>Proteínas</a>
-      <a href="#vitaminas"><svg class="icono"><use href="#i-vitamina"/></svg>Vitaminas</a>
-      <a href="#fibra-colageno"><svg class="icono"><use href="#i-hoja"/></svg>Fibra y Colágeno</a>
-      <a href="#nuevos"><svg class="icono"><use href="#i-nuevo"/></svg>Nuevos ingresos</a>
-      <a href="#packs" class="destacado"><svg class="icono"><use href="#i-pack"/></svg><span>Packs y Ofertas<small>Ahorra comprando en pack</small></span></a>
-    </div>
-
-    <!-- Descuento por cantidad (solo Bari&Nutrition) -->
-    <div class="promo">
-      <h3><svg class="icono"><use href="#i-pack"/></svg>Mientras más llevas, menos pagas</h3>
-      <ul>
-        <li>2 productos Bari&amp;Nutrition <b>−S/ 15</b></li>
-        <li>3 productos Bari&amp;Nutrition <b>−S/ 25</b></li>
-        <li>4 o más productos Bari&amp;Nutrition <b>−S/ 40</b></li>
-      </ul>
-      <p>El descuento se aplica solo a productos Bari&amp;Nutrition. No se suma a los packs ni a las ofertas x2.</p>
-    </div>
-  </section>
-
-  <!-- 5. SECCIONES DE PRODUCTOS
-       Cada sección es igual: cabecera + una lista que se llena sola
-       con los productos de CATALOGO (ver el script al final). -->
   <section class="seccion" id="proteinas">
-    <div class="sec-cab">
-      <h2><svg class="icono"><use href="#i-proteina"/></svg>Proteínas</h2>
-      <p>Líquida lista para tomar o en polvo, según la etapa en la que estés.</p>
-    </div>
+    <h2><svg class="icono"><use href="#i-proteina"/></svg>Proteínas</h2>
     <div class="grilla" data-lista="proteinas"></div>
   </section>
 
   <section class="seccion" id="vitaminas">
-    <div class="sec-cab">
-      <h2><svg class="icono"><use href="#i-vitamina"/></svg>Vitaminas</h2>
-      <p>Gomitas y tabletas masticables para la suplementación de todos los días.</p>
-    </div>
+    <h2><svg class="icono"><use href="#i-vitamina"/></svg>Vitaminas</h2>
     <div class="grilla" data-lista="vitaminas"></div>
   </section>
 
   <section class="seccion" id="fibra-colageno">
-    <div class="sec-cab">
-      <h2><svg class="icono"><use href="#i-hoja"/></svg>Fibra y Colágeno</h2>
-      <p>Para el cuidado intestinal y el soporte de piel, cabello y uñas.</p>
-    </div>
+    <h2><svg class="icono"><use href="#i-hoja"/></svg>Fibra y Colágeno</h2>
     <div class="grilla" data-lista="fibraColageno"></div>
   </section>
 
-  <section class="seccion" id="packs">
-    <div class="sec-cab">
-      <h2><svg class="icono"><use href="#i-pack"/></svg>Packs y Ofertas</h2>
-      <p>Llévate dos y paga menos que comprándolos por separado.</p>
-    </div>
-    <div class="grilla" data-lista="packs" data-tipo="pack"></div>
-  </section>
-
   <section class="seccion" id="nuevos">
-    <div class="sec-cab">
-      <h2><svg class="icono"><use href="#i-nuevo"/></svg>Nuevos ingresos</h2>
-      <p>Lo último que llegó a la tienda.</p>
-    </div>
+    <h2><svg class="icono"><use href="#i-nuevo"/></svg>Nuevos ingresos</h2>
     <div class="grilla" data-lista="nuevos"></div>
   </section>
-
 </main>
 
-<!-- 7. CIERRE -->
-<footer class="cierre">
-  <div class="envoltura">
-    <h2>¿No sabes cuál elegir?</h2>
-    <p>Escríbenos y te ayudamos a escoger.</p>
-    <a class="btn btn-wa" data-wa="general" href="#"><svg><use href="#i-wa"/></svg>Escríbenos por WhatsApp</a>
-    <a class="link" href="/">Ver la tienda completa →</a>
-    <p class="legal">Consumir únicamente bajo indicación de su médico o nutricionista.</p>
-  </div>
+<footer>
+  <p>Precios referenciales en soles. La cotización final se confirma por WhatsApp.<br>
+     Consumir únicamente bajo indicación de su médico o nutricionista.</p>
 </footer>
 
-<!-- 8. BOTÓN FLOTANTE (siempre visible) -->
-<a class="wa-flotante" data-wa="flotante" href="#" aria-label="Escríbenos por WhatsApp">
-  <svg><use href="#i-wa"/></svg>Escríbenos
-</a>
+<!-- Botón flotante: abre el cotizador -->
+<button class="flotante" id="btnFlotante" type="button">
+  <svg><use href="#i-lista"/></svg><span id="txtFlotante">Ver mi cotización</span><span class="globo" id="globo" hidden>0</span>
+</button>
+
+<!-- Panel del cotizador -->
+<div class="fondo-panel" id="fondoPanel" hidden></div>
+<section class="panel" id="panel" hidden aria-label="Mi cotización">
+  <div class="panel-cab">
+    <h2>Mi cotización</h2>
+    <button type="button" id="btnCerrar" aria-label="Cerrar">×</button>
+  </div>
+  <div class="panel-lista" id="panelLista"></div>
+  <div class="panel-pie" id="panelPie"></div>
+</section>
 
 <script>
 /* =========================================================
-   DATOS DEL CATÁLOGO
+   PRODUCTOS
    ---------------------------------------------------------
-   Para agregar un producto se copia un bloque { ... } y se
-   cambian los datos. La tarjeta se dibuja sola.
-
-   Campos de un PRODUCTO:
-     nombre       texto (obligatorio)
-     precio       número en soles (obligatorio)
-     precioAntes  número — si existe y es mayor, sale como OFERTA
-     foto         ruta de la imagen, ej. "img/bn-whey-vainilla.jpg"
-                  (si falta, se ve un recuadro gris "Foto del producto")
-     chips        beneficios cortos, máximo 3: ["Primer mes","Sin lactosa"]
-     nuevo        true → sello azul "Nuevo"
-
-   Un PACK lleva además:
-     incluye      lista de lo que trae: ["1 Proteína", "1 Vitamina"]
-
-   HOY: son tarjetas de EJEMPLO para ver el diseño.
+   Para agregar uno, se copia un bloque y se cambian los datos.
+   La tarjeta se dibuja sola.
+     marca, nombre, precio        (obligatorios)
+     foto        ruta de la imagen
+     chips       hasta 3 beneficios cortos
+     nuevo:true  sello azul "Nuevo"
+     bn:true     entra en el descuento por cantidad B&N
+     precioAntes + incluye  → se dibuja como oferta x2
+   La CLAVE de cada producto (liquidaFresa, wheyVainilla…) es
+   su identificador en la cotización: no cambiarla a la ligera.
    ========================================================= */
 const WHATSAPP = "51961841069";
 
-/* Productos sueltos. Se definen una vez y se reutilizan en las
-   secciones de abajo (por eso los nuevos ingresos no se reescriben). */
 const P = {
-  liquidaFresa: { marca:"Bari&Nutrition", nombre:"Proteína Líquida Fresa 1 L", precio:200,
+  liquidaFresa: { marca:"Bari&Nutrition", nombre:"Proteína Líquida Fresa 1 L", precio:200, bn:true,
     foto:"img/cat-liquid-fresa.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar"] },
-  liquidaMaracumango: { marca:"Bari&Nutrition", nombre:"Proteína Líquida Maracumango 1 L", precio:200,
+  liquidaMaracumango: { marca:"Bari&Nutrition", nombre:"Proteína Líquida Maracumango 1 L", precio:200, bn:true,
     foto:"img/cat-liquid-maracumango.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar"] },
-  wheyVainilla: { marca:"Bari&Nutrition", nombre:"Proteína en Polvo Vainilla 1.5 kg", precio:280,
+  wheyVainilla: { marca:"Bari&Nutrition", nombre:"Proteína en Polvo Vainilla 1.5 kg", precio:280, bn:true,
     foto:"img/cat-whey-vainilla.jpg", chips:["30 g proteína","Deslactosada","0% azúcar"] },
-  wheyChocolate: { marca:"Bari&Nutrition", nombre:"Proteína en Polvo Chocolate 1.5 kg", precio:280,
+  wheyChocolate: { marca:"Bari&Nutrition", nombre:"Proteína en Polvo Chocolate 1.5 kg", precio:280, bn:true,
     foto:"img/cat-whey-chocolate.jpg", chips:["30 g proteína","Deslactosada","0% azúcar"] },
-  isolate: { marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295,
-    foto:"img/nf-whey-isolate.jpg", nuevo:true, chips:["23 g proteína","Sabor neutro","Sin lactosa"] },
+  isolate: { marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295, nuevo:true,
+    foto:"img/nf-whey-isolate.jpg", chips:["23 g proteína","Sabor neutro","Sin lactosa"] },
 
-  multivit: { marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150,
+  multivit: { marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150, bn:true,
     foto:"img/cat-gomita-multivit.jpg", chips:["120 gomitas","Multisabor","Sin azúcar añadida"] },
-  b12: { marca:"Bari&Nutrition", nombre:"B12 + Ácido Fólico en Gomitas — 90 und", precio:150,
+  b12: { marca:"Bari&Nutrition", nombre:"B12 + Ácido Fólico en Gomitas — 90 und", precio:150, bn:true,
     foto:"img/cat-gomita-b12.jpg", chips:["90 gomitas","Sabor piña","Sin azúcar añadida"] },
-  hierro: { marca:"Bari&Nutrition", nombre:"Hierro 45 mg + Vitamina C en Gomitas — 30 und", precio:150,
+  hierro: { marca:"Bari&Nutrition", nombre:"Hierro 45 mg + Vitamina C en Gomitas — 30 und", precio:150, bn:true,
     foto:"img/cat-gomita-hierro.jpg", chips:["45 mg hierro","Con vitamina C","Sabor naranja"] },
-  biotina: { marca:"Bari&Nutrition", nombre:"Biotina 10,000 mcg en Gomitas — 90 und", precio:150,
+  biotina: { marca:"Bari&Nutrition", nombre:"Biotina 10,000 mcg en Gomitas — 90 und", precio:150, bn:true,
     foto:"img/cat-gomita-biotina.jpg", chips:["10,000 mcg","90 gomitas","Sabor durazno"] },
   bfBayas: { marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas", precio:280,
     foto:"img/cat-bf-bayas.jpg", chips:["120 tabletas","Masticables","1 al día"] },
   bfTropical: { marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Tropical — 120 tabletas", precio:280,
     foto:"img/cat-bf-tropical.jpg", chips:["120 tabletas","Masticables","1 al día"] },
 
-  colageno: { marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150,
-    foto:"img/cat-colageno-bn.jpg", nuevo:true, chips:["Con calcio + vitamina D","Sabor arándano","500 g"] },
-  fibra: { marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85,
-    foto:"img/cat-fibra.jpg", chips:["320 g","A base de maíz","Rápida absorción"] }
+  colageno: { marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150, bn:true, nuevo:true,
+    foto:"img/cat-colageno-bn.jpg", chips:["Con calcio + vitamina D","Sabor arándano","500 g"] },
+  fibra: { marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85, bn:true,
+    foto:"img/cat-fibra.jpg", chips:["320 g","A base de maíz","Rápida absorción"] },
+
+  /* Ofertas x2: van dentro de su propia categoría, no en una sección aparte */
+  ofLiquidas: { marca:"Bari&Nutrition", nombre:"Oferta x2 Proteínas Líquidas", precio:360, precioAntes:400,
+    foto:"img/oferta-2liquidas.jpg",
+    incluye:["2 Proteínas Líquidas de 1 L","Sabores a elegir: fresa o maracumango"] },
+  ofWhey: { marca:"Bari&Nutrition", nombre:"Oferta x2 Proteínas en Polvo", precio:520, precioAntes:560,
+    foto:"img/oferta-2whey-limpia.jpg",
+    incluye:["2 Proteínas en Polvo de 1.5 kg","Sabores a elegir: vainilla o chocolate"] },
+  ofIsolate: { marca:"Nutrifath", nombre:"Oferta x2 Whey Protein Isolate", precio:580, precioAntes:590,
+    foto:"img/oferta-2nutrifath.jpg",
+    incluye:["2 envases de 1 kg","Sabor neutro"] },
+  ofMultivit: { marca:"Bariatric Fusion", nombre:"Oferta x2 Multivitamínicos", precio:550, precioAntes:560,
+    foto:"img/oferta-2multivit.jpg",
+    incluye:["2 envases de 120 tabletas","Sabores a elegir: bayas mixtas o tropical"] }
 };
 
+/* Qué producto va en cada sección (un mismo producto puede repetirse) */
 const CATALOGO = {
-  proteinas: [P.liquidaFresa, P.liquidaMaracumango, P.wheyVainilla, P.wheyChocolate, P.isolate],
-  vitaminas: [P.multivit, P.b12, P.hierro, P.biotina, P.bfBayas, P.bfTropical],
-  fibraColageno: [P.colageno, P.fibra],
-  packs: [
-    { marca:"Bari&Nutrition", nombre:"Pack x2 Proteínas Líquidas", precio:360, precioAntes:400,
-      foto:"img/oferta-2liquidas.jpg",
-      incluye:["2 Proteínas Líquidas de 1 L","Sabores a elegir: fresa o maracumango"] },
-    { marca:"Bari&Nutrition", nombre:"Pack x2 Proteínas en Polvo", precio:520, precioAntes:560,
-      foto:"img/oferta-2whey-limpia.jpg",
-      incluye:["2 Proteínas en Polvo de 1.5 kg","Sabores a elegir: vainilla o chocolate"] },
-    { marca:"Bariatric Fusion", nombre:"Pack x2 Multivitamínicos", precio:550, precioAntes:560,
-      foto:"img/oferta-2multivit.jpg",
-      incluye:["2 envases de 120 tabletas","Sabores a elegir: bayas mixtas o tropical"] },
-    { marca:"Nutrifath", nombre:"Pack x2 Whey Protein Isolate", precio:580, precioAntes:590,
-      foto:"img/oferta-2nutrifath.jpg",
-      incluye:["2 envases de 1 kg","Sabor neutro"] }
-  ],
-  nuevos: [P.isolate, P.colageno]
+  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","ofLiquidas","ofWhey","ofIsolate"],
+  vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical","ofMultivit"],
+  fibraColageno: ["colageno","fibra"],
+  nuevos: ["isolate","colageno"]
 };
 
-/* ---------- Mensajes de WhatsApp ---------- */
-function linkWA(texto) {
-  return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(texto);
-}
-const MENSAJE_GENERAL = "Hola, vi el catálogo de Zona Bariátrica y tengo una consulta.";
-function mensajeCompra(p) {
-  return "Hola, quiero comprar:\n• " + p.nombre + " — " + soles(p.precio) + "\n\n(Lo vi en el catálogo)";
-}
+/* Descuento por cantidad — mismos tramos que la tienda */
+const DESCUENTO_BN = [ { min:4, desc:40 }, { min:3, desc:25 }, { min:2, desc:15 } ];
 
 /* ---------- Utilidades ---------- */
 function soles(n) { return "S/ " + (Number.isInteger(n) ? n : n.toFixed(2)); }
@@ -462,90 +405,185 @@ function esc(t) {
 }
 function enOferta(p) { return p.precioAntes && p.precioAntes > p.precio; }
 
-/* ---------- COMPONENTES (piezas reutilizables) ---------- */
-/* conSello=false en los packs: ahí el ahorro ya va en la franja verde de arriba */
-function foto(p, conSello = true) {
-  const img = p.foto
-    ? '<img src="' + esc(p.foto) + '" alt="' + esc(p.nombre) + '" loading="lazy" width="400" height="300">'
-    : '<div class="foto-vacia"><svg class="icono"><use href="#i-foto"/></svg>Foto del producto</div>';
-  let sello = "";
-  if (p.nuevo) sello = '<span class="sello sello-nuevo">Nuevo</span>';
-  else if (conSello && enOferta(p)) sello = '<span class="sello sello-oferta">Oferta</span>';
-  return '<div class="foto">' + img + sello + '</div>';
-}
+/* =========================================================
+   LA COTIZACIÓN
+   Es un objeto { claveDelProducto: cantidad }. Se guarda en
+   el propio celular del cliente, así no pierde su lista si
+   cierra la página por error.
+   ========================================================= */
+let cot = {};
+try { cot = JSON.parse(localStorage.getItem("zb_cotizacion")) || {}; } catch (e) { cot = {}; }
+/* Limpia claves de productos que ya no existen */
+Object.keys(cot).forEach(id => { if (!P[id] || !(cot[id] > 0)) delete cot[id]; });
 
-function precios(p, conAhorro = true) {
-  let html = '<div class="precios"><span class="precio">' + soles(p.precio) + '</span>';
-  if (enOferta(p)) {
-    html += '<span class="antes">Antes ' + soles(p.precioAntes) + '</span>';
-    if (conAhorro) html += '<span class="ahorro">Ahorras ' + soles(p.precioAntes - p.precio) + '</span>';
-  }
-  return html + '</div>';
-}
+function guardar() { try { localStorage.setItem("zb_cotizacion", JSON.stringify(cot)); } catch (e) {} }
+function unidades() { return Object.values(cot).reduce((a, b) => a + b, 0); }
 
-function marca(p) { return p.marca ? '<div class="marca">' + esc(p.marca) + '</div>' : ""; }
-
-function chips(lista) {
-  if (!lista || !lista.length) return "";
-  return '<ul class="chips">' + lista.slice(0, 3).map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>';
-}
-
-function botonComprar(p, seccion) {
-  return '<a class="btn btn-wa" target="_blank" rel="noopener" href="' + linkWA(mensajeCompra(p)) +
-         '" data-producto="' + esc(p.nombre) + '" data-seccion="' + seccion + '">' +
-         '<svg><use href="#i-wa"/></svg>Comprar por WhatsApp</a>';
-}
-
-function tarjetaProducto(p, seccion) {
-  return '<article class="tarjeta">' + foto(p) +
-    '<div class="info">' +
-      marca(p) + '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
-      precios(p) + chips(p.chips) + botonComprar(p, seccion) +
-    '</div></article>';
-}
-
-function tarjetaPack(p, seccion) {
-  const cinta = enOferta(p) ? '<div class="cinta">Ahorras ' + soles(p.precioAntes - p.precio) + '</div>' : "";
-  const incluye = (p.incluye && p.incluye.length)
-    ? '<div><div class="incluye-titulo">Incluye</div><ul class="incluye">' +
-      p.incluye.map(i => '<li><svg class="icono"><use href="#i-check"/></svg>' + esc(i) + '</li>').join("") +
-      '</ul></div>'
-    : "";
-  return '<article class="tarjeta pack">' + cinta + foto(p, false) +
-    '<div class="info">' +
-      marca(p) + '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
-      incluye + precios(p, !cinta) + chips(p.chips) + botonComprar(p, seccion) +
-    '</div></article>';
-}
-
-/* ---------- Dibujar las secciones ---------- */
-document.querySelectorAll("[data-lista]").forEach(el => {
-  const clave = el.dataset.lista;
-  const items = CATALOGO[clave] || [];
-  const dibujar = el.dataset.tipo === "pack" ? tarjetaPack : tarjetaProducto;
-  el.innerHTML = items.length
-    ? items.map(p => dibujar(p, clave)).join("")
-    : '<p class="vacio">Pronto tendremos productos aquí.</p>';
-});
-
-/* Botones generales (flotante y cierre) */
-document.querySelectorAll("[data-wa]").forEach(a => {
-  a.href = linkWA(MENSAJE_GENERAL);
-  a.target = "_blank"; a.rel = "noopener";
-});
-
-/* ---------- Medición: qué producto genera más clics a WhatsApp ---------- */
-document.addEventListener("click", e => {
-  const a = e.target.closest('a[href*="wa.me"]');
-  if (!a || typeof gtag !== "function") return;
-  gtag("event", "clic_whatsapp", {
-    origen: "catalogo",
-    producto: a.dataset.producto || a.dataset.wa || "general",
-    seccion: a.dataset.seccion || ""
+function cuentas() {
+  let subtotal = 0, unidadesBN = 0;
+  Object.keys(cot).forEach(id => {
+    const p = P[id];
+    subtotal += p.precio * cot[id];
+    if (p.bn) unidadesBN += cot[id];
   });
+  const tramo = DESCUENTO_BN.find(t => unidadesBN >= t.min);
+  const descuento = tramo ? tramo.desc : 0;
+  return { subtotal, descuento, total: subtotal - descuento, unidadesBN };
+}
+
+function cambiar(id, delta) {
+  cot[id] = (cot[id] || 0) + delta;
+  if (cot[id] <= 0) delete cot[id];
+  guardar(); refrescar(id);
+  if (delta > 0 && typeof gtag === "function") {
+    gtag("event", "agregar_cotizacion", { producto: P[id].nombre, precio: P[id].precio });
+  }
+}
+function sacar(id) { delete cot[id]; guardar(); refrescar(id); }
+
+/* Solo se redibuja el botón de ESE producto (puede estar en dos
+   secciones), el panel y el contador. Redibujar todo el catálogo
+   en cada toque hace parpadear las fotos en celulares lentos. */
+function refrescar(id) {
+  document.querySelectorAll('.tarjeta[data-id="' + id + '"] .acciones')
+    .forEach(el => { el.innerHTML = acciones(id); });
+  pintarPanel(); pintarFlotante();
+}
+
+/* ---------- TARJETAS ---------- */
+function acciones(id) {
+  const n = cot[id] || 0;
+  if (!n) return '<button class="btn-agregar" type="button" data-mas="' + id + '">' +
+    '<svg class="icono"><use href="#i-mas"/></svg>Agregar a mi cotización</button>';
+  return '<div class="contador">' +
+    '<button type="button" data-menos="' + id + '" aria-label="Quitar uno">−</button>' +
+    '<span class="cant">' + n + ' en tu lista<small>' + soles(P[id].precio * n) + '</small></span>' +
+    '<button type="button" data-mas="' + id + '" aria-label="Agregar uno">+</button>' +
+  '</div>';
+}
+
+function tarjeta(id) {
+  const p = P[id];
+  const oferta = enOferta(p);
+  const cinta = oferta ? '<div class="cinta">Ahorras ' + soles(p.precioAntes - p.precio) + '</div>' : "";
+  const sello = p.nuevo ? '<span class="sello">Nuevo</span>' : "";
+  const incluye = p.incluye
+    ? '<ul class="incluye">' + p.incluye.map(i => '<li><svg class="icono"><use href="#i-check"/></svg>' + esc(i) + '</li>').join("") + '</ul>'
+    : "";
+  const chips = p.chips
+    ? '<ul class="chips">' + p.chips.slice(0, 3).map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>'
+    : "";
+  const antes = oferta ? '<span class="antes">Antes ' + soles(p.precioAntes) + '</span>' : "";
+  return '<article class="tarjeta' + (oferta ? ' oferta' : '') + '" data-id="' + id + '">' + cinta +
+    '<div class="foto"><img src="' + esc(p.foto) + '" alt="' + esc(p.nombre) + '" loading="lazy" width="400" height="300">' + sello + '</div>' +
+    '<div class="info">' +
+      '<div class="marca">' + esc(p.marca) + '</div>' +
+      '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
+      incluye +
+      '<div class="precios"><span class="precio">' + soles(p.precio) + '</span>' + antes + '</div>' +
+      chips +
+      '<div class="acciones">' + acciones(id) + '</div>' +
+    '</div></article>';
+}
+
+function pintarCatalogo() {
+  document.querySelectorAll("[data-lista]").forEach(el => {
+    el.innerHTML = (CATALOGO[el.dataset.lista] || []).map(tarjeta).join("");
+  });
+}
+
+/* ---------- PANEL DEL COTIZADOR ---------- */
+function mensajeWA() {
+  const c = cuentas();
+  let t = "Hola, quiero cotizar:\n";
+  Object.keys(cot).forEach(id => {
+    const p = P[id];
+    t += "\n• " + cot[id] + " x " + p.nombre + " — " + soles(p.precio * cot[id]);
+  });
+  if (c.descuento) t += "\n\nDescuento por cantidad B&N: -" + soles(c.descuento);
+  t += "\nTotal referencial: " + soles(c.total);
+  t += "\n\n(Enviado desde el catálogo web)";
+  return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(t);
+}
+
+function pintarPanel() {
+  const lista = document.getElementById("panelLista");
+  const pie = document.getElementById("panelPie");
+  const ids = Object.keys(cot);
+
+  if (!ids.length) {
+    lista.innerHTML = '<p class="vacio">Tu cotización está vacía.<br>Agrega los productos que te interesan y te los cotizamos por WhatsApp.</p>';
+    pie.innerHTML = '<a class="btn-cotizar" aria-disabled="true"><svg><use href="#i-wa"/></svg>Cotizar por WhatsApp</a>' +
+      '<p class="nota-pie">Primero agrega al menos un producto.</p>';
+    return;
+  }
+
+  lista.innerHTML = ids.map(id => {
+    const p = P[id];
+    return '<div class="linea">' +
+      '<img src="' + esc(p.foto) + '" alt="" width="64" height="64">' +
+      '<div class="linea-datos">' +
+        '<div class="linea-nombre">' + esc(p.nombre) + '</div>' +
+        '<div class="linea-precio">' + soles(p.precio) + ' c/u</div>' +
+        '<div class="linea-pie">' +
+          '<button type="button" data-menos="' + id + '" aria-label="Quitar uno">−</button>' +
+          '<span class="n">' + cot[id] + '</span>' +
+          '<button type="button" data-mas="' + id + '" aria-label="Agregar uno">+</button>' +
+          '<button type="button" class="linea-quitar" data-sacar="' + id + '">Quitar</button>' +
+        '</div>' +
+      '</div></div>';
+  }).join("");
+
+  const c = cuentas();
+  const siguiente = DESCUENTO_BN.slice().sort((a, b) => a.min - b.min).find(t => t.min > c.unidadesBN);
+  const empuje = siguiente
+    ? '<div class="aviso-dcto">Agrega ' + (siguiente.min - c.unidadesBN) + ' producto' +
+      (siguiente.min - c.unidadesBN > 1 ? 's' : '') + ' Bari&amp;Nutrition más y descuentas S/ ' + siguiente.desc + '.</div>'
+    : "";
+
+  pie.innerHTML =
+    '<div class="cuenta"><span>Productos (' + unidades() + ')</span><span>' + soles(c.subtotal) + '</span></div>' +
+    (c.descuento ? '<div class="cuenta dcto"><span>Descuento por cantidad</span><span>−' + soles(c.descuento) + '</span></div>' : "") +
+    '<div class="cuenta total"><span>Total referencial</span><span>' + soles(c.total) + '</span></div>' +
+    empuje +
+    '<a class="btn-cotizar" id="btnCotizar" target="_blank" rel="noopener" href="' + mensajeWA() + '">' +
+      '<svg><use href="#i-wa"/></svg>Cotizar por WhatsApp</a>' +
+    '<p class="nota-pie">No pagas nada ahora. El delivery se coordina por WhatsApp.</p>';
+}
+
+function pintarFlotante() {
+  const n = unidades();
+  const globo = document.getElementById("globo");
+  globo.hidden = n === 0;
+  globo.textContent = n;
+  document.getElementById("txtFlotante").textContent = n ? "Ver mi cotización" : "Mi cotización";
+}
+
+function pintarTodo() { pintarCatalogo(); pintarPanel(); pintarFlotante(); }
+
+/* ---------- Abrir y cerrar el panel ---------- */
+const panel = document.getElementById("panel"), fondo = document.getElementById("fondoPanel");
+function abrir() { pintarPanel(); panel.hidden = false; fondo.hidden = false; document.body.classList.add("bloqueado"); }
+function cerrar() { panel.hidden = true; fondo.hidden = true; document.body.classList.remove("bloqueado"); }
+document.getElementById("btnFlotante").addEventListener("click", abrir);
+document.getElementById("btnCerrar").addEventListener("click", cerrar);
+fondo.addEventListener("click", cerrar);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !panel.hidden) cerrar(); });
+
+/* Un solo escuchador para todos los botones + / − / quitar */
+document.addEventListener("click", e => {
+  const mas = e.target.closest("[data-mas]"), menos = e.target.closest("[data-menos]"), fuera = e.target.closest("[data-sacar]");
+  if (mas) cambiar(mas.dataset.mas, 1);
+  else if (menos) cambiar(menos.dataset.menos, -1);
+  else if (fuera) sacar(fuera.dataset.sacar);
+  const cotizar = e.target.closest("#btnCotizar");
+  if (cotizar && typeof gtag === "function") {
+    const c = cuentas();
+    gtag("event", "enviar_cotizacion", { productos: unidades(), total: c.total });
+  }
 });
 
-/* ---------- Barra de categorías: marca en azul la sección visible ---------- */
+/* ---------- Barra de categorías: marca la sección visible ---------- */
 (function () {
   const nav = document.querySelector(".nav-cat ul");
   const enlaces = [...nav.querySelectorAll("a")];
@@ -568,6 +606,8 @@ document.addEventListener("click", e => {
   }, { passive: true });
   marcar();
 })();
+
+pintarTodo();
 </script>
 </body>
 </html>
