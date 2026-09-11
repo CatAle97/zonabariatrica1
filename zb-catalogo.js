@@ -606,6 +606,20 @@ const productos = [
     uso:"1 scoop (5g) al día disuelto en agua o bebida de preferencia.",
     tn: tn.fibra_bn },
 
+  /* Alta del 11-09-2026. Colageno propio de B&N (el otro colageno
+     del catalogo es el SKINFINITY de LVL, otra marca y otro precio).
+     Sin tabla nutricional todavia: falta la foto de la etiqueta, por
+     eso no lleva "tn" ni "galeria". Tampoco tiene ficha propia
+     (/producto/...) hasta tener esos datos. */
+  { id:"bi10", tipo:"bn", marcaTipo:"bn",
+    brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"colageno", subcat:"colageno", marca:"Bari&Nutrition",
+    nombre:"Colágeno Hidrolizado 500g",
+    desc:"Colágeno hidrolizado en polvo enriquecido con calcio y vitamina D. Sabor arándano, de rápida absorción. Según su etiqueta, contribuye a fortalecer las articulaciones y el sistema óseo, y es un antioxidante natural.",
+    tags:["Con calcio + vitamina D","Sabor arándano","Rápida absorción","500g"],
+    precio:150,
+    img: BN+"colageno.jpg",
+    uso:"Seguir el modo de preparación del envase. La cantidad que te corresponde la define tu médico o tu nutricionista." },
+
   // LVL DRINK INDIVIDUALES
   { id:"li1", tipo:"lvl", marcaTipo:"lvl",
     brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", destacado:true, marca:"LVL Drink",
@@ -674,6 +688,7 @@ const productos = [
     tags:["120 tabletas","Masticables","Sabor tropical","1 al día","Sin gluten"],
     precio:280,
     img: BF+"multivit-tropical.jpg",
+    galeria: [BF+"multivit-tropical.jpg", "img/tn-bf-multivit.jpg"],
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit },
 
@@ -684,6 +699,7 @@ const productos = [
     tags:["120 tabletas","Masticables","Sabor bayas mixtas","1 al día","Sin gluten"],
     precio:280,
     img: BF+"multivit-bayas.jpg",
+    galeria: [BF+"multivit-bayas.jpg", "img/tn-bf-multivit.jpg"],
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit },
 
