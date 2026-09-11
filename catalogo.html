@@ -120,8 +120,6 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
   background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio);
   overflow:hidden; box-shadow:var(--sombra); display:flex; flex-direction:column;
 }
-.tarjeta.oferta { border:2px solid var(--verde); }
-.cinta { background:var(--verde); color:var(--blanco); text-align:center; font-size:17px; font-weight:800; padding:9px 16px; }
 .foto { position:relative; aspect-ratio:4 / 3; background:var(--blanco); border-bottom:1px solid var(--borde); }
 .foto img { width:100%; height:100%; object-fit:contain; padding:12px; }
 .sello {
@@ -132,12 +130,12 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 .info { padding:16px; display:flex; flex-direction:column; gap:12px; flex:1; }
 .marca { font-size:var(--fs-xs); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--texto-3); margin-bottom:-8px; }
 .nombre { font-size:var(--fs-h3); line-height:1.25; font-weight:700; }
-.incluye { display:grid; gap:6px; font-size:var(--fs-sm); color:var(--texto-2); }
-.incluye li { display:flex; gap:8px; align-items:flex-start; }
-.incluye .icono { width:20px; height:20px; color:var(--verde); margin-top:1px; }
 .precios { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; }
 .precio { font-size:var(--fs-precio); font-weight:800; color:var(--azul-osc); line-height:1; }
-.antes { font-size:var(--fs-sm); color:var(--texto-3); text-decoration:line-through; }
+/* Aviso de oferta x2 dentro de la tarjeta */
+.aviso-x2 { background:var(--verde-claro); border:1px solid var(--verde-borde); border-radius:var(--radio-sm);
+  padding:8px 12px; font-size:var(--fs-sm); color:var(--verde-osc); font-weight:600; margin-top:-4px; }
+.aviso-x2 b { font-weight:800; }
 .chips { display:flex; flex-wrap:wrap; gap:8px; }
 .chips li {
   padding:6px 12px; border-radius:var(--pill); font-size:var(--fs-xs); font-weight:700;
@@ -161,12 +159,12 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 
 /* ---------- BOTÓN FLOTANTE = COTIZADOR ---------- */
 .flotante {
-  position:fixed; left:16px; right:16px; bottom:16px; bottom:calc(16px + env(safe-area-inset-bottom));
-  z-index:30; max-width:520px; margin:0 auto;
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  height:60px; border-radius:var(--pill);
-  background:var(--verde); color:var(--blanco); font-size:18px; font-weight:800;
-  box-shadow:0 4px 16px rgba(0,0,0,.25);
+  position:fixed; right:16px; bottom:16px; bottom:calc(16px + env(safe-area-inset-bottom));
+  z-index:30;
+  display:flex; align-items:center; gap:8px;
+  height:50px; padding:0 16px; border-radius:var(--pill);
+  background:var(--verde); color:var(--blanco); font-size:16px; font-weight:700;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
 }
 /* El icono de lista se dibuja con línea, no relleno (el de WhatsApp sí es relleno) */
 .flotante svg { width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; }
@@ -209,13 +207,27 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 .cuenta.total { font-size:var(--fs-h3); font-weight:800; color:var(--texto); }
 .aviso-dcto { background:var(--verde-claro); border:1px solid var(--verde-borde); border-radius:var(--radio-sm);
   padding:10px 12px; font-size:var(--fs-xs); color:var(--verde-osc); font-weight:600; }
-.btn-cotizar {
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  width:100%; min-height:58px; border-radius:var(--radio-sm);
-  background:var(--verde); color:var(--blanco); font-size:19px; font-weight:800;
+/* Campos de entrega: el cliente escribe, no elige de una lista */
+.campo { margin-top:12px; }
+.campo label { display:block; font-size:var(--fs-sm); font-weight:700; margin-bottom:6px; }
+.campo label span { font-weight:400; color:var(--texto-3); }
+.campo input {
+  width:100%; height:50px; padding:0 14px; border:1px solid var(--borde);
+  border-radius:var(--radio-sm); font-size:16px; /* 16px evita que el celular haga zoom */
+  font-family:inherit; color:var(--texto); background:var(--blanco);
 }
-.btn-cotizar[aria-disabled="true"] { background:var(--borde); color:var(--texto-3); pointer-events:none; }
-.btn-cotizar svg { width:26px; height:26px; fill:currentColor; }
+.campo input:focus { outline:none; border-color:var(--azul); box-shadow:0 0 0 3px var(--azul-claro); }
+.campo input.mal { border-color:#DC2626; }
+.campo .error { font-size:var(--fs-xs); color:#DC2626; font-weight:600; margin-top:6px; }
+.aviso-envio { font-size:var(--fs-xs); color:var(--texto-2); background:var(--gris);
+  border-radius:var(--radio-sm); padding:10px 12px; margin:12px 0; }
+.btn-pedido {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  width:100%; min-height:56px; border-radius:var(--radio-sm);
+  background:var(--verde); color:var(--blanco); font-size:19px; font-weight:800; letter-spacing:.02em;
+}
+.btn-pedido[aria-disabled="true"] { background:var(--borde); color:var(--texto-3); pointer-events:none; }
+.btn-pedido svg { width:26px; height:26px; fill:currentColor; }
 .nota-pie { font-size:var(--fs-xs); color:var(--texto-3); text-align:center; }
 
 /* ---------- PIE ---------- */
@@ -268,7 +280,7 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   <!-- Descuento por cantidad -->
   <div class="promo">
     <b>2 productos B&amp;N −S/ 15 · 3 −S/ 25 · 4 o más −S/ 40</b>
-    <span>Se descuenta solo en productos Bari&amp;Nutrition. No aplica a las ofertas x2.</span>
+    <span>Los descuentos y las ofertas x2 se aplican solos al armar tu pedido. Siempre te queda el precio más bajo.</span>
   </div>
 </div>
 
@@ -305,24 +317,49 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
 </main>
 
 <footer>
-  <p>Precios referenciales en soles. La cotización final se confirma por WhatsApp.<br>
+  <p>Precios en soles, sin delivery. El pedido se confirma por WhatsApp.<br>
      Consumir únicamente bajo indicación de su médico o nutricionista.</p>
 </footer>
 
 <!-- Botón flotante: abre el cotizador -->
 <button class="flotante" id="btnFlotante" type="button">
-  <svg><use href="#i-lista"/></svg><span id="txtFlotante">Ver mi cotización</span><span class="globo" id="globo" hidden>0</span>
+  <svg><use href="#i-lista"/></svg><span id="txtFlotante">Mi pedido</span><span class="globo" id="globo" hidden>0</span>
 </button>
 
 <!-- Panel del cotizador -->
 <div class="fondo-panel" id="fondoPanel" hidden></div>
-<section class="panel" id="panel" hidden aria-label="Mi cotización">
+<section class="panel" id="panel" hidden aria-label="Mi pedido">
   <div class="panel-cab">
-    <h2>Mi cotización</h2>
+    <h2>Mi pedido</h2>
     <button type="button" id="btnCerrar" aria-label="Cerrar">×</button>
   </div>
   <div class="panel-lista" id="panelLista"></div>
-  <div class="panel-pie" id="panelPie"></div>
+  <div class="panel-pie">
+    <div id="cuentas"></div>
+
+    <!-- Datos de entrega: campos para escribir, no botones.
+         La zona sirve para cotizarle el delivery, que paga el cliente. -->
+    <div id="formPedido" hidden>
+      <div class="campo">
+        <label for="inpZona">¿A qué distrito o provincia llega tu pedido?</label>
+        <input id="inpZona" type="text" autocomplete="address-level2" placeholder="Ej: Los Olivos, Lima">
+        <p class="error" id="errZona" hidden>Escribe tu distrito o provincia para cotizarte el delivery.</p>
+      </div>
+      <div class="campo">
+        <label for="inpNombre">Tu nombre <span>(opcional)</span></label>
+        <input id="inpNombre" type="text" autocomplete="name" placeholder="Ej: María">
+      </div>
+      <p class="aviso-envio">El delivery se cotiza según tu zona y lo paga el cliente. Te decimos cuánto es por WhatsApp.</p>
+      <a class="btn-pedido" id="btnPedido" target="_blank" rel="noopener" href="#">
+        <svg><use href="#i-wa"/></svg>HACER PEDIDO</a>
+      <p class="nota-pie">No pagas nada ahora.</p>
+    </div>
+
+    <div id="pieVacio">
+      <a class="btn-pedido" aria-disabled="true"><svg><use href="#i-wa"/></svg>HACER PEDIDO</a>
+      <p class="nota-pie">Primero agrega al menos un producto.</p>
+    </div>
+  </div>
 </section>
 
 <script>
@@ -370,40 +407,43 @@ const P = {
   colageno: { marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150, bn:true, nuevo:true,
     foto:"img/cat-colageno-bn.jpg", chips:["Con calcio + vitamina D","Sabor arándano","500 g"] },
   fibra: { marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85, bn:true,
-    foto:"img/cat-fibra.jpg", chips:["320 g","A base de maíz","Rápida absorción"] },
-
-  /* Ofertas x2: van dentro de su propia categoría, no en una sección aparte */
-  ofLiquidas: { marca:"Bari&Nutrition", nombre:"Oferta x2 Proteínas Líquidas", precio:360, precioAntes:400,
-    foto:"img/oferta-2liquidas.jpg",
-    incluye:["2 Proteínas Líquidas de 1 L","Sabores a elegir: fresa o maracumango"] },
-  ofWhey: { marca:"Bari&Nutrition", nombre:"Oferta x2 Proteínas en Polvo", precio:520, precioAntes:560,
-    foto:"img/oferta-2whey-limpia.jpg",
-    incluye:["2 Proteínas en Polvo de 1.5 kg","Sabores a elegir: vainilla o chocolate"] },
-  ofIsolate: { marca:"Nutrifath", nombre:"Oferta x2 Whey Protein Isolate", precio:580, precioAntes:590,
-    foto:"img/oferta-2nutrifath.jpg",
-    incluye:["2 envases de 1 kg","Sabor neutro"] },
-  ofMultivit: { marca:"Bariatric Fusion", nombre:"Oferta x2 Multivitamínicos", precio:550, precioAntes:560,
-    foto:"img/oferta-2multivit.jpg",
-    incluye:["2 envases de 120 tabletas","Sabores a elegir: bayas mixtas o tropical"] }
+    foto:"img/cat-fibra.jpg", chips:["320 g","A base de maíz","Rápida absorción"] }
 };
 
 /* Qué producto va en cada sección (un mismo producto puede repetirse) */
 const CATALOGO = {
-  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","ofLiquidas","ofWhey","ofIsolate"],
-  vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical","ofMultivit"],
+  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate"],
+  vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical"],
   fibraColageno: ["colageno","fibra"],
   nuevos: ["isolate","colageno"]
 };
 
+/* =========================================================
+   OFERTAS x2 AUTOMÁTICAS
+   ---------------------------------------------------------
+   Ya NO hay que elegir una "tarjeta de oferta": si el cliente
+   junta 2 unidades de la misma familia (aunque sean sabores
+   distintos), el precio de oferta se aplica solo.
+   `precioPar` es el precio de los DOS juntos.
+   ========================================================= */
+const OFERTAS_X2 = [
+  { nombre:"Oferta 2 Proteínas Líquidas", ids:["liquidaFresa","liquidaMaracumango"], precioPar:360 },
+  { nombre:"Oferta 2 Proteínas en Polvo", ids:["wheyVainilla","wheyChocolate"], precioPar:520 },
+  { nombre:"Oferta 2 Multivitamínicos Bariatric Fusion", ids:["bfBayas","bfTropical"], precioPar:550 },
+  { nombre:"Oferta 2 Whey Protein Isolate", ids:["isolate"], precioPar:580 }
+];
+
 /* Descuento por cantidad — mismos tramos que la tienda */
 const DESCUENTO_BN = [ { min:4, desc:40 }, { min:3, desc:25 }, { min:2, desc:15 } ];
+
+/* Busca si un producto tiene oferta por llevar 2 (para avisarlo en su tarjeta) */
+function ofertaDe(id) { return OFERTAS_X2.find(o => o.ids.includes(id)); }
 
 /* ---------- Utilidades ---------- */
 function soles(n) { return "S/ " + (Number.isInteger(n) ? n : n.toFixed(2)); }
 function esc(t) {
   return String(t).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 }
-function enOferta(p) { return p.precioAntes && p.precioAntes > p.precio; }
 
 /* =========================================================
    LA COTIZACIÓN
@@ -419,16 +459,60 @@ Object.keys(cot).forEach(id => { if (!P[id] || !(cot[id] > 0)) delete cot[id]; }
 function guardar() { try { localStorage.setItem("zb_cotizacion", JSON.stringify(cot)); } catch (e) {} }
 function unidades() { return Object.values(cot).reduce((a, b) => a + b, 0); }
 
+function descuentoPorCantidad(unidades) {
+  const tramo = DESCUENTO_BN.find(t => unidades >= t.min);
+  return tramo ? tramo.desc : 0;
+}
+
+/* =========================================================
+   CUENTAS
+   ---------------------------------------------------------
+   Se calculan DOS caminos y se le deja al cliente el que le
+   sale más barato, para que nunca pierda por no haber elegido
+   la tarjeta correcta:
+     A) aplicar las ofertas x2 a los pares que se formen, y el
+        descuento por cantidad solo a las unidades que sobran
+     B) no armar pares y aplicar el descuento por cantidad a
+        todas las unidades Bari&Nutrition
+   ========================================================= */
 function cuentas() {
-  let subtotal = 0, unidadesBN = 0;
-  Object.keys(cot).forEach(id => {
-    const p = P[id];
-    subtotal += p.precio * cot[id];
-    if (p.bn) unidadesBN += cot[id];
+  let subtotal = 0;
+  Object.keys(cot).forEach(id => { subtotal += P[id].precio * cot[id]; });
+
+  /* Camino A */
+  const sobran = Object.assign({}, cot);
+  const ofertas = [];
+  let ahorroOfertas = 0;
+  OFERTAS_X2.forEach(of => {
+    const total = of.ids.reduce((s, id) => s + (sobran[id] || 0), 0);
+    const pares = Math.floor(total / 2);
+    if (!pares) return;
+    const unitario = P[of.ids[0]].precio;
+    const ahorro = pares * (unitario * 2 - of.precioPar);
+    ahorroOfertas += ahorro;
+    ofertas.push({ nombre: of.nombre, veces: pares, ahorro });
+    let quitar = pares * 2;
+    of.ids.forEach(id => {
+      const usa = Math.min(quitar, sobran[id] || 0);
+      sobran[id] = (sobran[id] || 0) - usa;
+      quitar -= usa;
+    });
   });
-  const tramo = DESCUENTO_BN.find(t => unidadesBN >= t.min);
-  const descuento = tramo ? tramo.desc : 0;
-  return { subtotal, descuento, total: subtotal - descuento, unidadesBN };
+  let bnSobrantes = 0;
+  Object.keys(sobran).forEach(id => { if (P[id].bn) bnSobrantes += sobran[id]; });
+  const dctoA = descuentoPorCantidad(bnSobrantes);
+  const totalA = subtotal - ahorroOfertas - dctoA;
+
+  /* Camino B */
+  let bnTodos = 0;
+  Object.keys(cot).forEach(id => { if (P[id].bn) bnTodos += cot[id]; });
+  const dctoB = descuentoPorCantidad(bnTodos);
+  const totalB = subtotal - dctoB;
+
+  if (totalA <= totalB) {
+    return { subtotal, ofertas, descuento: dctoA, unidadesBN: bnSobrantes, total: totalA };
+  }
+  return { subtotal, ofertas: [], descuento: dctoB, unidadesBN: bnTodos, total: totalB };
 }
 
 function cambiar(id, delta) {
@@ -464,24 +548,23 @@ function acciones(id) {
 
 function tarjeta(id) {
   const p = P[id];
-  const oferta = enOferta(p);
-  const cinta = oferta ? '<div class="cinta">Ahorras ' + soles(p.precioAntes - p.precio) + '</div>' : "";
   const sello = p.nuevo ? '<span class="sello">Nuevo</span>' : "";
-  const incluye = p.incluye
-    ? '<ul class="incluye">' + p.incluye.map(i => '<li><svg class="icono"><use href="#i-check"/></svg>' + esc(i) + '</li>').join("") + '</ul>'
-    : "";
   const chips = p.chips
     ? '<ul class="chips">' + p.chips.slice(0, 3).map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>'
     : "";
-  const antes = oferta ? '<span class="antes">Antes ' + soles(p.precioAntes) + '</span>' : "";
-  return '<article class="tarjeta' + (oferta ? ' oferta' : '') + '" data-id="' + id + '">' + cinta +
+  /* Aviso de la oferta x2: se arma solo desde OFERTAS_X2 */
+  const of = ofertaDe(id);
+  const aviso = of
+    ? '<div class="aviso-x2">Llevando 2: ' + soles(of.precioPar) +
+      ' <b>(ahorras ' + soles(P[of.ids[0]].precio * 2 - of.precioPar) + ')</b></div>'
+    : "";
+  return '<article class="tarjeta" data-id="' + id + '">' +
     '<div class="foto"><img src="' + esc(p.foto) + '" alt="' + esc(p.nombre) + '" loading="lazy" width="400" height="300">' + sello + '</div>' +
     '<div class="info">' +
       '<div class="marca">' + esc(p.marca) + '</div>' +
       '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
-      incluye +
-      '<div class="precios"><span class="precio">' + soles(p.precio) + '</span>' + antes + '</div>' +
-      chips +
+      '<div class="precios"><span class="precio">' + soles(p.precio) + '</span></div>' +
+      aviso + chips +
       '<div class="acciones">' + acciones(id) + '</div>' +
     '</div></article>';
 }
@@ -495,26 +578,33 @@ function pintarCatalogo() {
 /* ---------- PANEL DEL COTIZADOR ---------- */
 function mensajeWA() {
   const c = cuentas();
-  let t = "Hola, quiero cotizar:\n";
+  let t = "Hola, quiero hacer este pedido:\n";
   Object.keys(cot).forEach(id => {
     const p = P[id];
     t += "\n• " + cot[id] + " x " + p.nombre + " — " + soles(p.precio * cot[id]);
   });
-  if (c.descuento) t += "\n\nDescuento por cantidad B&N: -" + soles(c.descuento);
-  t += "\nTotal referencial: " + soles(c.total);
+  t += "\n";
+  c.ofertas.forEach(o => {
+    t += "\n" + o.nombre + (o.veces > 1 ? " x" + o.veces : "") + ": -" + soles(o.ahorro);
+  });
+  if (c.descuento) t += "\nDescuento por cantidad B&N: -" + soles(c.descuento);
+  t += "\nTotal sin delivery: " + soles(c.total);
+  if (datos.zona) t += "\n\nEntrega en: " + datos.zona;
+  if (datos.nombre) t += "\nNombre: " + datos.nombre;
   t += "\n\n(Enviado desde el catálogo web)";
   return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(t);
 }
 
 function pintarPanel() {
   const lista = document.getElementById("panelLista");
-  const pie = document.getElementById("panelPie");
   const ids = Object.keys(cot);
 
+  document.getElementById("formPedido").hidden = !ids.length;
+  document.getElementById("pieVacio").hidden = !!ids.length;
+
   if (!ids.length) {
-    lista.innerHTML = '<p class="vacio">Tu cotización está vacía.<br>Agrega los productos que te interesan y te los cotizamos por WhatsApp.</p>';
-    pie.innerHTML = '<a class="btn-cotizar" aria-disabled="true"><svg><use href="#i-wa"/></svg>Cotizar por WhatsApp</a>' +
-      '<p class="nota-pie">Primero agrega al menos un producto.</p>';
+    lista.innerHTML = '<p class="vacio">Tu pedido está vacío.<br>Agrega los productos que quieres y te confirmamos todo por WhatsApp.</p>';
+    document.getElementById("cuentas").innerHTML = "";
     return;
   }
 
@@ -541,14 +631,15 @@ function pintarPanel() {
       (siguiente.min - c.unidadesBN > 1 ? 's' : '') + ' Bari&amp;Nutrition más y descuentas S/ ' + siguiente.desc + '.</div>'
     : "";
 
-  pie.innerHTML =
+  document.getElementById("cuentas").innerHTML =
     '<div class="cuenta"><span>Productos (' + unidades() + ')</span><span>' + soles(c.subtotal) + '</span></div>' +
+    c.ofertas.map(o => '<div class="cuenta dcto"><span>' + esc(o.nombre) + (o.veces > 1 ? ' x' + o.veces : '') +
+      '</span><span>−' + soles(o.ahorro) + '</span></div>').join("") +
     (c.descuento ? '<div class="cuenta dcto"><span>Descuento por cantidad</span><span>−' + soles(c.descuento) + '</span></div>' : "") +
-    '<div class="cuenta total"><span>Total referencial</span><span>' + soles(c.total) + '</span></div>' +
-    empuje +
-    '<a class="btn-cotizar" id="btnCotizar" target="_blank" rel="noopener" href="' + mensajeWA() + '">' +
-      '<svg><use href="#i-wa"/></svg>Cotizar por WhatsApp</a>' +
-    '<p class="nota-pie">No pagas nada ahora. El delivery se coordina por WhatsApp.</p>';
+    '<div class="cuenta total"><span>Total sin delivery</span><span>' + soles(c.total) + '</span></div>' +
+    empuje;
+
+  document.getElementById("btnPedido").href = mensajeWA();
 }
 
 function pintarFlotante() {
@@ -556,8 +647,34 @@ function pintarFlotante() {
   const globo = document.getElementById("globo");
   globo.hidden = n === 0;
   globo.textContent = n;
-  document.getElementById("txtFlotante").textContent = n ? "Ver mi cotización" : "Mi cotización";
 }
+
+/* =========================================================
+   DATOS DE ENTREGA
+   El distrito o provincia sirve para cotizar el delivery, que
+   corre por cuenta del cliente. Se guardan en su celular para
+   que no los vuelva a escribir la próxima vez.
+   ========================================================= */
+let datos = { zona:"", nombre:"" };
+try { datos = Object.assign(datos, JSON.parse(localStorage.getItem("zb_datos")) || {}); } catch (e) {}
+
+const inpZona = document.getElementById("inpZona");
+const inpNombre = document.getElementById("inpNombre");
+inpZona.value = datos.zona;
+inpNombre.value = datos.nombre;
+
+function anotar() {
+  datos.zona = inpZona.value.trim();
+  datos.nombre = inpNombre.value.trim();
+  try { localStorage.setItem("zb_datos", JSON.stringify(datos)); } catch (e) {}
+  if (datos.zona) {
+    inpZona.classList.remove("mal");
+    document.getElementById("errZona").hidden = true;
+  }
+  document.getElementById("btnPedido").href = mensajeWA();
+}
+inpZona.addEventListener("input", anotar);
+inpNombre.addEventListener("input", anotar);
 
 function pintarTodo() { pintarCatalogo(); pintarPanel(); pintarFlotante(); }
 
@@ -576,10 +693,21 @@ document.addEventListener("click", e => {
   if (mas) cambiar(mas.dataset.mas, 1);
   else if (menos) cambiar(menos.dataset.menos, -1);
   else if (fuera) sacar(fuera.dataset.sacar);
-  const cotizar = e.target.closest("#btnCotizar");
-  if (cotizar && typeof gtag === "function") {
-    const c = cuentas();
-    gtag("event", "enviar_cotizacion", { productos: unidades(), total: c.total });
+  /* HACER PEDIDO: sin distrito no se manda, porque sin eso no se
+     puede cotizar el delivery. */
+  const pedir = e.target.closest("#btnPedido");
+  if (pedir) {
+    if (!datos.zona) {
+      e.preventDefault();
+      inpZona.classList.add("mal");
+      document.getElementById("errZona").hidden = false;
+      inpZona.focus();
+      return;
+    }
+    if (typeof gtag === "function") {
+      const c = cuentas();
+      gtag("event", "hacer_pedido", { productos: unidades(), total: c.total, zona: datos.zona });
+    }
   }
 });
 
