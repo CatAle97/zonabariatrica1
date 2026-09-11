@@ -227,6 +227,14 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
 }
 .campo input:focus { outline:none; border-color:var(--azul); box-shadow:0 0 0 3px var(--azul-claro); }
 .campo input.mal { border-color:#DC2626; }
+/* Botones Lima / Provincia */
+.opciones { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.opcion {
+  min-height:52px; border:2px solid var(--borde); border-radius:var(--radio-sm);
+  background:var(--blanco); color:var(--texto-2); font-size:16px; font-weight:800; letter-spacing:.04em;
+}
+.opcion.elegida { border-color:var(--azul); background:var(--azul-claro); color:var(--azul-osc); }
+.opciones.mal .opcion { border-color:#DC2626; }
 .campo .error { font-size:var(--fs-xs); color:#DC2626; font-weight:600; margin-top:6px; }
 .aviso-envio { font-size:var(--fs-xs); color:var(--texto-2); background:var(--gris);
   border-radius:var(--radio-sm); padding:10px 12px; margin:12px 0; }
@@ -357,15 +365,23 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
          La zona sirve para cotizarle el delivery, que paga el cliente. -->
     <div id="formPedido" hidden>
       <div class="campo">
-        <label for="inpZona">¿A qué distrito o provincia llega tu pedido?</label>
-        <input id="inpZona" type="text" autocomplete="address-level2" placeholder="Ej: Los Olivos, Lima">
-        <p class="error" id="errZona" hidden>Escribe tu distrito o provincia para cotizarte el delivery.</p>
+        <label>¿A dónde va tu pedido?</label>
+        <div class="opciones">
+          <button type="button" class="opcion" data-zona="lima">LIMA</button>
+          <button type="button" class="opcion" data-zona="provincia">PROVINCIA</button>
+        </div>
+        <p class="error" id="errTipo" hidden>Elige Lima o Provincia.</p>
+      </div>
+      <div class="campo" id="campoZona" hidden>
+        <label for="inpZona" id="labelZona">Dirección exacta</label>
+        <input id="inpZona" type="text" autocomplete="street-address" placeholder="Ej: Av. Perú 123, dpto 201 — San Miguel">
+        <p class="error" id="errZona" hidden>Completa este dato para calcular tu envío.</p>
       </div>
       <div class="campo">
         <label for="inpNombre">Tu nombre <span>(opcional)</span></label>
         <input id="inpNombre" type="text" autocomplete="name" placeholder="Ej: María">
       </div>
-      <p class="aviso-envio">El delivery se cotiza según tu zona y lo paga el cliente. Te decimos cuánto es por WhatsApp.</p>
+      <p class="aviso-envio">El delivery no está incluido: lo paga el cliente. Te decimos cuánto cuesta a tu zona por WhatsApp.</p>
       <a class="btn-pedido" id="btnPedido" target="_blank" rel="noopener" href="#">
         <svg><use href="#i-wa"/></svg>HACER PEDIDO</a>
       <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
@@ -624,7 +640,11 @@ function mensajeWA() {
   });
   if (c.descuento) t += "\nDescuento por cantidad B&N: -" + soles(c.descuento);
   t += "\nTotal sin delivery: " + soles(c.total);
-  if (datos.zona) t += "\n\nEntrega en: " + datos.zona;
+  if (datos.zona) {
+    t += datos.tipo === "provincia"
+      ? "\n\nEnvío a PROVINCIA: " + datos.zona
+      : "\n\nEntrega en LIMA: " + datos.zona;
+  }
   if (datos.nombre) t += "\nNombre: " + datos.nombre;
   t += "\n\n(Enviado desde el catálogo web)";
   return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(t);
@@ -691,13 +711,33 @@ function pintarFlotante() {
    corre por cuenta del cliente. Se guardan en su celular para
    que no los vuelva a escribir la próxima vez.
    ========================================================= */
-let datos = { zona:"", nombre:"" };
+let datos = { tipo:"", zona:"", nombre:"" };
 try { datos = Object.assign(datos, JSON.parse(localStorage.getItem("zb_datos")) || {}); } catch (e) {}
 
 const inpZona = document.getElementById("inpZona");
 const inpNombre = document.getElementById("inpNombre");
-inpZona.value = datos.zona;
-inpNombre.value = datos.nombre;
+const campoZona = document.getElementById("campoZona");
+const labelZona = document.getElementById("labelZona");
+
+/* Lo que se le pide cambia según haya elegido Lima o provincia */
+const TEXTOS_ZONA = {
+  lima: { label:"Dirección exacta", ayuda:"Ej: Av. Perú 123, dpto 201 — San Miguel" },
+  provincia: { label:"¿A qué provincia?", ayuda:"Ej: Cusco" }
+};
+
+function elegirZona(tipo, limpiarTexto) {
+  datos.tipo = tipo;
+  if (limpiarTexto) { datos.zona = ""; inpZona.value = ""; }
+  document.querySelectorAll(".opcion").forEach(b => b.classList.toggle("elegida", b.dataset.zona === tipo));
+  document.querySelector(".opciones").classList.remove("mal");
+  document.getElementById("errTipo").hidden = true;
+  campoZona.hidden = !tipo;
+  if (tipo) {
+    labelZona.textContent = TEXTOS_ZONA[tipo].label;
+    inpZona.placeholder = TEXTOS_ZONA[tipo].ayuda;
+  }
+  anotar();
+}
 
 function anotar() {
   datos.zona = inpZona.value.trim();
@@ -711,6 +751,13 @@ function anotar() {
 }
 inpZona.addEventListener("input", anotar);
 inpNombre.addEventListener("input", anotar);
+document.querySelectorAll(".opcion").forEach(b => {
+  b.addEventListener("click", () => elegirZona(b.dataset.zona, b.dataset.zona !== datos.tipo));
+});
+
+/* Si ya pidió antes, se le deja puesto lo de la vez pasada */
+inpNombre.value = datos.nombre;
+if (datos.tipo) { elegirZona(datos.tipo, false); inpZona.value = datos.zona; anotar(); }
 
 function pintarTodo() { pintarCatalogo(); pintarPanel(); pintarFlotante(); }
 
@@ -735,6 +782,12 @@ document.addEventListener("click", e => {
      puede cotizar el delivery. */
   const pedir = e.target.closest("#btnPedido");
   if (pedir) {
+    if (!datos.tipo) {
+      e.preventDefault();
+      document.querySelector(".opciones").classList.add("mal");
+      document.getElementById("errTipo").hidden = false;
+      return;
+    }
     if (!datos.zona) {
       e.preventDefault();
       inpZona.classList.add("mal");
