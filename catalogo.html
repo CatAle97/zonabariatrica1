@@ -168,6 +168,7 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 }
 /* El icono de lista se dibuja con línea, no relleno (el de WhatsApp sí es relleno) */
 .flotante svg { width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; }
+body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
 .flotante .globo {
   min-width:28px; height:28px; padding:0 8px; border-radius:var(--pill);
   background:var(--blanco); color:var(--verde-osc); font-size:var(--fs-sm); font-weight:800;
@@ -179,17 +180,25 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
    Sin esta regla el cotizador se ve abierto siempre. */
 [hidden] { display:none !important; }
 .fondo-panel { position:fixed; inset:0; background:rgba(17,24,39,.5); z-index:40; }
+/* Ventana centrada en la pantalla. El alto va en dvh porque en el
+   celular la barra del navegador se mete en los vh y cortaba el
+   botón de abajo. */
 .panel {
-  position:fixed; left:0; right:0; bottom:0; z-index:41;
-  background:var(--fondo); border-radius:20px 20px 0 0;
-  max-height:88vh; display:flex; flex-direction:column;
-  max-width:560px; margin:0 auto; box-shadow:0 -4px 24px rgba(0,0,0,.2);
+  position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); z-index:41;
+  width:calc(100% - 24px); max-width:460px;
+  max-height:86vh; max-height:86dvh;
+  background:var(--fondo); border-radius:20px; overflow:hidden;
+  display:flex; flex-direction:column; box-shadow:0 10px 40px rgba(0,0,0,.3);
 }
-.panel-cab { display:flex; align-items:center; gap:12px; padding:16px var(--lado);
-  background:var(--blanco); border-bottom:1px solid var(--borde); border-radius:20px 20px 0 0; }
+.panel-cab { display:flex; align-items:center; gap:12px; padding:14px var(--lado);
+  background:var(--blanco); border-bottom:1px solid var(--borde); }
 .panel-cab h2 { font-size:var(--fs-h3); font-weight:800; flex:1; }
 .panel-cab button { width:44px; height:44px; border-radius:var(--pill); font-size:26px; color:var(--texto-2); }
-.panel-lista { overflow-y:auto; padding:var(--lado); display:grid; gap:12px; flex:1; -webkit-overflow-scrolling:touch; }
+/* Una sola zona con scroll: lista, cuentas, campos y botones.
+   Así el botón de pedido nunca queda cortado. */
+.panel-cuerpo { overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch;
+  padding:var(--lado); padding-bottom:calc(var(--lado) + env(safe-area-inset-bottom)); }
+.panel-lista { display:grid; gap:12px; margin-bottom:16px; }
 .linea { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio-sm); padding:12px; display:flex; gap:12px; }
 .linea img { width:64px; height:64px; object-fit:contain; flex-shrink:0; }
 .linea-datos { flex:1; min-width:0; }
@@ -200,8 +209,8 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 .linea-pie .n { font-size:var(--fs-sm); font-weight:800; min-width:20px; text-align:center; }
 .linea-quitar { margin-left:auto; font-size:var(--fs-xs); font-weight:700; color:var(--texto-3); text-decoration:underline; padding:10px 4px; width:auto !important; height:auto !important; border:0 !important; }
 .vacio { text-align:center; color:var(--texto-3); font-size:var(--fs-sm); padding:32px 16px; }
-.panel-pie { background:var(--blanco); border-top:1px solid var(--borde); padding:var(--lado);
-  padding-bottom:calc(var(--lado) + env(safe-area-inset-bottom)); display:grid; gap:10px; }
+.panel-pie { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio);
+  padding:var(--lado); display:grid; gap:10px; }
 .cuenta { display:flex; justify-content:space-between; font-size:var(--fs-sm); color:var(--texto-2); }
 .cuenta.dcto { color:var(--verde-osc); font-weight:700; }
 .cuenta.total { font-size:var(--fs-h3); font-weight:800; color:var(--texto); }
@@ -228,6 +237,12 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 }
 .btn-pedido[aria-disabled="true"] { background:var(--borde); color:var(--texto-3); pointer-events:none; }
 .btn-pedido svg { width:26px; height:26px; fill:currentColor; }
+.btn-limpiar {
+  width:100%; min-height:48px; border-radius:var(--radio-sm);
+  border:1px solid var(--borde); background:var(--blanco);
+  color:var(--texto-2); font-size:16px; font-weight:700; letter-spacing:.02em;
+}
+.btn-limpiar:active { background:var(--gris); }
 .nota-pie { font-size:var(--fs-xs); color:var(--texto-3); text-align:center; }
 
 /* ---------- PIE ---------- */
@@ -333,6 +348,7 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
     <h2>Mi pedido</h2>
     <button type="button" id="btnCerrar" aria-label="Cerrar">×</button>
   </div>
+  <div class="panel-cuerpo">
   <div class="panel-lista" id="panelLista"></div>
   <div class="panel-pie">
     <div id="cuentas"></div>
@@ -352,13 +368,16 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
       <p class="aviso-envio">El delivery se cotiza según tu zona y lo paga el cliente. Te decimos cuánto es por WhatsApp.</p>
       <a class="btn-pedido" id="btnPedido" target="_blank" rel="noopener" href="#">
         <svg><use href="#i-wa"/></svg>HACER PEDIDO</a>
+      <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
       <p class="nota-pie">No pagas nada ahora.</p>
     </div>
 
     <div id="pieVacio">
       <a class="btn-pedido" aria-disabled="true"><svg><use href="#i-wa"/></svg>HACER PEDIDO</a>
+      <button class="btn-limpiar" id="btnDeshacer" type="button" hidden>Deshacer, volver a poner mis productos</button>
       <p class="nota-pie">Primero agrega al menos un producto.</p>
     </div>
+  </div>
   </div>
 </section>
 
@@ -525,6 +544,22 @@ function cambiar(id, delta) {
 }
 function sacar(id) { delete cot[id]; guardar(); refrescar(id); }
 
+/* LIMPIAR vacía el pedido, pero guarda una copia: si lo tocaron
+   sin querer, el botón "Deshacer" lo devuelve tal cual estaba. */
+let copiaPrevia = null;
+function limpiar() {
+  if (!Object.keys(cot).length) return;
+  copiaPrevia = Object.assign({}, cot);
+  cot = {};
+  guardar(); pintarCatalogo(); pintarPanel(); pintarFlotante();
+}
+function deshacer() {
+  if (!copiaPrevia) return;
+  cot = Object.assign({}, copiaPrevia);
+  copiaPrevia = null;
+  guardar(); pintarCatalogo(); pintarPanel(); pintarFlotante();
+}
+
 /* Solo se redibuja el botón de ESE producto (puede estar en dos
    secciones), el panel y el contador. Redibujar todo el catálogo
    en cada toque hace parpadear las fotos en celulares lentos. */
@@ -605,6 +640,7 @@ function pintarPanel() {
   if (!ids.length) {
     lista.innerHTML = '<p class="vacio">Tu pedido está vacío.<br>Agrega los productos que quieres y te confirmamos todo por WhatsApp.</p>';
     document.getElementById("cuentas").innerHTML = "";
+    document.getElementById("btnDeshacer").hidden = !copiaPrevia;
     return;
   }
 
@@ -684,6 +720,8 @@ function abrir() { pintarPanel(); panel.hidden = false; fondo.hidden = false; do
 function cerrar() { panel.hidden = true; fondo.hidden = true; document.body.classList.remove("bloqueado"); }
 document.getElementById("btnFlotante").addEventListener("click", abrir);
 document.getElementById("btnCerrar").addEventListener("click", cerrar);
+document.getElementById("btnLimpiar").addEventListener("click", limpiar);
+document.getElementById("btnDeshacer").addEventListener("click", deshacer);
 fondo.addEventListener("click", cerrar);
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !panel.hidden) cerrar(); });
 
