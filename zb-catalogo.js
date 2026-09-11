@@ -54,7 +54,7 @@ const tn = {
     nota: "Vía oral. Adultos: 1 gomita masticable al día."
   },
   multivit: {
-    srv: "4 gomitas", srvs: "22 porciones por envase",
+    srv: "4 gomitas", srvs: "30 porciones por envase",
     filas: [
       ["Calorías","10 kcal",""],
       ["Grasa total","0 g","0%"],
@@ -571,12 +571,16 @@ const productos = [
 
   { id:"bi7", tipo:"bn", marcaTipo:"bn",
     brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"vitaminas", subcat:"multivit", formato:"gomitas", marca:"Bari&Nutrition",
-    nombre:"Gomitas Multivitamínico — 90 und",
+    nombre:"Gomitas Multivitamínico — 120 und",
     desc:"Gomitas multisabor con 23 vitaminas y minerales esenciales. Fórmula completa para cubrir los requerimientos nutricionales post-quirúrgicos.",
     tags:["23 vitaminas y minerales","Multisabor","Sin azúcares","Sin colorantes"],
     precio:150,
     img: BN+"gomita-multivit.jpg",
-    galeria: [BN+"gomita-multivit.jpg", "img/tn-multivitaminico.jpg"],
+    /* La foto de la tabla (img/tn-multivitaminico.jpg) dice "90 gomitas por
+       envase" y el frente del envase dice 120: se saco de la galeria el
+       11-09-2026 hasta que el proveedor mande la etiqueta actualizada.
+       Los valores por porcion no cambian y siguen en la tabla de abajo. */
+    galeria: [BN+"gomita-multivit.jpg"],
     uso:"4 gomitas al día.",
     tn: tn.multivit },
 
