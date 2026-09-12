@@ -73,17 +73,22 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 .cab-marca { font-size:15px; font-weight:800; letter-spacing:.04em; color:var(--azul-osc); line-height:1.1; }
 .cab-titulo { font-size:13px; font-weight:700; letter-spacing:.06em; color:var(--texto-3); line-height:1.1; }
 
-/* ---------- 4 CUADROS DE CATEGORÍA ---------- */
-.mosaico { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding-top:20px; }
-.mosaico a {
-  display:flex; flex-direction:column; justify-content:center; gap:10px;
-  min-height:110px; padding:16px; border-radius:var(--radio);
-  background:var(--blanco); border:1px solid var(--borde); box-shadow:var(--sombra);
-  font-size:18px; font-weight:700; line-height:1.2;
-}
-.mosaico .icono { width:30px; height:30px; color:var(--azul); }
-/* El quinto cuadro ocupa la fila entera para que no quede solo */
-.mosaico a:last-child { grid-column:1 / -1; flex-direction:row; align-items:center; min-height:74px; }
+/* ---------- CUADROS DE CATEGORÍA ----------
+   Las 4 primeras son ilustraciones con su texto ya dentro.
+   La quinta usa el mismo formato hasta que llegue su imagen. */
+.mosaico { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding-top:16px; }
+.tile { display:block; border-radius:var(--radio); overflow:hidden; box-shadow:var(--sombra); background:var(--gris); }
+.tile picture { display:block; }
+.tile img { width:100%; height:auto; display:block; }
+.tile:active { opacity:.85; }
+/* Quinta tarjeta: ocupa la fila entera */
+.tile-texto { grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:18px 20px; background:#F1ECFF; }
+.tile-texto strong { display:block; font-size:21px; font-weight:800; color:#4C1D95; line-height:1.15; }
+.tile-texto span { display:block; font-size:var(--fs-sm); color:#6D28D9; margin-top:2px; }
+.tile-texto .flecha { display:flex; align-items:center; justify-content:center; width:44px; height:44px;
+  border-radius:var(--pill); background:#7C3AED; color:#fff; margin-top:12px; }
+.tile-texto .deco { width:56px; height:56px; color:#A78BFA; flex-shrink:0; }
 
 /* ---------- AVISO DE DESCUENTO (una sola línea de texto) ---------- */
 .promo {
@@ -367,6 +372,7 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   <symbol id="i-hoja" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
   <symbol id="i-oferta" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
   <symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
   <symbol id="i-arriba" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
   <symbol id="i-nuevo" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></symbol>
@@ -388,11 +394,31 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
 <div class="envoltura">
   <!-- 4 cuadros -->
   <nav class="mosaico">
-    <a href="#proteinas"><svg class="icono"><use href="#i-proteina"/></svg>Proteínas</a>
-    <a href="#vitaminas"><svg class="icono"><use href="#i-vitamina"/></svg>Vitaminas</a>
-    <a href="#fibra-colageno"><svg class="icono"><use href="#i-hoja"/></svg>Fibra y Colágeno</a>
-    <a href="#ofertas"><svg class="icono"><use href="#i-oferta"/></svg>Ofertas</a>
-    <a href="#nuevos"><svg class="icono"><use href="#i-nuevo"/></svg>Nuevos ingresos</a>
+    <a class="tile" href="#proteinas">
+      <picture><source srcset="img/cat-tile-proteinas.webp" type="image/webp">
+      <img src="img/cat-tile-proteinas.jpg" alt="Proteínas — fuerza en cada etapa" width="760" height="625" fetchpriority="high"></picture>
+    </a>
+    <a class="tile" href="#vitaminas">
+      <picture><source srcset="img/cat-tile-vitaminas.webp" type="image/webp">
+      <img src="img/cat-tile-vitaminas.jpg" alt="Vitaminas — tu salud siempre contigo" width="760" height="614" fetchpriority="high"></picture>
+    </a>
+    <a class="tile" href="#fibra-colageno">
+      <picture><source srcset="img/cat-tile-fibra.webp" type="image/webp">
+      <img src="img/cat-tile-fibra.jpg" alt="Fibra y Colágeno — bienestar desde adentro" width="760" height="614" loading="lazy"></picture>
+    </a>
+    <a class="tile" href="#ofertas">
+      <picture><source srcset="img/cat-tile-ofertas.webp" type="image/webp">
+      <img src="img/cat-tile-ofertas.jpg" alt="Ofertas — tus favoritos a mejor precio" width="760" height="619" loading="lazy"></picture>
+    </a>
+    <!-- Nuevos ingresos: sin ilustración todavía, va en el mismo estilo -->
+    <a class="tile tile-texto" href="#nuevos">
+      <div>
+        <strong>Nuevos ingresos</strong>
+        <span>Siempre algo nuevo para ti</span>
+        <i class="flecha"><svg class="icono"><use href="#i-flecha"/></svg></i>
+      </div>
+      <svg class="icono deco"><use href="#i-nuevo"/></svg>
+    </a>
   </nav>
 
 </div>
