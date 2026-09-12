@@ -108,12 +108,15 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 }
 
 /* ---------- AVISO DE DESCUENTO (una sola línea de texto) ---------- */
-.promo {
-  margin-top:14px; background:var(--verde-claro); border:1px solid var(--verde-borde);
-  border-radius:var(--radio); padding:14px 16px; font-size:var(--fs-sm);
-}
-.promo b { color:var(--verde-osc); }
-.promo span { display:block; color:var(--texto-2); font-size:var(--fs-xs); margin-top:4px; }
+.promo { margin-top:14px; background:var(--verde-claro); border:1px solid var(--verde-borde);
+  border-radius:var(--radio); padding:14px 16px; }
+.promo-titulo { display:block; font-size:var(--fs-xs); font-weight:600; letter-spacing:.04em;
+  text-transform:uppercase; color:var(--verde-osc); margin-bottom:10px; }
+.promo ul { display:flex; gap:8px; }
+.promo li { flex:1; background:var(--blanco); border:1px solid var(--verde-borde); border-radius:var(--radio-sm);
+  padding:8px 6px; text-align:center; font-size:11px; color:var(--texto-3); line-height:1.3; }
+.promo li b { display:block; font-size:19px; font-weight:600; color:var(--texto); }
+.promo li span { display:block; font-size:13px; font-weight:600; color:var(--verde-osc); margin-top:2px; }
 
 /* ---------- BARRA DE CATEGORÍAS (fija arriba) ---------- */
 .nav-cat {
@@ -186,6 +189,15 @@ body.bloqueado .btn-arriba { display:none; }
 .incluye { font-size:var(--fs-sm); color:var(--texto-2); }
 .ya-tienes { font-size:var(--fs-xs); font-weight:700; color:var(--verde-osc);
   background:var(--verde-claro); border-radius:var(--radio-sm); padding:8px 12px; }
+
+/* Elección de sabores dentro de una oferta */
+.sabores { display:grid; gap:10px; }
+.sabor-fila { display:grid; gap:6px; }
+.sabor-fila > span { font-size:var(--fs-xs); font-weight:600; color:var(--texto-3); }
+.sabor-fila > div { display:flex; gap:6px; }
+.chip-sabor { flex:1; min-height:40px; padding:0 8px; border:1px solid var(--borde); border-radius:var(--radio-sm);
+  background:var(--blanco); font-size:13px; font-weight:500; color:var(--texto-2); line-height:1.2; }
+.chip-sabor.elegido { border-color:var(--azul); background:var(--azul-claro); color:var(--azul-osc); font-weight:600; }
 
 /* Se toca el producto y se abre su ficha */
 .foto[data-abrir], .cabeza { cursor:pointer; }
@@ -522,8 +534,12 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
   <section class="seccion" id="ofertas">
     <h2><svg class="icono"><use href="#i-oferta"/></svg>Ofertas</h2>
     <div class="promo">
-      <b>2 productos B&amp;N −S/ 15 · 3 −S/ 25 · 4 o más −S/ 40</b>
-      <span>Y llevando 2 del mismo producto pagas el precio de oferta. Todo se aplica solo al armar tu pedido.</span>
+      <span class="promo-titulo">Descuento Bari&amp;Nutrition</span>
+      <ul>
+        <li><b>2</b> productos <span>−S/ 15</span></li>
+        <li><b>3</b> productos <span>−S/ 25</span></li>
+        <li><b>4+</b> productos <span>−S/ 40</span></li>
+      </ul>
     </div>
     <div class="grilla" id="grillaOfertas"></div>
   </section>
@@ -640,13 +656,13 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
 const WHATSAPP = "51961841069";
 
 const P = {
-  liquidaFresa: { uso:"Tomar 30 ml por porción. Hasta 33 porciones por envase de 1 litro.", marca:"Bari&Nutrition", nombre:"Proteína Líquida Fresa 1 L", precio:200, bn:true,
+  liquidaFresa: { sabor:"Fresa", uso:"Tomar 30 ml por porción. Hasta 33 porciones por envase de 1 litro.", marca:"Bari&Nutrition", nombre:"Proteína Líquida Fresa 1 L", precio:200, bn:true,
     foto:"img/cat-liquid-fresa.jpg", tabla:"img/tn-liquid-protein.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar","Sin gluten"] },
-  liquidaMaracumango: { uso:"Tomar 30 ml por porción. Hasta 33 porciones por envase de 1 litro.", marca:"Bari&Nutrition", nombre:"Proteína Líquida Maracumango 1 L", precio:200, bn:true,
+  liquidaMaracumango: { sabor:"Maracumango", uso:"Tomar 30 ml por porción. Hasta 33 porciones por envase de 1 litro.", marca:"Bari&Nutrition", nombre:"Proteína Líquida Maracumango 1 L", precio:200, bn:true,
     foto:"img/cat-liquid-maracumango.jpg", tabla:"img/tn-liquid-protein.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar","Sin gluten"] },
-  wheyVainilla: { uso:"Disolver 3 scoops (48 g) en 250 ml de agua o leche.", marca:"Bari&Nutrition", nombre:"Proteína en Polvo Vainilla 1.5 kg", precio:280, bn:true,
+  wheyVainilla: { sabor:"Vainilla", uso:"Disolver 3 scoops (48 g) en 250 ml de agua o leche.", marca:"Bari&Nutrition", nombre:"Proteína en Polvo Vainilla 1.5 kg", precio:280, bn:true,
     foto:"img/cat-whey-vainilla.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
-  wheyChocolate: { uso:"Disolver 3 scoops (48 g) en 250 ml de agua o leche.", marca:"Bari&Nutrition", nombre:"Proteína en Polvo Chocolate 1.5 kg", precio:280, bn:true,
+  wheyChocolate: { sabor:"Chocolate", uso:"Disolver 3 scoops (48 g) en 250 ml de agua o leche.", marca:"Bari&Nutrition", nombre:"Proteína en Polvo Chocolate 1.5 kg", precio:280, bn:true,
     foto:"img/cat-whey-chocolate.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
   isolate: { uso:"Vía oral. Adultos: 1 porción (25 g, 1 cuchara) al día disuelta en 200-300 ml de agua.", marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295, nuevo:true,
     foto:"img/nf-whey-isolate.jpg", tabla:"img/tn-nutrifath.jpg", chips:["23 g proteína","Sin lactosa","Sin gluten","Sabor neutro"] },
@@ -659,9 +675,9 @@ const P = {
     foto:"img/cat-gomita-hierro.jpg", tabla:"img/tn-hierro.jpg", chips:["45 mg hierro","Con vitamina C","Sabor naranja"] },
   biotina: { uso:"2 gomitas al día, preferiblemente con una comida. No exceder la dosis recomendada.", marca:"Bari&Nutrition", nombre:"Biotina 10,000 mcg en Gomitas — 90 und", precio:150, bn:true,
     foto:"img/cat-gomita-biotina.jpg", tabla:"img/tn-biotina.jpg", chips:["10,000 mcg","90 gomitas","Sabor durazno"] },
-  bfBayas: { uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.", marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas", precio:280,
+  bfBayas: { sabor:"Bayas mixtas", uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.", marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas", precio:280,
     foto:"img/cat-bf-bayas.jpg", tabla:"img/tn-bf-multivit.jpg", chips:["120 tabletas","Masticables","Sin gluten","1 al día"] },
-  bfTropical: { uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.", marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Tropical — 120 tabletas", precio:280,
+  bfTropical: { sabor:"Tropical", uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.", marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Tropical — 120 tabletas", precio:280,
     foto:"img/cat-bf-tropical.jpg", tabla:"img/tn-bf-multivit.jpg", chips:["120 tabletas","Masticables","Sin gluten","1 al día"] },
 
   colageno: { uso:"Seguir el modo de preparación del envase. La cantidad que te corresponde la define tu médico o tu nutricionista.", marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150, bn:true, nuevo:true,
@@ -860,8 +876,7 @@ function refrescar(id) {
     if (cont) cont.innerHTML = acciones(id);
   }
   /* Las tarjetas de oferta muestran cuanto lleva de esa familia */
-  const go = document.getElementById("grillaOfertas");
-  if (go) go.innerHTML = OFERTAS_X2.map((of, i) => tarjetaOferta(i)).join("");
+  pintarOfertas();
   pintarPanel(); pintarFlotante();
 }
 
@@ -905,35 +920,72 @@ function tarjeta(id) {
     '</div></article>';
 }
 
+/* Qué oferta está eligiendo sabores y cuáles lleva elegidos */
+let eligiendo = -1;
+let elegidos = [];
+
 function tarjetaOferta(i) {
   const of = OFERTAS_X2[i];
   const unitario = P[of.ids[0]].precio;
   const antes = unitario * 2;
   const enPedido = of.ids.reduce((n, id) => n + (cot[id] || 0), 0);
-  const yaTiene = enPedido
-    ? `<div class="ya-tienes">Ya tienes ${enPedido} en tu pedido</div>`
-    : "";
-  return `<article class="tarjeta oferta">
-    <div class="cinta">Ahorras ${soles(antes - of.precioPar)}</div>
-    <div class="foto">${imagenHTML(of.foto, of.nombre, 'loading="lazy" decoding="async"')}</div>
-    <div class="info">
-      <h3 class="nombre">${esc(of.nombre)}</h3>
-      <div class="precios"><span class="precio">${soles(of.precioPar)}</span><span class="antes">Antes ${soles(antes)}</span></div>
-      <div class="incluye">Incluye ${esc(of.incluye)}</div>
-      ${yaTiene}
-      <div class="acciones">
-        <button class="btn-agregar" type="button" data-oferta="${i}">
-          <svg class="icono"><use href="#i-mas"/></svg>
-          <span class="txt-largo">Agregar esta oferta</span><span class="txt-corto">Agregar</span></button>
-      </div>
-    </div></article>`;
+  const yaTiene = enPedido ? '<div class="ya-tienes">Ya tienes ' + enPedido + ' en tu pedido</div>' : "";
+  const variossabores = of.ids.length > 1;
+
+  /* Mientras elige sabores, la tarjeta muestra los dos selectores */
+  let accion;
+  if (eligiendo === i && variossabores) {
+    accion = '<div class="sabores">' +
+      [0, 1].map(pos => '<div class="sabor-fila"><span>Envase ' + (pos + 1) + '</span><div>' +
+        of.ids.map(id => '<button type="button" class="chip-sabor' + (elegidos[pos] === id ? ' elegido' : '') +
+          '" data-sabor="' + i + ':' + pos + ':' + id + '">' + esc(P[id].sabor) + '</button>').join("") +
+      '</div></div>').join("") +
+      '<button class="btn-agregar" type="button" data-confirmar="' + i + '">' +
+        '<svg class="icono"><use href="#i-mas"/></svg>Agregar al pedido</button>' +
+    '</div>';
+  } else {
+    accion = '<button class="btn-agregar" type="button" data-oferta="' + i + '">' +
+      '<svg class="icono"><use href="#i-mas"/></svg>' +
+      '<span class="txt-largo">' + (variossabores ? 'Elegir sabores' : 'Agregar esta oferta') + '</span>' +
+      '<span class="txt-corto">' + (variossabores ? 'Elegir' : 'Agregar') + '</span></button>';
+  }
+
+  return '<article class="tarjeta oferta">' +
+    '<div class="cinta">Ahorras ' + soles(antes - of.precioPar) + '</div>' +
+    '<div class="foto">' + imagenHTML(of.foto, of.nombre, 'loading="lazy" decoding="async"') + '</div>' +
+    '<div class="info">' +
+      '<h3 class="nombre">' + esc(of.nombre) + '</h3>' +
+      '<div class="precios"><span class="precio">' + soles(of.precioPar) + '</span>' +
+        '<span class="antes">Antes ' + soles(antes) + '</span></div>' +
+      yaTiene +
+      '<div class="acciones">' + accion + '</div>' +
+    '</div></article>';
 }
 
-function agregarOferta(i) {
+/* Al tocar una oferta con dos sabores, primero se eligen. Con un
+   solo sabor (Nutrifath) se agregan las dos unidades directo. */
+function abrirOferta(i) {
   const of = OFERTAS_X2[i];
-  /* Con dos sabores se agrega uno de cada uno; con uno solo, dos unidades */
-  if (of.ids.length > 1) { of.ids.forEach(id => { cot[id] = (cot[id] || 0) + 1; }); }
-  else { cot[of.ids[0]] = (cot[of.ids[0]] || 0) + 2; }
+  if (of.ids.length === 1) { agregarOferta(i, [of.ids[0], of.ids[0]]); return; }
+  eligiendo = i;
+  elegidos = [of.ids[0], of.ids[1]];
+  pintarOfertas();
+}
+
+function elegirSabor(i, pos, id) {
+  elegidos[pos] = id;
+  pintarOfertas();
+}
+
+function pintarOfertas() {
+  const go = document.getElementById("grillaOfertas");
+  if (go) go.innerHTML = OFERTAS_X2.map((of, i) => tarjetaOferta(i)).join("");
+}
+
+function agregarOferta(i, ids) {
+  const of = OFERTAS_X2[i];
+  (ids || elegidos).forEach(id => { cot[id] = (cot[id] || 0) + 1; });
+  eligiendo = -1;
   guardar(); pintarCatalogo(); pintarPanel(); pintarFlotante();
   if (typeof gtag === "function") gtag("event", "agregar_oferta", { oferta: of.nombre, precio: of.precioPar });
 }
@@ -1200,7 +1252,11 @@ visor.addEventListener("click", e => { if (e.target === visor) cerrarTabla(); })
 /* Un solo escuchador para todos los botones + / − / quitar */
 document.addEventListener("click", e => {
   const oferta = e.target.closest("[data-oferta]");
-  if (oferta) { agregarOferta(Number(oferta.dataset.oferta)); return; }
+  if (oferta) { abrirOferta(Number(oferta.dataset.oferta)); return; }
+  const sabor = e.target.closest("[data-sabor]");
+  if (sabor) { const p = sabor.dataset.sabor.split(":"); elegirSabor(+p[0], +p[1], p[2]); return; }
+  const confirmar = e.target.closest("[data-confirmar]");
+  if (confirmar) { agregarOferta(Number(confirmar.dataset.confirmar)); return; }
   const abrir = e.target.closest("[data-abrir]");
   if (abrir) { abrirTabla(abrir.dataset.abrir); return; }
   const mas = e.target.closest("[data-mas]"), menos = e.target.closest("[data-menos]"), fuera = e.target.closest("[data-sacar]");
