@@ -288,6 +288,36 @@ const tn = {
     nota: "Valores por porción de 25g transcritos de la etiqueta del envase; la etiqueta no declara % de valor diario. Vía oral: 1 porción al día disuelta en 200 a 300ml de agua. Fabricado en una instalación que también procesa leche, soya, trigo, huevo, maní, frutos secos, pescado y mariscos. No recomendado para personas con alergia a los lácteos. Almacenar a no más de 30 °C."
   },
 
+  colageno_bn: {
+    srv: "1 scoop (10 g)", srvs: "50 servicios por envase",
+    filas: [
+      ["Calorías","40",""],
+      ["Grasa total","0 g",""],
+      ["Grasa saturada","0 g",""],
+      ["Colesterol","0 mg",""],
+      ["Sodio","66.6 mg",""],
+      ["Carbohidratos totales","0 g",""],
+      ["Fibra dietética","0 g",""],
+      ["Azúcares","0 g",""],
+      ["Proteínas","9.3 g",""],
+      ["Calcio","1,200 mg",""],
+      ["Fósforo","14.5 mg",""],
+      ["Magnesio","15 mg",""],
+      ["Vitamina C","8.53 mg",""],
+      ["Vitamina D","75 mcg (3,000 UI)",""],
+      ["Niacina (B3)","1.8 mg",""],
+      ["Vitamina E","1.2 mg",""],
+      ["Ácido pantoténico (B5)","0.6 mg",""],
+      ["Vitamina B6 (piridoxina)","0.2 mg",""],
+      ["Riboflavina","1.5 mg",""],
+      ["Tiamina","0.13 mg",""],
+      ["Ácido fólico (B9)","20 mcg",""],
+      ["Biotina (B8)","15 mcg",""],
+      ["Vitamina B12 (cianocobalamina)","0.2 mcg",""]
+    ],
+    nota: "Sabor arándanos. Valores tomados de la etiqueta del envase."
+  },
+
   bf_multivit: {
     srv: "1 tableta masticable", srvs: "120 porciones por envase",
     filas: [
@@ -576,11 +606,7 @@ const productos = [
     tags:["23 vitaminas y minerales","Multisabor","Sin azúcares","Sin colorantes"],
     precio:150,
     img: BN+"gomita-multivit.jpg",
-    /* La foto de la tabla (img/tn-multivitaminico.jpg) dice "90 gomitas por
-       envase" y el frente del envase dice 120: se saco de la galeria el
-       11-09-2026 hasta que el proveedor mande la etiqueta actualizada.
-       Los valores por porcion no cambian y siguen en la tabla de abajo. */
-    galeria: [BN+"gomita-multivit.jpg"],
+    galeria: [BN+"gomita-multivit.jpg", "img/tn-multivitaminico.jpg"],
     uso:"4 gomitas al día.",
     tn: tn.multivit },
 
@@ -618,7 +644,9 @@ const productos = [
     tags:["Con calcio + vitamina D","Sabor arándano","Rápida absorción","500g"],
     precio:150,
     img: BN+"colageno.jpg",
-    uso:"Seguir el modo de preparación del envase. La cantidad que te corresponde la define tu médico o tu nutricionista." },
+    galeria: [BN+"colageno.jpg", "img/tn-colageno-bn.jpg"],
+    uso:"1 scoop (10 g) al día. La cantidad que te corresponde la define tu médico o tu nutricionista.",
+    tn: tn.colageno_bn },
 
   // LVL DRINK INDIVIDUALES
   { id:"li1", tipo:"lvl", marcaTipo:"lvl",

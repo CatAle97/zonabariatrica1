@@ -68,8 +68,9 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 
 /* ---------- CABECERA ---------- */
 .cab { background:var(--blanco); border-bottom:1px solid var(--borde); }
-.cab .envoltura { display:flex; align-items:center; gap:10px; height:52px; }
-.cab img { width:30px; height:30px; object-fit:contain; }
+.cab .envoltura { display:flex; align-items:center; justify-content:center; gap:10px; height:56px; }
+.cab img { width:32px; height:32px; object-fit:contain; }
+.cab-marca, .cab-titulo { text-align:center; }
 .cab-marca { font-size:15px; font-weight:800; letter-spacing:.04em; color:var(--azul-osc); line-height:1.1; }
 .cab-titulo { font-size:13px; font-weight:700; letter-spacing:.06em; color:var(--texto-3); line-height:1.1; }
 
@@ -626,14 +627,12 @@ const P = {
   wheyVainilla: { uso:"Disolver 3 scoops (48 g) en 250 ml de agua o leche.", marca:"Bari&Nutrition", nombre:"Proteína en Polvo Vainilla 1.5 kg", precio:280, bn:true,
     foto:"img/cat-whey-vainilla.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
   wheyChocolate: { uso:"Disolver 3 scoops (48 g) en 250 ml de agua o leche.", marca:"Bari&Nutrition", nombre:"Proteína en Polvo Chocolate 1.5 kg", precio:280, bn:true,
-    foto:"img/cat-whey-chocolate.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
+    foto:"img/cat-whey-chocolate.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
   isolate: { uso:"Vía oral. Adultos: 1 porción (25 g, 1 cuchara) al día disuelta en 200-300 ml de agua.", marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295, nuevo:true,
     foto:"img/nf-whey-isolate.jpg", tabla:"img/tn-nutrifath.jpg", chips:["23 g proteína","Sin lactosa","Sin gluten","Sabor neutro"] },
 
-  /* multivit: su foto de tabla dice "90 gomitas por envase" y el envase
-     dice 120. No se pone hasta que el proveedor mande la etiqueta nueva. */
   multivit: { uso:"4 gomitas al día.", marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150, bn:true,
-    foto:"img/cat-gomita-multivit.jpg", chips:["120 gomitas","23 vitaminas","Sin azúcar añadida"] },
+    foto:"img/cat-gomita-multivit.jpg", tabla:"img/tn-multivitaminico.jpg", chips:["120 gomitas","23 vitaminas","Sin azúcar añadida"] },
   b12: { uso:"3 gomitas masticables al día.", marca:"Bari&Nutrition", nombre:"B12 + Ácido Fólico en Gomitas — 90 und", precio:150, bn:true,
     foto:"img/cat-gomita-b12.jpg", tabla:"img/tn-b12.jpg", chips:["90 gomitas","Sabor piña","Sin azúcar añadida"] },
   hierro: { uso:"1 gomita masticable al día. Vía oral.", marca:"Bari&Nutrition", nombre:"Hierro 45 mg + Vitamina C en Gomitas — 30 und", precio:150, bn:true,
@@ -646,7 +645,7 @@ const P = {
     foto:"img/cat-bf-tropical.jpg", tabla:"img/tn-bf-multivit.jpg", chips:["120 tabletas","Masticables","Sin gluten","1 al día"] },
 
   colageno: { uso:"Seguir el modo de preparación del envase. La cantidad que te corresponde la define tu médico o tu nutricionista.", marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150, bn:true, nuevo:true,
-    foto:"img/cat-colageno-bn.jpg", chips:["Calcio + vitamina D","Sabor arándano","500 g"] },
+    foto:"img/cat-colageno-bn.jpg", tabla:"img/tn-colageno-bn.jpg", chips:["Calcio + vitamina D","Sabor arándano","500 g"] },
   fibra: { uso:"1 scoop (5 g) al día disuelto en agua o bebida de preferencia.", marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85, bn:true,
     foto:"img/cat-fibra.jpg", tabla:"img/tn-fibra.jpg", chips:["320 g","A base de maíz","Sin azúcar"] }
 };
