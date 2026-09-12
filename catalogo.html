@@ -82,30 +82,7 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 .tile img { width:100%; height:auto; display:block; }
 .tile:active { opacity:.85; }
 /* Quinta tarjeta: ocupa la fila entera */
-.tile-nuevos { grid-column:1 / -1; display:flex; align-items:center; gap:8px;
-  background:linear-gradient(100deg,#EDE9FE 0%,#F5F3FF 55%,#EDE9FE 100%); padding:16px 0 16px 18px; }
-.tn-texto { flex:1 1 auto; min-width:0; }
-.tn-texto strong { display:block; font-size:26px; font-weight:800; color:#4C1D95; line-height:1.05; letter-spacing:-.01em; }
-.tn-texto span { display:block; font-size:var(--fs-sm); color:#6D28D9; margin-top:6px; line-height:1.25; }
-.tn-boton { display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:10px 18px;
-  border-radius:var(--pill); background:#6D28D9; color:#fff; font-size:15px; font-weight:700; font-style:normal; }
-.tn-boton .icono { width:18px; height:18px; }
-/* Los dos envases, montados uno sobre otro como en la ilustración */
-.tn-fotos { position:relative; flex:0 0 38%; display:flex; align-items:flex-end; justify-content:flex-end;
-  padding-right:6px; }
-/* Las fotos son JPG con fondo blanco: multiply hace que ese blanco
-   se funda con el lila y no se vea el recuadro. */
-.tn-fotos img { width:80px; height:80px; object-fit:contain; mix-blend-mode:multiply; }
-.tn-fotos picture:last-of-type img { margin-left:-14px; }
-.tn-sello { position:absolute; top:0; right:0; background:#7C3AED; color:#fff; font-style:normal;
-  font-size:9.5px; font-weight:800; line-height:1.15; text-align:center; padding:6px 8px; border-radius:10px;
-  transform:rotate(6deg); }
-.tn-texto span { max-width:20ch; text-wrap:balance; }
-@media (min-width:600px) {
-  .tn-texto strong { font-size:30px; }
-  .tn-fotos img { width:104px; height:104px; }
-  .tn-sello { font-size:11px; padding:8px 11px; }
-}
+.tile-nuevos { grid-column:1 / -1; }
 
 /* ---------- AVISO DE DESCUENTO (una sola línea de texto) ---------- */
 .promo {
@@ -265,34 +242,60 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
   background:var(--blanco); border-radius:20px; overflow:hidden;
   display:flex; flex-direction:column; box-shadow:0 10px 40px rgba(0,0,0,.3);
 }
-.panel-cab { display:flex; align-items:center; gap:12px; padding:14px var(--lado);
+.panel-cab { display:flex; align-items:flex-start; gap:10px; padding:16px var(--lado);
   background:var(--blanco); border-bottom:1px solid var(--borde); }
-.panel-cab h2 { font-size:var(--fs-h3); font-weight:800; flex:1; }
-.panel-cab button { width:44px; height:44px; border-radius:var(--pill); font-size:26px; color:var(--texto-2); }
-/* Una sola zona con scroll: lista, cuentas, campos y botones.
-   Así el botón de pedido nunca queda cortado. */
+.panel-cab h2 { font-size:26px; font-weight:800; line-height:1.1; }
+.panel-cab p { font-size:var(--fs-sm); color:var(--texto-3); margin-top:2px; }
+.panel-cab > div:first-child { flex:1; }
+.cuenta-chip { background:var(--verde-claro); color:var(--verde-osc); border-radius:var(--pill);
+  padding:7px 12px; font-size:var(--fs-xs); font-weight:800; white-space:nowrap; align-self:center; }
+.panel-cab button { width:40px; height:40px; border-radius:var(--pill); color:var(--texto-2); font-size:26px; align-self:center; }
+
+/* ---------- LINEA DE PRODUCTO EN EL PEDIDO ---------- */
 .panel-cuerpo { overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch;
-  padding:var(--lado); padding-bottom:calc(var(--lado) + env(safe-area-inset-bottom)); }
-.panel-lista { display:grid; gap:12px; margin-bottom:16px; }
-.linea { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio-sm); padding:12px; display:flex; gap:12px; }
-.linea picture { flex-shrink:0; }
-.linea img { width:64px; height:64px; object-fit:contain; }
+  padding:var(--lado); padding-bottom:calc(var(--lado) + env(safe-area-inset-bottom)); background:var(--fondo); }
+.panel-lista { display:grid; gap:12px; margin-bottom:14px; }
+.linea { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio);
+  padding:12px; display:flex; gap:12px; align-items:flex-start; }
+.linea picture { flex:0 0 78px; }
+.linea img { width:78px; height:95px; object-fit:contain; }
 .linea-datos { flex:1; min-width:0; }
-.linea-nombre { font-size:var(--fs-sm); font-weight:700; line-height:1.3; }
-.linea-precio { font-size:var(--fs-sm); color:var(--texto-2); margin-top:2px; }
-.linea-pie { display:flex; align-items:center; gap:10px; margin-top:10px; }
-.linea-pie button { width:40px; height:40px; border:1px solid var(--borde); border-radius:8px; font-size:20px; font-weight:800; }
-.linea-pie .n { font-size:var(--fs-sm); font-weight:800; min-width:20px; text-align:center; }
-.linea-quitar { margin-left:auto; font-size:var(--fs-xs); font-weight:700; color:var(--texto-3); text-decoration:underline; padding:10px 4px; width:auto !important; height:auto !important; border:0 !important; }
+.linea-nombre { font-size:var(--fs-sm); font-weight:800; line-height:1.25; }
+.linea-chips { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0; }
+.linea-chips li { background:var(--gris); color:var(--texto-2); border-radius:8px;
+  padding:4px 8px; font-size:11.5px; font-weight:700; }
+.linea-precio { font-size:20px; font-weight:800; color:var(--azul); }
+.linea-lado { display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+.linea-borrar { width:34px; height:34px; color:var(--texto-3); display:flex; align-items:center; justify-content:center; }
+.linea-borrar .icono { width:19px; height:19px; }
+.contador-mini { display:flex; align-items:center; gap:4px; background:var(--gris); border-radius:var(--pill); padding:3px; }
+.contador-mini button { width:34px; height:34px; border-radius:var(--pill); font-size:19px; font-weight:800; color:var(--texto-2); background:var(--blanco); }
+.contador-mini button.mas { background:var(--azul); color:var(--blanco); }
+.contador-mini span { min-width:22px; text-align:center; font-size:var(--fs-sm); font-weight:800; }
+.linea-subtotal { font-size:11.5px; color:var(--texto-3); font-weight:600; text-align:right; }
+.linea-subtotal b { display:block; font-size:var(--fs-sm); color:var(--texto); }
 .vacio { text-align:center; color:var(--texto-3); font-size:var(--fs-sm); padding:32px 16px; }
-.panel-pie { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio);
-  padding:var(--lado); display:grid; gap:10px; }
-.cuenta { display:flex; justify-content:space-between; font-size:var(--fs-sm); color:var(--texto-2); }
+.panel-pie { background:transparent; border:0; padding:0; display:grid; gap:12px; }
+.totales { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio); padding:16px; display:grid; gap:8px; }
+.cuenta { display:flex; justify-content:space-between; gap:12px; font-size:var(--fs-sm); color:var(--texto-2); }
 .cuenta.dcto { color:var(--verde-osc); font-weight:700; }
-.cuenta.total { font-size:var(--fs-h3); font-weight:800; color:var(--texto); }
-.aviso-dcto { background:var(--verde-claro); border:1px solid var(--verde-borde); border-radius:var(--radio-sm);
-  padding:10px 12px; font-size:var(--fs-xs); color:var(--verde-osc); font-weight:600; }
+.cuenta.total { border-top:1px solid var(--borde); padding-top:12px; margin-top:4px;
+  font-size:22px; font-weight:800; color:var(--texto); }
+.cuenta.total span:last-child { color:var(--azul); }
+.sin-delivery { font-size:var(--fs-xs); color:var(--texto-3); text-align:right; }
+.aviso-dcto { display:flex; gap:10px; background:var(--verde-claro); border:1px solid var(--verde-borde);
+  border-radius:var(--radio); padding:14px; }
+.aviso-dcto .icono { width:24px; height:24px; color:var(--verde); flex-shrink:0; }
+.aviso-dcto b { display:block; font-size:var(--fs-sm); color:var(--verde-osc); }
+.aviso-dcto span { display:block; font-size:var(--fs-xs); color:var(--texto-2); margin-top:3px; }
+.bloque-envio { display:flex; gap:12px; align-items:flex-start; background:var(--azul-claro);
+  border:1px solid var(--azul-borde); border-radius:var(--radio); padding:14px; margin-bottom:6px; }
+.bloque-envio .icono { width:26px; height:26px; color:var(--azul); flex-shrink:0; }
+.bloque-envio b { display:block; font-size:var(--fs-sm); color:var(--azul-osc); }
+.bloque-envio span { display:block; font-size:var(--fs-xs); color:var(--texto-2); margin-top:2px; }
 /* Campos de entrega: el cliente escribe, no elige de una lista */
+#formPedido, #pieVacio { background:var(--blanco); border:1px solid var(--borde);
+  border-radius:var(--radio); padding:16px; }
 .campo { margin-top:12px; }
 .campo label { display:block; font-size:var(--fs-sm); font-weight:700; margin-bottom:6px; }
 .campo label span { font-weight:400; color:var(--texto-3); }
@@ -330,7 +333,9 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
   color:var(--texto-2); font-size:16px; font-weight:700; letter-spacing:.02em;
 }
 .btn-limpiar:active { background:var(--gris); }
-.nota-pie { font-size:var(--fs-xs); color:var(--texto-3); text-align:center; }
+.nota-pie { display:flex; align-items:center; justify-content:center; gap:6px;
+  font-size:var(--fs-xs); color:var(--texto-3); text-align:center; margin-top:10px; }
+.nota-pie .icono { width:16px; height:16px; }
 
 /* ---------- PIE ---------- */
 footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--borde); padding-block:24px; text-align:center; }
@@ -389,6 +394,9 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   <symbol id="i-hoja" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
   <symbol id="i-oferta" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-basura" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol>
+  <symbol id="i-camion" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62L18.3 9.38a1 1 0 0 0-.78-.38H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+  <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
   <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
   <symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
   <symbol id="i-arriba" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
@@ -427,774 +435,8 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
       <picture><source srcset="img/cat-tile-ofertas.webp" type="image/webp">
       <img src="img/cat-tile-ofertas.jpg" alt="Ofertas — tus favoritos a mejor precio" width="760" height="619" loading="lazy"></picture>
     </a>
-    <!-- Nuevos ingresos: hecha en código, con las fotos reales de
-         los dos productos que de verdad acaban de entrar. -->
     <a class="tile tile-nuevos" href="#nuevos">
-      <div class="tn-texto">
-        <strong>Nuevos ingresos</strong>
-        <span>Siempre algo nuevo para ti</span>
-        <i class="tn-boton">Ver productos <svg class="icono"><use href="#i-flecha"/></svg></i>
-      </div>
-      <div class="tn-fotos">
-        <picture><source srcset="img/nf-whey-isolate.webp" type="image/webp">
-        <img src="img/nf-whey-isolate.jpg" alt="Whey Protein Isolate de Nutrifath" loading="lazy" width="200" height="200"></picture>
-        <picture><source srcset="img/cat-colageno-bn.webp" type="image/webp">
-        <img src="img/cat-colageno-bn.jpg" alt="Colágeno Hidrolizado de Bari&amp;Nutrition" loading="lazy" width="200" height="200"></picture>
-        <em class="tn-sello">LO MÁS<br>NUEVO</em>
-      </div>
+      <picture><source srcset="img/cat-tile-nuevos.webp" type="image/webp">
+      <img src="img/cat-tile-nuevos.jpg" alt="Nuevos ingresos — siempre algo nuevo para ti" width="1000" height="508" loading="lazy"></picture>
     </a>
-</nav>
 
-</div>
-
-<!-- Barra que se queda fija al bajar -->
-<nav class="nav-cat" aria-label="Categorías">
-  <ul>
-    <li><a href="#proteinas">Proteínas</a></li>
-    <li><a href="#vitaminas">Vitaminas</a></li>
-    <li><a href="#fibra-colageno">Fibra y Colágeno</a></li>
-    <li><a href="#ofertas">Ofertas</a></li>
-    <li><a href="#nuevos">Nuevos ingresos</a></li>
-  </ul>
-</nav>
-
-<main class="envoltura">
-  <section class="seccion" id="proteinas">
-    <h2><svg class="icono"><use href="#i-proteina"/></svg>Proteínas</h2>
-    <div class="grilla" data-lista="proteinas"></div>
-  </section>
-
-  <section class="seccion" id="vitaminas">
-    <h2><svg class="icono"><use href="#i-vitamina"/></svg>Vitaminas</h2>
-    <div class="grilla" data-lista="vitaminas"></div>
-  </section>
-
-  <section class="seccion" id="fibra-colageno">
-    <h2><svg class="icono"><use href="#i-hoja"/></svg>Fibra y Colágeno</h2>
-    <div class="grilla" data-lista="fibraColageno"></div>
-  </section>
-
-  <section class="seccion" id="ofertas">
-    <h2><svg class="icono"><use href="#i-oferta"/></svg>Ofertas</h2>
-    <div class="promo">
-      <b>2 productos B&amp;N −S/ 15 · 3 −S/ 25 · 4 o más −S/ 40</b>
-      <span>Y llevando 2 del mismo producto pagas el precio de oferta. Todo se aplica solo al armar tu pedido.</span>
-    </div>
-    <div class="grilla" id="grillaOfertas"></div>
-  </section>
-
-  <section class="seccion" id="nuevos">
-    <h2><svg class="icono"><use href="#i-nuevo"/></svg>Nuevos ingresos</h2>
-    <div class="grilla" data-lista="nuevos"></div>
-  </section>
-</main>
-
-<footer>
-  <p>Precios en soles, sin delivery. El pedido se confirma por WhatsApp.<br>
-     Consumir únicamente bajo indicación de su médico o nutricionista.</p>
-</footer>
-
-<!-- Botón flotante: abre el cotizador -->
-<button class="flotante" id="btnFlotante" type="button">
-  <svg><use href="#i-lista"/></svg><span id="txtFlotante">Mi pedido</span><span class="globo" id="globo" hidden>0</span>
-</button>
-
-<!-- Ficha del producto (se arma al abrirla) -->
-<div class="visor" id="visor" hidden>
-  <div class="ficha">
-    <div class="ficha-cab">
-      <span id="visorTitulo"></span>
-      <button type="button" id="visorCerrar" aria-label="Cerrar">×</button>
-    </div>
-    <div class="ficha-cuerpo" id="visorImg"></div>
-  </div>
-</div>
-
-<!-- Vuelve al menu de los 5 cuadros. Aparece solo al bajar. -->
-<button class="btn-arriba" id="btnArriba" type="button" hidden aria-label="Volver al menú">
-  <svg class="icono"><use href="#i-arriba"/></svg><span>Menú</span>
-</button>
-
-<!-- Panel del cotizador -->
-<div class="fondo-panel" id="fondoPanel" hidden></div>
-<section class="panel" id="panel" hidden aria-label="Mi pedido">
-  <div class="panel-cab">
-    <h2>Mi pedido</h2>
-    <button type="button" id="btnCerrar" aria-label="Cerrar">×</button>
-  </div>
-  <div class="panel-cuerpo">
-  <div class="panel-lista" id="panelLista"></div>
-  <div class="panel-pie">
-    <div id="cuentas"></div>
-
-    <!-- Datos de entrega: campos para escribir, no botones.
-         La zona sirve para cotizarle el delivery, que paga el cliente. -->
-    <div id="formPedido" hidden>
-      <div class="campo">
-        <label>¿A dónde va tu pedido?</label>
-        <div class="opciones">
-          <button type="button" class="opcion" data-zona="lima">LIMA</button>
-          <button type="button" class="opcion" data-zona="provincia">PROVINCIA</button>
-        </div>
-        <p class="error" id="errTipo" hidden>Elige Lima o Provincia.</p>
-      </div>
-      <div class="campo" id="campoZona" hidden>
-        <label for="inpZona" id="labelZona">Dirección exacta</label>
-        <input id="inpZona" type="text" autocomplete="street-address" placeholder="Ej: Av. Perú 123, dpto 201 — San Miguel">
-        <p class="error" id="errZona" hidden>Completa este dato para calcular tu envío.</p>
-      </div>
-      <div class="campo">
-        <label for="inpNombre">Tu nombre <span>(opcional)</span></label>
-        <input id="inpNombre" type="text" autocomplete="name" placeholder="Ej: María">
-      </div>
-      <ul class="confianza">
-        <li><svg class="icono"><use href="#i-check"/></svg>No pagas nada en la web</li>
-        <li><svg class="icono"><use href="#i-check"/></svg>Delivery en Lima y provincias (lo paga el cliente)</li>
-        <li><svg class="icono"><use href="#i-check"/></svg>Yape, Plin, transferencia o tarjeta</li>
-      </ul>
-      <a class="btn-pedido" id="btnPedido" target="_blank" rel="noopener" href="#">
-        <svg><use href="#i-wa"/></svg>HACER PEDIDO</a>
-      <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
-      <p class="nota-pie">Te confirmamos stock y el costo del envío por WhatsApp.</p>
-    </div>
-
-    <div id="pieVacio">
-      <a class="btn-pedido" aria-disabled="true"><svg><use href="#i-wa"/></svg>HACER PEDIDO</a>
-      <button class="btn-limpiar" id="btnDeshacer" type="button" hidden>Deshacer, volver a poner mis productos</button>
-      <p class="nota-pie">Primero agrega al menos un producto.</p>
-    </div>
-  </div>
-  </div>
-</section>
-
-<!-- Catálogo de la tienda: de aquí salen los PRECIOS, para que
-     no existan dos listas de precios que se desincronicen. -->
-<script src="zb-catalogo.js"></script>
-<script>
-/* =========================================================
-   PRODUCTOS
-   ---------------------------------------------------------
-   Para agregar uno, se copia un bloque y se cambian los datos.
-   La tarjeta se dibuja sola.
-     marca, nombre, precio        (obligatorios)
-     foto        ruta de la imagen
-     chips       hasta 3 beneficios cortos
-     nuevo:true  sello azul "Nuevo"
-     bn:true     entra en el descuento por cantidad B&N
-     precioAntes + incluye  → se dibuja como oferta x2
-   La CLAVE de cada producto (liquidaFresa, wheyVainilla…) es
-   su identificador en la cotización: no cambiarla a la ligera.
-   ========================================================= */
-const WHATSAPP = "51961841069";
-
-const P = {
-  liquidaFresa: { uso:"Tomar 30 ml por porción. Hasta 33 porciones por envase de 1 litro.", marca:"Bari&Nutrition", nombre:"Proteína Líquida Fresa 1 L", precio:200, bn:true,
-    foto:"img/cat-liquid-fresa.jpg", tabla:"img/tn-liquid-protein.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar","Sin gluten"] },
-  liquidaMaracumango: { uso:"Tomar 30 ml por porción. Hasta 33 porciones por envase de 1 litro.", marca:"Bari&Nutrition", nombre:"Proteína Líquida Maracumango 1 L", precio:200, bn:true,
-    foto:"img/cat-liquid-maracumango.jpg", tabla:"img/tn-liquid-protein.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar","Sin gluten"] },
-  wheyVainilla: { uso:"Disolver 3 scoops (48 g) en 250 ml de agua o leche.", marca:"Bari&Nutrition", nombre:"Proteína en Polvo Vainilla 1.5 kg", precio:280, bn:true,
-    foto:"img/cat-whey-vainilla.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
-  wheyChocolate: { uso:"Disolver 3 scoops (48 g) en 250 ml de agua o leche.", marca:"Bari&Nutrition", nombre:"Proteína en Polvo Chocolate 1.5 kg", precio:280, bn:true,
-    foto:"img/cat-whey-chocolate.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
-  isolate: { uso:"Vía oral. Adultos: 1 porción (25 g, 1 cuchara) al día disuelta en 200-300 ml de agua.", marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295, nuevo:true,
-    foto:"img/nf-whey-isolate.jpg", tabla:"img/tn-nutrifath.jpg", chips:["23 g proteína","Sin lactosa","Sin gluten","Sabor neutro"] },
-
-  /* multivit: su foto de tabla dice "90 gomitas por envase" y el envase
-     dice 120. No se pone hasta que el proveedor mande la etiqueta nueva. */
-  multivit: { uso:"4 gomitas al día.", marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150, bn:true,
-    foto:"img/cat-gomita-multivit.jpg", chips:["120 gomitas","23 vitaminas","Sin azúcar añadida"] },
-  b12: { uso:"3 gomitas masticables al día.", marca:"Bari&Nutrition", nombre:"B12 + Ácido Fólico en Gomitas — 90 und", precio:150, bn:true,
-    foto:"img/cat-gomita-b12.jpg", tabla:"img/tn-b12.jpg", chips:["90 gomitas","Sabor piña","Sin azúcar añadida"] },
-  hierro: { uso:"1 gomita masticable al día. Vía oral.", marca:"Bari&Nutrition", nombre:"Hierro 45 mg + Vitamina C en Gomitas — 30 und", precio:150, bn:true,
-    foto:"img/cat-gomita-hierro.jpg", tabla:"img/tn-hierro.jpg", chips:["45 mg hierro","Con vitamina C","Sabor naranja"] },
-  biotina: { uso:"2 gomitas al día, preferiblemente con una comida. No exceder la dosis recomendada.", marca:"Bari&Nutrition", nombre:"Biotina 10,000 mcg en Gomitas — 90 und", precio:150, bn:true,
-    foto:"img/cat-gomita-biotina.jpg", tabla:"img/tn-biotina.jpg", chips:["10,000 mcg","90 gomitas","Sabor durazno"] },
-  bfBayas: { uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.", marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas", precio:280,
-    foto:"img/cat-bf-bayas.jpg", tabla:"img/tn-bf-multivit.jpg", chips:["120 tabletas","Masticables","Sin gluten","1 al día"] },
-  bfTropical: { uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.", marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Tropical — 120 tabletas", precio:280,
-    foto:"img/cat-bf-tropical.jpg", tabla:"img/tn-bf-multivit.jpg", chips:["120 tabletas","Masticables","Sin gluten","1 al día"] },
-
-  colageno: { uso:"Seguir el modo de preparación del envase. La cantidad que te corresponde la define tu médico o tu nutricionista.", marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150, bn:true, nuevo:true,
-    foto:"img/cat-colageno-bn.jpg", chips:["Calcio + vitamina D","Sabor arándano","500 g"] },
-  fibra: { uso:"1 scoop (5 g) al día disuelto en agua o bebida de preferencia.", marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85, bn:true,
-    foto:"img/cat-fibra.jpg", tabla:"img/tn-fibra.jpg", chips:["320 g","A base de maíz","Sin azúcar"] }
-};
-
-/* =========================================================
-   LOS PRECIOS LOS MANDA LA TIENDA
-   ---------------------------------------------------------
-   Cada producto de aquí apunta a su id en zb-catalogo.js, que
-   es el archivo que usa la tienda. Si allá cambia un precio,
-   aquí cambia solo. El precio escrito arriba queda como
-   respaldo por si ese archivo no carga.
-   ========================================================= */
-const IDS_TIENDA = {
-  liquidaFresa:"bi3", liquidaMaracumango:"bi4", wheyVainilla:"bi1", wheyChocolate:"bi2",
-  isolate:"nf1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
-  bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9"
-};
-const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4"];
-
-(function sincronizarPrecios() {
-  const lista = window.ZB_CATALOGO;
-  if (!lista || !lista.length) { console.warn("No cargó zb-catalogo.js: se usan los precios de respaldo"); return; }
-  const tienda = {};
-  lista.forEach(p => { tienda[p.id] = p; });
-  const sueltos = [];
-  Object.keys(IDS_TIENDA).forEach(clave => {
-    const p = tienda[IDS_TIENDA[clave]];
-    if (p && typeof p.precio === "number") P[clave].precio = p.precio;
-    else sueltos.push(clave);
-  });
-  if (sueltos.length) console.warn("Sin precio en la tienda: " + sueltos.join(", "));
-})();
-
-/* Qué producto va en cada sección (un mismo producto puede repetirse) */
-const CATALOGO = {
-  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate"],
-  vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical"],
-  fibraColageno: ["colageno","fibra"],
-  /* Ofertas = los productos que tienen precio especial llevando 2.
-     Sale de OFERTAS_X2, asi no hay dos listas que mantener. */
-  nuevos: ["isolate","colageno"]
-};
-
-/* =========================================================
-   OFERTAS x2 AUTOMÁTICAS
-   ---------------------------------------------------------
-   Ya NO hay que elegir una "tarjeta de oferta": si el cliente
-   junta 2 unidades de la misma familia (aunque sean sabores
-   distintos), el precio de oferta se aplica solo.
-   `precioPar` es el precio de los DOS juntos.
-   ========================================================= */
-const OFERTAS_X2 = [
-  { nombre:"2 Proteínas Líquidas", ids:["liquidaFresa","liquidaMaracumango"], precioPar:360,
-    foto:"img/oferta-2liquidas.jpg", incluye:"1 fresa + 1 maracumango" },
-  { nombre:"2 Proteínas en Polvo", ids:["wheyVainilla","wheyChocolate"], precioPar:520,
-    foto:"img/oferta-2whey-limpia.jpg", incluye:"1 vainilla + 1 chocolate" },
-  { nombre:"2 Multivitamínicos Bariatric Fusion", ids:["bfBayas","bfTropical"], precioPar:550,
-    foto:"img/oferta-2multivit.jpg", incluye:"1 bayas mixtas + 1 tropical" },
-  { nombre:"2 Whey Protein Isolate Nutrifath", ids:["isolate"], precioPar:580,
-    foto:"img/oferta-2nutrifath.jpg", incluye:"2 envases de 1 kg, sabor neutro" }
-];
-
-/* Descuento por cantidad — mismos tramos que la tienda */
-const DESCUENTO_BN = [ { min:4, desc:40 }, { min:3, desc:25 }, { min:2, desc:15 } ];
-
-/* El precio de cada oferta x2 también lo manda la tienda */
-(function sincronizarOfertas() {
-  const lista = window.ZB_CATALOGO;
-  if (!lista || !lista.length) return;
-  const tienda = {};
-  lista.forEach(p => { tienda[p.id] = p; });
-  OFERTAS_X2.forEach((of, i) => {
-    const p = tienda[IDS_OFERTAS[i]];
-    if (p && typeof p.precio === "number") of.precioPar = p.precio;
-  });
-})();
-
-/* Busca si un producto tiene oferta por llevar 2 (para avisarlo en su tarjeta) */
-function ofertaDe(id) { return OFERTAS_X2.find(o => o.ids.includes(id)); }
-
-/* ---------- Utilidades ---------- */
-function soles(n) { return "S/ " + (Number.isInteger(n) ? n : n.toFixed(2)); }
-function esc(t) {
-  return String(t).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
-}
-
-/* =========================================================
-   LA COTIZACIÓN
-   Es un objeto { claveDelProducto: cantidad }. Se guarda en
-   el propio celular del cliente, así no pierde su lista si
-   cierra la página por error.
-   ========================================================= */
-let cot = {};
-try { cot = JSON.parse(localStorage.getItem("zb_cotizacion")) || {}; } catch (e) { cot = {}; }
-/* Limpia claves de productos que ya no existen */
-Object.keys(cot).forEach(id => { if (!P[id] || !(cot[id] > 0)) delete cot[id]; });
-
-function guardar() { try { localStorage.setItem("zb_cotizacion", JSON.stringify(cot)); } catch (e) {} }
-function unidades() { return Object.values(cot).reduce((a, b) => a + b, 0); }
-
-function descuentoPorCantidad(unidades) {
-  const tramo = DESCUENTO_BN.find(t => unidades >= t.min);
-  return tramo ? tramo.desc : 0;
-}
-
-/* =========================================================
-   CUENTAS
-   ---------------------------------------------------------
-   Se calculan DOS caminos y se le deja al cliente el que le
-   sale más barato, para que nunca pierda por no haber elegido
-   la tarjeta correcta:
-     A) aplicar las ofertas x2 a los pares que se formen, y el
-        descuento por cantidad solo a las unidades que sobran
-     B) no armar pares y aplicar el descuento por cantidad a
-        todas las unidades Bari&Nutrition
-   ========================================================= */
-function cuentas() {
-  let subtotal = 0;
-  Object.keys(cot).forEach(id => { subtotal += P[id].precio * cot[id]; });
-
-  /* Camino A */
-  const sobran = Object.assign({}, cot);
-  const ofertas = [];
-  let ahorroOfertas = 0;
-  OFERTAS_X2.forEach(of => {
-    const total = of.ids.reduce((s, id) => s + (sobran[id] || 0), 0);
-    const pares = Math.floor(total / 2);
-    if (!pares) return;
-    const unitario = P[of.ids[0]].precio;
-    const ahorro = pares * (unitario * 2 - of.precioPar);
-    ahorroOfertas += ahorro;
-    ofertas.push({ nombre: of.nombre, veces: pares, ahorro });
-    let quitar = pares * 2;
-    of.ids.forEach(id => {
-      const usa = Math.min(quitar, sobran[id] || 0);
-      sobran[id] = (sobran[id] || 0) - usa;
-      quitar -= usa;
-    });
-  });
-  let bnSobrantes = 0;
-  Object.keys(sobran).forEach(id => { if (P[id].bn) bnSobrantes += sobran[id]; });
-  const dctoA = descuentoPorCantidad(bnSobrantes);
-  const totalA = subtotal - ahorroOfertas - dctoA;
-
-  /* Camino B */
-  let bnTodos = 0;
-  Object.keys(cot).forEach(id => { if (P[id].bn) bnTodos += cot[id]; });
-  const dctoB = descuentoPorCantidad(bnTodos);
-  const totalB = subtotal - dctoB;
-
-  if (totalA <= totalB) {
-    return { subtotal, ofertas, descuento: dctoA, unidadesBN: bnSobrantes, total: totalA };
-  }
-  return { subtotal, ofertas: [], descuento: dctoB, unidadesBN: bnTodos, total: totalB };
-}
-
-function cambiar(id, delta) {
-  cot[id] = (cot[id] || 0) + delta;
-  if (cot[id] <= 0) delete cot[id];
-  guardar(); refrescar(id);
-  if (delta > 0 && typeof gtag === "function") {
-    gtag("event", "agregar_cotizacion", { producto: P[id].nombre, precio: P[id].precio });
-  }
-}
-function sacar(id) { delete cot[id]; guardar(); refrescar(id); }
-
-/* LIMPIAR vacía el pedido, pero guarda una copia: si lo tocaron
-   sin querer, el botón "Deshacer" lo devuelve tal cual estaba. */
-let copiaPrevia = null;
-function limpiar() {
-  if (!Object.keys(cot).length) return;
-  copiaPrevia = Object.assign({}, cot);
-  cot = {};
-  guardar(); pintarCatalogo(); pintarPanel(); pintarFlotante();
-}
-function deshacer() {
-  if (!copiaPrevia) return;
-  cot = Object.assign({}, copiaPrevia);
-  copiaPrevia = null;
-  guardar(); pintarCatalogo(); pintarPanel(); pintarFlotante();
-}
-
-/* Solo se redibuja el botón de ESE producto (puede estar en dos
-   secciones), el panel y el contador. Redibujar todo el catálogo
-   en cada toque hace parpadear las fotos en celulares lentos. */
-function refrescar(id) {
-  document.querySelectorAll('.tarjeta[data-id="' + id + '"] .acciones')
-    .forEach(el => { el.innerHTML = acciones(id); });
-  /* Si la ficha esta abierta, su boton se actualiza igual */
-  if (!visor.hidden) {
-    const cont = document.querySelector("#visorImg .acciones");
-    if (cont) cont.innerHTML = acciones(id);
-  }
-  /* Las tarjetas de oferta muestran cuanto lleva de esa familia */
-  const go = document.getElementById("grillaOfertas");
-  if (go) go.innerHTML = OFERTAS_X2.map((of, i) => tarjetaOferta(i)).join("");
-  pintarPanel(); pintarFlotante();
-}
-
-/* ---------- TARJETAS ---------- */
-/* Las fotos se sirven en WebP (pesan la mitad) con el JPG de
-   respaldo para celulares viejos que no lo soportan. Si el .webp
-   no existiera, el navegador usa el .jpg sin romper nada. */
-function imagenHTML(src, alt, extra) {
-  const webp = src.replace(/.jpg$/, ".webp");
-  return '<picture><source srcset="' + esc(webp) + '" type="image/webp">' +
-    '<img src="' + esc(src) + '" alt="' + esc(alt) + '" ' + (extra || "") + '></picture>';
-}
-
-function acciones(id) {
-  const n = cot[id] || 0;
-  if (!n) return '<button class="btn-agregar" type="button" data-mas="' + id + '">' +
-    '<svg class="icono"><use href="#i-mas"/></svg>' +
-    '<span class="txt-largo">Agregar a mi pedido</span><span class="txt-corto">Agregar</span></button>';
-  return '<div class="contador">' +
-    '<button type="button" data-menos="' + id + '" aria-label="Quitar uno">−</button>' +
-    '<span class="cant">' + n + ' en tu lista<small>' + soles(P[id].precio * n) + '</small></span>' +
-    '<button type="button" data-mas="' + id + '" aria-label="Agregar uno">+</button>' +
-  '</div>';
-}
-
-function tarjeta(id) {
-  const p = P[id];
-  const sello = p.nuevo ? '<span class="sello">Nuevo</span>' : "";
-  const chips = p.chips
-    ? '<ul class="chips">' + p.chips.slice(0, 4).map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>'
-    : "";
-  /* Aviso de la oferta x2: se arma solo desde OFERTAS_X2 */
-  const of = ofertaDe(id);
-  const aviso = of
-    ? '<div class="aviso-x2">Llevando 2: ' + soles(of.precioPar) +
-      ' <b>(ahorras ' + soles(P[of.ids[0]].precio * 2 - of.precioPar) + ')</b></div>'
-    : "";
-  /* La foto de la tabla se carga solo cuando la tocan */
-  const tabla = '<button type="button" class="ver-ficha" data-tabla="' + id + '">' +
-    '<svg class="icono"><use href="#i-lupa"/></svg>Ver detalle</button>';
-  return '<article class="tarjeta" data-id="' + id + '">' +
-    '<div class="foto">' + imagenHTML(p.foto, p.nombre, 'loading="lazy" decoding="async" width="520" height="520"') + sello + '</div>' +
-    '<div class="info">' +
-      '<div class="marca">' + esc(p.marca) + '</div>' +
-      '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
-      '<div class="precios"><span class="precio">' + soles(p.precio) + '</span></div>' +
-      aviso + chips + tabla +
-      '<div class="acciones">' + acciones(id) + '</div>' +
-    '</div></article>';
-}
-
-function tarjetaOferta(i) {
-  const of = OFERTAS_X2[i];
-  const unitario = P[of.ids[0]].precio;
-  const antes = unitario * 2;
-  const enPedido = of.ids.reduce((n, id) => n + (cot[id] || 0), 0);
-  const yaTiene = enPedido
-    ? `<div class="ya-tienes">Ya tienes ${enPedido} en tu pedido</div>`
-    : "";
-  return `<article class="tarjeta oferta">
-    <div class="cinta">Ahorras ${soles(antes - of.precioPar)}</div>
-    <div class="foto">${imagenHTML(of.foto, of.nombre, 'loading="lazy" decoding="async"')}</div>
-    <div class="info">
-      <h3 class="nombre">${esc(of.nombre)}</h3>
-      <div class="precios"><span class="precio">${soles(of.precioPar)}</span><span class="antes">Antes ${soles(antes)}</span></div>
-      <div class="incluye">Incluye ${esc(of.incluye)}</div>
-      ${yaTiene}
-      <div class="acciones">
-        <button class="btn-agregar" type="button" data-oferta="${i}">
-          <svg class="icono"><use href="#i-mas"/></svg>
-          <span class="txt-largo">Agregar esta oferta</span><span class="txt-corto">Agregar</span></button>
-      </div>
-    </div></article>`;
-}
-
-function agregarOferta(i) {
-  const of = OFERTAS_X2[i];
-  /* Con dos sabores se agrega uno de cada uno; con uno solo, dos unidades */
-  if (of.ids.length > 1) { of.ids.forEach(id => { cot[id] = (cot[id] || 0) + 1; }); }
-  else { cot[of.ids[0]] = (cot[of.ids[0]] || 0) + 2; }
-  guardar(); pintarCatalogo(); pintarPanel(); pintarFlotante();
-  if (typeof gtag === "function") gtag("event", "agregar_oferta", { oferta: of.nombre, precio: of.precioPar });
-}
-
-function pintarCatalogo() {
-  const go = document.getElementById("grillaOfertas");
-  if (go) go.innerHTML = OFERTAS_X2.map((of, i) => tarjetaOferta(i)).join("");
-  document.querySelectorAll("[data-lista]").forEach(el => {
-    el.innerHTML = (CATALOGO[el.dataset.lista] || []).map(tarjeta).join("");
-  });
-}
-
-/* ---------- PANEL DEL COTIZADOR ---------- */
-function mensajeWA() {
-  const c = cuentas();
-  let t = "Hola, quiero hacer este pedido:\n";
-  Object.keys(cot).forEach(id => {
-    const p = P[id];
-    t += "\n• " + cot[id] + " x " + p.nombre + " — " + soles(p.precio * cot[id]);
-  });
-  t += "\n";
-  c.ofertas.forEach(o => {
-    t += "\n" + o.nombre + (o.veces > 1 ? " x" + o.veces : "") + ": -" + soles(o.ahorro);
-  });
-  if (c.descuento) t += "\nDescuento por cantidad B&N: -" + soles(c.descuento);
-  t += "\nTotal sin delivery: " + soles(c.total);
-  if (datos.zona) {
-    t += datos.tipo === "provincia"
-      ? "\n\nEnvío a PROVINCIA: " + datos.zona
-      : "\n\nEntrega en LIMA: " + datos.zona;
-  }
-  if (datos.nombre) t += "\nNombre: " + datos.nombre;
-  t += "\n\n(Enviado desde el catálogo web)";
-  return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(t);
-}
-
-function pintarPanel() {
-  const lista = document.getElementById("panelLista");
-  const ids = Object.keys(cot);
-
-  document.getElementById("formPedido").hidden = !ids.length;
-  document.getElementById("pieVacio").hidden = !!ids.length;
-
-  if (!ids.length) {
-    lista.innerHTML = '<p class="vacio">Tu pedido está vacío.<br>Agrega los productos que quieres y te confirmamos todo por WhatsApp.</p>';
-    document.getElementById("cuentas").innerHTML = "";
-    document.getElementById("btnDeshacer").hidden = !copiaPrevia;
-    return;
-  }
-
-  lista.innerHTML = ids.map(id => {
-    const p = P[id];
-    return '<div class="linea">' +
-      imagenHTML(p.foto, "", 'width="64" height="64" loading="lazy"') +
-      '<div class="linea-datos">' +
-        '<div class="linea-nombre">' + esc(p.nombre) + '</div>' +
-        '<div class="linea-precio">' + soles(p.precio) + ' c/u</div>' +
-        '<div class="linea-pie">' +
-          '<button type="button" data-menos="' + id + '" aria-label="Quitar uno">−</button>' +
-          '<span class="n">' + cot[id] + '</span>' +
-          '<button type="button" data-mas="' + id + '" aria-label="Agregar uno">+</button>' +
-          '<button type="button" class="linea-quitar" data-sacar="' + id + '">Quitar</button>' +
-        '</div>' +
-      '</div></div>';
-  }).join("");
-
-  const c = cuentas();
-  const siguiente = DESCUENTO_BN.slice().sort((a, b) => a.min - b.min).find(t => t.min > c.unidadesBN);
-  const empuje = siguiente
-    ? '<div class="aviso-dcto">Agrega ' + (siguiente.min - c.unidadesBN) + ' producto' +
-      (siguiente.min - c.unidadesBN > 1 ? 's' : '') + ' Bari&amp;Nutrition más y descuentas S/ ' + siguiente.desc + '.</div>'
-    : "";
-
-  document.getElementById("cuentas").innerHTML =
-    '<div class="cuenta"><span>Productos (' + unidades() + ')</span><span>' + soles(c.subtotal) + '</span></div>' +
-    c.ofertas.map(o => '<div class="cuenta dcto"><span>' + esc(o.nombre) + (o.veces > 1 ? ' x' + o.veces : '') +
-      '</span><span>−' + soles(o.ahorro) + '</span></div>').join("") +
-    (c.descuento ? '<div class="cuenta dcto"><span>Descuento por cantidad</span><span>−' + soles(c.descuento) + '</span></div>' : "") +
-    '<div class="cuenta total"><span>Total sin delivery</span><span>' + soles(c.total) + '</span></div>' +
-    empuje;
-
-  document.getElementById("btnPedido").href = mensajeWA();
-}
-
-function pintarFlotante() {
-  const n = unidades();
-  const globo = document.getElementById("globo");
-  globo.hidden = n === 0;
-  globo.textContent = n;
-}
-
-/* =========================================================
-   DATOS DE ENTREGA
-   El distrito o provincia sirve para cotizar el delivery, que
-   corre por cuenta del cliente. Se guardan en su celular para
-   que no los vuelva a escribir la próxima vez.
-   ========================================================= */
-let datos = { tipo:"", zona:"", nombre:"" };
-try { datos = Object.assign(datos, JSON.parse(localStorage.getItem("zb_datos")) || {}); } catch (e) {}
-
-const inpZona = document.getElementById("inpZona");
-const inpNombre = document.getElementById("inpNombre");
-const campoZona = document.getElementById("campoZona");
-const labelZona = document.getElementById("labelZona");
-
-/* Lo que se le pide cambia según haya elegido Lima o provincia */
-const TEXTOS_ZONA = {
-  lima: { label:"Dirección exacta", ayuda:"Ej: Av. Perú 123, dpto 201 — San Miguel" },
-  provincia: { label:"¿A qué provincia?", ayuda:"Ej: Cusco" }
-};
-
-function elegirZona(tipo, limpiarTexto) {
-  datos.tipo = tipo;
-  if (limpiarTexto) { datos.zona = ""; inpZona.value = ""; }
-  document.querySelectorAll(".opcion").forEach(b => b.classList.toggle("elegida", b.dataset.zona === tipo));
-  document.querySelector(".opciones").classList.remove("mal");
-  document.getElementById("errTipo").hidden = true;
-  campoZona.hidden = !tipo;
-  if (tipo) {
-    labelZona.textContent = TEXTOS_ZONA[tipo].label;
-    inpZona.placeholder = TEXTOS_ZONA[tipo].ayuda;
-  }
-  anotar();
-}
-
-function anotar() {
-  datos.zona = inpZona.value.trim();
-  datos.nombre = inpNombre.value.trim();
-  try { localStorage.setItem("zb_datos", JSON.stringify(datos)); } catch (e) {}
-  if (datos.zona) {
-    inpZona.classList.remove("mal");
-    document.getElementById("errZona").hidden = true;
-  }
-  document.getElementById("btnPedido").href = mensajeWA();
-}
-inpZona.addEventListener("input", anotar);
-inpNombre.addEventListener("input", anotar);
-
-/* Al escribir, el teclado del celular tapa la mitad de abajo.
-   Dos cosas lo evitan: la ventana se encoge a lo que queda
-   visible, y el campo se centra dentro de ella. */
-[inpZona, inpNombre].forEach(campo => {
-  campo.addEventListener("focus", () => {
-    setTimeout(() => campo.scrollIntoView({ block: "center", behavior: "smooth" }), 350);
-  });
-});
-/* Con el teclado abierto la ventana util se parte a la mitad. La
-   ventana deja de estar centrada y se pega arriba, que es la zona
-   que sigue viendose, y se encoge a ese alto. */
-function ajustarPorTeclado() {
-  const vv = window.visualViewport;
-  if (!vv || panel.hidden) return;
-  const hayTeclado = vv.height < window.innerHeight * 0.75;
-  if (hayTeclado) {
-    panel.style.top = "8px";
-    panel.style.transform = "translateX(-50%)";
-    panel.style.maxHeight = Math.round(vv.height - 16) + "px";
-  } else {
-    panel.style.top = "";
-    panel.style.transform = "";
-    panel.style.maxHeight = "";
-  }
-}
-if (window.visualViewport) {
-  window.visualViewport.addEventListener("resize", ajustarPorTeclado);
-  window.visualViewport.addEventListener("scroll", ajustarPorTeclado);
-}
-document.querySelectorAll(".opcion").forEach(b => {
-  b.addEventListener("click", () => elegirZona(b.dataset.zona, b.dataset.zona !== datos.tipo));
-});
-
-/* Si ya pidió antes, se le deja puesto lo de la vez pasada */
-inpNombre.value = datos.nombre;
-if (datos.tipo) { elegirZona(datos.tipo, false); inpZona.value = datos.zona; anotar(); }
-
-function pintarTodo() { pintarCatalogo(); pintarPanel(); pintarFlotante(); }
-
-/* ---------- Abrir y cerrar el panel ---------- */
-const panel = document.getElementById("panel"), fondo = document.getElementById("fondoPanel");
-function abrir() { pintarPanel(); panel.hidden = false; fondo.hidden = false; document.body.classList.add("bloqueado"); }
-function cerrar() { panel.style.top = ""; panel.style.transform = ""; panel.style.maxHeight = ""; panel.hidden = true; fondo.hidden = true; document.body.classList.remove("bloqueado"); }
-document.getElementById("btnFlotante").addEventListener("click", abrir);
-document.getElementById("btnCerrar").addEventListener("click", cerrar);
-document.getElementById("btnLimpiar").addEventListener("click", limpiar);
-document.getElementById("btnDeshacer").addEventListener("click", deshacer);
-fondo.addEventListener("click", cerrar);
-document.addEventListener("keydown", e => {
-  if (e.key !== "Escape") return;
-  if (!visor.hidden) cerrarTabla();
-  else if (!panel.hidden) cerrar();
-});
-
-/* ---------- Visor de la tabla nutricional ---------- */
-const visor = document.getElementById("visor");
-function abrirTabla(id) {
-  const p = P[id];
-  if (!p) return;
-  /* Las imagenes se crean recien aqui: no pesan para quien no abre la ficha */
-  const fotos = [{ src:p.foto, pie:"Producto" }];
-  if (p.tabla) fotos.push({ src:p.tabla, pie:"Tabla nutricional" });
-
-  document.getElementById("visorTitulo").textContent = p.nombre;
-  document.getElementById("visorImg").innerHTML =
-    '<div class="carrusel" id="carrusel">' +
-      fotos.map(f => '<figure>' +
-        (f.pie === "Producto" ? imagenHTML(f.src, p.nombre, "") : '<img src="' + esc(f.src) + '" alt="Tabla nutricional de ' + esc(p.nombre) + '">') +
-        '<figcaption>' + f.pie + '</figcaption></figure>').join("") +
-    '</div>' +
-    (fotos.length > 1
-      ? '<div class="puntos" id="puntos">' + fotos.map((f, i) => '<i class="' + (i ? "" : "on") + '"></i>').join("") + '</div>'
-      : "") +
-    '<div class="ficha-datos">' +
-      '<div class="ficha-precio">' + soles(p.precio) + '</div>' +
-      (p.chips ? '<ul class="chips">' + p.chips.map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>' : "") +
-      (p.uso ? '<div class="ficha-bloque"><h4>Modo de uso</h4><p>' + esc(p.uso) + '</p></div>' : "") +
-      '<div class="ficha-bloque"><h4>Importante</h4><p>Consumir únicamente bajo indicación de su médico o nutricionista.</p></div>' +
-      '<div class="acciones">' + acciones(id) + '</div>' +
-    '</div>';
-
-  /* Los puntos siguen el desplazamiento del carrusel */
-  const car = document.getElementById("carrusel"), pts = document.getElementById("puntos");
-  if (car && pts) {
-    car.addEventListener("scroll", () => {
-      const i = Math.round(car.scrollLeft / car.clientWidth);
-      [...pts.children].forEach((p2, j) => p2.classList.toggle("on", j === i));
-    }, { passive: true });
-  }
-  visor.hidden = false;
-  document.body.classList.add("bloqueado");
-  if (typeof gtag === "function") gtag("event", "ver_ficha", { producto: p.nombre });
-}
-function cerrarTabla() {
-  visor.hidden = true;
-  document.getElementById("visorImg").innerHTML = "";
-  if (panel.hidden) document.body.classList.remove("bloqueado");
-}
-document.getElementById("visorCerrar").addEventListener("click", cerrarTabla);
-visor.addEventListener("click", e => { if (e.target === visor) cerrarTabla(); });
-
-/* Un solo escuchador para todos los botones + / − / quitar */
-document.addEventListener("click", e => {
-  const oferta = e.target.closest("[data-oferta]");
-  if (oferta) { agregarOferta(Number(oferta.dataset.oferta)); return; }
-  const tabla = e.target.closest("[data-tabla]");
-  if (tabla) { abrirTabla(tabla.dataset.tabla); return; }
-  const mas = e.target.closest("[data-mas]"), menos = e.target.closest("[data-menos]"), fuera = e.target.closest("[data-sacar]");
-  if (mas) cambiar(mas.dataset.mas, 1);
-  else if (menos) cambiar(menos.dataset.menos, -1);
-  else if (fuera) sacar(fuera.dataset.sacar);
-  /* HACER PEDIDO: sin distrito no se manda, porque sin eso no se
-     puede cotizar el delivery. */
-  const pedir = e.target.closest("#btnPedido");
-  if (pedir) {
-    if (!datos.tipo) {
-      e.preventDefault();
-      document.querySelector(".opciones").classList.add("mal");
-      document.getElementById("errTipo").hidden = false;
-      return;
-    }
-    if (!datos.zona) {
-      e.preventDefault();
-      inpZona.classList.add("mal");
-      document.getElementById("errZona").hidden = false;
-      inpZona.focus();
-      return;
-    }
-    if (typeof gtag === "function") {
-      const c = cuentas();
-      gtag("event", "hacer_pedido", { productos: unidades(), total: c.total, zona: datos.zona });
-    }
-  }
-});
-
-/* ---------- Barra de categorías: marca la sección visible ---------- */
-(function () {
-  const nav = document.querySelector(".nav-cat ul");
-  const enlaces = [...nav.querySelectorAll("a")];
-  const secciones = enlaces.map(a => document.querySelector(a.getAttribute("href")));
-  function marcar() {
-    const linea = window.innerHeight * 0.35;
-    let actual = -1;
-    secciones.forEach((s, i) => { if (s.getBoundingClientRect().top <= linea) actual = i; });
-    enlaces.forEach((a, i) => a.classList.toggle("activo", i === actual));
-    document.getElementById("btnArriba").hidden = window.scrollY < 300;
-    if (actual >= 0) {
-      const a = enlaces[actual];
-      nav.scrollLeft = a.offsetLeft - nav.clientWidth / 2 + a.offsetWidth / 2;
-    }
-  }
-  let pendiente = false;
-  window.addEventListener("scroll", () => {
-    if (pendiente) return;
-    pendiente = true;
-    requestAnimationFrame(() => { marcar(); pendiente = false; });
-  }, { passive: true });
-  marcar();
-})();
-
-/* ---------- Volver al menu de los 5 cuadros ---------- */
-const btnArriba = document.getElementById("btnArriba");
-btnArriba.addEventListener("click", () => window.scrollTo(0, 0));
-
-pintarTodo();
-</script>
-</body>
-</html>
