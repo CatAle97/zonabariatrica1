@@ -182,7 +182,7 @@
   function bloqueZoe() {
     var msg = 'Hola Zoe 👋 Usé "¿Qué suplemento necesito?" y todavía tengo dudas.';
     return '<div class="sel-zoe">' +
-      '<img class="sel-zoe-av" src="img/zoe.png" alt="" aria-hidden="true">' +
+      '<img class="sel-zoe-av" src="/img/zoe.png" alt="" aria-hidden="true">' +
       '<div class="sel-zoe-txt">' +
         '<h3>¿Todavía tienes dudas?</h3>' +
         '<p>Zoe puede ayudarte a encontrar el suplemento adecuado según tu etapa.</p>' +

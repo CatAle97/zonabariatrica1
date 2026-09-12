@@ -629,7 +629,7 @@ const productos = [
     precio:85,
     img: BN+"fibra.jpg",
     galeria: [BN+"fibra.jpg", "img/tn-fibra.jpg"],
-    uso:"1 scoop (5g) al día disuelto en agua o bebida de preferencia.",
+    uso:"1 scoop (5 g) disuelto en 250 ml de agua, una vez al día.",
     tn: tn.fibra_bn },
 
   /* Alta del 11-09-2026. Colageno propio de B&N (el otro colageno
@@ -813,6 +813,7 @@ const slugs = {
   bi7: "gomitas-multivitaminico",
   bi8: "gomitas-b12-acido-folico",
   bi9: "fibra-soluble",
+  bi10: "colageno-hidrolizado",
   li1: "proteina-vainilla-high-iso",
   li2: "proteina-chocolate-high-iso",
   li3: "colageno-skinfinity",

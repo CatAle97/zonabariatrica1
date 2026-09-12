@@ -317,7 +317,7 @@
   /* Contexto de la sesión. Se borra al recargar la página. */
   var ctx = { cirugia: null, tiempo: null, objetivo: null, flujo: null };
 
-  var AVATAR = 'img/zoe.png';
+  var AVATAR = '/img/zoe.png';
 
   function el(tag, cls, html) {
     var n = document.createElement(tag);
