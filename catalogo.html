@@ -338,7 +338,9 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
 .bloque-envio b { display:block; font-size:var(--fs-sm); color:var(--azul-osc); }
 .bloque-envio span { display:block; font-size:var(--fs-xs); color:var(--texto-2); margin-top:2px; }
 #formPedido, #pieVacio { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio); padding:16px; }
-.cuenta { display:flex; justify-content:space-between; gap:12px; font-size:var(--fs-sm); color:var(--texto-2); }
+.cuenta { display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  font-size:var(--fs-sm); color:var(--texto-2); }
+.cuenta span:last-child { white-space:nowrap; font-variant-numeric:tabular-nums; }
 .cuenta.dcto { color:var(--verde-osc); font-weight:700; }
 .cuenta.total { border-top:1px solid var(--borde); padding-top:12px; margin-top:4px; font-size:22px; font-weight:600; letter-spacing:-.02em; color:var(--texto); }
 .cuenta.total span:last-child { color:var(--azul); }
@@ -1070,14 +1072,12 @@ function pintarPanel() {
       '</div></div>'
     : "";
 
+  const ahorroTotal = c.ofertas.reduce((s, o) => s + o.ahorro, 0) + c.descuento;
   document.getElementById("cuentas").innerHTML =
     empuje +
     '<div class="totales">' +
-      '<div class="cuenta"><span>Subtotal (' + unidades() + ' producto' + (unidades() === 1 ? "" : "s") + ')</span>' +
-        '<span>' + soles(c.subtotal) + '</span></div>' +
-      c.ofertas.map(o => '<div class="cuenta dcto"><span>' + esc(o.nombre) + (o.veces > 1 ? " x" + o.veces : "") +
-        '</span><span>− ' + soles(o.ahorro) + '</span></div>').join("") +
-      '<div class="cuenta dcto"><span>Descuento</span><span>− ' + soles(c.descuento) + '</span></div>' +
+      '<div class="cuenta"><span>Subtotal</span><span>' + soles(c.subtotal) + '</span></div>' +
+      (ahorroTotal ? '<div class="cuenta dcto"><span>Descuentos</span><span>− ' + soles(ahorroTotal) + '</span></div>' : "") +
       '<div class="cuenta total"><span>Total</span><span>' + soles(c.total) + '</span></div>' +
       '<p class="sin-delivery">No incluye el delivery</p>' +
     '</div>';
