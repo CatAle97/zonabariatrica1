@@ -111,14 +111,6 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 }
 .nav-cat a.activo { background:var(--azul); border-color:var(--azul); color:var(--blanco); }
 
-/* ---------- CUANTOS PRODUCTOS POR PANTALLA ---------- */
-.vista { display:flex; align-items:center; justify-content:flex-end; gap:10px; padding-top:14px;
-  font-size:var(--fs-sm); font-weight:600; color:var(--texto-3); }
-.vista-btns { display:flex; gap:6px; }
-.vista-btn { width:44px; height:38px; border:1px solid var(--borde); border-radius:var(--radio-sm);
-  background:var(--blanco); font-size:15px; font-weight:800; color:var(--texto-2); }
-.vista-btn.elegida { background:var(--azul); border-color:var(--azul); color:var(--blanco); }
-
 /* ---------- BOTON VOLVER AL MENU ---------- */
 .btn-arriba {
   position:fixed; left:16px; bottom:16px; bottom:calc(16px + env(safe-area-inset-bottom)); z-index:30;
@@ -298,29 +290,42 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
 footer p { font-size:var(--fs-xs); color:var(--texto-3); }
 
 /* ---------- Pantallas grandes ---------- */
-/* Vista de 2 y 4 por pantalla: la tarjeta se queda con lo esencial */
-body.cols-2 .grilla { grid-template-columns:1fr 1fr; gap:12px; }
-body.cols-4 .grilla { grid-template-columns:1fr 1fr; gap:10px; }
-body.cols-2 .info, body.cols-4 .info { padding:12px; gap:8px; }
-body.cols-2 .nombre { font-size:15px; }
-body.cols-4 .nombre { font-size:14px; }
-body.cols-2 .precio, body.cols-4 .precio { font-size:21px; }
-body.cols-2 .chips, body.cols-4 .chips,
-body.cols-2 .ver-tabla, body.cols-4 .ver-tabla,
-body.cols-4 .aviso-x2, body.cols-4 .marca, body.cols-4 .incluye { display:none; }
-body.cols-2 .aviso-x2 { font-size:var(--fs-xs); padding:6px 10px; }
-body.cols-2 .btn-agregar, body.cols-4 .btn-agregar { min-height:46px; font-size:15px; }
-.txt-corto { display:none; }
-body.cols-2 .txt-largo, body.cols-4 .txt-largo { display:none; }
-body.cols-2 .txt-corto { display:inline; }
-body.cols-4 .cant small { display:none; }
-body.cols-4 .contador button, body.cols-2 .contador button { width:40px; height:40px; }
-body.cols-4 .cinta { font-size:14px; padding:7px 10px; }
-body.cols-4 .foto { aspect-ratio:1 / 1; }
+/* ---------- MOVIL: SIEMPRE 2 POR FILA ----------
+   La tarjeta se queda con lo esencial; los chips de beneficios
+   no se leen a este ancho y se muestran desde 600px. */
+.grilla { grid-template-columns:1fr 1fr; gap:10px; }
+.foto { aspect-ratio:1 / 1; }
+.info { padding:12px; gap:8px; }
+.nombre { font-size:15px; }
+.precio { font-size:21px; }
+.marca { font-size:11px; }
+.chips { display:none; }
+.aviso-x2 { font-size:var(--fs-xs); padding:6px 10px; }
+.ver-tabla { font-size:var(--fs-xs); }
+.incluye { font-size:var(--fs-xs); }
+.cinta { font-size:15px; padding:7px 10px; }
+.btn-agregar { min-height:46px; font-size:15px; }
+.txt-largo { display:none; }
+.txt-corto { display:inline; }
+.contador button { width:40px; height:40px; }
+.cant { font-size:15px; }
+.cant small { display:none; }
 
 @media (min-width:600px) {
   :root { --lado:24px; }
-  .grilla { grid-template-columns:1fr 1fr; }
+  .grilla { grid-template-columns:1fr 1fr; gap:16px; }
+  .foto { aspect-ratio:4 / 3; }
+  .info { padding:16px; gap:12px; }
+  .nombre { font-size:var(--fs-h3); }
+  .precio { font-size:var(--fs-precio); }
+  .marca { font-size:var(--fs-xs); }
+  .chips { display:flex; }
+  .ver-tabla, .incluye { font-size:var(--fs-sm); }
+  .cinta { font-size:17px; padding:9px 16px; }
+  .btn-agregar { min-height:var(--btn-alto); font-size:17px; }
+  .txt-largo { display:inline; }
+  .txt-corto { display:none; }
+  .cant small { display:block; }
   .mosaico { grid-template-columns:repeat(4, 1fr); }
 }
 @media (min-width:960px) { .grilla { grid-template-columns:repeat(3, 1fr); } }
@@ -374,20 +379,6 @@ body.cols-4 .foto { aspect-ratio:1 / 1; }
     <li><a href="#nuevos">Nuevos ingresos</a></li>
   </ul>
 </nav>
-
-<div class="envoltura">
-  <!-- Cuantos productos por pantalla. Siempre arranca en 1: la
-       eleccion NO se guarda, para que el catalogo se vea igual
-       cada vez que alguien lo abre. -->
-  <div class="vista">
-    <span>Ver</span>
-    <div class="vista-btns">
-      <button type="button" class="vista-btn elegida" data-cols="1" aria-label="Un producto por pantalla">1</button>
-      <button type="button" class="vista-btn" data-cols="2" aria-label="Dos productos por pantalla">2</button>
-      <button type="button" class="vista-btn" data-cols="4" aria-label="Cuatro productos por pantalla">4</button>
-    </div>
-  </div>
-</div>
 
 <main class="envoltura">
   <section class="seccion" id="proteinas">
@@ -1001,17 +992,6 @@ document.addEventListener("click", e => {
   }, { passive: true });
   marcar();
 })();
-
-/* ---------- Cuantos productos por pantalla ----------
-   Arranca siempre en 1 y NO se guarda: quien abre el enlace
-   debe ver el catalogo igual la primera vez, siempre. */
-document.querySelectorAll(".vista-btn").forEach(b => {
-  b.addEventListener("click", () => {
-    document.body.classList.remove("cols-1", "cols-2", "cols-4");
-    document.body.classList.add("cols-" + b.dataset.cols);
-    document.querySelectorAll(".vista-btn").forEach(o => o.classList.toggle("elegida", o === b));
-  });
-});
 
 /* ---------- Volver al menu de los 5 cuadros ---------- */
 const btnArriba = document.getElementById("btnArriba");
