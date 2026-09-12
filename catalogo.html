@@ -184,6 +184,13 @@ body.bloqueado .btn-arriba { display:none; }
 .ya-tienes { font-size:var(--fs-xs); font-weight:700; color:var(--verde-osc);
   background:var(--verde-claro); border-radius:var(--radio-sm); padding:8px 12px; }
 
+/* Se toca el producto y se abre su ficha */
+.foto[data-abrir], .cabeza { cursor:pointer; }
+.lupa { position:absolute; right:8px; bottom:8px; width:30px; height:30px; border-radius:var(--pill);
+  background:rgba(255,255,255,.92); border:1px solid var(--borde);
+  display:flex; align-items:center; justify-content:center; color:var(--texto-2); }
+.lupa .icono { width:16px; height:16px; }
+
 /* Boton para abrir la ficha del producto */
 .ver-ficha { display:flex; align-items:center; justify-content:center; gap:6px;
   width:100%; min-height:42px; border:1px solid var(--azul-borde); border-radius:var(--radio-sm);
@@ -870,17 +877,17 @@ function acciones(id) {
 function tarjeta(id) {
   const p = P[id];
   const sello = p.nuevo ? '<span class="sello">Nuevo</span>' : "";
-  const tabla = p.tabla
-    ? '<button type="button" class="ver-ficha" data-tabla="' + id + '">' +
-      '<svg class="icono"><use href="#i-lupa"/></svg>Tabla nutricional</button>'
-    : "";
+  const lupa = '<span class="lupa"><svg class="icono"><use href="#i-lupa"/></svg></span>';
   return '<article class="tarjeta" data-id="' + id + '">' +
-    '<div class="foto">' + imagenHTML(p.foto, p.nombre, 'loading="lazy" decoding="async" width="520" height="520"') + sello + '</div>' +
+    '<div class="foto" data-abrir="' + id + '">' +
+      imagenHTML(p.foto, p.nombre, 'loading="lazy" decoding="async" width="520" height="520"') + sello + lupa +
+    '</div>' +
     '<div class="info">' +
-      '<div class="marca">' + esc(p.marca) + '</div>' +
-      '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
-      '<div class="precios"><span class="precio">' + soles(p.precio) + '</span></div>' +
-      tabla +
+      '<div class="cabeza" data-abrir="' + id + '">' +
+        '<div class="marca">' + esc(p.marca) + '</div>' +
+        '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
+        '<div class="precios"><span class="precio">' + soles(p.precio) + '</span></div>' +
+      '</div>' +
       '<div class="acciones">' + acciones(id) + '</div>' +
     '</div></article>';
 }
@@ -1181,8 +1188,8 @@ visor.addEventListener("click", e => { if (e.target === visor) cerrarTabla(); })
 document.addEventListener("click", e => {
   const oferta = e.target.closest("[data-oferta]");
   if (oferta) { agregarOferta(Number(oferta.dataset.oferta)); return; }
-  const tabla = e.target.closest("[data-tabla]");
-  if (tabla) { abrirTabla(tabla.dataset.tabla); return; }
+  const abrir = e.target.closest("[data-abrir]");
+  if (abrir) { abrirTabla(abrir.dataset.abrir); return; }
   const mas = e.target.closest("[data-mas]"), menos = e.target.closest("[data-menos]"), fuera = e.target.closest("[data-sacar]");
   if (mas) cambiar(mas.dataset.mas, 1);
   else if (menos) cambiar(menos.dataset.menos, -1);
