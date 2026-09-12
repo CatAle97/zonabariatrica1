@@ -111,6 +111,23 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 }
 .nav-cat a.activo { background:var(--azul); border-color:var(--azul); color:var(--blanco); }
 
+/* ---------- CUANTOS PRODUCTOS POR PANTALLA ---------- */
+.vista { display:flex; align-items:center; justify-content:flex-end; gap:10px; padding-top:14px;
+  font-size:var(--fs-sm); font-weight:600; color:var(--texto-3); }
+.vista-btns { display:flex; gap:6px; }
+.vista-btn { width:44px; height:38px; border:1px solid var(--borde); border-radius:var(--radio-sm);
+  background:var(--blanco); font-size:15px; font-weight:800; color:var(--texto-2); }
+.vista-btn.elegida { background:var(--azul); border-color:var(--azul); color:var(--blanco); }
+
+/* ---------- BOTON VOLVER AL MENU ---------- */
+.btn-arriba {
+  position:fixed; left:16px; bottom:16px; bottom:calc(16px + env(safe-area-inset-bottom)); z-index:30;
+  display:flex; align-items:center; gap:6px; height:50px; padding:0 16px 0 12px;
+  border-radius:var(--pill); background:var(--blanco); border:1px solid var(--borde);
+  color:var(--texto); font-size:15px; font-weight:700; box-shadow:0 4px 14px rgba(0,0,0,.15);
+}
+body.bloqueado .btn-arriba { display:none; }
+
 /* ---------- SECCIONES ---------- */
 .seccion { padding-block:32px 4px; scroll-margin-top:var(--nav-alto); }
 .seccion h2 { font-size:var(--fs-h2); font-weight:800; display:flex; align-items:center; gap:10px; margin-bottom:18px; }
@@ -143,6 +160,14 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
   padding:6px 12px; border-radius:var(--pill); font-size:var(--fs-xs); font-weight:700;
   background:var(--azul-claro); color:var(--azul-osc); border:1px solid var(--azul-borde);
 }
+
+/* Tarjeta de oferta x2 */
+.tarjeta.oferta { border:2px solid var(--verde); }
+.cinta { background:var(--verde); color:var(--blanco); text-align:center; font-size:17px; font-weight:800; padding:9px 16px; }
+.antes { font-size:var(--fs-sm); color:var(--texto-3); text-decoration:line-through; }
+.incluye { font-size:var(--fs-sm); color:var(--texto-2); }
+.ya-tienes { font-size:var(--fs-xs); font-weight:700; color:var(--verde-osc);
+  background:var(--verde-claro); border-radius:var(--radio-sm); padding:8px 12px; }
 
 /* Enlace discreto a la tabla nutricional */
 .ver-tabla { align-self:flex-start; padding:6px 0; font-size:var(--fs-sm); font-weight:700;
@@ -273,6 +298,26 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
 footer p { font-size:var(--fs-xs); color:var(--texto-3); }
 
 /* ---------- Pantallas grandes ---------- */
+/* Vista de 2 y 4 por pantalla: la tarjeta se queda con lo esencial */
+body.cols-2 .grilla { grid-template-columns:1fr 1fr; gap:12px; }
+body.cols-4 .grilla { grid-template-columns:1fr 1fr; gap:10px; }
+body.cols-2 .info, body.cols-4 .info { padding:12px; gap:8px; }
+body.cols-2 .nombre { font-size:15px; }
+body.cols-4 .nombre { font-size:14px; }
+body.cols-2 .precio, body.cols-4 .precio { font-size:21px; }
+body.cols-2 .chips, body.cols-4 .chips,
+body.cols-2 .ver-tabla, body.cols-4 .ver-tabla,
+body.cols-4 .aviso-x2, body.cols-4 .marca, body.cols-4 .incluye { display:none; }
+body.cols-2 .aviso-x2 { font-size:var(--fs-xs); padding:6px 10px; }
+body.cols-2 .btn-agregar, body.cols-4 .btn-agregar { min-height:46px; font-size:15px; }
+.txt-corto { display:none; }
+body.cols-2 .txt-largo, body.cols-4 .txt-largo { display:none; }
+body.cols-2 .txt-corto { display:inline; }
+body.cols-4 .cant small { display:none; }
+body.cols-4 .contador button, body.cols-2 .contador button { width:40px; height:40px; }
+body.cols-4 .cinta { font-size:14px; padding:7px 10px; }
+body.cols-4 .foto { aspect-ratio:1 / 1; }
+
 @media (min-width:600px) {
   :root { --lado:24px; }
   .grilla { grid-template-columns:1fr 1fr; }
@@ -290,6 +335,7 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   <symbol id="i-vitamina" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></symbol>
   <symbol id="i-hoja" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
   <symbol id="i-oferta" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
+  <symbol id="i-arriba" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
   <symbol id="i-nuevo" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></symbol>
   <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
   <symbol id="i-lista" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></symbol>
@@ -329,6 +375,20 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   </ul>
 </nav>
 
+<div class="envoltura">
+  <!-- Cuantos productos por pantalla. Siempre arranca en 1: la
+       eleccion NO se guarda, para que el catalogo se vea igual
+       cada vez que alguien lo abre. -->
+  <div class="vista">
+    <span>Ver</span>
+    <div class="vista-btns">
+      <button type="button" class="vista-btn elegida" data-cols="1" aria-label="Un producto por pantalla">1</button>
+      <button type="button" class="vista-btn" data-cols="2" aria-label="Dos productos por pantalla">2</button>
+      <button type="button" class="vista-btn" data-cols="4" aria-label="Cuatro productos por pantalla">4</button>
+    </div>
+  </div>
+</div>
+
 <main class="envoltura">
   <section class="seccion" id="proteinas">
     <h2><svg class="icono"><use href="#i-proteina"/></svg>Proteínas</h2>
@@ -351,7 +411,7 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
       <b>2 productos B&amp;N −S/ 15 · 3 −S/ 25 · 4 o más −S/ 40</b>
       <span>Y llevando 2 del mismo producto pagas el precio de oferta. Todo se aplica solo al armar tu pedido.</span>
     </div>
-    <div class="grilla" data-lista="ofertas"></div>
+    <div class="grilla" id="grillaOfertas"></div>
   </section>
 
   <section class="seccion" id="nuevos">
@@ -378,6 +438,11 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   </div>
   <div class="visor-img" id="visorImg"></div>
 </div>
+
+<!-- Vuelve al menu de los 5 cuadros. Aparece solo al bajar. -->
+<button class="btn-arriba" id="btnArriba" type="button" hidden aria-label="Volver al menú">
+  <svg class="icono"><use href="#i-arriba"/></svg><span>Menú</span>
+</button>
 
 <!-- Panel del cotizador -->
 <div class="fondo-panel" id="fondoPanel" hidden></div>
@@ -484,7 +549,6 @@ const CATALOGO = {
   fibraColageno: ["colageno","fibra"],
   /* Ofertas = los productos que tienen precio especial llevando 2.
      Sale de OFERTAS_X2, asi no hay dos listas que mantener. */
-  ofertas: [],
   nuevos: ["isolate","colageno"]
 };
 
@@ -497,19 +561,18 @@ const CATALOGO = {
    `precioPar` es el precio de los DOS juntos.
    ========================================================= */
 const OFERTAS_X2 = [
-  { nombre:"Oferta 2 Proteínas Líquidas", ids:["liquidaFresa","liquidaMaracumango"], precioPar:360 },
-  { nombre:"Oferta 2 Proteínas en Polvo", ids:["wheyVainilla","wheyChocolate"], precioPar:520 },
-  { nombre:"Oferta 2 Multivitamínicos Bariatric Fusion", ids:["bfBayas","bfTropical"], precioPar:550 },
-  { nombre:"Oferta 2 Whey Protein Isolate", ids:["isolate"], precioPar:580 }
+  { nombre:"2 Proteínas Líquidas", ids:["liquidaFresa","liquidaMaracumango"], precioPar:360,
+    foto:"img/oferta-2liquidas.jpg", incluye:"1 fresa + 1 maracumango" },
+  { nombre:"2 Proteínas en Polvo", ids:["wheyVainilla","wheyChocolate"], precioPar:520,
+    foto:"img/oferta-2whey-limpia.jpg", incluye:"1 vainilla + 1 chocolate" },
+  { nombre:"2 Multivitamínicos Bariatric Fusion", ids:["bfBayas","bfTropical"], precioPar:550,
+    foto:"img/oferta-2multivit.jpg", incluye:"1 bayas mixtas + 1 tropical" },
+  { nombre:"2 Whey Protein Isolate Nutrifath", ids:["isolate"], precioPar:580,
+    foto:"img/oferta-2nutrifath.jpg", incluye:"2 envases de 1 kg, sabor neutro" }
 ];
 
 /* Descuento por cantidad — mismos tramos que la tienda */
 const DESCUENTO_BN = [ { min:4, desc:40 }, { min:3, desc:25 }, { min:2, desc:15 } ];
-
-/* La seccion Ofertas se llena con los productos de OFERTAS_X2.
-   OJO: va DESPUES de declarar OFERTAS_X2; si se sube, el script
-   falla y el catalogo sale vacio. */
-CATALOGO.ofertas = OFERTAS_X2.reduce((lista, of) => lista.concat(of.ids), []);
 
 /* Busca si un producto tiene oferta por llevar 2 (para avisarlo en su tarjeta) */
 function ofertaDe(id) { return OFERTAS_X2.find(o => o.ids.includes(id)); }
@@ -622,6 +685,9 @@ function deshacer() {
 function refrescar(id) {
   document.querySelectorAll('.tarjeta[data-id="' + id + '"] .acciones')
     .forEach(el => { el.innerHTML = acciones(id); });
+  /* Las tarjetas de oferta muestran cuanto lleva de esa familia */
+  const go = document.getElementById("grillaOfertas");
+  if (go) go.innerHTML = OFERTAS_X2.map((of, i) => tarjetaOferta(i)).join("");
   pintarPanel(); pintarFlotante();
 }
 
@@ -629,7 +695,8 @@ function refrescar(id) {
 function acciones(id) {
   const n = cot[id] || 0;
   if (!n) return '<button class="btn-agregar" type="button" data-mas="' + id + '">' +
-    '<svg class="icono"><use href="#i-mas"/></svg>Agregar a mi pedido</button>';
+    '<svg class="icono"><use href="#i-mas"/></svg>' +
+    '<span class="txt-largo">Agregar a mi pedido</span><span class="txt-corto">Agregar</span></button>';
   return '<div class="contador">' +
     '<button type="button" data-menos="' + id + '" aria-label="Quitar uno">−</button>' +
     '<span class="cant">' + n + ' en tu lista<small>' + soles(P[id].precio * n) + '</small></span>' +
@@ -664,7 +731,42 @@ function tarjeta(id) {
     '</div></article>';
 }
 
+function tarjetaOferta(i) {
+  const of = OFERTAS_X2[i];
+  const unitario = P[of.ids[0]].precio;
+  const antes = unitario * 2;
+  const enPedido = of.ids.reduce((n, id) => n + (cot[id] || 0), 0);
+  const yaTiene = enPedido
+    ? `<div class="ya-tienes">Ya tienes ${enPedido} en tu pedido</div>`
+    : "";
+  return `<article class="tarjeta oferta">
+    <div class="cinta">Ahorras ${soles(antes - of.precioPar)}</div>
+    <div class="foto"><img src="${esc(of.foto)}" alt="${esc(of.nombre)}" loading="lazy" width="400" height="300"></div>
+    <div class="info">
+      <h3 class="nombre">${esc(of.nombre)}</h3>
+      <div class="precios"><span class="precio">${soles(of.precioPar)}</span><span class="antes">Antes ${soles(antes)}</span></div>
+      <div class="incluye">Incluye ${esc(of.incluye)}</div>
+      ${yaTiene}
+      <div class="acciones">
+        <button class="btn-agregar" type="button" data-oferta="${i}">
+          <svg class="icono"><use href="#i-mas"/></svg>
+          <span class="txt-largo">Agregar esta oferta</span><span class="txt-corto">Agregar</span></button>
+      </div>
+    </div></article>`;
+}
+
+function agregarOferta(i) {
+  const of = OFERTAS_X2[i];
+  /* Con dos sabores se agrega uno de cada uno; con uno solo, dos unidades */
+  if (of.ids.length > 1) { of.ids.forEach(id => { cot[id] = (cot[id] || 0) + 1; }); }
+  else { cot[of.ids[0]] = (cot[of.ids[0]] || 0) + 2; }
+  guardar(); pintarCatalogo(); pintarPanel(); pintarFlotante();
+  if (typeof gtag === "function") gtag("event", "agregar_oferta", { oferta: of.nombre, precio: of.precioPar });
+}
+
 function pintarCatalogo() {
+  const go = document.getElementById("grillaOfertas");
+  if (go) go.innerHTML = OFERTAS_X2.map((of, i) => tarjetaOferta(i)).join("");
   document.querySelectorAll("[data-lista]").forEach(el => {
     el.innerHTML = (CATALOGO[el.dataset.lista] || []).map(tarjeta).join("");
   });
@@ -843,6 +945,8 @@ visor.addEventListener("click", e => { if (e.target === visor) cerrarTabla(); })
 
 /* Un solo escuchador para todos los botones + / − / quitar */
 document.addEventListener("click", e => {
+  const oferta = e.target.closest("[data-oferta]");
+  if (oferta) { agregarOferta(Number(oferta.dataset.oferta)); return; }
   const tabla = e.target.closest("[data-tabla]");
   if (tabla) { abrirTabla(tabla.dataset.tabla); return; }
   const mas = e.target.closest("[data-mas]"), menos = e.target.closest("[data-menos]"), fuera = e.target.closest("[data-sacar]");
@@ -883,6 +987,7 @@ document.addEventListener("click", e => {
     let actual = -1;
     secciones.forEach((s, i) => { if (s.getBoundingClientRect().top <= linea) actual = i; });
     enlaces.forEach((a, i) => a.classList.toggle("activo", i === actual));
+    document.getElementById("btnArriba").hidden = window.scrollY < 300;
     if (actual >= 0) {
       const a = enlaces[actual];
       nav.scrollLeft = a.offsetLeft - nav.clientWidth / 2 + a.offsetWidth / 2;
@@ -896,6 +1001,21 @@ document.addEventListener("click", e => {
   }, { passive: true });
   marcar();
 })();
+
+/* ---------- Cuantos productos por pantalla ----------
+   Arranca siempre en 1 y NO se guarda: quien abre el enlace
+   debe ver el catalogo igual la primera vez, siempre. */
+document.querySelectorAll(".vista-btn").forEach(b => {
+  b.addEventListener("click", () => {
+    document.body.classList.remove("cols-1", "cols-2", "cols-4");
+    document.body.classList.add("cols-" + b.dataset.cols);
+    document.querySelectorAll(".vista-btn").forEach(o => o.classList.toggle("elegida", o === b));
+  });
+});
+
+/* ---------- Volver al menu de los 5 cuadros ---------- */
+const btnArriba = document.getElementById("btnArriba");
+btnArriba.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
 pintarTodo();
 </script>
