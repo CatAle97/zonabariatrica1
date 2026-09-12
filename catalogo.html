@@ -1004,25 +1004,34 @@ function pintarCatalogo() {
 /* ---------- PANEL DEL COTIZADOR ---------- */
 function mensajeWA() {
   const c = cuentas();
-  let t = "Hola, quiero hacer este pedido:\n";
+  const S = "\u000A";                 /* salto de línea */
+  const RAYA = "\u2501".repeat(14);   /* la línea divisoria */
+  /* En WhatsApp las negritas van entre asteriscos */
+  let m = "\uD83D\uDED2 *Hola, Zona Bariátrica. Quiero realizar este pedido.*" + S + S;
+  m += "*MI PEDIDO*" + S + S;
   Object.keys(cot).forEach(id => {
     const p = P[id];
-    t += "\n• " + cot[id] + " x " + p.nombre + " — " + soles(p.precio * cot[id]);
+    m += "• " + cot[id] + "x " + p.nombre + " — " + soles(p.precio * cot[id]) + S;
   });
-  t += "\n";
-  c.ofertas.forEach(o => {
-    t += "\n" + o.nombre + (o.veces > 1 ? " x" + o.veces : "") + ": -" + soles(o.ahorro);
-  });
-  if (c.descuento) t += "\nDescuento por cantidad B&N: -" + soles(c.descuento);
-  t += "\nTotal sin delivery: " + soles(c.total);
-  if (datos.zona) {
-    t += datos.tipo === "provincia"
-      ? "\n\nEnvío a PROVINCIA: " + datos.zona
-      : "\n\nEntrega en LIMA: " + datos.zona;
+  const ahorro = c.ofertas.reduce((s, o) => s + o.ahorro, 0) + c.descuento;
+  m += S + RAYA + S + S;
+  m += "*Subtotal productos:* " + soles(c.subtotal) + S;
+  m += "\uD83D\uDC9A *Descuento:* " + (ahorro ? "- " + soles(ahorro) : "S/ 0") + S;
+  m += "\uD83D\uDCB0 *TOTAL PRODUCTOS:* " + soles(c.total) + S + S;
+  m += RAYA + S + S;
+  /* En Lima el cliente escribe su dirección; en provincia, su ciudad */
+  if (datos.tipo === "provincia") {
+    m += "\uD83D\uDCCD *Ciudad / Distrito:* " + datos.zona + S;
+    m += "\uD83D\uDE9A *Envío:* Agencia Shalom" + S;
+  } else {
+    m += "\uD83D\uDCCD *Ciudad / Distrito:* Lima" + S;
+    m += "\uD83C\uDFE0 *Dirección:* " + datos.zona + S;
+    m += "\uD83D\uDE9A *Envío:* Delivery Lima" + S;
   }
-  if (datos.nombre) t += "\nNombre: " + datos.nombre;
-  t += "\n\n(Enviado desde el catálogo web)";
-  return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(t);
+  if (datos.nombre) m += "\uD83D\uDC64 *Nombre:* " + datos.nombre + S;
+  m += S + RAYA + S + S;
+  m += "Quedo atento(a) a la *confirmación del costo de envío* y al *total final de mi pedido*. ¡Muchas gracias! \uD83D\uDE0A";
+  return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(m);
 }
 
 function pintarPanel() {
