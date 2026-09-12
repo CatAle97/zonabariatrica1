@@ -863,7 +863,7 @@ function acciones(id) {
     '<span class="txt-largo">Agregar a mi pedido</span><span class="txt-corto">Agregar</span></button>';
   return '<div class="contador">' +
     '<button type="button" data-menos="' + id + '" aria-label="Quitar uno">−</button>' +
-    '<span class="cant">' + n + ' en tu lista<small>' + soles(P[id].precio * n) + '</small></span>' +
+    '<span class="cant">' + n + '</span>' +
     '<button type="button" data-mas="' + id + '" aria-label="Agregar uno">+</button>' +
   '</div>';
 }
@@ -871,25 +871,17 @@ function acciones(id) {
 function tarjeta(id) {
   const p = P[id];
   const sello = p.nuevo ? '<span class="sello">Nuevo</span>' : "";
-  const chips = p.chips
-    ? '<ul class="chips">' + p.chips.slice(0, 4).map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>'
+  const tabla = p.tabla
+    ? '<button type="button" class="ver-ficha" data-tabla="' + id + '">' +
+      '<svg class="icono"><use href="#i-lupa"/></svg>Tabla nutricional</button>'
     : "";
-  /* Aviso de la oferta x2: se arma solo desde OFERTAS_X2 */
-  const of = ofertaDe(id);
-  const aviso = of
-    ? '<div class="aviso-x2">Llevando 2: ' + soles(of.precioPar) +
-      ' <b>(ahorras ' + soles(P[of.ids[0]].precio * 2 - of.precioPar) + ')</b></div>'
-    : "";
-  /* La foto de la tabla se carga solo cuando la tocan */
-  const tabla = '<button type="button" class="ver-ficha" data-tabla="' + id + '">' +
-    '<svg class="icono"><use href="#i-lupa"/></svg>Ver detalle</button>';
   return '<article class="tarjeta" data-id="' + id + '">' +
     '<div class="foto">' + imagenHTML(p.foto, p.nombre, 'loading="lazy" decoding="async" width="520" height="520"') + sello + '</div>' +
     '<div class="info">' +
       '<div class="marca">' + esc(p.marca) + '</div>' +
       '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
       '<div class="precios"><span class="precio">' + soles(p.precio) + '</span></div>' +
-      aviso + chips + tabla +
+      tabla +
       '<div class="acciones">' + acciones(id) + '</div>' +
     '</div></article>';
 }
