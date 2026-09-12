@@ -83,6 +83,105 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 .tile:active { opacity:.85; }
 /* Quinta tarjeta: ocupa la fila entera */
 .tile-nuevos { grid-column:1 / -1; }
+.tn-texto { flex:1 1 auto; min-width:0; }
+.tn-texto strong { display:block; font-size:26px; font-weight:800; color:#4C1D95; line-height:1.05; letter-spacing:-.01em; }
+.tn-texto span { display:block; font-size:var(--fs-sm); color:#6D28D9; margin-top:6px; line-height:1.25; }
+.tn-boton { display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:10px 18px;
+  border-radius:var(--pill); background:#6D28D9; color:#fff; font-size:15px; font-weight:700; font-style:normal; }
+.tn-boton .icono { width:18px; height:18px; }
+/* Los dos envases, montados uno sobre otro como en la ilustración */
+.tn-fotos { position:relative; flex:0 0 38%; display:flex; align-items:flex-end; justify-content:flex-end;
+  padding-right:6px; }
+/* Las fotos son JPG con fondo blanco: multiply hace que ese blanco
+   se funda con el lila y no se vea el recuadro. */
+.tn-fotos img { width:80px; height:80px; object-fit:contain; mix-blend-mode:multiply; }
+.tn-fotos picture:last-of-type img { margin-left:-14px; }
+.tn-sello { position:absolute; top:0; right:0; background:#7C3AED; color:#fff; font-style:normal;
+  font-size:9.5px; font-weight:800; line-height:1.15; text-align:center; padding:6px 8px; border-radius:10px;
+  transform:rotate(6deg); }
+.tn-texto span { max-width:20ch; text-wrap:balance; }
+@media (min-width:600px) {
+  .tn-texto strong { font-size:30px; }
+  .tn-fotos img { width:104px; height:104px; }
+  .tn-sello { font-size:11px; padding:8px 11px; }
+}
+
+/* ---------- AVISO DE DESCUENTO (una sola línea de texto) ---------- */
+.promo {
+  margin-top:14px; background:var(--verde-claro); border:1px solid var(--verde-borde);
+  border-radius:var(--radio); padding:14px 16px; font-size:var(--fs-sm);
+}
+.promo b { color:var(--verde-osc); }
+.promo span { display:block; color:var(--texto-2); font-size:var(--fs-xs); margin-top:4px; }
+
+/* ---------- BARRA DE CATEGORÍAS (fija arriba) ---------- */
+.nav-cat {
+  position:sticky; top:0; z-index:20; background:var(--blanco);
+  border-bottom:1px solid var(--borde); margin-top:24px;
+}
+.nav-cat ul {
+  display:flex; gap:8px; height:var(--nav-alto); align-items:center;
+  overflow-x:auto; scrollbar-width:none; padding-inline:var(--lado);
+  max-width:1080px; margin:0 auto;
+}
+.nav-cat ul::-webkit-scrollbar { display:none; }
+.nav-cat a {
+  display:flex; align-items:center; height:44px; padding:0 16px; white-space:nowrap;
+  border-radius:var(--pill); border:1px solid var(--borde); background:var(--blanco);
+  font-size:var(--fs-sm); font-weight:600; color:var(--texto-2);
+}
+.nav-cat a.activo { background:var(--azul); border-color:var(--azul); color:var(--blanco); }
+
+/* ---------- BOTON VOLVER AL MENU ---------- */
+.btn-arriba {
+  position:fixed; left:16px; bottom:16px; bottom:calc(16px + env(safe-area-inset-bottom)); z-index:30;
+  display:flex; align-items:center; gap:6px; height:50px; padding:0 16px 0 12px;
+  border-radius:var(--pill); background:var(--blanco); border:1px solid var(--borde);
+  color:var(--texto); font-size:15px; font-weight:700; box-shadow:0 4px 14px rgba(0,0,0,.15);
+}
+body.bloqueado .btn-arriba { display:none; }
+
+/* ---------- SECCIONES ---------- */
+.seccion { padding-block:32px 4px; scroll-margin-top:var(--nav-alto); }
+.seccion h2 { font-size:var(--fs-h2); font-weight:800; display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+.seccion h2 .icono { color:var(--azul); width:28px; height:28px; }
+
+/* ---------- TARJETA DE PRODUCTO ---------- */
+.grilla { display:grid; grid-template-columns:1fr; gap:16px; }
+.tarjeta {
+  background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio);
+  overflow:hidden; box-shadow:var(--sombra); display:flex; flex-direction:column;
+}
+.foto { position:relative; aspect-ratio:4 / 3; background:var(--blanco); border-bottom:1px solid var(--borde); }
+.foto picture { display:block; width:100%; height:100%; }
+.foto img { width:100%; height:100%; object-fit:contain; padding:12px; }
+.sello {
+  position:absolute; top:12px; left:12px; padding:6px 12px; border-radius:var(--pill);
+  font-size:var(--fs-xs); font-weight:800; letter-spacing:.04em; text-transform:uppercase;
+  background:var(--azul); color:var(--blanco);
+}
+.info { padding:16px; display:flex; flex-direction:column; gap:12px; flex:1; }
+.marca { font-size:var(--fs-xs); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--texto-3); margin-bottom:-8px; }
+.nombre { font-size:var(--fs-h3); line-height:1.25; font-weight:700; }
+.precios { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; }
+.precio { font-size:var(--fs-precio); font-weight:800; color:var(--azul-osc); line-height:1; }
+/* Aviso de oferta x2 dentro de la tarjeta */
+.aviso-x2 { background:var(--verde-claro); border:1px solid var(--verde-borde); border-radius:var(--radio-sm);
+  padding:8px 12px; font-size:var(--fs-sm); color:var(--verde-osc); font-weight:600; margin-top:-4px; }
+.aviso-x2 b { font-weight:800; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; }
+.chips li {
+  padding:6px 12px; border-radius:var(--pill); font-size:var(--fs-xs); font-weight:700;
+  background:var(--azul-claro); color:var(--azul-osc); border:1px solid var(--azul-borde);
+}
+
+/* Tarjeta de oferta x2 */
+.tarjeta.oferta { border:2px solid var(--verde); }
+.cinta { background:var(--verde); color:var(--blanco); text-align:center; font-size:17px; font-weight:800; padding:9px 16px; }
+.antes { font-size:var(--fs-sm); color:var(--texto-3); text-decoration:line-through; }
+.incluye { font-size:var(--fs-sm); color:var(--texto-2); }
+.ya-tienes { font-size:var(--fs-xs); font-weight:700; color:var(--verde-osc);
+  background:var(--verde-claro); border-radius:var(--radio-sm); padding:8px 12px; }
 
 /* Boton para abrir la ficha del producto */
 .ver-ficha { display:flex; align-items:center; justify-content:center; gap:6px;
