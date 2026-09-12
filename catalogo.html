@@ -82,13 +82,30 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 .tile img { width:100%; height:auto; display:block; }
 .tile:active { opacity:.85; }
 /* Quinta tarjeta: ocupa la fila entera */
-.tile-texto { grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between; gap:12px;
-  padding:18px 20px; background:#F1ECFF; }
-.tile-texto strong { display:block; font-size:21px; font-weight:800; color:#4C1D95; line-height:1.15; }
-.tile-texto span { display:block; font-size:var(--fs-sm); color:#6D28D9; margin-top:2px; }
-.tile-texto .flecha { display:flex; align-items:center; justify-content:center; width:44px; height:44px;
-  border-radius:var(--pill); background:#7C3AED; color:#fff; margin-top:12px; }
-.tile-texto .deco { width:56px; height:56px; color:#A78BFA; flex-shrink:0; }
+.tile-nuevos { grid-column:1 / -1; display:flex; align-items:center; gap:8px;
+  background:linear-gradient(100deg,#EDE9FE 0%,#F5F3FF 55%,#EDE9FE 100%); padding:16px 0 16px 18px; }
+.tn-texto { flex:1 1 auto; min-width:0; }
+.tn-texto strong { display:block; font-size:26px; font-weight:800; color:#4C1D95; line-height:1.05; letter-spacing:-.01em; }
+.tn-texto span { display:block; font-size:var(--fs-sm); color:#6D28D9; margin-top:6px; line-height:1.25; }
+.tn-boton { display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:10px 18px;
+  border-radius:var(--pill); background:#6D28D9; color:#fff; font-size:15px; font-weight:700; font-style:normal; }
+.tn-boton .icono { width:18px; height:18px; }
+/* Los dos envases, montados uno sobre otro como en la ilustración */
+.tn-fotos { position:relative; flex:0 0 38%; display:flex; align-items:flex-end; justify-content:flex-end;
+  padding-right:6px; }
+/* Las fotos son JPG con fondo blanco: multiply hace que ese blanco
+   se funda con el lila y no se vea el recuadro. */
+.tn-fotos img { width:80px; height:80px; object-fit:contain; mix-blend-mode:multiply; }
+.tn-fotos picture:last-of-type img { margin-left:-14px; }
+.tn-sello { position:absolute; top:0; right:0; background:#7C3AED; color:#fff; font-style:normal;
+  font-size:9.5px; font-weight:800; line-height:1.15; text-align:center; padding:6px 8px; border-radius:10px;
+  transform:rotate(6deg); }
+.tn-texto span { max-width:20ch; text-wrap:balance; }
+@media (min-width:600px) {
+  .tn-texto strong { font-size:30px; }
+  .tn-fotos img { width:104px; height:104px; }
+  .tn-sello { font-size:11px; padding:8px 11px; }
+}
 
 /* ---------- AVISO DE DESCUENTO (una sola línea de texto) ---------- */
 .promo {
@@ -410,16 +427,23 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
       <picture><source srcset="img/cat-tile-ofertas.webp" type="image/webp">
       <img src="img/cat-tile-ofertas.jpg" alt="Ofertas — tus favoritos a mejor precio" width="760" height="619" loading="lazy"></picture>
     </a>
-    <!-- Nuevos ingresos: sin ilustración todavía, va en el mismo estilo -->
-    <a class="tile tile-texto" href="#nuevos">
-      <div>
+    <!-- Nuevos ingresos: hecha en código, con las fotos reales de
+         los dos productos que de verdad acaban de entrar. -->
+    <a class="tile tile-nuevos" href="#nuevos">
+      <div class="tn-texto">
         <strong>Nuevos ingresos</strong>
         <span>Siempre algo nuevo para ti</span>
-        <i class="flecha"><svg class="icono"><use href="#i-flecha"/></svg></i>
+        <i class="tn-boton">Ver productos <svg class="icono"><use href="#i-flecha"/></svg></i>
       </div>
-      <svg class="icono deco"><use href="#i-nuevo"/></svg>
+      <div class="tn-fotos">
+        <picture><source srcset="img/nf-whey-isolate.webp" type="image/webp">
+        <img src="img/nf-whey-isolate.jpg" alt="Whey Protein Isolate de Nutrifath" loading="lazy" width="200" height="200"></picture>
+        <picture><source srcset="img/cat-colageno-bn.webp" type="image/webp">
+        <img src="img/cat-colageno-bn.jpg" alt="Colágeno Hidrolizado de Bari&amp;Nutrition" loading="lazy" width="200" height="200"></picture>
+        <em class="tn-sello">LO MÁS<br>NUEVO</em>
+      </div>
     </a>
-  </nav>
+</nav>
 
 </div>
 
