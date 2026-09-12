@@ -267,19 +267,36 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
 }
 .panel-cab { display:flex; align-items:center; gap:12px; padding:14px var(--lado);
   background:var(--blanco); border-bottom:1px solid var(--borde); }
-.panel-cab h2 { font-size:var(--fs-h3); font-weight:800; flex:1; }
+.panel-cab { align-items:center; }
+.panel-titulo { flex:1; }
+.panel-cab h2 { font-size:25px; font-weight:800; line-height:1.1; }
+.panel-cab p { font-size:var(--fs-xs); color:var(--texto-3); margin-top:2px; }
+.cuenta-chip { background:var(--verde-claro); color:var(--verde-osc); border-radius:var(--pill);
+  padding:7px 12px; font-size:var(--fs-xs); font-weight:800; white-space:nowrap; }
 .panel-cab button { width:44px; height:44px; border-radius:var(--pill); font-size:26px; color:var(--texto-2); }
 /* Una sola zona con scroll: lista, cuentas, campos y botones.
    Así el botón de pedido nunca queda cortado. */
 .panel-cuerpo { overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch;
   padding:var(--lado); padding-bottom:calc(var(--lado) + env(safe-area-inset-bottom)); }
 .panel-lista { display:grid; gap:12px; margin-bottom:16px; }
-.linea { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio-sm); padding:12px; display:flex; gap:12px; }
-.linea picture { flex-shrink:0; }
-.linea img { width:64px; height:64px; object-fit:contain; }
+.linea { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio);
+  padding:12px 10px; display:flex; gap:10px; align-items:flex-start; }
+.linea picture { flex:0 0 64px; }
+.linea img { width:64px; height:84px; object-fit:contain; }
+.linea-chips { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0; }
+.linea-chips li { background:var(--gris); color:var(--texto-2); border-radius:8px; padding:3px 7px; font-size:11px; font-weight:700; }
+.linea-lado { display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+.linea-borrar { width:34px; height:34px; color:var(--texto-3); display:flex; align-items:center; justify-content:center; }
+.linea-borrar .icono { width:19px; height:19px; }
+.contador-mini { display:flex; align-items:center; gap:4px; background:var(--gris); border-radius:var(--pill); padding:3px; }
+.contador-mini button { width:32px; height:32px; border-radius:var(--pill); font-size:19px; font-weight:800; color:var(--texto-2); background:var(--blanco); }
+.contador-mini button.mas { background:var(--azul); color:var(--blanco); }
+.contador-mini span { min-width:22px; text-align:center; font-size:var(--fs-sm); font-weight:800; }
+.linea-subtotal { font-size:11.5px; color:var(--texto-3); font-weight:600; text-align:right; }
+.linea-subtotal b { display:block; font-size:var(--fs-sm); color:var(--texto); }
 .linea-datos { flex:1; min-width:0; }
-.linea-nombre { font-size:var(--fs-sm); font-weight:700; line-height:1.3; }
-.linea-precio { font-size:var(--fs-sm); color:var(--texto-2); margin-top:2px; }
+.linea-nombre { font-size:var(--fs-sm); font-weight:800; line-height:1.25; }
+.linea-precio { font-size:20px; font-weight:800; color:var(--azul); }
 .linea-pie { display:flex; align-items:center; gap:10px; margin-top:10px; }
 .linea-pie button { width:40px; height:40px; border:1px solid var(--borde); border-radius:8px; font-size:20px; font-weight:800; }
 .linea-pie .n { font-size:var(--fs-sm); font-weight:800; min-width:20px; text-align:center; }
@@ -287,11 +304,24 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
 .vacio { text-align:center; color:var(--texto-3); font-size:var(--fs-sm); padding:32px 16px; }
 .panel-pie { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio);
   padding:var(--lado); display:grid; gap:10px; }
-.cuenta { display:flex; justify-content:space-between; font-size:var(--fs-sm); color:var(--texto-2); }
+.panel-cuerpo { background:var(--fondo); }
+.totales { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio); padding:16px; display:grid; gap:8px; }
+.sin-delivery { font-size:var(--fs-xs); color:var(--texto-3); text-align:right; }
+.bloque-envio { display:flex; gap:12px; align-items:flex-start; background:var(--azul-claro);
+  border:1px solid var(--azul-borde); border-radius:var(--radio); padding:14px; margin-bottom:4px; }
+.bloque-envio .icono { width:26px; height:26px; color:var(--azul); flex-shrink:0; }
+.bloque-envio b { display:block; font-size:var(--fs-sm); color:var(--azul-osc); }
+.bloque-envio span { display:block; font-size:var(--fs-xs); color:var(--texto-2); margin-top:2px; }
+#formPedido, #pieVacio { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio); padding:16px; }
+.cuenta { display:flex; justify-content:space-between; gap:12px; font-size:var(--fs-sm); color:var(--texto-2); }
 .cuenta.dcto { color:var(--verde-osc); font-weight:700; }
-.cuenta.total { font-size:var(--fs-h3); font-weight:800; color:var(--texto); }
-.aviso-dcto { background:var(--verde-claro); border:1px solid var(--verde-borde); border-radius:var(--radio-sm);
-  padding:10px 12px; font-size:var(--fs-xs); color:var(--verde-osc); font-weight:600; }
+.cuenta.total { border-top:1px solid var(--borde); padding-top:12px; margin-top:4px; font-size:22px; font-weight:800; color:var(--texto); }
+.cuenta.total span:last-child { color:var(--azul); }
+.aviso-dcto { display:flex; gap:10px; background:var(--verde-claro); border:1px solid var(--verde-borde);
+  border-radius:var(--radio); padding:14px; margin-bottom:12px; }
+.aviso-dcto .icono { width:24px; height:24px; color:var(--verde); flex-shrink:0; }
+.aviso-dcto b { display:block; font-size:var(--fs-sm); color:var(--verde-osc); }
+.aviso-dcto span { display:block; font-size:var(--fs-xs); color:var(--texto-2); margin-top:3px; }
 /* Campos de entrega: el cliente escribe, no elige de una lista */
 .campo { margin-top:12px; }
 .campo label { display:block; font-size:var(--fs-sm); font-weight:700; margin-bottom:6px; }
@@ -330,7 +360,8 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
   color:var(--texto-2); font-size:16px; font-weight:700; letter-spacing:.02em;
 }
 .btn-limpiar:active { background:var(--gris); }
-.nota-pie { font-size:var(--fs-xs); color:var(--texto-3); text-align:center; }
+.nota-pie { display:flex; align-items:center; justify-content:center; gap:6px; font-size:var(--fs-xs); color:var(--texto-3); }
+.nota-pie .icono { width:16px; height:16px; }
 
 /* ---------- PIE ---------- */
 footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--borde); padding-block:24px; text-align:center; }
@@ -389,6 +420,9 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   <symbol id="i-hoja" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
   <symbol id="i-oferta" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-basura" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol>
+  <symbol id="i-camion" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62L18.3 9.38a1 1 0 0 0-.78-.38H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+  <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
   <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
   <symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
   <symbol id="i-arriba" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
@@ -519,7 +553,11 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
 <div class="fondo-panel" id="fondoPanel" hidden></div>
 <section class="panel" id="panel" hidden aria-label="Mi pedido">
   <div class="panel-cab">
-    <h2>Mi pedido</h2>
+    <div class="panel-titulo">
+      <h2>Mi pedido</h2>
+      <p>Revisa tus productos antes de enviar</p>
+    </div>
+    <span class="cuenta-chip" id="chipCuenta">0 productos</span>
     <button type="button" id="btnCerrar" aria-label="Cerrar">×</button>
   </div>
   <div class="panel-cuerpo">
@@ -530,6 +568,10 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
     <!-- Datos de entrega: campos para escribir, no botones.
          La zona sirve para cotizarle el delivery, que paga el cliente. -->
     <div id="formPedido" hidden>
+      <div class="bloque-envio">
+        <svg class="icono"><use href="#i-camion"/></svg>
+        <div><b>Envío / Entrega</b><span>Coordinamos el envío por WhatsApp según tu ubicación.</span></div>
+      </div>
       <div class="campo">
         <label>¿A dónde va tu pedido?</label>
         <div class="opciones">
@@ -553,9 +595,9 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
         <li><svg class="icono"><use href="#i-check"/></svg>Yape, Plin, transferencia o tarjeta</li>
       </ul>
       <a class="btn-pedido" id="btnPedido" target="_blank" rel="noopener" href="#">
-        <svg><use href="#i-wa"/></svg>HACER PEDIDO</a>
+        <svg><use href="#i-wa"/></svg>Enviar pedido por WhatsApp</a>
       <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
-      <p class="nota-pie">Te confirmamos stock y el costo del envío por WhatsApp.</p>
+      <p class="nota-pie"><svg class="icono"><use href="#i-escudo"/></svg>Compra segura con el respaldo de Zona Bariátrica</p>
     </div>
 
     <div id="pieVacio">
@@ -934,6 +976,7 @@ function pintarPanel() {
 
   document.getElementById("formPedido").hidden = !ids.length;
   document.getElementById("pieVacio").hidden = !!ids.length;
+  pintarChipCuenta();
 
   if (!ids.length) {
     lista.innerHTML = '<p class="vacio">Tu pedido está vacío.<br>Agrega los productos que quieres y te confirmamos todo por WhatsApp.</p>';
@@ -942,38 +985,61 @@ function pintarPanel() {
     return;
   }
 
+  /* Cada producto: foto, nombre, dos chips, precio, contador,
+     papelera para quitarlo y su subtotal. */
   lista.innerHTML = ids.map(id => {
     const p = P[id];
+    const chips = (p.chips || []).slice(0, 2).map(c => '<li>' + esc(c) + '</li>').join("");
     return '<div class="linea">' +
-      imagenHTML(p.foto, "", 'width="64" height="64" loading="lazy"') +
+      imagenHTML(p.foto, "", 'width="150" height="150" loading="lazy"') +
       '<div class="linea-datos">' +
         '<div class="linea-nombre">' + esc(p.nombre) + '</div>' +
-        '<div class="linea-precio">' + soles(p.precio) + ' c/u</div>' +
-        '<div class="linea-pie">' +
+        (chips ? '<ul class="linea-chips">' + chips + '</ul>' : "") +
+        '<div class="linea-precio">' + soles(p.precio) + '</div>' +
+      '</div>' +
+      '<div class="linea-lado">' +
+        '<button type="button" class="linea-borrar" data-sacar="' + id + '" aria-label="Quitar del pedido">' +
+          '<svg class="icono"><use href="#i-basura"/></svg></button>' +
+        '<div class="contador-mini">' +
           '<button type="button" data-menos="' + id + '" aria-label="Quitar uno">−</button>' +
-          '<span class="n">' + cot[id] + '</span>' +
-          '<button type="button" data-mas="' + id + '" aria-label="Agregar uno">+</button>' +
-          '<button type="button" class="linea-quitar" data-sacar="' + id + '">Quitar</button>' +
+          '<span>' + cot[id] + '</span>' +
+          '<button type="button" class="mas" data-mas="' + id + '" aria-label="Agregar uno">+</button>' +
         '</div>' +
-      '</div></div>';
+        '<div class="linea-subtotal"><span>Subtotal</span><b>' + soles(p.precio * cot[id]) + '</b></div>' +
+      '</div>' +
+    '</div>';
   }).join("");
 
   const c = cuentas();
-  const siguiente = DESCUENTO_BN.slice().sort((a, b) => a.min - b.min).find(t => t.min > c.unidadesBN);
+  const siguiente = DESCUENTO_BN.slice().sort((a, b) => a.min - b.min).find(x => x.min > c.unidadesBN);
+  const faltan = siguiente ? siguiente.min - c.unidadesBN : 0;
   const empuje = siguiente
-    ? '<div class="aviso-dcto">Agrega ' + (siguiente.min - c.unidadesBN) + ' producto' +
-      (siguiente.min - c.unidadesBN > 1 ? 's' : '') + ' Bari&amp;Nutrition más y descuentas S/ ' + siguiente.desc + '.</div>'
+    ? '<div class="aviso-dcto"><svg class="icono"><use href="#i-oferta"/></svg><div>' +
+      '<b>¡Estás a un paso de ahorrar!</b>' +
+      '<span>Agrega ' + faltan + ' producto' + (faltan > 1 ? "s" : "") +
+      ' Bari&amp;Nutrition más y obtén un descuento de ' + soles(siguiente.desc) + ' en tu pedido.</span>' +
+      '</div></div>'
     : "";
 
   document.getElementById("cuentas").innerHTML =
-    '<div class="cuenta"><span>Productos (' + unidades() + ')</span><span>' + soles(c.subtotal) + '</span></div>' +
-    c.ofertas.map(o => '<div class="cuenta dcto"><span>' + esc(o.nombre) + (o.veces > 1 ? ' x' + o.veces : '') +
-      '</span><span>−' + soles(o.ahorro) + '</span></div>').join("") +
-    (c.descuento ? '<div class="cuenta dcto"><span>Descuento por cantidad</span><span>−' + soles(c.descuento) + '</span></div>' : "") +
-    '<div class="cuenta total"><span>Total sin delivery</span><span>' + soles(c.total) + '</span></div>' +
-    empuje;
+    empuje +
+    '<div class="totales">' +
+      '<div class="cuenta"><span>Subtotal (' + unidades() + ' producto' + (unidades() === 1 ? "" : "s") + ')</span>' +
+        '<span>' + soles(c.subtotal) + '</span></div>' +
+      c.ofertas.map(o => '<div class="cuenta dcto"><span>' + esc(o.nombre) + (o.veces > 1 ? " x" + o.veces : "") +
+        '</span><span>− ' + soles(o.ahorro) + '</span></div>').join("") +
+      '<div class="cuenta dcto"><span>Descuento</span><span>− ' + soles(c.descuento) + '</span></div>' +
+      '<div class="cuenta total"><span>Total</span><span>' + soles(c.total) + '</span></div>' +
+      '<p class="sin-delivery">No incluye el delivery</p>' +
+    '</div>';
 
   document.getElementById("btnPedido").href = mensajeWA();
+}
+
+/* El contador de la cabecera del pedido */
+function pintarChipCuenta() {
+  const n = unidades();
+  document.getElementById("chipCuenta").textContent = n + (n === 1 ? " producto" : " productos");
 }
 
 function pintarFlotante() {
