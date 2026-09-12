@@ -377,8 +377,12 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
 .nota-pie .icono { width:16px; height:16px; }
 
 /* ---------- PIE ---------- */
-footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--borde); padding-block:24px; text-align:center; }
-footer p { font-size:var(--fs-xs); color:var(--texto-3); }
+footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--borde); padding:24px var(--lado) 32px; }
+.datos { display:grid; gap:14px; max-width:420px; margin:0 auto; }
+.datos li { display:flex; align-items:center; gap:12px; font-size:var(--fs-sm); font-weight:400; color:var(--texto-2); }
+.datos b { font-weight:600; color:var(--texto); }
+.datos .icono { width:22px; height:22px; color:var(--azul); flex-shrink:0; }
+.datos a { color:var(--verde-osc); }
 
 /* ---------- Pantallas grandes ---------- */
 /* ---------- MOVIL: SIEMPRE 2 POR FILA ----------
@@ -436,6 +440,7 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   <symbol id="i-oferta" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
   <symbol id="i-basura" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol>
+  <symbol id="i-billete" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01"/><path d="M18 12h.01"/></symbol>
   <symbol id="i-camion" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62L18.3 9.38a1 1 0 0 0-.78-.38H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
   <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
   <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
@@ -530,8 +535,11 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
 </main>
 
 <footer>
-  <p>Precios en soles, sin delivery. El pedido se confirma por WhatsApp.<br>
-     Consumir únicamente bajo indicación de su médico o nutricionista.</p>
+  <ul class="datos">
+    <li><svg class="icono"><use href="#i-camion"/></svg>Envíos a provincia por agencia <b>Shalom</b></li>
+    <li><svg class="icono"><use href="#i-billete"/></svg>Pago contra entrega en <b>Lima y provincias</b></li>
+    <li><svg class="icono"><use href="#i-wa"/></svg>Pedidos: <a href="https://wa.me/51961841069" target="_blank" rel="noopener"><b>961 841 069</b></a></li>
+  </ul>
 </footer>
 
 <!-- Botón flotante del carrito: abre el resumen del pedido -->
@@ -596,19 +604,14 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
         <label for="inpNombre">Tu nombre <span>(opcional)</span></label>
         <input id="inpNombre" type="text" autocomplete="name" placeholder="Ej: María">
       </div>
-      <ul class="confianza">
-        <li><svg class="icono"><use href="#i-check"/></svg>No pagas nada en la web</li>
-        <li><svg class="icono"><use href="#i-check"/></svg>Delivery en Lima y provincias (lo paga el cliente)</li>
-        <li><svg class="icono"><use href="#i-check"/></svg>Yape, Plin, transferencia o tarjeta</li>
-      </ul>
       <a class="btn-pedido" id="btnPedido" target="_blank" rel="noopener" href="#">
-        <svg><use href="#i-wa"/></svg>Enviar pedido por WhatsApp</a>
+        <svg><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
       <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
       <p class="nota-pie"><svg class="icono"><use href="#i-escudo"/></svg>Compra segura con el respaldo de Zona Bariátrica</p>
     </div>
 
     <div id="pieVacio">
-      <a class="btn-pedido" aria-disabled="true"><svg><use href="#i-wa"/></svg>HACER PEDIDO</a>
+      <a class="btn-pedido" aria-disabled="true"><svg><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
       <button class="btn-limpiar" id="btnDeshacer" type="button" hidden>Deshacer, volver a poner mis productos</button>
       <p class="nota-pie">Primero agrega al menos un producto.</p>
     </div>
