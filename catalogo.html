@@ -32,20 +32,20 @@
    Sin fuentes externas, para que cargue rápido con datos.
    ========================================================= */
 :root {
-  --azul:#2563EB; --azul-osc:#1E40AF; --azul-claro:#EFF6FF; --azul-borde:#BFDBFE;
+  --azul:#0F52FF; --azul-osc:#0B3FCC; --azul-claro:#EDF2FF; --azul-borde:#C7D7FF;
   --verde:#16A34A; --verde-osc:#15803D; --verde-claro:#F0FDF4; --verde-borde:#BBF7D0;
   --texto:#111827; --texto-2:#4B5563; --texto-3:#6B7280;
   --blanco:#FFFFFF; --fondo:#F8FAFC; --gris:#F1F5F9; --borde:#E5E7EB;
 
   --fuente:system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --fs-base:17px; --fs-sm:15px; --fs-xs:13px;
-  --fs-h2:24px; --fs-h3:19px; --fs-precio:26px;
+  --fs-base:18px; --fs-sm:16px; --fs-xs:14px;
+  --fs-h2:25px; --fs-h3:20px; --fs-precio:27px;
 
   --lado:16px;
-  --radio:16px; --radio-sm:10px; --pill:999px;
+  --radio:18px; --radio-sm:12px; --pill:999px;
   --btn-alto:52px;
   --nav-alto:60px;
-  --sombra:0 1px 3px rgba(16,24,40,.08);
+  --sombra:0 1px 3px rgba(16,24,40,.06);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -68,10 +68,10 @@ button { font:inherit; cursor:pointer; border:0; background:none; color:inherit;
 
 /* ---------- CABECERA ---------- */
 .cab { background:var(--blanco); border-bottom:1px solid var(--borde); }
-.cab .envoltura { display:flex; align-items:center; gap:12px; height:66px; }
-.cab img { width:42px; height:42px; object-fit:contain; }
-.cab-marca { font-size:var(--fs-xs); font-weight:700; color:var(--texto-3); letter-spacing:.06em; }
-.cab-titulo { font-size:22px; font-weight:800; letter-spacing:.04em; color:var(--azul-osc); line-height:1.1; }
+.cab .envoltura { display:flex; align-items:center; gap:10px; height:52px; }
+.cab img { width:30px; height:30px; object-fit:contain; }
+.cab-marca { font-size:15px; font-weight:800; letter-spacing:.04em; color:var(--azul-osc); line-height:1.1; }
+.cab-titulo { font-size:13px; font-weight:700; letter-spacing:.06em; color:var(--texto-3); line-height:1.1; }
 
 /* ---------- 4 CUADROS DE CATEGORÍA ---------- */
 .mosaico { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding-top:20px; }
@@ -161,18 +161,37 @@ body.bloqueado .btn-arriba { display:none; }
 .ya-tienes { font-size:var(--fs-xs); font-weight:700; color:var(--verde-osc);
   background:var(--verde-claro); border-radius:var(--radio-sm); padding:8px 12px; }
 
-/* Enlace discreto a la tabla nutricional */
-.ver-tabla { align-self:flex-start; padding:6px 0; font-size:var(--fs-sm); font-weight:700;
-  color:var(--azul); text-decoration:underline; }
+/* Boton para abrir la ficha del producto */
+.ver-ficha { display:flex; align-items:center; justify-content:center; gap:6px;
+  width:100%; min-height:42px; border:1px solid var(--azul-borde); border-radius:var(--radio-sm);
+  background:var(--azul-claro); color:var(--azul-osc); font-size:var(--fs-sm); font-weight:700; }
+.ver-ficha .icono { width:18px; height:18px; }
 
-/* Visor de la tabla nutricional */
-.visor { position:fixed; inset:0; z-index:50; background:rgba(17,24,39,.9);
-  display:flex; flex-direction:column; padding:12px; }
-.visor-cab { display:flex; align-items:center; gap:12px; color:var(--blanco); padding:4px 6px 10px; }
-.visor-cab span { font-size:var(--fs-sm); font-weight:700; flex:1; }
-.visor-cab button { width:44px; height:44px; border-radius:var(--pill); color:var(--blanco); font-size:26px; }
-.visor-img { flex:1; overflow:auto; display:flex; align-items:center; justify-content:center; }
-.visor-img img { width:100%; height:auto; display:block; background:var(--blanco); border-radius:var(--radio-sm); }
+/* Ficha del producto, con carrusel de imagenes */
+.visor { position:fixed; inset:0; z-index:50; background:rgba(17,24,39,.6);
+  display:flex; align-items:center; justify-content:center; padding:12px; }
+.ficha { background:var(--blanco); border-radius:var(--radio); width:100%; max-width:460px;
+  max-height:92vh; max-height:92dvh; display:flex; flex-direction:column; overflow:hidden; }
+.ficha-cab { display:flex; align-items:center; gap:10px; padding:14px var(--lado); border-bottom:1px solid var(--borde); }
+.ficha-cab span { font-size:var(--fs-h3); font-weight:800; flex:1; line-height:1.2; }
+.ficha-cab button { width:44px; height:44px; border-radius:var(--pill); color:var(--texto-2); font-size:26px; }
+.ficha-cuerpo { overflow-y:auto; -webkit-overflow-scrolling:touch; }
+/* Carrusel: se desliza con el dedo y cada imagen se acomoda sola */
+.carrusel { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; }
+.carrusel::-webkit-scrollbar { display:none; }
+.carrusel figure { flex:0 0 100%; scroll-snap-align:center; padding:12px; }
+.carrusel img { width:100%; height:auto; max-height:40vh; object-fit:contain; border-radius:var(--radio-sm); }
+.carrusel figcaption { text-align:center; font-size:var(--fs-xs); font-weight:700; color:var(--texto-3);
+  text-transform:uppercase; letter-spacing:.06em; padding-top:8px; }
+.puntos { display:flex; justify-content:center; gap:8px; padding-bottom:12px; }
+.puntos i { width:8px; height:8px; border-radius:var(--pill); background:var(--borde); }
+.puntos i.on { background:var(--azul); width:22px; }
+.ficha-datos { padding:0 var(--lado) var(--lado); display:grid; gap:14px; }
+.ficha-precio { font-size:var(--fs-precio); font-weight:800; color:var(--azul-osc); }
+.ficha-bloque h4 { font-size:var(--fs-xs); font-weight:800; text-transform:uppercase; letter-spacing:.06em;
+  color:var(--texto-3); margin-bottom:4px; }
+.ficha-bloque p { font-size:var(--fs-sm); color:var(--texto-2); }
+.ficha-pie { padding:var(--lado); border-top:1px solid var(--borde); }
 
 /* ---------- BOTÓN AGREGAR / CONTADOR ---------- */
 .acciones { margin-top:auto; }
@@ -219,7 +238,7 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
   position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); z-index:41;
   width:calc(100% - 24px); max-width:460px;
   max-height:86vh; max-height:86dvh;
-  background:var(--fondo); border-radius:20px; overflow:hidden;
+  background:var(--blanco); border-radius:20px; overflow:hidden;
   display:flex; flex-direction:column; box-shadow:0 10px 40px rgba(0,0,0,.3);
 }
 .panel-cab { display:flex; align-items:center; gap:12px; padding:14px var(--lado);
@@ -268,8 +287,11 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
 .opcion.elegida { border-color:var(--azul); background:var(--azul-claro); color:var(--azul-osc); }
 .opciones.mal .opcion { border-color:#DC2626; }
 .campo .error { font-size:var(--fs-xs); color:#DC2626; font-weight:600; margin-top:6px; }
-.aviso-envio { font-size:var(--fs-xs); color:var(--texto-2); background:var(--gris);
-  border-radius:var(--radio-sm); padding:10px 12px; margin:12px 0; }
+/* Bloque de confianza, justo antes de mandar el pedido */
+.confianza { display:grid; gap:8px; background:var(--verde-claro); border:1px solid var(--verde-borde);
+  border-radius:var(--radio-sm); padding:12px 14px; margin:14px 0; }
+.confianza li { display:flex; align-items:flex-start; gap:8px; font-size:var(--fs-sm); font-weight:600; color:var(--texto-2); }
+.confianza .icono { width:20px; height:20px; color:var(--verde); flex-shrink:0; margin-top:1px; }
 .btn-pedido {
   display:flex; align-items:center; justify-content:center; gap:10px;
   width:100%; min-height:56px; border-radius:var(--radio-sm);
@@ -299,7 +321,8 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
 .nombre { font-size:15px; }
 .precio { font-size:21px; }
 .marca { font-size:11px; }
-.chips { display:none; }
+.chips { gap:6px; }
+.chips li { padding:5px 10px; font-size:13px; }
 .aviso-x2 { font-size:var(--fs-xs); padding:6px 10px; }
 .ver-tabla { font-size:var(--fs-xs); }
 .incluye { font-size:var(--fs-xs); }
@@ -340,6 +363,8 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   <symbol id="i-vitamina" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></symbol>
   <symbol id="i-hoja" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
   <symbol id="i-oferta" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
   <symbol id="i-arriba" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
   <symbol id="i-nuevo" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></symbol>
   <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
@@ -421,13 +446,15 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   <svg><use href="#i-lista"/></svg><span id="txtFlotante">Mi pedido</span><span class="globo" id="globo" hidden>0</span>
 </button>
 
-<!-- Visor de la tabla nutricional (se llena al abrirlo) -->
+<!-- Ficha del producto (se arma al abrirla) -->
 <div class="visor" id="visor" hidden>
-  <div class="visor-cab">
-    <span id="visorTitulo"></span>
-    <button type="button" id="visorCerrar" aria-label="Cerrar">×</button>
+  <div class="ficha">
+    <div class="ficha-cab">
+      <span id="visorTitulo"></span>
+      <button type="button" id="visorCerrar" aria-label="Cerrar">×</button>
+    </div>
+    <div class="ficha-cuerpo" id="visorImg"></div>
   </div>
-  <div class="visor-img" id="visorImg"></div>
 </div>
 
 <!-- Vuelve al menu de los 5 cuadros. Aparece solo al bajar. -->
@@ -467,11 +494,15 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
         <label for="inpNombre">Tu nombre <span>(opcional)</span></label>
         <input id="inpNombre" type="text" autocomplete="name" placeholder="Ej: María">
       </div>
-      <p class="aviso-envio">El delivery no está incluido: lo paga el cliente. Te decimos cuánto cuesta a tu zona por WhatsApp.</p>
+      <ul class="confianza">
+        <li><svg class="icono"><use href="#i-check"/></svg>No pagas nada en la web</li>
+        <li><svg class="icono"><use href="#i-check"/></svg>Delivery en Lima y provincias (lo paga el cliente)</li>
+        <li><svg class="icono"><use href="#i-check"/></svg>Yape, Plin, transferencia o tarjeta</li>
+      </ul>
       <a class="btn-pedido" id="btnPedido" target="_blank" rel="noopener" href="#">
         <svg><use href="#i-wa"/></svg>HACER PEDIDO</a>
       <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
-      <p class="nota-pie">No pagas nada ahora.</p>
+      <p class="nota-pie">Te confirmamos stock y el costo del envío por WhatsApp.</p>
     </div>
 
     <div id="pieVacio">
@@ -501,36 +532,36 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
 const WHATSAPP = "51961841069";
 
 const P = {
-  liquidaFresa: { marca:"Bari&Nutrition", nombre:"Proteína Líquida Fresa 1 L", precio:200, bn:true,
-    foto:"img/cat-liquid-fresa.jpg", tabla:"img/tn-liquid-protein.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar"] },
-  liquidaMaracumango: { marca:"Bari&Nutrition", nombre:"Proteína Líquida Maracumango 1 L", precio:200, bn:true,
-    foto:"img/cat-liquid-maracumango.jpg", tabla:"img/tn-liquid-protein.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar"] },
-  wheyVainilla: { marca:"Bari&Nutrition", nombre:"Proteína en Polvo Vainilla 1.5 kg", precio:280, bn:true,
-    foto:"img/cat-whey-vainilla.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Deslactosada","0% azúcar"] },
-  wheyChocolate: { marca:"Bari&Nutrition", nombre:"Proteína en Polvo Chocolate 1.5 kg", precio:280, bn:true,
-    foto:"img/cat-whey-chocolate.jpg", chips:["30 g proteína","Deslactosada","0% azúcar"] },
-  isolate: { marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295, nuevo:true,
-    foto:"img/nf-whey-isolate.jpg", tabla:"img/tn-nutrifath.jpg", chips:["23 g proteína","Sabor neutro","Sin lactosa"] },
+  liquidaFresa: { uso:"Tomar 30 ml por porción. Hasta 33 porciones por envase de 1 litro.", marca:"Bari&Nutrition", nombre:"Proteína Líquida Fresa 1 L", precio:200, bn:true,
+    foto:"img/cat-liquid-fresa.jpg", tabla:"img/tn-liquid-protein.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar","Sin gluten"] },
+  liquidaMaracumango: { uso:"Tomar 30 ml por porción. Hasta 33 porciones por envase de 1 litro.", marca:"Bari&Nutrition", nombre:"Proteína Líquida Maracumango 1 L", precio:200, bn:true,
+    foto:"img/cat-liquid-maracumango.jpg", tabla:"img/tn-liquid-protein.jpg", chips:["20 g proteína","Sin lactosa","Lista para tomar","Sin gluten"] },
+  wheyVainilla: { uso:"Disolver 3 scoops (48 g) en 250 ml de agua o leche.", marca:"Bari&Nutrition", nombre:"Proteína en Polvo Vainilla 1.5 kg", precio:280, bn:true,
+    foto:"img/cat-whey-vainilla.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
+  wheyChocolate: { uso:"Disolver 3 scoops (48 g) en 250 ml de agua o leche.", marca:"Bari&Nutrition", nombre:"Proteína en Polvo Chocolate 1.5 kg", precio:280, bn:true,
+    foto:"img/cat-whey-chocolate.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
+  isolate: { uso:"Vía oral. Adultos: 1 porción (25 g, 1 cuchara) al día disuelta en 200-300 ml de agua.", marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295, nuevo:true,
+    foto:"img/nf-whey-isolate.jpg", tabla:"img/tn-nutrifath.jpg", chips:["23 g proteína","Sin lactosa","Sin gluten","Sabor neutro"] },
 
   /* multivit: su foto de tabla dice "90 gomitas por envase" y el envase
      dice 120. No se pone hasta que el proveedor mande la etiqueta nueva. */
-  multivit: { marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150, bn:true,
-    foto:"img/cat-gomita-multivit.jpg", chips:["120 gomitas","Multisabor","Sin azúcar añadida"] },
-  b12: { marca:"Bari&Nutrition", nombre:"B12 + Ácido Fólico en Gomitas — 90 und", precio:150, bn:true,
+  multivit: { uso:"4 gomitas al día.", marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150, bn:true,
+    foto:"img/cat-gomita-multivit.jpg", chips:["120 gomitas","23 vitaminas","Sin azúcar añadida"] },
+  b12: { uso:"3 gomitas masticables al día.", marca:"Bari&Nutrition", nombre:"B12 + Ácido Fólico en Gomitas — 90 und", precio:150, bn:true,
     foto:"img/cat-gomita-b12.jpg", tabla:"img/tn-b12.jpg", chips:["90 gomitas","Sabor piña","Sin azúcar añadida"] },
-  hierro: { marca:"Bari&Nutrition", nombre:"Hierro 45 mg + Vitamina C en Gomitas — 30 und", precio:150, bn:true,
+  hierro: { uso:"1 gomita masticable al día. Vía oral.", marca:"Bari&Nutrition", nombre:"Hierro 45 mg + Vitamina C en Gomitas — 30 und", precio:150, bn:true,
     foto:"img/cat-gomita-hierro.jpg", tabla:"img/tn-hierro.jpg", chips:["45 mg hierro","Con vitamina C","Sabor naranja"] },
-  biotina: { marca:"Bari&Nutrition", nombre:"Biotina 10,000 mcg en Gomitas — 90 und", precio:150, bn:true,
+  biotina: { uso:"2 gomitas al día, preferiblemente con una comida. No exceder la dosis recomendada.", marca:"Bari&Nutrition", nombre:"Biotina 10,000 mcg en Gomitas — 90 und", precio:150, bn:true,
     foto:"img/cat-gomita-biotina.jpg", tabla:"img/tn-biotina.jpg", chips:["10,000 mcg","90 gomitas","Sabor durazno"] },
-  bfBayas: { marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas", precio:280,
-    foto:"img/cat-bf-bayas.jpg", tabla:"img/tn-bf-multivit.jpg", chips:["120 tabletas","Masticables","1 al día"] },
-  bfTropical: { marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Tropical — 120 tabletas", precio:280,
-    foto:"img/cat-bf-tropical.jpg", tabla:"img/tn-bf-multivit.jpg", chips:["120 tabletas","Masticables","1 al día"] },
+  bfBayas: { uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.", marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Bayas Mixtas — 120 tabletas", precio:280,
+    foto:"img/cat-bf-bayas.jpg", tabla:"img/tn-bf-multivit.jpg", chips:["120 tabletas","Masticables","Sin gluten","1 al día"] },
+  bfTropical: { uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.", marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Tropical — 120 tabletas", precio:280,
+    foto:"img/cat-bf-tropical.jpg", tabla:"img/tn-bf-multivit.jpg", chips:["120 tabletas","Masticables","Sin gluten","1 al día"] },
 
-  colageno: { marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150, bn:true, nuevo:true,
-    foto:"img/cat-colageno-bn.jpg", chips:["Con calcio + vitamina D","Sabor arándano","500 g"] },
-  fibra: { marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85, bn:true,
-    foto:"img/cat-fibra.jpg", tabla:"img/tn-fibra.jpg", chips:["320 g","A base de maíz","Rápida absorción"] }
+  colageno: { uso:"Seguir el modo de preparación del envase. La cantidad que te corresponde la define tu médico o tu nutricionista.", marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150, bn:true, nuevo:true,
+    foto:"img/cat-colageno-bn.jpg", chips:["Calcio + vitamina D","Sabor arándano","500 g"] },
+  fibra: { uso:"1 scoop (5 g) al día disuelto en agua o bebida de preferencia.", marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85, bn:true,
+    foto:"img/cat-fibra.jpg", tabla:"img/tn-fibra.jpg", chips:["320 g","A base de maíz","Sin azúcar"] }
 };
 
 /* Qué producto va en cada sección (un mismo producto puede repetirse) */
@@ -676,6 +707,11 @@ function deshacer() {
 function refrescar(id) {
   document.querySelectorAll('.tarjeta[data-id="' + id + '"] .acciones')
     .forEach(el => { el.innerHTML = acciones(id); });
+  /* Si la ficha esta abierta, su boton se actualiza igual */
+  if (!visor.hidden) {
+    const cont = document.querySelector("#visorImg .acciones");
+    if (cont) cont.innerHTML = acciones(id);
+  }
   /* Las tarjetas de oferta muestran cuanto lleva de esa familia */
   const go = document.getElementById("grillaOfertas");
   if (go) go.innerHTML = OFERTAS_X2.map((of, i) => tarjetaOferta(i)).join("");
@@ -699,7 +735,7 @@ function tarjeta(id) {
   const p = P[id];
   const sello = p.nuevo ? '<span class="sello">Nuevo</span>' : "";
   const chips = p.chips
-    ? '<ul class="chips">' + p.chips.slice(0, 3).map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>'
+    ? '<ul class="chips">' + p.chips.slice(0, 4).map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>'
     : "";
   /* Aviso de la oferta x2: se arma solo desde OFERTAS_X2 */
   const of = ofertaDe(id);
@@ -708,9 +744,8 @@ function tarjeta(id) {
       ' <b>(ahorras ' + soles(P[of.ids[0]].precio * 2 - of.precioPar) + ')</b></div>'
     : "";
   /* La foto de la tabla se carga solo cuando la tocan */
-  const tabla = p.tabla
-    ? '<button type="button" class="ver-tabla" data-tabla="' + id + '">Ver tabla nutricional</button>'
-    : "";
+  const tabla = '<button type="button" class="ver-ficha" data-tabla="' + id + '">' +
+    '<svg class="icono"><use href="#i-lupa"/></svg>Ver detalle</button>';
   return '<article class="tarjeta" data-id="' + id + '">' +
     '<div class="foto"><img src="' + esc(p.foto) + '" alt="' + esc(p.nombre) + '" loading="lazy" width="400" height="300">' + sello + '</div>' +
     '<div class="info">' +
@@ -917,14 +952,39 @@ document.addEventListener("keydown", e => {
 const visor = document.getElementById("visor");
 function abrirTabla(id) {
   const p = P[id];
-  if (!p || !p.tabla) return;
+  if (!p) return;
+  /* Las imagenes se crean recien aqui: no pesan para quien no abre la ficha */
+  const fotos = [{ src:p.foto, pie:"Producto" }];
+  if (p.tabla) fotos.push({ src:p.tabla, pie:"Tabla nutricional" });
+
   document.getElementById("visorTitulo").textContent = p.nombre;
-  /* La imagen se crea recién aquí: así no pesa para quien no la abre */
   document.getElementById("visorImg").innerHTML =
-    '<img src="' + esc(p.tabla) + '" alt="Tabla nutricional de ' + esc(p.nombre) + '">';
+    '<div class="carrusel" id="carrusel">' +
+      fotos.map(f => '<figure><img src="' + esc(f.src) + '" alt="' + esc(p.nombre) + '">' +
+        '<figcaption>' + f.pie + '</figcaption></figure>').join("") +
+    '</div>' +
+    (fotos.length > 1
+      ? '<div class="puntos" id="puntos">' + fotos.map((f, i) => '<i class="' + (i ? "" : "on") + '"></i>').join("") + '</div>'
+      : "") +
+    '<div class="ficha-datos">' +
+      '<div class="ficha-precio">' + soles(p.precio) + '</div>' +
+      (p.chips ? '<ul class="chips">' + p.chips.map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>' : "") +
+      (p.uso ? '<div class="ficha-bloque"><h4>Modo de uso</h4><p>' + esc(p.uso) + '</p></div>' : "") +
+      '<div class="ficha-bloque"><h4>Importante</h4><p>Consumir únicamente bajo indicación de su médico o nutricionista.</p></div>' +
+      '<div class="acciones">' + acciones(id) + '</div>' +
+    '</div>';
+
+  /* Los puntos siguen el desplazamiento del carrusel */
+  const car = document.getElementById("carrusel"), pts = document.getElementById("puntos");
+  if (car && pts) {
+    car.addEventListener("scroll", () => {
+      const i = Math.round(car.scrollLeft / car.clientWidth);
+      [...pts.children].forEach((p2, j) => p2.classList.toggle("on", j === i));
+    }, { passive: true });
+  }
   visor.hidden = false;
   document.body.classList.add("bloqueado");
-  if (typeof gtag === "function") gtag("event", "ver_tabla", { producto: p.nombre });
+  if (typeof gtag === "function") gtag("event", "ver_ficha", { producto: p.nombre });
 }
 function cerrarTabla() {
   visor.hidden = true;
