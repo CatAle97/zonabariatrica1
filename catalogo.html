@@ -372,6 +372,7 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
   border-radius:var(--radio-sm); padding:12px 14px; margin:14px 0; }
 .confianza li { display:flex; align-items:flex-start; gap:8px; font-size:var(--fs-sm); font-weight:600; color:var(--texto-2); }
 .confianza .icono { width:20px; height:20px; color:var(--verde); flex-shrink:0; margin-top:1px; }
+#formPedido .campo:last-of-type { margin-bottom:20px; }
 .btn-pedido {
   display:flex; align-items:center; justify-content:center; gap:10px;
   width:100%; min-height:56px; border-radius:var(--radio-sm);
@@ -617,13 +618,13 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
         <p class="error" id="errZona" hidden>Completa este dato para calcular tu envío.</p>
       </div>
       <div class="campo">
-        <label for="inpNombre">Tu nombre <span>(opcional)</span></label>
+        <label for="inpNombre">Nombre</label>
         <input id="inpNombre" type="text" autocomplete="name" placeholder="Ej: María">
+        <p class="error" id="errNombre" hidden>Escribe tu nombre para registrar el pedido.</p>
       </div>
       <a class="btn-pedido" id="btnPedido" target="_blank" rel="noopener" href="#">
         <svg><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
       <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
-      <p class="nota-pie"><svg class="icono"><use href="#i-escudo"/></svg>Compra segura con el respaldo de Zona Bariátrica</p>
     </div>
 
     <div id="pieVacio">
@@ -1041,13 +1042,10 @@ function pintarPanel() {
      papelera para quitarlo y su subtotal. */
   lista.innerHTML = ids.map(id => {
     const p = P[id];
-    const chips = (p.chips || []).slice(0, 2).map(c => '<li>' + esc(c) + '</li>').join("");
     return '<div class="linea">' +
       imagenHTML(p.foto, "", 'width="150" height="150" loading="lazy"') +
       '<div class="linea-datos">' +
         '<div class="linea-nombre">' + esc(p.nombre) + '</div>' +
-        (chips ? '<ul class="linea-chips">' + chips + '</ul>' : "") +
-        '<div class="linea-precio">' + soles(p.precio) + '</div>' +
       '</div>' +
       '<div class="linea-lado">' +
         '<button type="button" class="linea-borrar" data-sacar="' + id + '" aria-label="Quitar del pedido">' +
@@ -1057,7 +1055,6 @@ function pintarPanel() {
           '<span>' + cot[id] + '</span>' +
           '<button type="button" class="mas" data-mas="' + id + '" aria-label="Agregar uno">+</button>' +
         '</div>' +
-        '<div class="linea-subtotal"><span>Subtotal</span><b>' + soles(p.precio * cot[id]) + '</b></div>' +
       '</div>' +
     '</div>';
   }).join("");
@@ -1142,6 +1139,10 @@ function anotar() {
   if (datos.zona) {
     inpZona.classList.remove("mal");
     document.getElementById("errZona").hidden = true;
+  }
+  if (datos.nombre) {
+    inpNombre.classList.remove("mal");
+    document.getElementById("errNombre").hidden = true;
   }
   document.getElementById("btnPedido").href = mensajeWA();
 }
@@ -1278,6 +1279,13 @@ document.addEventListener("click", e => {
       inpZona.classList.add("mal");
       document.getElementById("errZona").hidden = false;
       inpZona.focus();
+      return;
+    }
+    if (!datos.nombre) {
+      e.preventDefault();
+      inpNombre.classList.add("mal");
+      document.getElementById("errNombre").hidden = false;
+      inpNombre.focus();
       return;
     }
     if (typeof gtag === "function") {
