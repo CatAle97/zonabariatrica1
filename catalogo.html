@@ -132,6 +132,7 @@ body.bloqueado .btn-arriba { display:none; }
   overflow:hidden; box-shadow:var(--sombra); display:flex; flex-direction:column;
 }
 .foto { position:relative; aspect-ratio:4 / 3; background:var(--blanco); border-bottom:1px solid var(--borde); }
+.foto picture { display:block; width:100%; height:100%; }
 .foto img { width:100%; height:100%; object-fit:contain; padding:12px; }
 .sello {
   position:absolute; top:12px; left:12px; padding:6px 12px; border-radius:var(--pill);
@@ -180,6 +181,7 @@ body.bloqueado .btn-arriba { display:none; }
 .carrusel { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; }
 .carrusel::-webkit-scrollbar { display:none; }
 .carrusel figure { flex:0 0 100%; scroll-snap-align:center; padding:12px; }
+.carrusel picture { display:block; }
 .carrusel img { width:100%; height:auto; max-height:40vh; object-fit:contain; border-radius:var(--radio-sm); }
 .carrusel figcaption { text-align:center; font-size:var(--fs-xs); font-weight:700; color:var(--texto-3);
   text-transform:uppercase; letter-spacing:.06em; padding-top:8px; }
@@ -251,7 +253,8 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
   padding:var(--lado); padding-bottom:calc(var(--lado) + env(safe-area-inset-bottom)); }
 .panel-lista { display:grid; gap:12px; margin-bottom:16px; }
 .linea { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio-sm); padding:12px; display:flex; gap:12px; }
-.linea img { width:64px; height:64px; object-fit:contain; flex-shrink:0; }
+.linea picture { flex-shrink:0; }
+.linea img { width:64px; height:64px; object-fit:contain; }
 .linea-datos { flex:1; min-width:0; }
 .linea-nombre { font-size:var(--fs-sm); font-weight:700; line-height:1.3; }
 .linea-precio { font-size:var(--fs-sm); color:var(--texto-2); margin-top:2px; }
@@ -514,6 +517,9 @@ footer p { font-size:var(--fs-xs); color:var(--texto-3); }
   </div>
 </section>
 
+<!-- Catálogo de la tienda: de aquí salen los PRECIOS, para que
+     no existan dos listas de precios que se desincronicen. -->
+<script src="zb-catalogo.js"></script>
 <script>
 /* =========================================================
    PRODUCTOS
@@ -564,6 +570,35 @@ const P = {
     foto:"img/cat-fibra.jpg", tabla:"img/tn-fibra.jpg", chips:["320 g","A base de maíz","Sin azúcar"] }
 };
 
+/* =========================================================
+   LOS PRECIOS LOS MANDA LA TIENDA
+   ---------------------------------------------------------
+   Cada producto de aquí apunta a su id en zb-catalogo.js, que
+   es el archivo que usa la tienda. Si allá cambia un precio,
+   aquí cambia solo. El precio escrito arriba queda como
+   respaldo por si ese archivo no carga.
+   ========================================================= */
+const IDS_TIENDA = {
+  liquidaFresa:"bi3", liquidaMaracumango:"bi4", wheyVainilla:"bi1", wheyChocolate:"bi2",
+  isolate:"nf1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
+  bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9"
+};
+const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4"];
+
+(function sincronizarPrecios() {
+  const lista = window.ZB_CATALOGO;
+  if (!lista || !lista.length) { console.warn("No cargó zb-catalogo.js: se usan los precios de respaldo"); return; }
+  const tienda = {};
+  lista.forEach(p => { tienda[p.id] = p; });
+  const sueltos = [];
+  Object.keys(IDS_TIENDA).forEach(clave => {
+    const p = tienda[IDS_TIENDA[clave]];
+    if (p && typeof p.precio === "number") P[clave].precio = p.precio;
+    else sueltos.push(clave);
+  });
+  if (sueltos.length) console.warn("Sin precio en la tienda: " + sueltos.join(", "));
+})();
+
 /* Qué producto va en cada sección (un mismo producto puede repetirse) */
 const CATALOGO = {
   proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate"],
@@ -595,6 +630,18 @@ const OFERTAS_X2 = [
 
 /* Descuento por cantidad — mismos tramos que la tienda */
 const DESCUENTO_BN = [ { min:4, desc:40 }, { min:3, desc:25 }, { min:2, desc:15 } ];
+
+/* El precio de cada oferta x2 también lo manda la tienda */
+(function sincronizarOfertas() {
+  const lista = window.ZB_CATALOGO;
+  if (!lista || !lista.length) return;
+  const tienda = {};
+  lista.forEach(p => { tienda[p.id] = p; });
+  OFERTAS_X2.forEach((of, i) => {
+    const p = tienda[IDS_OFERTAS[i]];
+    if (p && typeof p.precio === "number") of.precioPar = p.precio;
+  });
+})();
 
 /* Busca si un producto tiene oferta por llevar 2 (para avisarlo en su tarjeta) */
 function ofertaDe(id) { return OFERTAS_X2.find(o => o.ids.includes(id)); }
@@ -719,6 +766,15 @@ function refrescar(id) {
 }
 
 /* ---------- TARJETAS ---------- */
+/* Las fotos se sirven en WebP (pesan la mitad) con el JPG de
+   respaldo para celulares viejos que no lo soportan. Si el .webp
+   no existiera, el navegador usa el .jpg sin romper nada. */
+function imagenHTML(src, alt, extra) {
+  const webp = src.replace(/.jpg$/, ".webp");
+  return '<picture><source srcset="' + esc(webp) + '" type="image/webp">' +
+    '<img src="' + esc(src) + '" alt="' + esc(alt) + '" ' + (extra || "") + '></picture>';
+}
+
 function acciones(id) {
   const n = cot[id] || 0;
   if (!n) return '<button class="btn-agregar" type="button" data-mas="' + id + '">' +
@@ -747,7 +803,7 @@ function tarjeta(id) {
   const tabla = '<button type="button" class="ver-ficha" data-tabla="' + id + '">' +
     '<svg class="icono"><use href="#i-lupa"/></svg>Ver detalle</button>';
   return '<article class="tarjeta" data-id="' + id + '">' +
-    '<div class="foto"><img src="' + esc(p.foto) + '" alt="' + esc(p.nombre) + '" loading="lazy" width="400" height="300">' + sello + '</div>' +
+    '<div class="foto">' + imagenHTML(p.foto, p.nombre, 'loading="lazy" decoding="async" width="520" height="520"') + sello + '</div>' +
     '<div class="info">' +
       '<div class="marca">' + esc(p.marca) + '</div>' +
       '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
@@ -767,7 +823,7 @@ function tarjetaOferta(i) {
     : "";
   return `<article class="tarjeta oferta">
     <div class="cinta">Ahorras ${soles(antes - of.precioPar)}</div>
-    <div class="foto"><img src="${esc(of.foto)}" alt="${esc(of.nombre)}" loading="lazy" width="400" height="300"></div>
+    <div class="foto">${imagenHTML(of.foto, of.nombre, 'loading="lazy" decoding="async"')}</div>
     <div class="info">
       <h3 class="nombre">${esc(of.nombre)}</h3>
       <div class="precios"><span class="precio">${soles(of.precioPar)}</span><span class="antes">Antes ${soles(antes)}</span></div>
@@ -839,7 +895,7 @@ function pintarPanel() {
   lista.innerHTML = ids.map(id => {
     const p = P[id];
     return '<div class="linea">' +
-      '<img src="' + esc(p.foto) + '" alt="" width="64" height="64">' +
+      imagenHTML(p.foto, "", 'width="64" height="64" loading="lazy"') +
       '<div class="linea-datos">' +
         '<div class="linea-nombre">' + esc(p.nombre) + '</div>' +
         '<div class="linea-precio">' + soles(p.precio) + ' c/u</div>' +
@@ -923,6 +979,36 @@ function anotar() {
 }
 inpZona.addEventListener("input", anotar);
 inpNombre.addEventListener("input", anotar);
+
+/* Al escribir, el teclado del celular tapa la mitad de abajo.
+   Dos cosas lo evitan: la ventana se encoge a lo que queda
+   visible, y el campo se centra dentro de ella. */
+[inpZona, inpNombre].forEach(campo => {
+  campo.addEventListener("focus", () => {
+    setTimeout(() => campo.scrollIntoView({ block: "center", behavior: "smooth" }), 350);
+  });
+});
+/* Con el teclado abierto la ventana util se parte a la mitad. La
+   ventana deja de estar centrada y se pega arriba, que es la zona
+   que sigue viendose, y se encoge a ese alto. */
+function ajustarPorTeclado() {
+  const vv = window.visualViewport;
+  if (!vv || panel.hidden) return;
+  const hayTeclado = vv.height < window.innerHeight * 0.75;
+  if (hayTeclado) {
+    panel.style.top = "8px";
+    panel.style.transform = "translateX(-50%)";
+    panel.style.maxHeight = Math.round(vv.height - 16) + "px";
+  } else {
+    panel.style.top = "";
+    panel.style.transform = "";
+    panel.style.maxHeight = "";
+  }
+}
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", ajustarPorTeclado);
+  window.visualViewport.addEventListener("scroll", ajustarPorTeclado);
+}
 document.querySelectorAll(".opcion").forEach(b => {
   b.addEventListener("click", () => elegirZona(b.dataset.zona, b.dataset.zona !== datos.tipo));
 });
@@ -936,7 +1022,7 @@ function pintarTodo() { pintarCatalogo(); pintarPanel(); pintarFlotante(); }
 /* ---------- Abrir y cerrar el panel ---------- */
 const panel = document.getElementById("panel"), fondo = document.getElementById("fondoPanel");
 function abrir() { pintarPanel(); panel.hidden = false; fondo.hidden = false; document.body.classList.add("bloqueado"); }
-function cerrar() { panel.hidden = true; fondo.hidden = true; document.body.classList.remove("bloqueado"); }
+function cerrar() { panel.style.top = ""; panel.style.transform = ""; panel.style.maxHeight = ""; panel.hidden = true; fondo.hidden = true; document.body.classList.remove("bloqueado"); }
 document.getElementById("btnFlotante").addEventListener("click", abrir);
 document.getElementById("btnCerrar").addEventListener("click", cerrar);
 document.getElementById("btnLimpiar").addEventListener("click", limpiar);
@@ -960,7 +1046,8 @@ function abrirTabla(id) {
   document.getElementById("visorTitulo").textContent = p.nombre;
   document.getElementById("visorImg").innerHTML =
     '<div class="carrusel" id="carrusel">' +
-      fotos.map(f => '<figure><img src="' + esc(f.src) + '" alt="' + esc(p.nombre) + '">' +
+      fotos.map(f => '<figure>' +
+        (f.pie === "Producto" ? imagenHTML(f.src, p.nombre, "") : '<img src="' + esc(f.src) + '" alt="Tabla nutricional de ' + esc(p.nombre) + '">') +
         '<figcaption>' + f.pie + '</figcaption></figure>').join("") +
     '</div>' +
     (fotos.length > 1
