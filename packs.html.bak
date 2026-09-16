@@ -41,18 +41,14 @@
     {"@type": "ListItem", "position": 3, "item": {"@type": "Product", "name": "Pack Proteína en Polvo + Vitaminas", "image": "https://zonabariatrica.com/img/bn-pack-polvo-vitaminas.jpg", "description": "Proteína en polvo, gomitas multivitamínicas, gomitas hierro + vit C y gomitas B12 + ácido fólico.", "brand": {"@type": "Brand", "name": "Bari&Nutrition"}, "offers": {"@type": "Offer", "price": "672", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
     {"@type": "ListItem", "position": 4, "item": {"@type": "Product", "name": "Pack Energía y Cabello", "image": "https://zonabariatrica.com/img/bn-pack-energia-cabello.jpg", "description": "Gomitas de biotina, multivitamínico, hierro + vit C y B12 + ácido fólico. Para quienes experimentan pérdida de cabello.", "brand": {"@type": "Brand", "name": "Bari&Nutrition"}, "offers": {"@type": "Offer", "price": "552", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
     {"@type": "ListItem", "position": 5, "item": {"@type": "Product", "name": "Pack Suplementación Completa", "image": "https://zonabariatrica.com/img/bn-pack-suplementacion-completa.jpg", "description": "El pack más completo de Bari&Nutrition: proteína líquida, proteína en polvo, biotina, multivitamínico, hierro, B12 y fibra.", "brand": {"@type": "Brand", "name": "Bari&Nutrition"}, "offers": {"@type": "Offer", "price": "1060", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 6, "item": {"@type": "Product", "name": "Pack Completo LVL", "image": "https://zonabariatrica.com/img/lvl-pack-completo.jpg", "description": "Proteína en polvo 1kg, colágeno hidrolizado 500g, fibra manzana verde 200g.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "389", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 7, "item": {"@type": "Product", "name": "Pack Proteína + Colágeno", "image": "https://zonabariatrica.com/img/lvl-pack-prot-colageno.jpg", "description": "Proteína en polvo HIGH ISO 1kg, colágeno hidrolizado SKINFINITY 500g.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "309", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 8, "item": {"@type": "Product", "name": "Pack Proteína + Fibra", "image": "https://zonabariatrica.com/img/lvl-pack-prot-fibra.jpg", "description": "Proteína en polvo HIGH ISO 1kg, fibra manzana verde 200g.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "269", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 9, "item": {"@type": "Product", "name": "Pack Colágeno + Fibra", "image": "https://zonabariatrica.com/img/lvl-pack-colageno-fibra.jpg", "description": "Colágeno hidrolizado SKINFINITY 500g, fibra manzana verde 200g.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "179", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 10, "item": {"@type": "Product", "name": "Pack Doble Fibra", "image": "https://zonabariatrica.com/img/lvl-pack-doble-fibra.jpg", "description": "Dos potes de fibra manzana verde (200g c/u). Ideal para el cuidado intestinal.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "149", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 11, "item": {"@type": "Product", "name": "Pack Doble Colágeno", "image": "https://zonabariatrica.com/img/lvl-pack-doble-colageno.jpg", "description": "Dos potes de colágeno hidrolizado SKINFINITY (500g c/u).", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "209", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 12, "item": {"@type": "Product", "name": "Pack 2 Proteínas", "image": "https://zonabariatrica.com/img/lvl-pack-2proteinas.jpg", "description": "Proteína chocolate 1kg, proteína vainilla 1kg. Ambos sabores para variar.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "399", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 13, "item": {"@type": "Product", "name": "2 Proteínas en Polvo (Whey)", "image": "https://zonabariatrica.com/img/bn-whey-vainilla.jpg", "description": "Promo de julio: 2 Whey Protein de 1.5kg. 30g de proteína por servicio, sin gluten, sin lactosa y 0% azúcar. Sabores vainilla o chocolate.", "brand": {"@type": "Brand", "name": "Bari&Nutrition"}, "offers": {"@type": "Offer", "price": "520", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 14, "item": {"@type": "Product", "name": "Pack Doble Proteína Chocolate", "image": "https://zonabariatrica.com/img/lvl-pack-doble-choco.jpg", "description": "Proteína Chocolate 1kg x2.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "399", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 15, "item": {"@type": "Product", "name": "Pack Doble Proteína Vainilla", "image": "https://zonabariatrica.com/img/lvl-pack-doble-vainilla.jpg", "description": "Proteína Vainilla 1kg x2.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "399", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 16, "item": {"@type": "Product", "name": "Pack Balance Fit + Fibra", "image": "https://zonabariatrica.com/img/lvl-pack-balance-fibra.jpg", "description": "Batido Balance Fit 1kg , Fibra Manzana Verde 200g.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "269", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
-    {"@type": "ListItem", "position": 17, "item": {"@type": "Product", "name": "Pack Mini LVL", "image": "https://zonabariatrica.com/img/lvl-pack-mini.jpg", "description": "Presentaciones mini de los suplementos LVL Drink.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "89", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}}
+    {"@type": "ListItem", "position": 6, "item": {"@type": "Product", "name": "Pack Completo LVL", "image": "https://zonabariatrica.com/img/lvl-pack-completo.jpg", "description": "Proteína en polvo 1kg, colágeno hidrolizado 500g, fibra manzana verde 200g y shaker oficial.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "389", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
+    {"@type": "ListItem", "position": 7, "item": {"@type": "Product", "name": "Pack Proteína + Colágeno + Shaker", "image": "https://zonabariatrica.com/img/lvl-pack-prot-colageno.jpg", "description": "Proteína en polvo HIGH ISO 1kg, colágeno hidrolizado SKINFINITY 500g y shaker oficial LVL.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "309", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
+    {"@type": "ListItem", "position": 8, "item": {"@type": "Product", "name": "Pack Proteína + Fibra + Shaker", "image": "https://zonabariatrica.com/img/lvl-pack-prot-fibra.jpg", "description": "Proteína en polvo HIGH ISO 1kg, fibra manzana verde 200g y shaker oficial LVL.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "269", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
+    {"@type": "ListItem", "position": 9, "item": {"@type": "Product", "name": "Pack Colágeno + Fibra + Shaker", "image": "https://zonabariatrica.com/img/lvl-pack-colageno-fibra.jpg", "description": "Colágeno hidrolizado SKINFINITY 500g, fibra manzana verde 200g y shaker oficial LVL.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "179", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
+    {"@type": "ListItem", "position": 10, "item": {"@type": "Product", "name": "Pack Doble Fibra + Shaker", "image": "https://zonabariatrica.com/img/lvl-pack-doble-fibra.jpg", "description": "Dos potes de fibra manzana verde (200g c/u) y shaker oficial LVL. Ideal para el cuidado intestinal.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "149", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
+    {"@type": "ListItem", "position": 11, "item": {"@type": "Product", "name": "Pack Doble Colágeno + Shaker", "image": "https://zonabariatrica.com/img/lvl-pack-doble-colageno.jpg", "description": "Dos potes de colágeno hidrolizado SKINFINITY (500g c/u) y shaker oficial LVL.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "209", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
+    {"@type": "ListItem", "position": 12, "item": {"@type": "Product", "name": "Pack 2 Proteínas + Shaker", "image": "https://zonabariatrica.com/img/lvl-pack-2proteinas.jpg", "description": "Proteína chocolate 1kg, proteína vainilla 1kg y shaker oficial LVL. Ambos sabores para variar.", "brand": {"@type": "Brand", "name": "LVL Drink"}, "offers": {"@type": "Offer", "price": "399", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}},
+    {"@type": "ListItem", "position": 13, "item": {"@type": "Product", "name": "2 Proteínas en Polvo (Whey)", "image": "https://zonabariatrica.com/img/bn-whey-vainilla.jpg", "description": "Promo de julio: 2 Whey Protein de 1.5kg. 30g de proteína por servicio, sin gluten, sin lactosa y 0% azúcar. Sabores vainilla o chocolate.", "brand": {"@type": "Brand", "name": "Bari&Nutrition"}, "offers": {"@type": "Offer", "price": "520", "priceCurrency": "PEN", "availability": "https://schema.org/InStock", "url": "https://zonabariatrica.com/packs"}}}
   ]
 }
 </script>
@@ -378,13 +374,13 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
   </div>
 
   <div class="card">
-    <img src="img/lvl-pack-completo.jpg" alt="Pack completo LVL — proteína, colágeno y fibra" loading="lazy">
+    <img src="img/lvl-pack-completo.jpg" alt="Pack completo LVL — proteína, colágeno, fibra y shaker" loading="lazy">
     <div class="card-body">
       <div class="marca">LVL Drink</div>
       <h2>Pack Completo LVL</h2>
-      <p class="desc">El pack más completo de LVL Drink. Proteína, colágeno y fibra en un solo pedido.</p>
-      <p class="incluye"><strong>Incluye:</strong> Proteína whey en polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g</p>
-      <div class="precio">S/ 389 <span class="antes">S/ 397</span><span class="ahorro">Ahorras S/ 8</span></div>
+      <p class="desc">El pack más completo de LVL Drink. Proteína, colágeno, fibra y shaker oficial en un solo pedido.</p>
+      <p class="incluye"><strong>Incluye:</strong> Proteína whey en polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g · Shaker oficial</p>
+      <div class="precio">S/ 389 <span class="antes">S/ 477</span><span class="ahorro">Ahorras S/ 88</span></div>
       <div class="acciones">
         <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Completo%20LVL%20(S%2F%20389)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/producto/pack-completo-lvl">Ver producto</a>
@@ -393,147 +389,91 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
   </div>
 
   <div class="card">
-    <img src="img/lvl-pack-prot-colageno.jpg" alt="Pack proteína y colágeno LVL" loading="lazy">
+    <img src="img/lvl-pack-prot-colageno.jpg" alt="Pack proteína y colágeno LVL con shaker" loading="lazy">
     <div class="card-body">
       <div class="marca">LVL Drink</div>
-      <h2>Pack Proteína + Colágeno</h2>
-      <p class="desc">Proteína en Polvo HIGH ISO + Colágeno Hidrolizado SKINFINITY.</p>
-      <p class="incluye"><strong>Incluye:</strong> Proteína whey en polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g</p>
-      <div class="precio">S/ 309 <span class="antes">S/ 318</span><span class="ahorro">Ahorras S/ 9</span></div>
+      <h2>Pack Proteína + Colágeno + Shaker</h2>
+      <p class="desc">Proteína en Polvo HIGH ISO + Colágeno Hidrolizado SKINFINITY + Shaker oficial LVL.</p>
+      <p class="incluye"><strong>Incluye:</strong> Proteína whey en polvo 1kg (sabor a elegir) · Colágeno Hidrolizado 500g · Shaker oficial</p>
+      <div class="precio">S/ 309 <span class="antes">S/ 368</span><span class="ahorro">Ahorras S/ 59</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20%2B%20Col%C3%A1geno%20(S%2F%20309)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20%2B%20Col%C3%A1geno%20%2B%20Shaker%20(S%2F%20309)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/producto/pack-proteina-colageno-shaker">Ver producto</a>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <img src="img/lvl-pack-prot-fibra.jpg" alt="Pack proteína y fibra LVL" loading="lazy">
+    <img src="img/lvl-pack-prot-fibra.jpg" alt="Pack proteína y fibra LVL con shaker" loading="lazy">
     <div class="card-body">
       <div class="marca">LVL Drink</div>
-      <h2>Pack Proteína + Fibra</h2>
-      <p class="desc">Proteína en Polvo HIGH ISO + Fibra Manzana Verde.</p>
-      <p class="incluye"><strong>Incluye:</strong> Proteína whey en polvo 1kg (sabor a elegir) · Fibra Manzana Verde 200g</p>
-      <div class="precio">S/ 269 <span class="antes">S/ 288</span><span class="ahorro">Ahorras S/ 19</span></div>
+      <h2>Pack Proteína + Fibra + Shaker</h2>
+      <p class="desc">Proteína en Polvo HIGH ISO + Fibra Manzana Verde + Shaker oficial LVL.</p>
+      <p class="incluye"><strong>Incluye:</strong> Proteína whey en polvo 1kg (sabor a elegir) · Fibra Manzana Verde 200g · Shaker oficial</p>
+      <div class="precio">S/ 269 <span class="antes">S/ 349</span><span class="ahorro">Ahorras S/ 80</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20%2B%20Fibra%20(S%2F%20269)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Prote%C3%ADna%20%2B%20Fibra%20%2B%20Shaker%20(S%2F%20269)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/producto/pack-proteina-fibra-shaker">Ver producto</a>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <img src="img/lvl-pack-colageno-fibra.jpg" alt="Pack colágeno y fibra LVL" loading="lazy">
+    <img src="img/lvl-pack-colageno-fibra.jpg" alt="Pack colágeno y fibra LVL con shaker" loading="lazy">
     <div class="card-body">
       <div class="marca">LVL Drink</div>
-      <h2>Pack Colágeno + Fibra</h2>
-      <p class="desc">Colágeno Hidrolizado SKINFINITY + Fibra Manzana Verde.</p>
-      <p class="incluye"><strong>Incluye:</strong> Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g</p>
-      <div class="precio">S/ 179 <span class="antes">S/ 188</span><span class="ahorro">Ahorras S/ 9</span></div>
+      <h2>Pack Colágeno + Fibra + Shaker</h2>
+      <p class="desc">Colágeno Hidrolizado SKINFINITY + Fibra Manzana Verde + Shaker oficial LVL.</p>
+      <p class="incluye"><strong>Incluye:</strong> Colágeno Hidrolizado 500g · Fibra Manzana Verde 200g · Shaker oficial</p>
+      <div class="precio">S/ 179 <span class="antes">S/ 238</span><span class="ahorro">Ahorras S/ 59</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Col%C3%A1geno%20%2B%20Fibra%20(S%2F%20179)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Col%C3%A1geno%20%2B%20Fibra%20%2B%20Shaker%20(S%2F%20179)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/producto/pack-colageno-fibra-shaker">Ver producto</a>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <img src="img/lvl-pack-doble-fibra.jpg" alt="Pack doble fibra LVL" loading="lazy">
+    <img src="img/lvl-pack-doble-fibra.jpg" alt="Pack doble fibra LVL con shaker" loading="lazy">
     <div class="card-body">
       <div class="marca">LVL Drink</div>
-      <h2>Pack Doble Fibra</h2>
-      <p class="desc">Dos potes de Fibra Manzana Verde. Ideal para el cuidado intestinal.</p>
-      <p class="incluye"><strong>Incluye:</strong> Fibra Manzana Verde x2 (200g c/u)</p>
-      <div class="precio">S/ 149 <span class="antes">S/ 158</span><span class="ahorro">Ahorras S/ 9</span></div>
+      <h2>Pack Doble Fibra + Shaker</h2>
+      <p class="desc">Dos potes de Fibra Manzana Verde + Shaker oficial LVL. Ideal para el cuidado intestinal.</p>
+      <p class="incluye"><strong>Incluye:</strong> Fibra Manzana Verde x2 (200g c/u) · Shaker oficial</p>
+      <div class="precio">S/ 149 <span class="antes">S/ 218</span><span class="ahorro">Ahorras S/ 69</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Doble%20Fibra%20(S%2F%20149)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Doble%20Fibra%20%2B%20Shaker%20(S%2F%20149)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/producto/pack-doble-fibra-shaker">Ver producto</a>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <img src="img/lvl-pack-doble-colageno.jpg" alt="Pack doble colágeno LVL" loading="lazy">
+    <img src="img/lvl-pack-doble-colageno.jpg" alt="Pack doble colágeno LVL con shaker" loading="lazy">
     <div class="card-body">
       <div class="marca">LVL Drink</div>
-      <h2>Pack Doble Colágeno</h2>
-      <p class="desc">Dos potes de Colágeno Hidrolizado SKINFINITY.</p>
-      <p class="incluye"><strong>Incluye:</strong> Colágeno Hidrolizado x2 (500g c/u)</p>
-      <div class="precio">S/ 209 <span class="antes">S/ 218</span><span class="ahorro">Ahorras S/ 9</span></div>
+      <h2>Pack Doble Colágeno + Shaker</h2>
+      <p class="desc">Dos potes de Colágeno Hidrolizado SKINFINITY + Shaker oficial LVL.</p>
+      <p class="incluye"><strong>Incluye:</strong> Colágeno Hidrolizado x2 (500g c/u) · Shaker oficial</p>
+      <div class="precio">S/ 209 <span class="antes">S/ 258</span><span class="ahorro">Ahorras S/ 49</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Doble%20Col%C3%A1geno%20(S%2F%20209)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Doble%20Col%C3%A1geno%20%2B%20Shaker%20(S%2F%20209)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/producto/pack-doble-colageno-shaker">Ver producto</a>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <img src="img/lvl-pack-2proteinas.jpg" alt="Pack 2 proteínas LVL chocolate y vainilla" loading="lazy">
+    <img src="img/lvl-pack-2proteinas.jpg" alt="Pack 2 proteínas LVL chocolate y vainilla con shaker" loading="lazy">
     <div class="card-body">
       <div class="marca">LVL Drink</div>
-      <h2>Pack 2 Proteínas</h2>
-      <p class="desc">Proteína Chocolate + Proteína Vainilla. Ambos sabores para variar.</p>
-      <p class="incluye"><strong>Incluye:</strong> Proteína Chocolate 1kg · Proteína Vainilla 1kg</p>
-      <div class="precio">S/ 399 <span class="antes">S/ 418</span><span class="ahorro">Ahorras S/ 19</span></div>
+      <h2>Pack 2 Proteínas + Shaker</h2>
+      <p class="desc">Proteína Chocolate + Proteína Vainilla + Shaker oficial. Ambos sabores para variar.</p>
+      <p class="incluye"><strong>Incluye:</strong> Proteína Chocolate 1kg · Proteína Vainilla 1kg · Shaker oficial</p>
+      <div class="precio">S/ 399 <span class="antes">S/ 479</span><span class="ahorro">Ahorras S/ 80</span></div>
       <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%202%20Prote%C3%ADnas%20(S%2F%20399)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
+        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%202%20Prote%C3%ADnas%20%2B%20Shaker%20(S%2F%20399)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
         <a class="btn-tienda" href="/producto/pack-2-proteinas-shaker">Ver producto</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="img/lvl-pack-doble-choco.jpg" alt="Pack doble proteína LVL sabor chocolate" loading="lazy">
-    <div class="card-body">
-      <div class="marca">LVL Drink</div>
-      <h2>Pack Doble Proteína Chocolate</h2>
-      <p class="desc">Dos envases de Proteína en Polvo HIGH ISO sabor chocolate, 1kg cada uno.</p>
-      <p class="incluye"><strong>Incluye:</strong> Proteína Chocolate 1kg x2</p>
-      <div class="precio">S/ 399 <span class="antes">S/ 418</span><span class="ahorro">Ahorras S/ 19</span></div>
-      <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Doble%20Prote%C3%ADna%20Chocolate%20(S%2F%20399)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="img/lvl-pack-doble-vainilla.jpg" alt="Pack doble proteína LVL sabor vainilla" loading="lazy">
-    <div class="card-body">
-      <div class="marca">LVL Drink</div>
-      <h2>Pack Doble Proteína Vainilla</h2>
-      <p class="desc">Dos envases de Proteína en Polvo HIGH ISO sabor vainilla, 1kg cada uno.</p>
-      <p class="incluye"><strong>Incluye:</strong> Proteína Vainilla 1kg x2</p>
-      <div class="precio">S/ 399 <span class="antes">S/ 418</span><span class="ahorro">Ahorras S/ 19</span></div>
-      <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Doble%20Prote%C3%ADna%20Vainilla%20(S%2F%20399)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="img/lvl-pack-balance-fibra.jpg" alt="Pack batido Balance Fit y fibra de manzana LVL" loading="lazy">
-    <div class="card-body">
-      <div class="marca">LVL Drink</div>
-      <h2>Pack Balance Fit + Fibra</h2>
-      <p class="desc">Batido Balance Fit para el control de peso más un pote de Fibra Manzana Verde.</p>
-      <p class="incluye"><strong>Incluye:</strong> Batido Balance Fit 1kg · Fibra Manzana Verde 200g</p>
-      <div class="precio">S/ 269 <span class="antes">S/ 288</span><span class="ahorro">Ahorras S/ 19</span></div>
-      <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Balance%20Fit%20%2B%20Fibra%20(S%2F%20269)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="img/lvl-pack-mini.jpg" alt="Pack mini LVL Drink con presentaciones de prueba" loading="lazy">
-    <div class="card-body">
-      <div class="marca">LVL Drink</div>
-      <h2>Pack Mini LVL</h2>
-      <p class="desc">Presentaciones mini de los suplementos LVL, para probar los sabores antes de decidirse por el envase grande.</p>
-      <p class="incluye"><strong>Incluye:</strong> Presentaciones mini de los suplementos LVL Drink</p>
-      <div class="precio">S/ 89 <span class="antes">S/ 169</span><span class="ahorro">Ahorras S/ 80</span></div>
-      <div class="acciones">
-        <a class="btn-wa" href="https://wa.me/51961841069?text=Hola%2C%20me%20interesa%20el%20Pack%20Mini%20LVL%20(S%2F%2089)" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span>Pedir por WhatsApp</span></a>
       </div>
     </div>
   </div>
@@ -619,7 +559,7 @@ footer .links { display:flex; gap:var(--s-5); justify-content:center; flex-wrap:
     <li><strong>Reduce el riesgo de quedarte a medias.</strong> Es habitual empezar solo con la proteína y descubrir semanas después que faltaban los micronutrientes.</li>
     <li><strong>Ayuda a la constancia</strong>, que es donde más se falla: tener todo en casa evita la interrupción entre pedido y pedido.</li>
     <li><strong>Un solo envío</strong> en lugar de varios pedidos sueltos a lo largo del mes.</li>
-    <li><strong>Ahorra llevando más de uno</strong>, útil para preparar la proteína en polvo fuera de casa.</li>
+    <li><strong>Varios incluyen shaker</strong>, útil para preparar la proteína en polvo fuera de casa.</li>
   </ul>
   <div class="zb-nota">
     Ningún pack sirve para todas las etapas. Si tienes dudas sobre cuál te corresponde,
