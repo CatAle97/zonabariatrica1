@@ -741,7 +741,19 @@ const P = {
   colageno: { uso:"Seguir el modo de preparación del envase. La cantidad que te corresponde la define tu médico o tu nutricionista.", marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150, bn:true, nuevo:true,
     foto:"img/cat-colageno-bn.jpg", tabla:"img/tn-colageno-bn.jpg", chips:["Calcio + vitamina D","Sabor arándano","500 g"] },
   fibra: { uso:"1 scoop (5 g) disuelto en 250 ml de agua, una vez al día.", marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85, bn:true,
-    foto:"img/cat-fibra.jpg", tabla:"img/tn-fibra.jpg", chips:["320 g","A base de maíz","Sin azúcar"] }
+    foto:"img/cat-fibra.jpg", tabla:"img/tn-fibra.jpg", chips:["320 g","A base de maíz","Sin azúcar"] },
+
+  /* LVL Drink — entraron al catálogo el 16-09-2026. Ya estaban en
+     la tienda (ids li1–li4), aquí se les dio su tarjeta. NO llevan
+     bn:true: la marca no entra en el descuento por cantidad B&N. */
+  lvlVainilla: { sabor:"Vainilla", uso:"Disolver 1 scoop (40 g) en 250 ml de agua. Consumir una vez al día.", marca:"LVL Drink", nombre:"Proteína HIGH ISO Vainilla 1 kg", precio:209,
+    foto:"img/lvl-proteina-vainilla.jpg", tabla:"img/tn-lvl-proteina-vainilla.jpg", chips:["27 g proteína","Stevia natural","Sin gluten","Sin azúcares"] },
+  lvlChocolate: { sabor:"Chocolate", uso:"Disolver 1 scoop (40 g) en 250 ml de agua. Consumir una vez al día.", marca:"LVL Drink", nombre:"Proteína HIGH ISO Chocolate 1 kg", precio:209,
+    foto:"img/lvl-proteina-chocolate.jpg", tabla:"img/tn-lvl-proteina-chocolate.jpg", chips:["27 g proteína","100% cacao","Stevia natural","Sin gluten"] },
+  lvlColageno: { uso:"Disolver 1 scoop (12 g) en 250 ml de agua al día. Se recomienda consumir en ayunas o antes de acostarse.", marca:"LVL Drink", nombre:"Colágeno SKINFINITY 500 g", precio:109,
+    foto:"img/lvl-colageno.jpg", tabla:"img/tn-lvl-colageno.jpg", chips:["9 g colágeno","10,000 mcg biotina","Camu camu","Sabor arándano"] },
+  lvlFibra: { uso:"Disolver 1 scoop (10 g) en 250 ml de agua al día.", marca:"LVL Drink", nombre:"Fibra GET OUT Manzana Verde 200 g", precio:79,
+    foto:"img/lvl-fibra.jpg", tabla:"img/tn-lvl-fibra.jpg", chips:["6 g fibra","Fibra inulina","Manzana verde","Sin azúcares"] }
 };
 
 /* =========================================================
@@ -755,7 +767,8 @@ const P = {
 const IDS_TIENDA = {
   liquidaFresa:"bi3", liquidaMaracumango:"bi4", wheyVainilla:"bi1", wheyChocolate:"bi2",
   isolate:"nf1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
-  bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9"
+  bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9",
+  lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4"
 };
 const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4"];
 
@@ -775,9 +788,9 @@ const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4"];
 
 /* Qué producto va en cada sección (un mismo producto puede repetirse) */
 const CATALOGO = {
-  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate"],
+  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","lvlVainilla","lvlChocolate"],
   vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical"],
-  fibraColageno: ["colageno","fibra"],
+  fibraColageno: ["colageno","fibra","lvlColageno","lvlFibra"],
   /* Ofertas = los productos que tienen precio especial llevando 2.
      Sale de OFERTAS_X2, asi no hay dos listas que mantener. */
   nuevos: ["isolate","colageno"]
@@ -942,10 +955,16 @@ function refrescar(id) {
 /* Las fotos se sirven en WebP (pesan la mitad) con el JPG de
    respaldo para celulares viejos que no lo soportan. Si el .webp
    no existiera, el navegador usa el .jpg sin romper nada. */
+/* Fotos que todavía no tienen su versión .webp: si se les pone el
+   <source> el navegador pide un archivo que no existe (404) antes de
+   caer al .jpg. Cuando se generen los .webp, se borra de esta lista. */
+const SIN_WEBP = /\/(lvl-|tn-lvl-)/;
+
 function imagenHTML(src, alt, extra) {
+  const img = '<img src="' + esc(src) + '" alt="' + esc(alt) + '" ' + (extra || "") + '>';
+  if (SIN_WEBP.test(src)) return '<picture>' + img + '</picture>';
   const webp = src.replace(/.jpg$/, ".webp");
-  return '<picture><source srcset="' + esc(webp) + '" type="image/webp">' +
-    '<img src="' + esc(src) + '" alt="' + esc(alt) + '" ' + (extra || "") + '></picture>';
+  return '<picture><source srcset="' + esc(webp) + '" type="image/webp">' + img + '</picture>';
 }
 
 function acciones(id) {
