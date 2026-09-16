@@ -747,13 +747,13 @@ const P = {
      la tienda (ids li1–li4), aquí se les dio su tarjeta. NO llevan
      bn:true: la marca no entra en el descuento por cantidad B&N. */
   lvlVainilla: { sabor:"Vainilla", uso:"Disolver 1 scoop (40 g) en 250 ml de agua. Consumir una vez al día.", marca:"LVL Drink", nombre:"Proteína HIGH ISO Vainilla 1 kg", precio:209,
-    foto:"img/lvl-proteina-vainilla.jpg", tabla:"img/tn-lvl-proteina-vainilla.jpg", chips:["27 g proteína","Stevia natural","Sin gluten","Sin azúcares"] },
+    foto:"img/cat-lvl-proteina-vainilla.jpg", tabla:"img/tn-lvl-proteina-vainilla.jpg", chips:["27 g proteína","Stevia natural","Sin gluten","Sin azúcares"] },
   lvlChocolate: { sabor:"Chocolate", uso:"Disolver 1 scoop (40 g) en 250 ml de agua. Consumir una vez al día.", marca:"LVL Drink", nombre:"Proteína HIGH ISO Chocolate 1 kg", precio:209,
-    foto:"img/lvl-proteina-chocolate.jpg", tabla:"img/tn-lvl-proteina-chocolate.jpg", chips:["27 g proteína","100% cacao","Stevia natural","Sin gluten"] },
+    foto:"img/cat-lvl-proteina-chocolate.jpg", tabla:"img/tn-lvl-proteina-chocolate.jpg", chips:["27 g proteína","100% cacao","Stevia natural","Sin gluten"] },
   lvlColageno: { uso:"Disolver 1 scoop (12 g) en 250 ml de agua al día. Se recomienda consumir en ayunas o antes de acostarse.", marca:"LVL Drink", nombre:"Colágeno SKINFINITY 500 g", precio:109,
-    foto:"img/lvl-colageno.jpg", tabla:"img/tn-lvl-colageno.jpg", chips:["9 g colágeno","10,000 mcg biotina","Camu camu","Sabor arándano"] },
+    foto:"img/cat-lvl-colageno.jpg", tabla:"img/tn-lvl-colageno.jpg", chips:["9 g colágeno","10,000 mcg biotina","Camu camu","Sabor arándano"] },
   lvlFibra: { uso:"Disolver 1 scoop (10 g) en 250 ml de agua al día.", marca:"LVL Drink", nombre:"Fibra GET OUT Manzana Verde 200 g", precio:79,
-    foto:"img/lvl-fibra.jpg", tabla:"img/tn-lvl-fibra.jpg", chips:["6 g fibra","Fibra inulina","Manzana verde","Sin azúcares"] }
+    foto:"img/cat-lvl-fibra.jpg", tabla:"img/tn-lvl-fibra.jpg", chips:["6 g fibra","Fibra inulina","Manzana verde","Sin azúcares"] }
 };
 
 /* =========================================================
@@ -958,7 +958,7 @@ function refrescar(id) {
 /* Fotos que todavía no tienen su versión .webp: si se les pone el
    <source> el navegador pide un archivo que no existe (404) antes de
    caer al .jpg. Cuando se generen los .webp, se borra de esta lista. */
-const SIN_WEBP = /\/(lvl-|tn-lvl-)/;
+const SIN_WEBP = /\/(cat-lvl-|tn-lvl-)/;
 
 function imagenHTML(src, alt, extra) {
   const img = '<img src="' + esc(src) + '" alt="' + esc(alt) + '" ' + (extra || "") + '>';
