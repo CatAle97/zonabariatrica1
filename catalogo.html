@@ -753,7 +753,17 @@ const P = {
   lvlColageno: { uso:"Disolver 1 scoop (12 g) en 250 ml de agua al día. Se recomienda consumir en ayunas o antes de acostarse.", marca:"LVL Drink", nombre:"Colágeno SKINFINITY 500 g", precio:109,
     foto:"img/cat-lvl-colageno.jpg", tabla:"img/tn-lvl-colageno.jpg", chips:["9 g colágeno","10,000 mcg biotina","Camu camu","Sabor arándano"] },
   lvlFibra: { uso:"Disolver 1 scoop (10 g) en 250 ml de agua al día.", marca:"LVL Drink", nombre:"Fibra GET OUT Manzana Verde 200 g", precio:79,
-    foto:"img/cat-lvl-fibra.jpg", tabla:"img/tn-lvl-fibra.jpg", chips:["6 g fibra","Fibra inulina","Manzana verde","Sin azúcares"] }
+    foto:"img/cat-lvl-fibra.jpg", tabla:"img/tn-lvl-fibra.jpg", chips:["6 g fibra","Fibra inulina","Manzana verde","Sin azúcares"] },
+
+  /* El único pack del catálogo. Va en la sección de Ofertas porque
+     tiene precio rebajado: precioAntes hace que la tarjeta se dibuje
+     con cinta de ahorro y precio tachado, igual que las ofertas x2.
+     La proteína es chocolate fija, no se elige sabor. */
+  packLvl: { marca:"LVL Drink", nombre:"Pack Completo LVL", precio:389, precioAntes:477,
+    incluye:"Proteína Chocolate 1 kg · Colágeno Hidrolizado 500 g · Fibra Manzana Verde 200 g",
+    uso:"Mezclar la proteína, el colágeno o la fibra en 250 ml de agua, jugo o smoothie, según preferencia. Consumir en diferentes momentos del día.",
+    foto:"img/cat-lvl-pack-completo.jpg",
+    chips:["3 productos","27 g proteína","Sin azúcares añadidos","Apto bariátrico"] }
 };
 
 /* =========================================================
@@ -768,7 +778,8 @@ const IDS_TIENDA = {
   liquidaFresa:"bi3", liquidaMaracumango:"bi4", wheyVainilla:"bi1", wheyChocolate:"bi2",
   isolate:"nf1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
   bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9",
-  lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4"
+  lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4",
+  packLvl:"lp1"
 };
 const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4"];
 
@@ -780,7 +791,11 @@ const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4"];
   const sueltos = [];
   Object.keys(IDS_TIENDA).forEach(clave => {
     const p = tienda[IDS_TIENDA[clave]];
-    if (p && typeof p.precio === "number") P[clave].precio = p.precio;
+    if (p && typeof p.precio === "number") {
+      P[clave].precio = p.precio;
+      /* Los packs además traen su precio de lista (precioN en la tienda) */
+      if (P[clave].precioAntes && typeof p.precioN === "number") P[clave].precioAntes = p.precioN;
+    }
     else sueltos.push(clave);
   });
   if (sueltos.length) console.warn("Sin precio en la tienda: " + sueltos.join(", "));
@@ -791,6 +806,9 @@ const CATALOGO = {
   proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","lvlVainilla","lvlChocolate"],
   vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical"],
   fibraColageno: ["colageno","fibra","lvlColageno","lvlFibra"],
+  /* Packs con precio rebajado: se dibujan en la sección de Ofertas,
+     después de las ofertas x2 automáticas. */
+  packs: ["packLvl"],
   /* Ofertas = los productos que tienen precio especial llevando 2.
      Sale de OFERTAS_X2, asi no hay dos listas que mantener. */
   nuevos: ["isolate","colageno"]
@@ -983,7 +1001,14 @@ function tarjeta(id) {
   const p = P[id];
   const sello = p.nuevo ? '<span class="sello">Nuevo</span>' : "";
   const lupa = '<span class="lupa"><svg class="icono"><use href="#i-lupa"/></svg></span>';
-  return '<article class="tarjeta" data-id="' + id + '">' +
+  /* Un pack con precioAntes se viste igual que una oferta x2:
+     borde verde, cinta de ahorro arriba y el precio de lista tachado. */
+  const esPack = typeof p.precioAntes === "number" && p.precioAntes > p.precio;
+  const cinta = esPack ? '<div class="cinta">Ahorras ' + soles(p.precioAntes - p.precio) + '</div>' : "";
+  const antes = esPack ? '<span class="antes">Antes ' + soles(p.precioAntes) + '</span>' : "";
+  const incluye = p.incluye ? '<div class="incluye">' + esc(p.incluye) + '</div>' : "";
+  return '<article class="tarjeta' + (esPack ? ' oferta' : '') + '" data-id="' + id + '">' +
+    cinta +
     '<div class="foto" data-abrir="' + id + '">' +
       imagenHTML(p.foto, p.nombre, 'loading="lazy" decoding="async" width="520" height="520"') + sello + lupa +
     '</div>' +
@@ -991,8 +1016,9 @@ function tarjeta(id) {
       '<div class="cabeza" data-abrir="' + id + '">' +
         '<div class="marca">' + esc(p.marca) + '</div>' +
         '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
-        '<div class="precios"><span class="precio">' + soles(p.precio) + '</span></div>' +
+        '<div class="precios"><span class="precio">' + soles(p.precio) + '</span>' + antes + '</div>' +
       '</div>' +
+      incluye +
       '<div class="acciones">' + acciones(id) + '</div>' +
     '</div></article>';
 }
@@ -1054,9 +1080,16 @@ function elegirSabor(i, pos, id) {
   pintarOfertas();
 }
 
+/* La sección de Ofertas lleva dos cosas: las ofertas x2 automáticas
+   y, después, los packs con precio rebajado (CATALOGO.packs). */
+function htmlOfertas() {
+  return OFERTAS_X2.map((of, i) => tarjetaOferta(i)).join("") +
+    (CATALOGO.packs || []).map(tarjeta).join("");
+}
+
 function pintarOfertas() {
   const go = document.getElementById("grillaOfertas");
-  if (go) go.innerHTML = OFERTAS_X2.map((of, i) => tarjetaOferta(i)).join("");
+  if (go) go.innerHTML = htmlOfertas();
 }
 
 function agregarOferta(i, ids) {
@@ -1069,7 +1102,7 @@ function agregarOferta(i, ids) {
 
 function pintarCatalogo() {
   const go = document.getElementById("grillaOfertas");
-  if (go) go.innerHTML = OFERTAS_X2.map((of, i) => tarjetaOferta(i)).join("");
+  if (go) go.innerHTML = htmlOfertas();
   document.querySelectorAll("[data-lista]").forEach(el => {
     el.innerHTML = (CATALOGO[el.dataset.lista] || []).map(tarjeta).join("");
   });
@@ -1309,6 +1342,7 @@ function abrirTabla(id) {
     '<div class="ficha-datos">' +
       '<div class="ficha-precio">' + soles(p.precio) + '</div>' +
       (p.chips ? '<ul class="chips">' + p.chips.map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>' : "") +
+      (p.incluye ? '<div class="ficha-bloque"><h4>Qué incluye</h4><p>' + esc(p.incluye) + '</p></div>' : "") +
       (p.uso ? '<div class="ficha-bloque"><h4>Modo de uso</h4><p>' + esc(p.uso) + '</p></div>' : "") +
       '<div class="ficha-bloque"><h4>Importante</h4><p>Consumir únicamente bajo indicación de su médico o nutricionista.</p></div>' +
       '<div class="acciones">' + acciones(id) + '</div>' +
