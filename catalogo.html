@@ -743,27 +743,112 @@ const P = {
   fibra: { uso:"1 scoop (5 g) disuelto en 250 ml de agua, una vez al día.", marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85, bn:true,
     foto:"img/cat-fibra.jpg", tabla:"img/tn-fibra.jpg", chips:["320 g","A base de maíz","Sin azúcar"] },
 
-  /* LVL Drink — entraron al catálogo el 16-09-2026. Ya estaban en
-     la tienda (ids li1–li4), aquí se les dio su tarjeta. NO llevan
-     bn:true: la marca no entra en el descuento por cantidad B&N. */
-  lvlVainilla: { sabor:"Vainilla", uso:"Disolver 1 scoop (40 g) en 250 ml de agua. Consumir una vez al día.", marca:"LVL Drink", nombre:"Proteína HIGH ISO Vainilla 1 kg", precio:209,
-    foto:"img/cat-lvl-proteina-vainilla.jpg", tabla:"img/tn-lvl-proteina-vainilla.jpg", chips:["27 g proteína","Stevia natural","Sin gluten","Sin azúcares"] },
-  lvlChocolate: { sabor:"Chocolate", uso:"Disolver 1 scoop (40 g) en 250 ml de agua. Consumir una vez al día.", marca:"LVL Drink", nombre:"Proteína HIGH ISO Chocolate 1 kg", precio:209,
-    foto:"img/cat-lvl-proteina-chocolate.jpg", tabla:"img/tn-lvl-proteina-chocolate.jpg", chips:["27 g proteína","100% cacao","Stevia natural","Sin gluten"] },
-  lvlColageno: { uso:"Disolver 1 scoop (12 g) en 250 ml de agua al día. Se recomienda consumir en ayunas o antes de acostarse.", marca:"LVL Drink", nombre:"Colágeno SKINFINITY 500 g", precio:109,
-    foto:"img/cat-lvl-colageno.jpg", tabla:"img/tn-lvl-colageno.jpg", chips:["9 g colágeno","10,000 mcg biotina","Camu camu","Sabor arándano"] },
-  lvlFibra: { uso:"Disolver 1 scoop (10 g) en 250 ml de agua al día.", marca:"LVL Drink", nombre:"Fibra GET OUT Manzana Verde 200 g", precio:79,
-    foto:"img/cat-lvl-fibra.jpg", tabla:"img/tn-lvl-fibra.jpg", chips:["6 g fibra","Fibra inulina","Manzana verde","Sin azúcares"] },
+  /* =========================================================
+     LVL DRINK — catálogo completo, 16-09-2026
+     ---------------------------------------------------------
+     Fotos y datos tomados de la tienda del fabricante y llevados
+     al formato de la casa (620x620). Los textos están escritos
+     aquí, no copiados: una ficha igual a la del fabricante
+     compite contra nosotros en Google en vez de sumar.
 
-  /* El único pack del catálogo. Va en la sección de Ofertas porque
-     tiene precio rebajado: precioAntes hace que la tarjeta se dibuje
-     con cinta de ahorro y precio tachado, igual que las ofertas x2.
-     La proteína es chocolate fija, no se elige sabor. */
-  packLvl: { marca:"LVL Drink", nombre:"Pack Completo LVL", precio:389, precioAntes:477,
+     NINGUNO lleva bn:true: LVL no entra en el descuento por
+     cantidad de Bari&Nutrition.
+
+     PRECIOS: los 4 individuales y los packs que ya estaban en la
+     tienda conservan el precio de Zona Bariátrica; los productos
+     nuevos entran con el precio de venta de LVL.
+
+     precioAntes NO es el precio de lista de LVL, es la suma de lo
+     que cuestan esos mismos productos sueltos AQUÍ. Así el ahorro
+     que anuncia la tarjeta lo puede comprobar el cliente en esta
+     misma página.
+     ========================================================= */
+  lvlVainilla: { sabor:"Vainilla", uso:"Disolver 1 scoop (40 g) en 250 ml de agua. Consumir una vez al día.", marca:"LVL Drink", nombre:"Proteína HIGH ISO Vainilla 1 kg", precio:209,
+    foto:"img/cat-lvl-proteina-vainilla.jpg", tabla:"img/tn-lvl-proteina-vainilla.jpg", chips:["27 g proteína","25 porciones","Stevia natural","Sin gluten"] },
+  lvlChocolate: { sabor:"Chocolate", uso:"Disolver 1 scoop (40 g) en 250 ml de agua. Consumir una vez al día.", marca:"LVL Drink", nombre:"Proteína HIGH ISO Chocolate 1 kg", precio:209,
+    foto:"img/cat-lvl-proteina-chocolate.jpg", tabla:"img/tn-lvl-proteina-chocolate.jpg", chips:["27 g proteína","25 porciones","100% cacao","Sin gluten"] },
+  lvlBalanceFit: { sabor:"Vainilla francesa", uso:"Disolver 1 porción en 250 ml de agua. Consumir según indicación de tu equipo médico.", marca:"LVL Drink", nombre:"Batido Balance Fit Vainilla 1 kg", precio:209, nuevo:true,
+    foto:"img/cat-lvl-batido-para-el-control-de-peso.jpg", chips:["20 g proteína","Con fibra","Vitaminas y minerales","Sin azúcar añadida"] },
+  lvlMultivit: { uso:"Disolver 1 porción (10 g) en 250 ml de agua al día.", marca:"LVL Drink", nombre:"Multivitamínico Level Up 300 g", precio:109, nuevo:true,
+    foto:"img/cat-lvl-multivitaminico-energizante.jpg", chips:["30 porciones","12 kcal","Sabor arándano","Vitaminas y minerales"] },
+  lvlColageno: { uso:"Disolver 1 scoop (12 g) en 250 ml de agua al día. Se recomienda consumir en ayunas o antes de acostarse.", marca:"LVL Drink", nombre:"Colágeno SKINFINITY 500 g", precio:109,
+    foto:"img/cat-lvl-colageno-hidrolizado-biotina.jpg", tabla:"img/tn-lvl-colageno.jpg", chips:["12 g por servicio","41 porciones","10,000 mcg biotina","40 kcal"] },
+  lvlFibra: { uso:"Disolver 1 scoop (10 g) en 250 ml de agua al día.", marca:"LVL Drink", nombre:"Fibra GET OUT Manzana Verde 200 g", precio:79,
+    foto:"img/cat-lvl-fibra-manzana-verde.jpg", tabla:"img/tn-lvl-fibra.jpg", chips:["6 g fibra","20 porciones","27 kcal","Manzana verde"] },
+
+  /* --- Packs LVL. Todos van a la sección de Ofertas --- */
+  packLvl: { marca:"LVL Drink", nombre:"Pack Completo LVL Chocolate", precio:389, precioAntes:397,
     incluye:"Proteína Chocolate 1 kg · Colágeno Hidrolizado 500 g · Fibra Manzana Verde 200 g",
-    uso:"Mezclar la proteína, el colágeno o la fibra en 250 ml de agua, jugo o smoothie, según preferencia. Consumir en diferentes momentos del día.",
-    foto:"img/cat-lvl-pack-completo.jpg",
-    chips:["3 productos","27 g proteína","Sin azúcares añadidos","Apto bariátrico"] }
+    uso:"Mezclar la proteína, el colágeno o la fibra en 250 ml de agua. Consumir en diferentes momentos del día.",
+    foto:"img/cat-lvl-proteina-iso-chocolate-colageno-fibra.jpg",
+    chips:["3 productos","27 g proteína","Sin azúcares añadidos","Apto bariátrico"] },
+  packLvlVainilla: { marca:"LVL Drink", nombre:"Pack Completo LVL Vainilla", precio:389, precioAntes:397,
+    incluye:"Proteína Vainilla 1 kg · Colágeno Hidrolizado 500 g · Fibra Manzana Verde 200 g",
+    uso:"Mezclar la proteína, el colágeno o la fibra en 250 ml de agua. Consumir en diferentes momentos del día.",
+    foto:"img/cat-lvl-pack-proteina-vainilla-colageno-fibra.jpg",
+    chips:["3 productos","27 g proteína","Sin azúcares añadidos","Apto bariátrico"] },
+  packDobleMixto: { marca:"LVL Drink", nombre:"Pack Doble Proteína Chocolate + Vainilla", precio:399, precioAntes:418,
+    incluye:"Proteína Chocolate 1 kg · Proteína Vainilla 1 kg",
+    uso:"Disolver 1 scoop (40 g) en 250 ml de agua al día.",
+    foto:"img/cat-lvl-doble-proteina-iso.jpg",
+    chips:["2 kg en total","Ambos sabores","27 g proteína","Sin gluten"] },
+  packDobleChoco: { marca:"LVL Drink", nombre:"Pack Doble Proteína Chocolate", precio:399, precioAntes:418,
+    incluye:"Proteína Chocolate 1 kg x2",
+    uso:"Disolver 1 scoop (40 g) en 250 ml de agua al día.",
+    foto:"img/cat-lvl-doble-proteina-iso-chocolate.jpg",
+    chips:["2 kg en total","27 g proteína","100% cacao","Sin gluten"] },
+  packDobleVainilla: { marca:"LVL Drink", nombre:"Pack Doble Proteína Vainilla", precio:399, precioAntes:418,
+    incluye:"Proteína Vainilla 1 kg x2",
+    uso:"Disolver 1 scoop (40 g) en 250 ml de agua al día.",
+    foto:"img/cat-lvl-doble-proteina-iso-vainilla.jpg",
+    chips:["2 kg en total","27 g proteína","Stevia natural","Sin gluten"] },
+  packProtChocoColageno: { marca:"LVL Drink", nombre:"Pack Proteína Chocolate + Colágeno", precio:309, precioAntes:318,
+    incluye:"Proteína Chocolate 1 kg · Colágeno Hidrolizado 500 g",
+    uso:"Disolver cada uno en 250 ml de agua, en momentos distintos del día.",
+    foto:"img/cat-lvl-proteina-iso-chocolate-y-colageno-hidrolizado.jpg",
+    chips:["2 productos","27 g proteína","10,000 mcg biotina","Sin gluten"] },
+  packProtVainillaColageno: { marca:"LVL Drink", nombre:"Pack Proteína Vainilla + Colágeno", precio:309, precioAntes:318,
+    incluye:"Proteína Vainilla 1 kg · Colágeno Hidrolizado 500 g",
+    uso:"Disolver cada uno en 250 ml de agua, en momentos distintos del día.",
+    foto:"img/cat-lvl-pack-proteina-vainilla-colageno.jpg",
+    chips:["2 productos","27 g proteína","10,000 mcg biotina","Sin gluten"] },
+  packProtChocoFibra: { marca:"LVL Drink", nombre:"Pack Proteína Chocolate + Fibra", precio:269, precioAntes:288,
+    incluye:"Proteína Chocolate 1 kg · Fibra Manzana Verde 200 g",
+    uso:"Disolver cada uno en 250 ml de agua, en momentos distintos del día.",
+    foto:"img/cat-lvl-proteina-iso-chocolate-y-fibra.jpg",
+    chips:["2 productos","27 g proteína","6 g fibra","Sin gluten"] },
+  packProtVainillaFibra: { marca:"LVL Drink", nombre:"Pack Proteína Vainilla + Fibra", precio:269, precioAntes:288,
+    incluye:"Proteína Vainilla 1 kg · Fibra Manzana Verde 200 g",
+    uso:"Disolver cada uno en 250 ml de agua, en momentos distintos del día.",
+    foto:"img/cat-lvl-proteina-iso-vainilla-y-fibra.jpg",
+    chips:["2 productos","27 g proteína","6 g fibra","Sin gluten"] },
+  packBatidoFibra: { marca:"LVL Drink", nombre:"Pack Batido Balance Fit + Fibra", precio:269, precioAntes:288,
+    incluye:"Batido Balance Fit 1 kg · Fibra Manzana Verde 200 g",
+    uso:"Disolver cada uno en 250 ml de agua, en momentos distintos del día.",
+    foto:"img/cat-lvl-batido-control-de-peso-fibra.jpg",
+    chips:["2 productos","20 g proteína","6 g fibra","Sin azúcar añadida"] },
+  packDobleColageno: { marca:"LVL Drink", nombre:"Pack Doble Colágeno + Biotina", precio:209, precioAntes:218,
+    incluye:"Colágeno Hidrolizado 500 g x2",
+    uso:"Disolver 1 scoop (12 g) en 250 ml de agua al día.",
+    foto:"img/cat-lvl-pack-doble-colageno-hidrolizado.jpg",
+    chips:["1 kg en total","10,000 mcg biotina","Piel y cabello","40 kcal"] },
+  packColagenoFibra: { marca:"LVL Drink", nombre:"Pack Colágeno + Fibra", precio:179, precioAntes:188,
+    incluye:"Colágeno Hidrolizado 500 g · Fibra Manzana Verde 200 g",
+    uso:"Disolver cada uno en 250 ml de agua, en momentos distintos del día.",
+    foto:"img/cat-lvl-pack-colageno-fibra-suplemento.jpg",
+    chips:["2 productos","10,000 mcg biotina","6 g fibra","Sin azúcares"] },
+  packDobleFibra: { marca:"LVL Drink", nombre:"Pack Doble Fibra de Manzana", precio:149, precioAntes:158,
+    incluye:"Fibra Manzana Verde 200 g x2",
+    uso:"Disolver 1 scoop (10 g) en 250 ml de agua al día.",
+    foto:"img/cat-lvl-pack-doble-fibra.jpg",
+    chips:["400 g en total","6 g fibra","40 porciones","Manzana verde"] },
+  /* El único cuyo precioAntes viene del fabricante: es un muestrario
+     de presentaciones chicas, no tiene equivalente suelto aquí. */
+  packMini: { marca:"LVL Drink", nombre:"Pack Mini LVL", precio:89, precioAntes:169, nuevo:true,
+    incluye:"Presentaciones mini de los suplementos LVL, para probar los sabores antes de comprar el envase grande",
+    uso:"Cada presentación trae su propia indicación en el envase.",
+    foto:"img/cat-lvl-pack-mini-lvldrink.jpg",
+    chips:["Para probar","Varios sabores","Sin azúcar añadida","Con stevia"] }
 };
 
 /* =========================================================
@@ -779,7 +864,11 @@ const IDS_TIENDA = {
   isolate:"nf1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
   bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9",
   lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4",
-  packLvl:"lp1"
+  /* Packs que ya existían en la tienda. Los packs y productos LVL
+     nuevos no figuran allá todavía: su precio vive solo aquí. */
+  packLvl:"lp1", packProtChocoColageno:"lp2", packProtChocoFibra:"lp3",
+  packColagenoFibra:"lp4", packDobleFibra:"lp5", packDobleColageno:"lp6",
+  packDobleMixto:"lp7"
 };
 const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4"];
 
@@ -791,27 +880,29 @@ const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4"];
   const sueltos = [];
   Object.keys(IDS_TIENDA).forEach(clave => {
     const p = tienda[IDS_TIENDA[clave]];
-    if (p && typeof p.precio === "number") {
-      P[clave].precio = p.precio;
-      /* Los packs además traen su precio de lista (precioN en la tienda) */
-      if (P[clave].precioAntes && typeof p.precioN === "number") P[clave].precioAntes = p.precioN;
-    }
+    if (p && typeof p.precio === "number") P[clave].precio = p.precio;
     else sueltos.push(clave);
+    /* Ojo: precioAntes NO se trae de la tienda. Allá es el precio de
+       lista del fabricante; aquí es lo que cuestan esos productos
+       sueltos en esta página, para que el ahorro sea comprobable. */
   });
   if (sueltos.length) console.warn("Sin precio en la tienda: " + sueltos.join(", "));
 })();
 
 /* Qué producto va en cada sección (un mismo producto puede repetirse) */
 const CATALOGO = {
-  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","lvlVainilla","lvlChocolate"],
-  vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical"],
+  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","lvlVainilla","lvlChocolate","lvlBalanceFit"],
+  vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical","lvlMultivit"],
   fibraColageno: ["colageno","fibra","lvlColageno","lvlFibra"],
   /* Packs con precio rebajado: se dibujan en la sección de Ofertas,
-     después de las ofertas x2 automáticas. */
-  packs: ["packLvl"],
+     después de las ofertas x2 automáticas. De mayor a menor precio. */
+  packs: ["packDobleMixto","packDobleChoco","packDobleVainilla","packLvl","packLvlVainilla",
+          "packProtChocoColageno","packProtVainillaColageno","packProtChocoFibra",
+          "packProtVainillaFibra","packBatidoFibra","packDobleColageno","packColagenoFibra",
+          "packDobleFibra","packMini"],
   /* Ofertas = los productos que tienen precio especial llevando 2.
      Sale de OFERTAS_X2, asi no hay dos listas que mantener. */
-  nuevos: ["isolate","colageno"]
+  nuevos: ["lvlMultivit","lvlBalanceFit","packMini","isolate","colageno"]
 };
 
 /* =========================================================
