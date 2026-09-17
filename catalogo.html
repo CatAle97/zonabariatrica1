@@ -986,10 +986,14 @@ function refrescar(id) {
 /* Las fotos se sirven en WebP (pesan la mitad) con el JPG de
    respaldo para celulares viejos que no lo soportan. Si el .webp
    no existiera, el navegador usa el .jpg sin romper nada. */
-/* Fotos que todavía no tienen su versión .webp: si se les pone el
-   <source> el navegador pide un archivo que no existe (404) antes de
-   caer al .jpg. Cuando se generen los .webp, se borra de esta lista. */
-const SIN_WEBP = /\/(cat-lvl-|tn-lvl-)/;
+/* Fotos sin versión .webp al día.
+   Las fotos de producto (cat-*) se renovaron el 16-09-2026 y sus .webp
+   quedaron desactualizados: como el <source> gana sobre el <img>, el
+   navegador mostraría la foto vieja. Hasta que se regeneren los .webp
+   se sirve el .jpg directo, que sí está al día.
+   Los banners de categoría (cat-tile-*) no pasan por aquí: llevan su
+   <picture> escrito a mano en el HTML y su .webp sigue siendo válido. */
+const SIN_WEBP = /\/(cat-|tn-lvl-)/;
 
 function imagenHTML(src, alt, extra) {
   const img = '<img src="' + esc(src) + '" alt="' + esc(alt) + '" ' + (extra || "") + '>';
