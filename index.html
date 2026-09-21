@@ -635,21 +635,20 @@ a.nav-link {
   .hero-cta:hover, .hero-cta.hero-cta-centro:hover, .hero-cta.hero-cta-teal:hover { transform: none; }
 }
 
-/* Los banners de imagen suelen tener fondo claro, y las flechas y
-   puntos del slider son blancos: sobre blanco desaparecen. Cuando
-   el banner activo es una imagen, se oscurecen para que se vean. */
-.promo-slider:has(:is(.slide-hero,.slide-pro).active) .slider-arrow {
-  background: rgba(17,24,39,0.42); color: #fff;
+/* Flechas y puntos del slider, iguales para todos los banners:
+   flechas = botones circulares blancos con sombra suave; puntos = grises,
+   y el del banner activo es una píldora azul. */
+.promo-slider .slider-arrow {
+  background: #fff; color: #052A78; border: none;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  box-shadow: 0 4px 14px rgba(5,42,120,0.14), 0 1px 3px rgba(5,42,120,0.08);
 }
-.promo-slider:has(:is(.slide-hero,.slide-pro).active) .slider-arrow:hover {
-  background: rgba(17,24,39,0.62);
+.promo-slider .slider-arrow:hover {
+  background: #fff; color: #0A4BFF; transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 8px 22px rgba(5,42,120,0.2), 0 2px 4px rgba(5,42,120,0.08);
 }
-.promo-slider:has(:is(.slide-hero,.slide-pro).active) .slider-dot {
-  background: rgba(17,24,39,0.30);
-}
-.promo-slider:has(:is(.slide-hero,.slide-pro).active) .slider-dot.active {
-  background: var(--dark, #111827);
-}
+.promo-slider .slider-dot { background: #C9D2E2; }
+.promo-slider .slider-dot.active { background: #0A4BFF; width: 24px; }
 
 /* Banner que no es formato tira (más alto de lo que cabe): se muestra entero
    y centrado, y el espacio sobrante se rellena con el mismo banner ampliado
@@ -682,27 +681,30 @@ a.nav-link {
 .pro-inner {
   position: relative; z-index: 1; max-width: 1280px; margin: 0 auto;
   min-height: clamp(320px, 31.25vw, 600px);
-  display: grid; grid-template-columns: 42% 1fr; align-items: center;
-  gap: clamp(24px, 4vw, 72px); padding: clamp(24px, 3vw, 48px) clamp(64px, 6vw, 96px);
+  display: grid; grid-template-columns: 44% 1fr; align-items: center;
+  gap: clamp(24px, 4vw, 72px); padding: clamp(10px, 1vw, 18px) clamp(64px, 6vw, 96px);
 }
+/* Las botellas llenan casi todo el alto útil del banner. */
 .pro-botellas {
   position: relative; display: flex; justify-content: center; align-items: flex-end;
-  height: clamp(250px, 28vw, 530px);
+  height: clamp(296px, 29.4vw, 564px);
 }
 .pro-botellas img {
   height: 100%; width: auto; display: block; flex-shrink: 0;
   filter: drop-shadow(0 18px 22px rgba(5,42,120,0.14)) drop-shadow(0 3px 5px rgba(5,42,120,0.08));
 }
-/* Ligeramente superpuestas: la de maracumango va delante y un poco más baja. */
-.pro-botellas img + img { margin-left: -5%; height: 94%; position: relative; z-index: 1; }
-.pro-texto { max-width: 680px; }
-.pro-badge {
+/* Superpuestas 18 px: la de maracumango va delante y un poco más baja. */
+.pro-botellas img + img { margin-left: -18px; height: 94%; position: relative; z-index: 1; }
+/* El bloque de texto sube hasta 50 px para dejar aire debajo
+   (menos en pantallas chicas, donde no sobra espacio arriba). */
+.pro-texto { max-width: 680px; transform: translateY(calc(-1 * clamp(0px, (100vw - 1000px) * 0.055, 50px))); }
+.pro-pill {
   display: inline-flex; align-items: center; gap: 8px;
-  background: #EAF7EE; color: #1B7F33; border-radius: 999px;
-  padding: 7px 14px; font-size: clamp(12px, 0.8vw, 14px); font-weight: 600;
-  margin-bottom: clamp(14px, 1.4vw, 24px);
+  background: #fff; color: var(--pro-azul-osc); border: 1px solid #E1E8F5; border-radius: 999px;
+  padding: 6px 14px 6px 8px; font-size: clamp(12px, 0.78vw, 14px); font-weight: 600;
+  box-shadow: 0 2px 8px rgba(5,42,120,0.06); margin-bottom: clamp(14px, 1.3vw, 22px);
 }
-.pro-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--pro-verde); }
+.pro-pill svg { width: 18px; height: 18px; flex-shrink: 0; }
 .pro-titulo {
   font-size: clamp(30px, 3.7vw, 68px); line-height: 1.02; font-weight: 700;
   letter-spacing: -0.035em; color: var(--pro-azul-osc); margin: 0 0 clamp(12px, 1.2vw, 20px);
@@ -710,7 +712,12 @@ a.nav-link {
 .pro-titulo span { display: block; color: var(--pro-azul); white-space: nowrap; }
 .pro-sub {
   font-size: clamp(15px, 1.1vw, 20px); line-height: 1.55; color: #475A80;
-  margin: 0 0 clamp(20px, 2vw, 36px); max-width: 30ch;
+  margin: 0 0 clamp(14px, 1.2vw, 20px); max-width: 30ch;
+}
+.pro-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 clamp(20px, 1.9vw, 34px); padding: 0; list-style: none; }
+.pro-chips li {
+  background: #fff; border: 1px solid #DCE5F5; color: var(--pro-azul-osc); border-radius: 999px;
+  padding: 7px 14px; font-size: clamp(12px, 0.78vw, 14px); font-weight: 500; line-height: 1.2;
 }
 .pro-cta {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -720,16 +727,17 @@ a.nav-link {
   cursor: pointer; box-shadow: 0 8px 20px rgba(10,75,255,0.22);
   transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
 }
-.pro-cta svg { width: 18px; height: 18px; }
+.pro-cta svg { width: 19px; height: 19px; }
 .pro-cta:hover { background: var(--pro-azul-osc); box-shadow: 0 10px 24px rgba(5,42,120,0.28); transform: translateY(-1px); }
 /* Celular: botellas arriba, texto abajo, botón a todo el ancho, márgenes de 20px. */
 @media (max-width: 640px) {
   .pro-inner {
     grid-template-columns: 1fr; gap: 20px; min-height: 0;
-    padding: 24px 20px 48px;
+    padding: 20px 20px 48px;
   }
-  .pro-botellas { height: 230px; }
-  .pro-texto { max-width: none; }
+  .pro-botellas { height: 335px; }
+  .pro-botellas img + img { margin-left: -12px; }
+  .pro-texto { max-width: none; transform: none; }
   .pro-titulo { font-size: 32px; }
   .pro-sub { font-size: 15px; max-width: none; }
   .pro-cta { display: flex; width: 100%; padding: 16px 20px; }
@@ -4126,9 +4134,8 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
        sigue en img/banner-hero-1.jpg por si se quiere recuperar. -->
   <div class="slide slide-pro active">
     <svg class="pro-ondas" viewBox="0 0 1920 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <path fill="#EDF4FF" d="M0 600V372c160-58 330-40 470 30 150 76 300 88 450 22 190-84 330-78 520 6 170 75 320 70 480 8v162z"/>
-      <path fill="#EDF4FF" opacity=".7" d="M170 120c110-78 290-86 400 4 96 78 94 214 12 300-96 100-282 118-392 36C74 380 60 198 170 120z"/>
-      <path fill="#F5F9FF" d="M1500 0h420v210c-80 50-190 48-270-8-86-60-176-102-150-202z"/>
+      <path fill="#EDF4FF" d="M0 600V392c170-62 340-44 480 26 150 74 300 84 450 20 190-82 330-76 520 8 170 74 320 68 470 6v148z"/>
+      <path fill="#EDF4FF" d="M1480 0h440v236c-90 54-206 50-290-10-92-66-190-118-150-226z"/>
     </svg>
     <div class="pro-inner">
       <div class="pro-botellas">
@@ -4138,12 +4145,20 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
              alt="Liquid Protein Bari&amp;Nutrition sabor maracumango, 1 litro">
       </div>
       <div class="pro-texto">
-        <span class="pro-badge">20 g de proteína por porción</span>
+        <span class="pro-pill">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#28B446"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          20 g proteína por porción
+        </span>
         <h2 class="pro-titulo">PROTEÍNA<span>PARA CADA ETAPA</span></h2>
         <p class="pro-sub">Encuentra la proteína ideal para cada etapa de tu proceso bariátrico.</p>
+        <ul class="pro-chips">
+          <li>20 g proteína</li>
+          <li>Sin lactosa</li>
+          <li>Lista para tomar</li>
+        </ul>
         <button class="pro-cta" onclick="megaFiltrar('proteina',null)">
-          Ver proteínas
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          Comprar proteínas
         </button>
       </div>
     </div>
