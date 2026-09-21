@@ -6900,6 +6900,20 @@ function sliderMove(dir) { sliderGoTo(sliderIdx + dir); }
   }
 })();
 
+// Google Analytics: registra cada clic en un botón de los banners del
+// slider como evento "clic_banner", con el número del banner (1 = el
+// principal de proteína) y el texto del botón. Así se ve en GA4 qué
+// banner hace que la gente entre a comprar.
+document.querySelector('.promo-slider')?.addEventListener('click', e => {
+  const btn = e.target.closest('.pro-cta, .hero-cta, .hero-hotspot');
+  if (!btn || typeof gtag !== 'function') return;
+  const slides = [...document.querySelectorAll('.promo-slider .slide')];
+  gtag('event', 'clic_banner', {
+    banner_numero: slides.indexOf(btn.closest('.slide')) + 1,
+    boton_texto: (btn.textContent.trim() || btn.getAttribute('aria-label') || '').slice(0, 60)
+  });
+});
+
 function aplicarOrden() {
   const orden = document.getElementById('ordenSelect').value;
   const grids = document.querySelectorAll('#contenido .grid');
