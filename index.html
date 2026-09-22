@@ -3762,149 +3762,122 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 </div>
 
 <!-- MODAL DATOS CLIENTE -->
+<!-- PEDIDO (formato del catálogo: lista con fotos + cuentas + datos de entrega) -->
 <div class="cot-confirm" id="modalDatosCliente">
-  <div class="cot-confirm-box" style="max-width:420px;text-align:left;padding:28px 24px;max-height:92vh;overflow-y:auto;">
-    <div class="cot-confirm-icon" style="text-align:center;">📋</div>
-    <h3 style="text-align:center;margin-bottom:6px;">Completa tu pedido</h3>
-    <p style="text-align:center;margin-bottom:20px;font-size:13px;color:var(--text-muted);">Ingresa tus datos y elige cómo pagar.</p>
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">¿A dónde te lo enviamos? *</label>
-        <div style="display:flex;gap:8px;">
-          <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 13px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);" id="zonaLimaLabel">
-            <input type="radio" name="zonaEnvio" value="lima" checked onchange="actualizarZona()" style="accent-color:var(--blue);width:15px;height:15px;">
-            <span style="font-size:13px;font-weight:600;color:var(--text);">Lima</span>
-          </label>
-          <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 13px;border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;background:var(--surface);" id="zonaProvLabel">
-            <input type="radio" name="zonaEnvio" value="provincia" onchange="actualizarZona()" style="accent-color:var(--blue);width:15px;height:15px;">
-            <span style="font-size:13px;font-weight:600;color:var(--text);">Provincia</span>
-          </label>
-        </div>
-        <div id="entregaDetalle" style="margin-top:8px;padding:9px 12px;background:var(--blue-light);border-radius:var(--r-sm);font-size:12px;color:var(--text);line-height:1.5;"></div>
-        <div id="avisoTraslado" style="display:none;margin-top:8px;padding:9px 12px;background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:var(--r-sm);font-size:12px;color:#92400E;font-weight:500;">
-          📦 Se agregará <strong>S/ 10</strong> por traslado y embalaje a agencia Shalom.
-        </div>
+  <div class="cot-confirm-box" style="max-width:430px;text-align:left;padding:0;max-height:94vh;overflow:hidden;display:flex;flex-direction:column;">
+
+    <!-- Cabecera -->
+    <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <div style="flex:1;">
+        <h3 style="font-size:20px;font-weight:700;margin:0;color:var(--text);">Mi pedido</h3>
+        <p style="font-size:12.5px;color:var(--text-muted);margin:2px 0 0;">Revisa tus productos antes de enviar</p>
       </div>
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Nombre completo *</label>
-        <input id="clienteNombre" type="text" placeholder="Tu nombre y apellido" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Dirección *</label>
-        <input id="clienteDireccion" type="text" placeholder="Calle, número, referencia" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Distrito / Ciudad *</label>
-        <input id="clienteDistrito" type="text" placeholder="Ej: Miraflores, Trujillo..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Correo <span style="font-weight:500;text-transform:none;">— opcional, para enviarte el comprobante</span></label>
-        <input id="clienteCorreo" type="email" placeholder="tucorreo@ejemplo.com" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">DNI <span style="font-weight:500;text-transform:none;">— opcional, solo si necesitas boleta</span></label>
-        <input id="clienteDNI" type="text" placeholder="12345678" maxlength="8" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;outline:none;">
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">Método de pago *</label>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <label id="formLabelYape" style="display:flex;align-items:center;gap:10px;padding:11px 13px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);">
-            <input type="radio" name="formMetodoPago" value="yape" checked style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
-            <img src="img/logo-yape.png" alt="Yape" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
-            <div>
-              <div style="font-size:13px;font-weight:700;color:var(--text);">Yape / Transferencia BCP</div>
-              <div style="font-size:11px;color:var(--text-muted);">Sin costo adicional</div>
-            </div>
-          </label>
-          <label id="formLabelIzipay" style="display:flex;align-items:center;gap:10px;padding:11px 13px;border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;background:var(--surface);">
-            <input type="radio" name="formMetodoPago" value="tarjeta" style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
-            <img src="img/logo-izipay.png" alt="Izipay" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
-            <div>
-              <div style="font-size:13px;font-weight:700;color:var(--text);">Tarjeta de crédito/débito</div>
-              <div style="font-size:11px;color:#dc2626;font-weight:600;">+ 4% de recargo</div>
-            </div>
-          </label>
-        </div>
-      </div>
-      <div style="background:var(--bg);border-radius:var(--r-sm);padding:12px 14px;border-left:3px solid var(--blue);">
+      <span id="checkoutChip" style="background:var(--blue-light);color:var(--blue);font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:999px;white-space:nowrap;">0 productos</span>
+      <button onclick="cerrarDatosCliente()" aria-label="Cerrar" style="width:38px;height:38px;border:none;background:none;font-size:24px;line-height:1;color:var(--text-muted);cursor:pointer;border-radius:999px;">&times;</button>
+    </div>
+
+    <!-- Cuerpo desplazable -->
+    <div style="overflow-y:auto;flex:1;padding:16px 20px 20px;background:var(--bg);-webkit-overflow-scrolling:touch;">
+
+      <div id="checkoutLista" style="display:grid;gap:10px;margin-bottom:14px;"></div>
+
+      <div id="checkoutEmpuje"></div>
+
+      <!-- Cuentas -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:14px;">
         <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);margin-bottom:4px;">
           <span>Subtotal</span><span id="formSubtotal">S/ 0</span>
         </div>
         <div id="formDescuentoFila" style="display:none;justify-content:space-between;font-size:13px;font-weight:600;color:#15803d;margin-bottom:4px;">
           <span id="formDescuentoLabel">Descuento B&amp;N</span><span id="formDescuentoVal">-S/ 0</span>
         </div>
-        <div id="formRecargoFila" style="display:none;justify-content:space-between;font-size:13px;color:#dc2626;margin-bottom:4px;">
-          <span>Recargo tarjeta (4%)</span><span id="formRecargoVal">S/ 0.00</span>
-        </div>
         <div id="formTrasladoFila" style="display:none;justify-content:space-between;font-size:13px;color:#92400E;margin-bottom:4px;">
           <span>Traslado y embalaje</span><span>S/ 10.00</span>
+        </div>
+        <div id="formRecargoFila" style="display:none;justify-content:space-between;font-size:13px;color:#dc2626;margin-bottom:4px;">
+          <span>Recargo tarjeta (4%)</span><span id="formRecargoVal">S/ 0.00</span>
         </div>
         <div id="formEnvioFila" style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);margin-bottom:4px;">
           <span>Envío</span><span id="formEnvioVal" style="font-weight:600;">Se confirma por WhatsApp</span>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:700;color:var(--blue);border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">
-          <span>Total <span style="font-weight:500;font-size:12px;">(sin delivery)</span></span><span id="formTotal">S/ 0</span>
+        <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:700;color:var(--blue);border-top:1px solid var(--border);padding-top:9px;margin-top:5px;">
+          <span>Total</span><span id="formTotal">S/ 0</span>
+        </div>
+        <p style="font-size:11.5px;color:var(--text-muted);margin:6px 0 0;">No incluye el delivery</p>
+      </div>
+
+      <!-- Envío / Entrega -->
+      <div style="display:flex;gap:10px;align-items:flex-start;background:var(--blue-light);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:14px;">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);">Envío / Entrega</div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.45;">Coordinamos el envío por WhatsApp según tu ubicación.</div>
         </div>
       </div>
-    </div>
-    <div style="margin-top:14px;background:#F0FDF4;border-left:3px solid #16A34A;border-radius:var(--r-sm);padding:10px 13px;font-size:12px;color:#166534;line-height:1.5;">
-      ✅ <strong>No pagas nada ahora.</strong> Te escribimos por WhatsApp con el costo exacto del envío y recién ahí decides si confirmas.
-    </div>
-    <button class="cot-confirm-btn" onclick="enviarConDatos()" style="margin-top:16px;">Enviar mi pedido por WhatsApp</button>
-    <button onclick="cerrarDatosCliente()" style="width:100%;margin-top:8px;background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;padding:6px;font-family:inherit;">Cancelar</button>
-  </div>
-</div>
 
-<!-- MODAL RESUMEN + PAGO -->
-<div class="cot-confirm" id="modalResumenPago">
-  <div class="cot-confirm-box" style="max-width:440px;text-align:left;padding:28px 24px;max-height:90vh;overflow-y:auto;">
-    <div style="text-align:center;margin-bottom:16px;">
-      <div style="font-size:36px;margin-bottom:8px;">🧾</div>
-      <h3 style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px;">Resumen de tu pedido</h3>
-      <p style="font-size:13px;color:var(--text-muted);margin-bottom:0;">Revisa tu pedido y elige cómo pagar</p>
-    </div>
-    <div id="resumenProductos" style="background:var(--bg);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:14px;font-size:12.5px;line-height:2;border-left:3px solid var(--mint);"></div>
-    <div style="margin-bottom:16px;">
-      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);padding:3px 0;">
-        <span>Subtotal productos</span>
-        <span id="resumenSubtotal">S/ 0</span>
-      </div>
-      <div id="resumenDescuentoFila" style="display:none;justify-content:space-between;font-size:13px;font-weight:600;color:#15803d;padding:3px 0;">
-        <span id="resumenDescuentoLabel">Descuento B&amp;N</span>
-        <span id="resumenDescuentoVal">-S/ 0</span>
-      </div>
-      <div id="resumenRecargoFila" style="display:none;justify-content:space-between;font-size:13px;color:#dc2626;padding:3px 0;">
-        <span>Recargo Izipay (4%)</span>
-        <span id="resumenRecargoVal">S/ 0.00</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:700;color:var(--blue);border-top:1.5px solid var(--border);padding-top:8px;margin-top:6px;">
-        <span>Total a pagar</span>
-        <span id="resumenTotal">S/ 0</span>
-      </div>
-    </div>
-    <div style="margin-bottom:16px;">
-      <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Método de pago</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <label id="labelYape" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);">
-          <input type="radio" name="metodoPago" value="yape" checked style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarMetodoPago()">
-          <img src="img/logo-yape.png" alt="Yape" style="height:30px;width:auto;object-fit:contain;flex-shrink:0;">
-          <div>
-            <div style="font-size:13.5px;font-weight:700;color:var(--text);">Yape / Transferencia</div>
-            <div style="font-size:11.5px;color:var(--text-muted);">Sin costo adicional</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">¿A dónde va tu pedido? *</label>
+          <div style="display:flex;gap:8px;">
+            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:11px 13px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);" id="zonaLimaLabel">
+              <input type="radio" name="zonaEnvio" value="lima" checked onchange="actualizarZona()" style="accent-color:var(--blue);width:15px;height:15px;">
+              <span style="font-size:13px;font-weight:600;color:var(--text);">LIMA</span>
+            </label>
+            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:11px 13px;border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;background:var(--surface);" id="zonaProvLabel">
+              <input type="radio" name="zonaEnvio" value="provincia" onchange="actualizarZona()" style="accent-color:var(--blue);width:15px;height:15px;">
+              <span style="font-size:13px;font-weight:600;color:var(--text);">PROVINCIA</span>
+            </label>
           </div>
-        </label>
-        <label id="labelIzipay" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;background:var(--surface);">
-          <input type="radio" name="metodoPago" value="izipay" style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarMetodoPago()">
-          <img src="img/logo-izipay.png" alt="Izipay" style="height:30px;width:auto;object-fit:contain;flex-shrink:0;">
-          <div>
-            <div style="font-size:13.5px;font-weight:700;color:var(--text);">Izipay (tarjeta de crédito)</div>
-            <div style="font-size:11.5px;color:#dc2626;font-weight:600;">+ 4% de recargo sobre el total</div>
+          <div id="entregaDetalle" style="margin-top:8px;padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);font-size:12px;color:var(--text);line-height:1.5;"></div>
+          <div id="avisoTraslado" style="display:none;margin-top:8px;padding:9px 12px;background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:var(--r-sm);font-size:12px;color:#92400E;font-weight:500;">
+            📦 Se agregará <strong>S/ 10</strong> por traslado y embalaje a agencia Shalom.
           </div>
-        </label>
+        </div>
+
+        <div>
+          <label id="labelDireccion" for="clienteDireccion" style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Dirección exacta *</label>
+          <input id="clienteDireccion" type="text" autocomplete="street-address" placeholder="Ej: Av. Perú 123, dpto 201 — San Miguel" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:16px;font-family:inherit;outline:none;">
+        </div>
+
+        <div>
+          <label for="clienteNombre" style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Nombre completo *</label>
+          <input id="clienteNombre" type="text" autocomplete="name" placeholder="Tu nombre y apellido" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:16px;font-family:inherit;outline:none;">
+        </div>
+
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">¿Cómo pagas al recibir? *</label>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <label id="formLabelYape" style="display:flex;align-items:center;gap:10px;padding:11px 13px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);">
+              <input type="radio" name="formMetodoPago" value="yape" checked style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
+              <img src="img/logo-yape.png" alt="Yape" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
+              <div>
+                <div style="font-size:13px;font-weight:700;color:var(--text);">Yape o efectivo al recibir</div>
+                <div style="font-size:11px;color:var(--text-muted);">Sin costo adicional</div>
+              </div>
+            </label>
+            <label id="formLabelIzipay" style="display:flex;align-items:center;gap:10px;padding:11px 13px;border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;background:var(--surface);">
+              <input type="radio" name="formMetodoPago" value="tarjeta" style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
+              <img src="img/logo-izipay.png" alt="Izipay" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
+              <div>
+                <div style="font-size:13px;font-weight:700;color:var(--text);">Tarjeta al recibir</div>
+                <div style="font-size:11px;color:#dc2626;font-weight:600;">+ 4% de recargo</div>
+              </div>
+            </label>
+          </div>
+        </div>
       </div>
+
+      <div style="margin-top:14px;background:#F0FDF4;border-left:3px solid #16A34A;border-radius:var(--r-sm);padding:10px 13px;font-size:12px;color:#166534;line-height:1.5;">
+        ✅ <strong>Pagas al recibir tu pedido.</strong> Te escribimos por WhatsApp para confirmar la entrega y el costo exacto del envío.
+      </div>
+
+      <button class="cot-confirm-btn" onclick="enviarConDatos()" style="margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.529 5.858L.057 23.5l5.805-1.48A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.368l-.36-.214-3.444.878.908-3.334-.235-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
+        Enviar mi pedido por WhatsApp
+      </button>
+      <button onclick="cerrarDatosCliente()" style="width:100%;margin-top:8px;background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;padding:6px;font-family:inherit;">Seguir comprando</button>
+      <p style="text-align:center;font-size:11.5px;color:var(--text-muted);margin-top:10px;">Compra segura con el respaldo de Zona Bariátrica</p>
     </div>
-    <button class="cot-confirm-btn" onclick="confirmarYEnviar()">✅ CONFIRMAR Y ENVIAR POR WHATSAPP</button>
-    <button onclick="cerrarResumenPago()" style="width:100%;margin-top:8px;background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;padding:6px;font-family:inherit;">← Volver y editar datos</button>
   </div>
 </div>
 
@@ -6436,6 +6409,13 @@ function actualizarCartUI() {
     badge.classList.toggle('visible', total > 0);
   }
   renderizarCartItems();
+  /* Si el pedido ya está abierto, se repinta junto con el carrito */
+  const pedido = document.getElementById('modalDatosCliente');
+  if (pedido && pedido.classList.contains('open')) {
+    if (!carrito.length) { cerrarDatosCliente(); return; }
+    pintarCheckoutLista();
+    actualizarTotalForm();
+  }
 }
 
 function calcularAhorro() {
@@ -6606,16 +6586,14 @@ async function confirmarEnvio() {
   cerrarModalEnvio();
   document.querySelectorAll('input[name="formMetodoPago"]').forEach(r => { r.checked = r.value === 'yape'; });
   actualizarZona();
+  pintarCheckoutLista();
   // Auto-rellenar con datos del perfil si hay sesión
   const { data: { session } } = await supa.auth.getSession();
   if (session) {
     const m = session.user.user_metadata || {};
     const nombre = ((m.nombre || '') + ' ' + (m.apellido || '')).trim();
     if (nombre) document.getElementById('clienteNombre').value = nombre;
-    if (m.numero_documento) document.getElementById('clienteDNI').value = m.numero_documento;
     if (m.direccion) document.getElementById('clienteDireccion').value = m.direccion + (m.referencia ? ' — ' + m.referencia : '');
-    if (m.ciudad) document.getElementById('clienteDistrito').value = (m.ciudad || '') + (m.pais && m.pais !== 'Peru' ? ', ' + m.pais : '');
-    if (session.user.email) document.getElementById('clienteCorreo').value = session.user.email;
   }
   document.getElementById('modalDatosCliente').classList.add('open');
 }
@@ -6634,7 +6612,54 @@ function actualizarZona() {
   document.getElementById('zonaLimaLabel').style.background = esProv ? 'var(--surface)' : 'var(--blue-light)';
   document.getElementById('zonaProvLabel').style.borderColor = esProv ? 'var(--blue)' : 'var(--border)';
   document.getElementById('zonaProvLabel').style.background = esProv ? 'var(--blue-light)' : 'var(--surface)';
+  /* En Lima se pide la dirección exacta; en provincia, la ciudad:
+     ahí la entrega es en agencia Shalom. */
+  const lbl = document.getElementById('labelDireccion');
+  const inp = document.getElementById('clienteDireccion');
+  if (lbl && inp) {
+    lbl.textContent = esProv ? '¿A qué ciudad o provincia? *' : 'Dirección exacta *';
+    inp.placeholder = esProv ? 'Ej: Cusco' : 'Ej: Av. Perú 123, dpto 201 — San Miguel';
+  }
   actualizarTotalForm();
+}
+
+/* Pinta la lista de productos dentro del pedido, con el mismo
+   formato del catálogo: foto, precio, contador y papelera. */
+function pintarCheckoutLista() {
+  const lista = document.getElementById('checkoutLista');
+  if (!lista) return;
+  const chip = document.getElementById('checkoutChip');
+  const n = carrito.reduce((s, i) => s + i.qty, 0);
+  if (chip) chip.textContent = n + (n === 1 ? ' producto' : ' productos');
+  const btnQty = 'width:34px;height:34px;border:1.5px solid var(--border);background:var(--surface);border-radius:8px;font-size:18px;font-weight:700;line-height:1;color:var(--text);cursor:pointer;font-family:inherit;';
+  lista.innerHTML = carrito.map(item => {
+    const p = productos.find(x => x.id === item.id);
+    if (!p) return '';
+    return `<div style="display:flex;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px;">
+      <img src="${p.img}" alt="${p.nombre}" loading="lazy" decoding="async" style="width:68px;height:68px;object-fit:contain;border-radius:8px;flex-shrink:0;background:#fff;" onerror="this.style.background='#eee'">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:600;color:var(--text);line-height:1.35;">${p.nombre}</div>
+        ${item.notas ? `<div style="font-size:11.5px;color:var(--text-muted);margin-top:2px;">${item.notas}</div>` : ''}
+        <div style="font-size:17px;font-weight:700;color:var(--blue);margin-top:3px;">S/ ${p.precio * item.qty}</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+          <button type="button" aria-label="Quitar uno" onclick="cambiarQty('${p.id}',-1)" style="${btnQty}">−</button>
+          <span style="font-size:14px;font-weight:700;min-width:20px;text-align:center;">${item.qty}</span>
+          <button type="button" aria-label="Agregar uno" onclick="cambiarQty('${p.id}',1)" style="${btnQty}color:var(--blue);border-color:var(--blue);">+</button>
+        </div>
+      </div>
+      <button type="button" aria-label="Quitar del pedido" onclick="cambiarQty('${p.id}',-${item.qty})" style="width:34px;height:34px;border:none;background:none;color:var(--text-muted);cursor:pointer;align-self:flex-start;">
+        <svg class="ico ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+      </button>
+    </div>`;
+  }).join('');
+  /* Empujón: cuánto le falta para el siguiente tramo de descuento */
+  const empuje = document.getElementById('checkoutEmpuje');
+  if (empuje) {
+    const msg = mensajeProgresoBN();
+    empuje.innerHTML = msg
+      ? '<div style="display:flex;gap:9px;align-items:flex-start;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--r-sm);padding:10px 13px;margin-bottom:14px;font-size:12.5px;color:#15803d;line-height:1.5;"><span>🏷️</span><div><b>¡Estás a un paso de ahorrar!</b><br>' + msg + '</div></div>'
+      : '';
+  }
 }
 
 function actualizarTotalForm() {
@@ -6684,91 +6709,43 @@ function cerrarDatosCliente() {
 
 function enviarConDatos() {
   const nombre = document.getElementById('clienteNombre').value.trim();
-  const dni = document.getElementById('clienteDNI').value.trim();
   const direccion = document.getElementById('clienteDireccion').value.trim();
-  const distrito = document.getElementById('clienteDistrito').value.trim();
-  const correo = document.getElementById('clienteCorreo').value.trim();
   const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
   const zona = document.querySelector('input[name="zonaEnvio"]:checked')?.value || 'lima';
-  if (!nombre || !direccion || !distrito) {
-    alert('Necesitamos tu nombre, dirección y distrito para coordinar la entrega.');
+  if (!direccion) {
+    alert(zona === 'provincia'
+      ? 'Escribe a qué ciudad o provincia enviamos tu pedido.'
+      : 'Escribe tu dirección para coordinar la entrega.');
+    document.getElementById('clienteDireccion').focus();
+    return;
+  }
+  if (!nombre) {
+    alert('Escribe tu nombre para registrar el pedido.');
+    document.getElementById('clienteNombre').focus();
     return;
   }
   cerrarDatosCliente();
-  enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo, zona);
+  enviarCotizacion(nombre, direccion, metodo, zona);
 }
 
-function mostrarResumenPago() {
-  const sub = calcularSubtotal();
-  const lineas = carrito.map(i => {
-    const p = productos.find(x => x.id === i.id);
-    let linea = `📦 <strong>${p.nombre}</strong> x${i.qty} — S/ ${p.precio * i.qty}`;
-    if (i.notas) linea += ` <em>(${i.notas})</em>`;
-    return linea;
-  }).join('<br>');
-  document.getElementById('resumenProductos').innerHTML = lineas;
-  document.getElementById('resumenSubtotal').textContent = 'S/ ' + sub;
-  document.querySelectorAll('input[name="metodoPago"]').forEach(r => { r.checked = r.value === 'yape'; });
-  actualizarMetodoPago();
-  document.getElementById('modalResumenPago').classList.add('open');
-}
 
-function actualizarMetodoPago() {
-  const metodo = document.querySelector('input[name="metodoPago"]:checked').value;
-  const descBN = calcularDescuentoBN();
-  const base = calcularSubtotal() - descBN;
-  const recargoFila = document.getElementById('resumenRecargoFila');
-  const recargoVal = document.getElementById('resumenRecargoVal');
-  const totalEl = document.getElementById('resumenTotal');
-  const labelYape = document.getElementById('labelYape');
-  const labelIzipay = document.getElementById('labelIzipay');
-  const descFila = document.getElementById('resumenDescuentoFila');
-  if (descBN > 0) {
-    descFila.style.display = 'flex';
-    document.getElementById('resumenDescuentoLabel').textContent = DESCUENTO_BN.nombre;
-    document.getElementById('resumenDescuentoVal').textContent = '-S/ ' + descBN;
-  } else {
-    descFila.style.display = 'none';
-  }
-  if (metodo === 'izipay') {
-    const recargo = Math.round(base * 0.04 * 100) / 100;
-    recargoFila.style.display = 'flex';
-    recargoVal.textContent = 'S/ ' + recargo.toFixed(2);
-    totalEl.textContent = 'S/ ' + (base + recargo).toFixed(2);
-    labelYape.style.borderColor = 'var(--border)';
-    labelYape.style.background = 'var(--surface)';
-    labelIzipay.style.borderColor = 'var(--blue)';
-    labelIzipay.style.background = 'var(--blue-light)';
-  } else {
-    recargoFila.style.display = 'none';
-    totalEl.textContent = 'S/ ' + base;
-    labelYape.style.borderColor = 'var(--blue)';
-    labelYape.style.background = 'var(--blue-light)';
-    labelIzipay.style.borderColor = 'var(--border)';
-    labelIzipay.style.background = 'var(--surface)';
-  }
-}
 
-function cerrarResumenPago() {
-  document.getElementById('modalResumenPago').classList.remove('open');
-  document.getElementById('modalDatosCliente').classList.add('open');
-}
 
-function confirmarYEnviar() {
-  const metodo = document.querySelector('input[name="metodoPago"]:checked').value;
-  document.getElementById('modalResumenPago').classList.remove('open');
-  const { nombre, dni, direccion, distrito } = _datosPedido;
-  enviarCotizacion(nombre, dni, direccion, distrito, metodo);
-}
 
-function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo, zona) {
+
+
+
+
+function enviarCotizacion(nombre, direccion, metodo, zona) {
   if (!carrito.length) return;
+  const S = '\n';
+  const RAYA = '━'.repeat(14);
   const lineas = carrito.map(i => {
     const p = productos.find(x => x.id === i.id);
-    let linea = `• ${p.nombre} x${i.qty} — S/ ${p.precio * i.qty}`;
-    if (i.notas) linea += ` (${i.notas})`;
+    let linea = '• ' + i.qty + 'x ' + p.nombre + ' — S/ ' + (p.precio * i.qty);
+    if (i.notas) linea += ' (' + i.notas + ')';
     return linea;
-  }).join('\n');
+  }).join(S);
   const sub = calcularSubtotal();
   const descBN = calcularDescuentoBN();
   const base = sub - descBN;
@@ -6777,38 +6754,28 @@ function enviarCotizacion(nombre, dni, direccion, distrito, correo, metodo, zona
   const esTarjeta = metodo === 'tarjeta';
   const recargo = esTarjeta ? Math.round((base + traslado) * 0.04 * 100) / 100 : 0;
   const total = base + traslado + recargo;
-  const lineaTraslado = esProv ? `🚚 Traslado y embalaje (Shalom): S/ 10\n` : '';
-  const lineaDNI = dni ? `🪪 DNI: ${dni}\n` : '';
-  const lineaCorreo = correo ? `📧 Correo: ${correo}\n` : '';
-  const lineaDescuento = descBN > 0 ? `🎁 ${DESCUENTO_BN.nombre}: -S/ ${descBN}\n` : '';
-  let msg;
-  if (esTarjeta) {
-    msg =
-      `🛒 NUEVO PEDIDO — Zona Bariátrica\n\n` +
-      `👤 Cliente: ${nombre}\n` +
-      `${lineaDNI}` +
-      `${lineaCorreo}` +
-      `📍 Dirección: ${direccion} — ${distrito} (${esProv ? 'PROVINCIA' : 'LIMA'})\n\n` +
-      `📦 PRODUCTOS:\n${lineas}\n\n` +
-      `${lineaDescuento}` +
-      `${lineaTraslado}` +
-      `💰 TOTAL: S/ ${total.toFixed(2)} (incluye 4% por tarjeta)\n` +
-      `💳 Pago: TARJETA\n\n` +
-      `¿Me puede confirmar el costo de delivery y enviarme el link de pago?`;
+
+  let msg = '🛒 *CONFIRMO MI PEDIDO — Zona Bariátrica*' + S + S;
+  msg += '*MI PEDIDO*' + S + S + lineas + S;
+  msg += S + RAYA + S + S;
+  msg += '*Subtotal productos:* S/ ' + sub + S;
+  if (descBN > 0) msg += '💚 *' + DESCUENTO_BN.nombre + ':* - S/ ' + descBN + S;
+  if (traslado) msg += '📦 *Traslado y embalaje (Shalom):* S/ ' + traslado + S;
+  if (recargo) msg += '💳 *Recargo tarjeta (4%):* S/ ' + recargo.toFixed(2) + S;
+  msg += '💰 *TOTAL:* S/ ' + (esTarjeta ? total.toFixed(2) : total) + S + S;
+  msg += RAYA + S + S;
+  msg += '👤 *Nombre:* ' + nombre + S;
+  if (esProv) {
+    msg += '📍 *Ciudad / Provincia:* ' + direccion + S;
+    msg += '🚚 *Envío:* Agencia Shalom' + S;
   } else {
-    msg =
-      `🛒 NUEVO PEDIDO — Zona Bariátrica\n\n` +
-      `👤 Cliente: ${nombre}\n` +
-      `${lineaDNI}` +
-      `${lineaCorreo}` +
-      `📍 Dirección: ${direccion} — ${distrito} (${esProv ? 'PROVINCIA' : 'LIMA'})\n\n` +
-      `📦 PRODUCTOS:\n${lineas}\n\n` +
-      `${lineaDescuento}` +
-      `${lineaTraslado}` +
-      `💰 TOTAL: S/ ${total}\n` +
-      `🟣 Pago: YAPE\n\n` +
-      `¿Me puede confirmar el costo de delivery y enviarme el QR y número para realizar el Yape?`;
+    msg += '📍 *Dirección:* ' + direccion + S;
+    msg += '🚚 *Envío:* Delivery Lima' + S;
   }
+  msg += '💵 *Pago:* Contra entrega — ' + (esTarjeta ? 'tarjeta al recibir (+4%)' : 'Yape o efectivo al recibir') + S;
+  msg += S + RAYA + S + S;
+  msg += 'Quiero cerrar mi compra. Quedo atento(a) a la *confirmación del costo del delivery* y de la *fecha de entrega*. ¡Gracias! 😊';
+
   window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank');
   cerrarCarrito();
   carrito = [];
