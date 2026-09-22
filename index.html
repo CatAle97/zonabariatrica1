@@ -3851,8 +3851,8 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
               <input type="radio" name="formMetodoPago" value="yape" checked style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
               <img src="img/logo-yape.png" alt="Yape" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
               <div>
-                <div style="font-size:13px;font-weight:700;color:var(--text);">Yape o efectivo al recibir</div>
-                <div style="font-size:11px;color:var(--text-muted);">Sin costo adicional</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text);">Yape o transferencia BCP</div>
+                <div style="font-size:11px;color:var(--text-muted);">Sin costo adicional · no aceptamos efectivo</div>
               </div>
             </label>
             <label id="formLabelIzipay" style="display:flex;align-items:center;gap:10px;padding:11px 13px;border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;background:var(--surface);">
@@ -6772,7 +6772,7 @@ function enviarCotizacion(nombre, direccion, metodo, zona) {
     msg += '📍 *Dirección:* ' + direccion + S;
     msg += '🚚 *Envío:* Delivery Lima' + S;
   }
-  msg += '💵 *Pago:* Contra entrega — ' + (esTarjeta ? 'tarjeta al recibir (+4%)' : 'Yape o efectivo al recibir') + S;
+  msg += '💵 *Pago:* Contra entrega — ' + (esTarjeta ? 'tarjeta al recibir (+4%)' : 'Yape o transferencia BCP') + S;
   msg += S + RAYA + S + S;
   msg += 'Quiero cerrar mi compra. Quedo atento(a) a la *confirmación del costo del delivery* y de la *fecha de entrega*. ¡Gracias! 😊';
 
