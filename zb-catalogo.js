@@ -421,7 +421,7 @@ const productos = [
     incluye:"Whey Protein Isolate 1000g x2 · Sabor neutro",
     tags:["2000g en total","23g proteína","Sabor neutro","Sin lactosa"],
     precio:580, precioN:590, ahorro:10,
-    img: "img/oferta-2nutrifath.jpg",
+    img: "img/oferta-2nutrifath-v2.jpg",
     uso:"Vía oral. Adultos: 1 porción (25g, 1 cuchara) al día disuelta en 200-300ml de agua.",
     tn: tn.nf_isolate },
 
@@ -848,8 +848,8 @@ const productos = [
     desc:"Proteína aislada de suero (Whey Protein Isolate) con 23g de proteína por porción de 25g, enriquecida con vitaminas y minerales. Sabor neutro: se mezcla con agua o se suma a cualquier preparación sin cambiarle el gusto.",
     tags:["23g proteína","Sabor neutro","Sin lactosa","Sin gluten","0% azúcar"],
     precio:295,
-    img: NF+"whey-isolate.jpg",
-    galeria: [NF+"whey-isolate.jpg", "img/tn-nutrifath.jpg"],
+    img: NF+"whey-isolate-v2.jpg",
+    galeria: [NF+"whey-isolate-v2.jpg", "img/tn-nutrifath.jpg"],
     uso:"Vía oral. Adultos: 1 porción (25g, 1 cuchara) al día disuelta en 200-300ml de agua.",
     tn: tn.nf_isolate },
 
