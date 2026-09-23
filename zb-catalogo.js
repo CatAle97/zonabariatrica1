@@ -406,7 +406,7 @@ const productos = [
     incluye:"Multivitamínico Completo — 120 tabletas x2 · Sabores a elección: Bayas mixtas o Tropical",
     tags:["240 tabletas en total","1 al día","Marca americana","Sin gluten"],
     precio:550, precioN:560, ahorro:10,
-    img: "img/oferta-2multivit.jpg",
+    img: "img/oferta-2multivit-v2.jpg",
     seleccionSabor:[{label:"Multivitamínico 1",sabores:["Bayas mixtas","Tropical"]},{label:"Multivitamínico 2",sabores:["Bayas mixtas","Tropical"]}],
     uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.",
     tn: tn.bf_multivit },
