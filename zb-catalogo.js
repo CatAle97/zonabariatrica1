@@ -864,7 +864,7 @@ const productos = [
     tags:["19g proteína","Whey Isolate","Colágeno hidrolizado","0g azúcar","20 porciones"],
     precio:180,
     img: SP+"geno-frente.jpg",
-    galeria: [SP+"geno-frente.jpg", SP+"geno-posterior.jpg", "img/oferta-2geno.jpg", "img/tn-geno.jpg"],
+    galeria: [SP+"geno-frente.jpg", "img/tn-geno.jpg"],
     uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.",
     tn: tn.geno }
 ];
