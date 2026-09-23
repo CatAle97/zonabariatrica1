@@ -130,7 +130,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;800&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    DESIGN SYSTEM — Zona Bariátrica
@@ -3693,18 +3693,18 @@ section[id], .productos-header { scroll-margin-top: 92px; }
   .hpc-forma { position: absolute; top: 0; right: 0; width: 560px; height: auto; pointer-events: none; }
   .hpc-grid {
     position: relative; max-width: var(--maxw); margin: 0 auto;
-    padding: 24px var(--gutter);
+    padding: 0 var(--gutter);
     display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; align-items: center;
-    min-height: 600px;
+    height: 620px;
   }
   .hpc-producto {
-    grid-column: 1 / span 6; display: flex; justify-content: center; align-items: flex-end;
-    height: 520px;
+    grid-column: 1 / span 6; display: flex; justify-content: center; align-items: center;
+    height: 560px;   /* 620 de hero − 30px de aire arriba y abajo: nunca se corta */
   }
   .hpc-producto img { height: 100%; width: auto; display: block; }
-  .hpc-producto img + img { margin-left: -22px; height: 94%; position: relative; z-index: 1; }
+  .hpc-producto img + img { margin-left: -26px; height: 94%; position: relative; z-index: 1; margin-top: 6%; }
 
-  .hpc-texto { grid-column: 7 / span 6; max-width: 540px; }
+  .hpc-texto { grid-column: 7 / span 6; max-width: 600px; }
   .hpc-badge {
     display: inline-block; background: #EAF2FF; color: #0057FF;
     border-radius: 999px; padding: 8px 16px;
@@ -3712,7 +3712,7 @@ section[id], .productos-header { scroll-margin-top: 92px; }
     margin-bottom: 24px;
   }
   .hpc-titulo {
-    font-family: 'Manrope', var(--font); font-size: 56px; line-height: 1.05; font-weight: 600;
+    font-family: 'Manrope', var(--font); font-size: 64px; line-height: 1.05; font-weight: 800;
     letter-spacing: -0.03em; color: #111827; margin: 0 0 20px;
   }
   .hpc-sub { font-size: 19px; line-height: 1.55; color: #4B5563; margin: 0 0 36px; max-width: 34ch; }
@@ -3731,7 +3731,8 @@ section[id], .productos-header { scroll-margin-top: 92px; }
 
   /* Barra de confianza */
   .hpc-confianza {
-    position: relative; list-style: none; margin: 0 auto; padding: 28px var(--gutter);
+    position: relative; list-style: none; margin: 0 auto; padding: 32px var(--gutter);
+    background: #FFFFFF;
     max-width: var(--maxw); display: grid; grid-template-columns: repeat(4, auto);
     justify-content: space-between; gap: 24px;
     border-top: 1px solid #EEF2F6;
@@ -4249,7 +4250,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       </div>
       <div class="hpc-texto">
         <span class="hpc-badge">20 g de proteína por porción</span>
-        <h2 class="hpc-titulo">Proteínas para pacientes bariátricos.</h2>
+        <h1 class="hpc-titulo">Proteínas para pacientes bariátricos.</h1>
         <p class="hpc-sub">Encuentre proteínas líquidas y en polvo para cada etapa de su proceso bariátrico.</p>
         <div class="hpc-botones">
           <a class="hpc-btn hpc-btn-primario" href="https://wa.me/51961841069?text=Hola%2C%20quiero%20comprar%20prote%C3%ADna%20para%20mi%20proceso%20bari%C3%A1trico" target="_blank" rel="noopener">Comprar por WhatsApp</a>
