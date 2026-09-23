@@ -3675,6 +3675,73 @@ section[id], .productos-header { scroll-margin-top: 92px; }
   .btn-cuenta span.cuenta-texto { display: none; }
   .btn-cuenta { padding: 0; width: 44px; height: 44px; justify-content: center; }
 }
+
+/* ============================================================
+   HERO PC (≥1280px) — Rediseño bloque 02
+   Estático, fondo blanco, una sola forma azul muy clara arriba a la
+   derecha. Rejilla de 12 columnas: producto (6) · texto (6). Las
+   botellas son los mismos WebP del banner anterior, ~22% más grandes.
+   Debajo, barra de confianza de 4 ítems. En celular no aparece.
+   ============================================================ */
+.hero-pc { display: none; }
+@media (min-width: 1280px) {
+  .promo-slider { background: #FFFFFF; }
+  .promo-slider > .slide, .promo-slider .slider-arrow, .promo-slider .slider-dots { display: none !important; }
+  .hero-intro { display: none !important; }   /* su contenido ya está en este hero */
+
+  .hero-pc { display: block; position: relative; background: #FFFFFF; }
+  .hpc-forma { position: absolute; top: 0; right: 0; width: 560px; height: auto; pointer-events: none; }
+  .hpc-grid {
+    position: relative; max-width: var(--maxw); margin: 0 auto;
+    padding: 24px var(--gutter);
+    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; align-items: center;
+    min-height: 600px;
+  }
+  .hpc-producto {
+    grid-column: 1 / span 6; display: flex; justify-content: center; align-items: flex-end;
+    height: 520px;
+  }
+  .hpc-producto img { height: 100%; width: auto; display: block; }
+  .hpc-producto img + img { margin-left: -22px; height: 94%; position: relative; z-index: 1; }
+
+  .hpc-texto { grid-column: 7 / span 6; max-width: 540px; }
+  .hpc-badge {
+    display: inline-block; background: #EAF2FF; color: #0057FF;
+    border-radius: 999px; padding: 8px 16px;
+    font-family: 'Manrope', var(--font); font-size: 14px; font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .hpc-titulo {
+    font-family: 'Manrope', var(--font); font-size: 56px; line-height: 1.05; font-weight: 600;
+    letter-spacing: -0.03em; color: #111827; margin: 0 0 20px;
+  }
+  .hpc-sub { font-size: 19px; line-height: 1.55; color: #4B5563; margin: 0 0 36px; max-width: 34ch; }
+  .hpc-botones { display: flex; gap: 12px; }
+  .hpc-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 56px; padding: 0 32px; border-radius: 999px;
+    font-family: 'Manrope', var(--font); font-size: 16px; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+    transition: background var(--t-fast), color var(--t-fast);
+  }
+  .hpc-btn-primario { background: #0057FF; color: #FFFFFF; border: 1.5px solid #0057FF; }
+  .hpc-btn-primario:hover { background: #0046CC; border-color: #0046CC; }
+  .hpc-btn-secundario { background: #FFFFFF; color: #0057FF; border: 1.5px solid #0057FF; }
+  .hpc-btn-secundario:hover { background: #EAF2FF; }
+
+  /* Barra de confianza */
+  .hpc-confianza {
+    position: relative; list-style: none; margin: 0 auto; padding: 28px var(--gutter);
+    max-width: var(--maxw); display: grid; grid-template-columns: repeat(4, auto);
+    justify-content: space-between; gap: 24px;
+    border-top: 1px solid #EEF2F6;
+  }
+  .hpc-confianza li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 15px; font-weight: 500; color: #374151;
+  }
+  .hpc-confianza svg { width: 24px; height: 24px; color: #0057FF; flex-shrink: 0; }
+}
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -4171,6 +4238,32 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 
 <!-- PROMO SLIDER -->
 <section class="promo-slider">
+  <!-- HERO PC (≥1280px) — Bloque 02. Estático, sin carrusel. En celular
+       no se ve: allí sigue el slider de siempre. -->
+  <div class="hero-pc">
+    <svg class="hpc-forma" viewBox="0 0 600 460" aria-hidden="true"><path fill="#EAF2FF" d="M600 0v400c-60 44-150 70-236 44-92-28-120-110-196-150C98 257 22 214 4 136-10 76 20 26 60 0z"/></svg>
+    <div class="hpc-grid">
+      <div class="hpc-producto">
+        <img src="img/hero-liquid-fresa.webp" width="260" height="760" alt="Liquid Protein Bari&amp;Nutrition sabor fresa, 1 litro">
+        <img src="img/hero-liquid-maracumango.webp" width="269" height="760" alt="Liquid Protein Bari&amp;Nutrition sabor maracumango, 1 litro">
+      </div>
+      <div class="hpc-texto">
+        <span class="hpc-badge">20 g de proteína por porción</span>
+        <h2 class="hpc-titulo">Proteínas para pacientes bariátricos.</h2>
+        <p class="hpc-sub">Encuentre proteínas líquidas y en polvo para cada etapa de su proceso bariátrico.</p>
+        <div class="hpc-botones">
+          <a class="hpc-btn hpc-btn-primario" href="https://wa.me/51961841069?text=Hola%2C%20quiero%20comprar%20prote%C3%ADna%20para%20mi%20proceso%20bari%C3%A1trico" target="_blank" rel="noopener">Comprar por WhatsApp</a>
+          <button class="hpc-btn hpc-btn-secundario" type="button" onclick="filtrar('todos');scrollProductos()">Ver catálogo</button>
+        </div>
+      </div>
+    </div>
+    <ul class="hpc-confianza">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>Envíos a todo el Perú</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>Yape · Izipay</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>Contraentrega en Lima</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>Marcas seleccionadas para pacientes bariátricos</li>
+    </ul>
+  </div>
   <!-- ========================================================
        BANNERS — una sola línea gráfica (Fase 3)
        Los 5 comparten plantilla: eyebrow, título, subtítulo,
@@ -6939,7 +7032,7 @@ function sliderMove(dir) { sliderGoTo(sliderIdx + dir); }
   // En celular el banner principal (botellas arriba + texto abajo) es mucho
   // más alto que los de imagen: si rotara solo, la página daría saltos
   // cada 7 s. Ahí se cambia solo con los puntos.
-  const movil = window.matchMedia('(max-width: 640px)').matches;
+  const movil = window.matchMedia('(max-width: 640px), (min-width: 1280px)').matches;
   let timer = (lento || movil) ? null : setInterval(() => sliderMove(1), 7000);
   window.pararAuto = function () { if (timer) { clearInterval(timer); timer = null; } };
   const cont = document.querySelector('.promo-slider');
@@ -6953,11 +7046,11 @@ function sliderMove(dir) { sliderGoTo(sliderIdx + dir); }
 // principal de proteína) y el texto del botón. Así se ve en GA4 qué
 // banner hace que la gente entre a comprar.
 document.querySelector('.promo-slider')?.addEventListener('click', e => {
-  const btn = e.target.closest('.pro-cta, .hero-cta, .hero-hotspot');
+  const btn = e.target.closest('.pro-cta, .hero-cta, .hero-hotspot, .hpc-btn');
   if (!btn || typeof gtag !== 'function') return;
   const slides = [...document.querySelectorAll('.promo-slider .slide')];
   gtag('event', 'clic_banner', {
-    banner_numero: slides.indexOf(btn.closest('.slide')) + 1,
+    banner_numero: btn.closest('.hero-pc') ? 'hero_pc' : slides.indexOf(btn.closest('.slide')) + 1,
     boton_texto: (btn.textContent.trim() || btn.getAttribute('aria-label') || '').slice(0, 60)
   });
 });
