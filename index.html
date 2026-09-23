@@ -3743,6 +3743,65 @@ section[id], .productos-header { scroll-margin-top: 92px; }
   }
   .hpc-confianza svg { width: 24px; height: 24px; color: #0057FF; flex-shrink: 0; }
 }
+
+/* ============================================================
+   LOS MÁS BUSCADOS (≥1280px) — Rediseño bloque 03
+   4 tarjetas blancas, borde gris claro, radio 20px, foto grande (~70%
+   de la tarjeta), nombre corto, precio azul y botón de WhatsApp azul.
+   ============================================================ */
+.top-pc { display: none; }
+@media (min-width: 1280px) {
+  .top-pc {
+    display: block; background: #FFFFFF;
+    max-width: var(--maxw); margin: 0 auto; padding: 64px var(--gutter) 72px;
+  }
+  .top-head { text-align: center; margin-bottom: 40px; }
+  .top-head h2 {
+    font-family: 'Manrope', var(--font); font-size: 36px; font-weight: 800;
+    letter-spacing: -0.02em; color: #111827; margin: 0 0 10px;
+  }
+  .top-head p { font-size: 17px; color: #6B7280; margin: 0; }
+  .top-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .top-card {
+    position: relative; display: flex; flex-direction: column;
+    background: #FFFFFF; border: 1px solid #E8ECF2; border-radius: 20px;
+    padding: 24px;
+  }
+  .top-badge {
+    position: absolute; top: 20px; left: 20px; z-index: 1;
+    background: #EAF2FF; color: #0057FF; border-radius: 999px;
+    padding: 5px 12px; font-family: 'Manrope', var(--font);
+    font-size: 12px; font-weight: 800; letter-spacing: 0.04em;
+  }
+  .top-img {
+    display: block; width: 100%; aspect-ratio: 1 / 1; padding: 0; margin: 0 0 20px;
+    border: none; background: none; cursor: pointer;
+  }
+  .top-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .top-nombre {
+    font-family: 'Manrope', var(--font); font-size: 16px; font-weight: 600; line-height: 1.35;
+    color: #111827; margin: 0 0 12px; min-height: 2.7em;
+  }
+  .top-precio {
+    font-family: 'Manrope', var(--font); font-size: 28px; font-weight: 800;
+    color: #0057FF; margin: 0 0 20px; margin-top: auto;
+  }
+  .top-btn {
+    display: flex; align-items: center; justify-content: center;
+    height: 48px; border-radius: 999px; background: #0057FF; color: #FFFFFF;
+    font-family: 'Manrope', var(--font); font-size: 15px; font-weight: 600; text-decoration: none;
+    transition: background var(--t-fast);
+  }
+  .top-btn:hover { background: #0046CC; }
+  .top-pie { text-align: center; margin-top: 40px; }
+  .top-ver-todos {
+    height: 56px; padding: 0 36px; border-radius: 999px; cursor: pointer;
+    background: #FFFFFF; color: #0057FF; border: 1.5px solid #0057FF;
+    font-family: 'Manrope', var(--font); font-size: 16px; font-weight: 600;
+    transition: background var(--t-fast);
+  }
+  .top-ver-todos:hover { background: #EAF2FF; }
+}
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -4264,6 +4323,19 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>Contraentrega en Lima y provincias</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>Marcas seleccionadas para pacientes bariátricos</li>
     </ul>
+  </div>
+  <!-- LOS MÁS BUSCADOS (≥1280px) — Bloque 03. Las tarjetas se dibujan
+       desde zb-catalogo.js (script junto a su <script src>), así el
+       precio nunca queda desactualizado. -->
+  <div class="top-pc">
+    <div class="top-head">
+      <h2>Los más buscados por pacientes bariátricos</h2>
+      <p>Los suplementos con mayor demanda en Zona Bariátrica.</p>
+    </div>
+    <div class="top-grid" id="topGrid"></div>
+    <div class="top-pie">
+      <button class="top-ver-todos" type="button" onclick="filtrar('todos');scrollProductos()">Ver todos los suplementos</button>
+    </div>
   </div>
   <!-- ========================================================
        BANNERS — una sola línea gráfica (Fase 3)
@@ -5115,6 +5187,43 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
      nutricionales. Debe cargarse ANTES del script principal:
      el catálogo se dibuja al arrancar la página. -->
 <script src="zb-catalogo.js"></script>
+<script>
+/* LOS MÁS BUSCADOS — ranking por ventas reales que pasó Roberto
+   (2026-09-23). Para cambiar el orden o un producto, tocar solo esta
+   lista: id del catálogo + nombre corto para la tarjeta. */
+(function () {
+  const TOP_VENTAS = [
+    { id: 'bf1', corto: 'Bariatric Fusion Multivitamínico Completo 120 tabletas' },
+    { id: 'bi3', corto: 'B&N Proteína Líquida Fresa 1 L' },
+    { id: 'bi7', corto: 'B&N Gomitas Multivitamínicas 120 und' },
+    { id: 'bi5', corto: 'B&N Gomitas Biotina 90 und' }
+  ];
+  const grid = document.getElementById('topGrid');
+  const cat = window.ZB_CATALOGO || [];
+  if (!grid) return;
+  const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  grid.innerHTML = TOP_VENTAS.map((t, i) => {
+    const p = cat.find(x => x.id === t.id);
+    if (!p) return '';
+    const wa = 'https://wa.me/51961841069?text=' +
+      encodeURIComponent('Hola, quiero comprar: ' + t.corto + ' (S/ ' + p.precio + ')');
+    return '<article class="top-card">' +
+      '<span class="top-badge">TOP #' + (i + 1) + '</span>' +
+      '<button class="top-img" type="button" onclick="abrirModal(\'' + p.id + '\')" aria-label="Ver ' + esc(t.corto) + '">' +
+        '<img src="' + p.img + '" alt="' + esc(t.corto) + '" width="1000" height="1000" loading="lazy" decoding="async">' +
+      '</button>' +
+      '<h3 class="top-nombre">' + esc(t.corto) + '</h3>' +
+      '<div class="top-precio">S/ ' + p.precio + '</div>' +
+      '<a class="top-btn" href="' + wa + '" target="_blank" rel="noopener" data-producto="' + p.id + '">Comprar por WhatsApp</a>' +
+    '</article>';
+  }).join('');
+  // Google Analytics: mismo evento que el catálogo de WhatsApp
+  grid.addEventListener('click', e => {
+    const a = e.target.closest('.top-btn');
+    if (a && typeof gtag === 'function') gtag('event', 'clic_whatsapp', { producto: a.dataset.producto, seccion: 'top_pc' });
+  });
+})();
+</script>
 
 <script>
 const WA = "51961841069";
