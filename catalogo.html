@@ -724,6 +724,8 @@ const P = {
     foto:"img/cat-whey-chocolate.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
   isolate: { uso:"Vía oral. Adultos: 1 porción (25 g, 1 cuchara) al día disuelta en 200-300 ml de agua.", marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295, nuevo:true,
     foto:"img/nf-whey-isolate.jpg", tabla:"img/tn-nutrifath.jpg", chips:["23 g proteína","Sin lactosa","Sin gluten","Sabor neutro"] },
+  geno: { uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.", marca:"Safie Pharma", nombre:"GENO DEEP CARE ADVANCE – Proteína Bariátrica 400 g", precio:180, nuevo:true,
+    foto:"img/sp-geno-frente.jpg", tabla:"img/tn-geno.jpg", chips:["19 g proteína","Whey Isolate","Colágeno hidrolizado","0 g azúcar"] },
 
   multivit: { uso:"4 gomitas al día.", marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150, bn:true,
     foto:"img/cat-gomita-multivit.jpg", tabla:"img/tn-multivitaminico.jpg", chips:["120 gomitas","23 vitaminas","Sin azúcar añadida"] },
@@ -787,13 +789,13 @@ const P = {
    ========================================================= */
 const IDS_TIENDA = {
   liquidaFresa:"bi3", liquidaMaracumango:"bi4", wheyVainilla:"bi1", wheyChocolate:"bi2",
-  isolate:"nf1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
+  isolate:"nf1", geno:"sp1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
   bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9",
   lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4"
   /* El Batido Balance Fit y el Multivitamínico Level Up todavía no
      están en zb-catalogo.js, así que su precio vive solo aquí. */
 };
-const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4"];
+const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4", "oferta5"];
 
 (function sincronizarPrecios() {
   const lista = window.ZB_CATALOGO;
@@ -814,7 +816,7 @@ const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4"];
 
 /* Qué producto va en cada sección (un mismo producto puede repetirse) */
 const CATALOGO = {
-  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","lvlVainilla","lvlChocolate","lvlBalanceFit"],
+  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","geno","lvlVainilla","lvlChocolate","lvlBalanceFit"],
   vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical","lvlMultivit"],
   fibraColageno: ["colageno","fibra","lvlColageno","lvlFibra"],
   /* Packs con precio rebajado, dibujados en la sección de Ofertas
@@ -824,7 +826,7 @@ const CATALOGO = {
   packs: [],
   /* Ofertas = los productos que tienen precio especial llevando 2.
      Sale de OFERTAS_X2, asi no hay dos listas que mantener. */
-  nuevos: ["lvlMultivit","lvlBalanceFit","isolate","colageno"]
+  nuevos: ["geno","lvlMultivit","lvlBalanceFit","isolate","colageno"]
 };
 
 /* =========================================================
@@ -843,7 +845,9 @@ const OFERTAS_X2 = [
   { nombre:"2 Multivitamínicos Bariatric Fusion", ids:["bfBayas","bfTropical"], precioPar:550,
     foto:"img/oferta-2multivit.jpg", incluye:"1 bayas mixtas + 1 tropical" },
   { nombre:"2 Whey Protein Isolate Nutrifath", ids:["isolate"], precioPar:580,
-    foto:"img/oferta-2nutrifath.jpg", incluye:"2 envases de 1 kg, sabor neutro" }
+    foto:"img/oferta-2nutrifath.jpg", incluye:"2 envases de 1 kg, sabor neutro" },
+  { nombre:"2 GENO DEEP CARE ADVANCE", ids:["geno"], precioPar:350,
+    foto:"img/oferta-2geno.jpg", incluye:"2 frascos de 400 g" }
 ];
 
 /* Descuento por cantidad — mismos tramos que la tienda */

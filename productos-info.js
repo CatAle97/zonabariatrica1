@@ -250,6 +250,24 @@
         { q: '¿A qué sabe si es sabor neutro?', r: 'Prácticamente a nada. Al no llevar saborizante se puede disolver en agua o sumar a caldos, yogur o preparaciones sin cambiarles el gusto, algo útil cuando los sabores dulces cansan tras la cirugía.' },
         { q: '¿Cuánto dura un envase de 1000g?', r: 'A razón de una porción de 25g al día, un envase rinde unos 40 días. Si tu indicación es de más de una porción diaria, durará proporcionalmente menos.' }
       ]
+    },
+
+    sp1: { // GENO DEEP CARE ADVANCE — Safie Pharma, 400 g
+      paraQuien: 'Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos, según la orientación de su profesional de salud.',
+      beneficios: [
+        '19 g de proteína por porción de 20 g',
+        'Proteína de suero aislada (Whey Isolate)',
+        'Con colágeno hidrolizado',
+        'Micronutrientes: vitamina C, zinc, cobre y selenio',
+        '0 g de azúcar y 0 g de grasa por porción',
+        '20 porciones por envase de 400 g'
+      ],
+      consumo: 'Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.',
+      faq: [
+        { q: '¿Cuánto rinde un frasco de 400 g?', r: 'Trae 20 porciones de 20 g (2 cucharadas). Cuánto te dura depende de las porciones que te indique tu profesional de salud.' },
+        { q: '¿Con qué se mezcla?', r: 'Con unos 200 ml de agua o con la bebida que te indique tu nutricionista o médico tratante.' },
+        { q: '¿Hay precio especial llevando dos?', r: 'Sí. Un frasco cuesta S/ 180 y llevando 2 pagas S/ 350: ahorras S/ 10.' }
+      ]
     }
 
   };

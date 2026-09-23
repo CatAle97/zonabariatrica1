@@ -16,6 +16,7 @@ const BN = "img/bn-";
 const LVL = "img/lvl-";
 const BF = "img/bf-";
 const NF = "img/nf-";
+const SP = "img/sp-";
 
 const tn = {
   fibra_bn: {
@@ -350,6 +351,23 @@ const tn = {
       ["Molibdeno (quelato)","18.8 mcg","42%"]
     ],
     nota: "Vía oral. Adultos: 1 tableta masticable al día; no exceder la dosis recomendada. Libre de lácteos, gluten, soya, maní, frutos secos, huevo, mariscos y pescado; sin conservantes, saborizantes, colorantes ni endulzantes artificiales. Conservar en lugar fresco y seco, a no más de 30 °C. Los complementos alimenticios no deben utilizarse como sustitutos de una dieta variada y equilibrada."
+  },
+  /* GENO DEEP CARE ADVANCE (Safie Pharma). Transcrita de la
+     etiqueta del envase (foto del 23-09-2026). */
+  geno: {
+    srv: "20 g (2 cucharadas)", srvs: "20 porciones por envase",
+    filas: [
+      ["Energía","76 kcal","3.8%"],
+      ["Proteína","19 g","26%"],
+      ["Carbohidratos totales","0.5 g","0.2%"],
+      ["Azúcares","0 g","0%"],
+      ["Grasa total","0 g","0%"],
+      ["Grasa saturada","0 g","0%"],
+      ["Colesterol","0 mg","0%"],
+      ["Sodio","0 mg","0%"],
+      ["Fibra dietética","0 g","0%"]
+    ],
+    nota: "Los porcentajes de valores diarios están basados en una dieta de 2000 calorías. Consumir según las recomendaciones de tu profesional de salud."
   }
 };
 const productos = [
@@ -406,6 +424,19 @@ const productos = [
     img: "img/oferta-2nutrifath.jpg",
     uso:"Vía oral. Adultos: 1 porción (25g, 1 cuchara) al día disuelta en 200-300ml de agua.",
     tn: tn.nf_isolate },
+
+  /* Oferta por cantidad de GENO DEEP CARE ADVANCE (23-09-2026).
+     La unidad cuesta S/180; llevando 2 salen S/350 (ahorro S/10). */
+  { id:"oferta5", tipo:"oferta", marcaTipo:"sp",
+    brand:"Safie Pharma", eligibleForBnQuantityDiscount:false, cat:"oferta", destacado:true, marca:"Safie Pharma",
+    nombre:"Pack x2 GENO DEEP CARE ADVANCE",
+    desc:"Llévate 2 frascos de 400 g de GENO DEEP CARE ADVANCE, proteína con Whey Isolate, colágeno hidrolizado y micronutrientes. Son 40 porciones en total.",
+    incluye:"GENO DEEP CARE ADVANCE 400 g x2",
+    tags:["800 g en total","19 g proteína","Whey Isolate","Colágeno hidrolizado"],
+    precio:350, precioN:360, ahorro:10,
+    img: "img/oferta-2geno.jpg",
+    uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.",
+    tn: tn.geno },
 
   // BARI&NUTRITION PACKS
   { id:"bp1", tipo:"pack", marcaTipo:"bn",
@@ -820,7 +851,22 @@ const productos = [
     img: NF+"whey-isolate.jpg",
     galeria: [NF+"whey-isolate.jpg", "img/tn-nutrifath.jpg"],
     uso:"Vía oral. Adultos: 1 porción (25g, 1 cuchara) al día disuelta en 200-300ml de agua.",
-    tn: tn.nf_isolate }
+    tn: tn.nf_isolate },
+
+  // SAFIE PHARMA
+  /* Alta del 23-09-2026. Marca nueva en la tienda: Safie Pharma.
+     No participa del descuento por cantidad de B&N — su oferta por
+     cantidad es el pack x2 (oferta5). */
+  { id:"sp1", tipo:"sp", marcaTipo:"sp",
+    brand:"Safie Pharma", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", destacado:true, marca:"Safie Pharma",
+    nombre:"GENO DEEP CARE ADVANCE – Proteína Bariátrica 400 g",
+    desc:"Proteína especializada con Whey Isolate, colágeno hidrolizado y micronutrientes: 19 g de proteína por porción de 20 g. Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos, según la orientación de su profesional de salud.",
+    tags:["19g proteína","Whey Isolate","Colágeno hidrolizado","0g azúcar","20 porciones"],
+    precio:180,
+    img: SP+"geno-frente.jpg",
+    galeria: [SP+"geno-frente.jpg", SP+"geno-posterior.jpg", "img/oferta-2geno.jpg", "img/tn-geno.jpg"],
+    uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.",
+    tn: tn.geno }
 ];
 
 /* =========================================================
@@ -895,7 +941,8 @@ const slugs = {
   li4: "fibra-get-out-manzana-verde",
   bf1: "multivitaminico-tropical-tabletas",
   bf2: "multivitaminico-bayas-tabletas",
-  nf1: "whey-protein-isolate-nutrifath"
+  nf1: "whey-protein-isolate-nutrifath",
+  sp1: "geno-deep-care-advance"
 };
 
 /* Devuelve la dirección de la ficha de un producto, o null si
