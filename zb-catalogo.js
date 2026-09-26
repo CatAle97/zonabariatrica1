@@ -561,8 +561,7 @@ const productos = [
      Solo entraron los que no se podían pedir ya: lp1, lp2 y lp3
      traen seleccionSabor, así que la versión vainilla de esos packs
      se pide desde ahí mismo y no hace falta duplicarlos. Lo que sí
-     faltaba: los dos del MISMO sabor por duplicado, el batido
-     Balance Fit con fibra, y el Pack Mini. */
+     faltaba: los dos del MISMO sabor por duplicado y el Pack Mini. */
   { id:"lp8", tipo:"pack", marcaTipo:"lvl",
     brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"LVL Drink",
     nombre:"Pack Doble Proteína Chocolate",
@@ -582,16 +581,6 @@ const productos = [
     precio:399, precioN:418, ahorro:19,
     img: LVL+"pack-doble-vainilla.jpg",
     uso:"Disolver 1 scoop (40g) en 250ml de agua al día.", tn: tn.lvl_pro },
-
-  { id:"lp10", tipo:"pack", marcaTipo:"lvl",
-    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"LVL Drink",
-    nombre:"Pack Balance Fit + Fibra",
-    desc:"Batido Balance Fit para el control de peso más un pote de Fibra Manzana Verde.",
-    incluye:"Batido Balance Fit 1kg · Fibra Manzana Verde 200g",
-    tags:["2 productos","20g proteína","6g fibra"],
-    precio:269, precioN:288, ahorro:19,
-    img: LVL+"pack-balance-fibra.jpg",
-    uso:"Disolver cada uno en 250ml de agua, en momentos distintos del día.", tn:null },
 
   /* El único cuyo precioN viene del fabricante: es un muestrario de
      presentaciones chicas y no hay un equivalente suelto que sumar. */
