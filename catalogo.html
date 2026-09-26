@@ -679,6 +679,11 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
         <input id="inpNombre" type="text" autocomplete="name" placeholder="Ej: María">
         <p class="error" id="errNombre" hidden>Escribe tu nombre para registrar el pedido.</p>
       </div>
+      <div class="campo">
+        <label for="inpDni">DNI</label>
+        <input id="inpDni" type="text" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="Ej: 45678912">
+        <p class="error" id="errDni" hidden>Escribe tu DNI (8 dígitos) para registrar el pedido.</p>
+      </div>
       <a class="btn-pedido" id="btnPedido" target="_blank" rel="noopener" href="#">
         <svg><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
       <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
@@ -1152,6 +1157,7 @@ function mensajeWA() {
   }
   m += "\uD83D\uDCB5 *Pago:* Contra entrega" + S;
   if (datos.nombre) m += "\uD83D\uDC64 *Nombre:* " + datos.nombre + S;
+  if (datos.dni) m += "🪪 *DNI:* " + datos.dni + S;
   m += S + RAYA + S + S;
   m += "Quedo atento(a) a la *confirmación del costo de envío* y al *total final de mi pedido*. ¡Muchas gracias! \uD83D\uDE0A";
   return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(m);
@@ -1236,11 +1242,15 @@ function pintarFlotante() {
    corre por cuenta del cliente. Se guardan en su celular para
    que no los vuelva a escribir la próxima vez.
    ========================================================= */
-let datos = { tipo:"", zona:"", nombre:"" };
+let datos = { tipo:"", zona:"", nombre:"", dni:"" };
 try { datos = Object.assign(datos, JSON.parse(localStorage.getItem("zb_datos")) || {}); } catch (e) {}
 
 const inpZona = document.getElementById("inpZona");
 const inpNombre = document.getElementById("inpNombre");
+const inpDni = document.getElementById("inpDni");
+/* DNI peruano = 8 dígitos. Se deja pasar hasta 12 por si es
+   carnet de extranjería. Solo se guardan los números. */
+function dniValido(d) { return /^[0-9]{8,12}$/.test(d); }
 const campoZona = document.getElementById("campoZona");
 const labelZona = document.getElementById("labelZona");
 
@@ -1267,6 +1277,9 @@ function elegirZona(tipo, limpiarTexto) {
 function anotar() {
   datos.zona = inpZona.value.trim();
   datos.nombre = inpNombre.value.trim();
+  const soloNumeros = inpDni.value.replace(/[^0-9]/g, "");
+  if (inpDni.value !== soloNumeros) inpDni.value = soloNumeros;
+  datos.dni = soloNumeros;
   try { localStorage.setItem("zb_datos", JSON.stringify(datos)); } catch (e) {}
   if (datos.zona) {
     inpZona.classList.remove("mal");
@@ -1276,15 +1289,20 @@ function anotar() {
     inpNombre.classList.remove("mal");
     document.getElementById("errNombre").hidden = true;
   }
+  if (dniValido(datos.dni)) {
+    inpDni.classList.remove("mal");
+    document.getElementById("errDni").hidden = true;
+  }
   document.getElementById("btnPedido").href = mensajeWA();
 }
 inpZona.addEventListener("input", anotar);
 inpNombre.addEventListener("input", anotar);
+inpDni.addEventListener("input", anotar);
 
 /* Al escribir, el teclado del celular tapa la mitad de abajo.
    Dos cosas lo evitan: la ventana se encoge a lo que queda
    visible, y el campo se centra dentro de ella. */
-[inpZona, inpNombre].forEach(campo => {
+[inpZona, inpNombre, inpDni].forEach(campo => {
   campo.addEventListener("focus", () => {
     setTimeout(() => campo.scrollIntoView({ block: "center", behavior: "smooth" }), 350);
   });
@@ -1316,6 +1334,7 @@ document.querySelectorAll(".opcion").forEach(b => {
 
 /* Si ya pidió antes, se le deja puesto lo de la vez pasada */
 inpNombre.value = datos.nombre;
+inpDni.value = datos.dni || "";
 if (datos.tipo) { elegirZona(datos.tipo, false); inpZona.value = datos.zona; anotar(); }
 
 function pintarTodo() { pintarCatalogo(); pintarPanel(); pintarFlotante(); }
@@ -1419,6 +1438,13 @@ document.addEventListener("click", e => {
       inpNombre.classList.add("mal");
       document.getElementById("errNombre").hidden = false;
       inpNombre.focus();
+      return;
+    }
+    if (!dniValido(datos.dni)) {
+      e.preventDefault();
+      inpDni.classList.add("mal");
+      document.getElementById("errDni").hidden = false;
+      inpDni.focus();
       return;
     }
     if (typeof gtag === "function") {
