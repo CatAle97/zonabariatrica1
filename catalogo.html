@@ -769,10 +769,6 @@ const P = {
     foto:"img/cat-lvl-proteina-vainilla.jpg", tabla:"img/tn-lvl-proteina-vainilla.jpg", chips:["27 g proteína","25 porciones","Stevia natural","Sin gluten"] },
   lvlChocolate: { sabor:"Chocolate", uso:"Disolver 1 scoop (40 g) en 250 ml de agua. Consumir una vez al día.", marca:"LVL Drink", nombre:"Proteína HIGH ISO Chocolate 1 kg", precio:209,
     foto:"img/cat-lvl-proteina-chocolate.jpg", tabla:"img/tn-lvl-proteina-chocolate.jpg", chips:["27 g proteína","25 porciones","100% cacao","Sin gluten"] },
-  lvlBalanceFit: { sabor:"Vainilla francesa", uso:"Disolver 1 porción en 250 ml de agua. Consumir según indicación de tu equipo médico.", marca:"LVL Drink", nombre:"Batido Balance Fit Vainilla 1 kg", precio:209, nuevo:true,
-    foto:"img/cat-lvl-batido-para-el-control-de-peso.jpg", chips:["20 g proteína","Con fibra","Vitaminas y minerales","Sin azúcar añadida"] },
-  lvlMultivit: { uso:"Disolver 1 porción (10 g) en 250 ml de agua al día.", marca:"LVL Drink", nombre:"Multivitamínico Level Up 300 g", precio:109, nuevo:true,
-    foto:"img/cat-lvl-multivitaminico-energizante.jpg", chips:["30 porciones","12 kcal","Sabor arándano","Vitaminas y minerales"] },
   lvlColageno: { uso:"Disolver 1 scoop (12 g) en 250 ml de agua al día. Se recomienda consumir en ayunas o antes de acostarse.", marca:"LVL Drink", nombre:"Colágeno SKINFINITY 500 g", precio:109,
     foto:"img/cat-lvl-colageno-hidrolizado-biotina.jpg", tabla:"img/tn-lvl-colageno.jpg", chips:["12 g por servicio","41 porciones","10,000 mcg biotina","40 kcal"] },
   lvlFibra: { uso:"Disolver 1 scoop (10 g) en 250 ml de agua al día.", marca:"LVL Drink", nombre:"Fibra GET OUT Manzana Verde 200 g", precio:79,
@@ -792,8 +788,6 @@ const IDS_TIENDA = {
   isolate:"nf1", geno:"sp1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
   bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9",
   lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4"
-  /* El Batido Balance Fit y el Multivitamínico Level Up todavía no
-     están en zb-catalogo.js, así que su precio vive solo aquí. */
 };
 const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4", "oferta5"];
 
@@ -816,8 +810,8 @@ const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4", "oferta5"];
 
 /* Qué producto va en cada sección (un mismo producto puede repetirse) */
 const CATALOGO = {
-  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","geno","lvlVainilla","lvlChocolate","lvlBalanceFit"],
-  vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical","lvlMultivit"],
+  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","geno","lvlVainilla","lvlChocolate"],
+  vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical"],
   fibraColageno: ["colageno","fibra","lvlColageno","lvlFibra"],
   /* Packs con precio rebajado, dibujados en la sección de Ofertas
      después de las ofertas x2. Vacío a propósito (16-09-2026): los
@@ -826,7 +820,7 @@ const CATALOGO = {
   packs: [],
   /* Ofertas = los productos que tienen precio especial llevando 2.
      Sale de OFERTAS_X2, asi no hay dos listas que mantener. */
-  nuevos: ["geno","lvlMultivit","lvlBalanceFit","isolate","colageno"]
+  nuevos: ["geno","isolate","colageno"]
 };
 
 /* =========================================================

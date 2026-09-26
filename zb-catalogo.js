@@ -775,32 +775,6 @@ const productos = [
     uso:"Disolver 1 scoop (10g) en 250ml de agua al día.",
     tn: tn.lvl_fib },
 
-  /* Los dos individuales que LVL vende y aquí no se ofrecían.
-     Entraron el 16-09-2026 con el precio de venta de LVL.
-     Todavía sin tabla nutricional (tn:null) ni ficha propia: por eso
-     no figuran en `slugs`, así no se enlaza una página que no existe. */
-  { id:"li5", tipo:"lvl", marcaTipo:"lvl",
-    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", marca:"LVL Drink",
-    nombre:"Batido Balance Fit Vainilla 1kg",
-    desc:"Batido para el control de peso con 20g de proteína por porción, fibra, vitaminas y minerales. Sabor vainilla francesa, endulzado con stevia y sin azúcar añadida.",
-    tags:["20g proteína","Con fibra","Vitaminas y minerales","Sin azúcar añadida","Apto bariátrico"],
-    precio:209,
-    img: LVL+"balance-fit.jpg",
-    galeria: [LVL+"balance-fit.jpg"],
-    uso:"Disolver 1 porción en 250ml de agua. Consumir según indicación de tu equipo médico.",
-    tn: null },
-
-  { id:"li6", tipo:"lvl", marcaTipo:"lvl",
-    brand:"LVL Drink", eligibleForBnQuantityDiscount:false, cat:"vitaminas", subcat:"multivit", marca:"LVL Drink",
-    nombre:"Multivitamínico Level Up 300g",
-    desc:"Multivitamínico en polvo con vitaminas, minerales, maca negra, ginseng y guaraná. Sabor arándano, 12 kcal por porción. 30 porciones por envase.",
-    tags:["30 porciones","12 kcal","Sabor arándano","Con maca y ginseng","Apto bariátrico"],
-    precio:109,
-    img: LVL+"multivitaminico.jpg",
-    galeria: [LVL+"multivitaminico.jpg"],
-    uso:"Disolver 1 porción (10g) en 250ml de agua al día.",
-    tn: null },
-
   /* BARIATRIC FUSION — actualizado el 04-09-2026.
      ---------------------------------------------------------
      Los DOS sabores están a la venta a S/280 cada uno (antes
