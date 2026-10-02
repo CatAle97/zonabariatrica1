@@ -920,3 +920,42 @@ window.ZB_CATALOGO = productos;
 window.ZB_TN = tn;
 window.ZB_SLUGS = slugs;
 window.ZB_URL_PRODUCTO = urlProducto;
+
+/* =========================================================
+   REGLAS DE COBRO (2026-10-01) — fuente única de verdad
+   ---------------------------------------------------------
+   Las usan el checkout de la web Y el cobro con tarjeta online
+   (la función "izipay" en Supabase descarga ESTE archivo para
+   calcular el monto real, así nadie puede pagar menos editando
+   la página). Si cambias una tarifa o un descuento, cámbialo
+   solo aquí: la web y el cobro se actualizan juntos.
+   ========================================================= */
+const reglasCobro = {
+  /* Descuento fijo en soles según unidades B&N elegibles
+     (eligibleForBnQuantityDiscount). Se aplica el tramo más alto. */
+  descuentoBN: {
+    nombre: 'Descuento B&N',
+    tramos: [ { min: 4, desc: 40 }, { min: 3, desc: 25 }, { min: 2, desc: 15 } ]
+  },
+  trasladoProvincia: 10,   // traslado y embalaje a agencia Shalom
+  recargoTarjeta: 0.04     // 4% sobre productos + envío
+};
+
+/* Delivery en Lima y Callao por distrito (S/). */
+const tarifasDeliveryLima = {
+  "Ancón": 25, "Ate": 18, "Barranco": 18, "Bellavista": 10, "Breña": 12,
+  "Callao": 10, "Carabayllo": 25, "Carmen de la Legua Reynoso": 10,
+  "Cercado de Lima": 12, "Chaclacayo": 25, "Chorrillos": 20, "Cieneguilla": 25,
+  "Comas": 20, "El Agustino": 15, "Independencia": 15, "Jesús María": 12,
+  "La Molina": 20, "La Perla": 10, "La Punta": 12, "La Victoria": 12,
+  "Lince": 12, "Los Olivos": 15, "Lurigancho - Chosica": 25, "Lurín": 25,
+  "Magdalena del Mar": 12, "Mi Perú": 20, "Miraflores": 15, "Pachacámac": 25,
+  "Pueblo Libre": 12, "Puente Piedra": 20, "Rímac": 12, "San Borja": 15,
+  "San Isidro": 15, "San Juan de Lurigancho": 20, "San Juan de Miraflores": 20,
+  "San Luis": 12, "San Martín de Porres": 12, "San Miguel": 12,
+  "Santa Anita": 18, "Santa Rosa": 25, "Santiago de Surco": 18,
+  "Surquillo": 15, "Ventanilla": 20, "Villa El Salvador": 20,
+  "Villa María del Triunfo": 20
+};
+window.ZB_REGLAS_COBRO = reglasCobro;
+window.ZB_TARIFAS_LIMA = tarifasDeliveryLima;
