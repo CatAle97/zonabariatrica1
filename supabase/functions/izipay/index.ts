@@ -124,7 +124,10 @@ async function registrarResultado(krAnswer: string) {
 async function crear(body: any) {
   const usuario = Deno.env.get("IZIPAY_USUARIO");
   const clave = Deno.env.get("IZIPAY_CLAVE");
-  const clavePublica = Deno.env.get("IZIPAY_CLAVE_PUBLICA");
+  // El formulario necesita "usuario:testpublickey_...". En el panel de Izipay a veces se
+  // copia solo la parte después de los dos puntos: se completa con el usuario.
+  const publicaCruda = (Deno.env.get("IZIPAY_CLAVE_PUBLICA") || "").trim();
+  const clavePublica = publicaCruda && !publicaCruda.includes(":") && usuario ? usuario.trim() + ":" + publicaCruda : publicaCruda;
   if (!usuario || !clave || !clavePublica) return json({ error: "Pago con tarjeta no configurado todavía." }, 503);
 
   const zona = body.zona === "provincia" ? "provincia" : "lima";
@@ -167,7 +170,11 @@ async function crear(body: any) {
   const r = await res.json();
   if (r.status !== "SUCCESS") {
     console.error("Izipay CreatePayment falló", JSON.stringify(r));
-    return json({ error: "No se pudo iniciar el pago. Intenta de nuevo o paga con Yape." }, 502);
+    return json({
+      error: "No se pudo iniciar el pago. Intenta de nuevo o paga con Yape.",
+      // Código de Izipay (no es secreto): ayuda a diagnosticar sin entrar a los logs.
+      detalle: [r?.answer?.errorCode, r?.answer?.errorMessage, r?.answer?.detailedErrorMessage].filter(Boolean).join(" · "),
+    }, 502);
   }
 
   await db.from("pagos_web").insert({
