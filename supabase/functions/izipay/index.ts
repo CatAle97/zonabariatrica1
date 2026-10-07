@@ -206,6 +206,11 @@ async function ipn(req: Request) {
   const form = await req.formData();
   const krAnswer = String(form.get("kr-answer") || "");
   const krHash = String(form.get("kr-hash") || "");
+  // Los pagos que no salen del checkout de la web (p. ej. links de pago
+  // creados en el panel de Izipay) avisan en otro formato (campos vads_*).
+  // No son pedidos de la web: se confirma recepción para que Izipay no
+  // marque error ni reintente. El pago igual queda en el panel de Izipay.
+  if (!krAnswer) return new Response("OK (pago fuera de la web)", { status: 200 });
   const tipo = String(form.get("kr-hash-key") || "password");
   const clave = tipo === "sha256_hmac" ? Deno.env.get("IZIPAY_HMAC") : Deno.env.get("IZIPAY_CLAVE");
   if (!clave || (await hmacHex(krAnswer, clave)) !== krHash) {
