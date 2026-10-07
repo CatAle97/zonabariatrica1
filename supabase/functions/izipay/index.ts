@@ -117,7 +117,9 @@ async function registrarResultado(krAnswer: string) {
       actualizado_en: new Date().toISOString(),
     }).eq("order_id", orderId);
   }
-  return { orderId, estado, monto: (answer?.orderDetails?.orderTotalAmount || 0) / 100, uuid: tx.uuid || null };
+  // modo "TEST" = tarjeta de prueba, no es dinero real.
+  const modo = answer?.orderDetails?.mode || "PRODUCTION";
+  return { orderId, estado, modo, monto: (answer?.orderDetails?.orderTotalAmount || 0) / 100, uuid: tx.uuid || null };
 }
 
 // ---------- Acciones ----------

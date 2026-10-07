@@ -3959,6 +3959,23 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 
 <!-- MODAL DATOS CLIENTE -->
 <!-- PEDIDO (formato del catálogo: lista con fotos + cuentas + datos de entrega) -->
+<!-- Pago con tarjeta (Izipay). El formulario lo dibuja Izipay dentro de #zbPagoForm. -->
+<div class="cot-confirm" id="modalPagoTarjeta">
+  <div class="cot-confirm-box" style="max-width:430px;text-align:left;max-height:94vh;overflow-y:auto;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="flex:1;">
+        <h3 style="font-size:19px;font-weight:700;margin:0;color:var(--text);">Pago con tarjeta</h3>
+        <p id="zbPagoResumen" style="font-size:12.5px;color:var(--text-muted);margin:2px 0 0;"></p>
+      </div>
+      <button onclick="cerrarPagoTarjeta()" aria-label="Cerrar" style="width:38px;height:38px;border:none;background:none;font-size:24px;line-height:1;color:var(--text-muted);cursor:pointer;">&times;</button>
+    </div>
+    <div id="zbPagoEstado" style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">Cargando formulario seguro…</div>
+    <div id="zbPagoForm"><div class="kr-embedded"></div></div>
+    <button onclick="cambiarAYape()" style="width:100%;margin-top:12px;background:none;border:1.5px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-size:13px;cursor:pointer;padding:10px;font-family:inherit;">¿Problemas con la tarjeta? Pide y paga con Yape al recibir</button>
+    <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:12px;">🔒 Tus datos de tarjeta los procesa Izipay. Zona Bariátrica no los ve ni los guarda.</p>
+  </div>
+</div>
+
 <div class="cot-confirm" id="modalDatosCliente">
   <div class="cot-confirm-box" style="max-width:430px;text-align:left;padding:0;max-height:94vh;overflow:hidden;display:flex;flex-direction:column;">
 
@@ -3999,7 +4016,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:700;color:var(--blue);border-top:1px solid var(--border);padding-top:9px;margin-top:5px;">
           <span>Total</span><span id="formTotal">S/ 0</span>
         </div>
-        <p style="font-size:11.5px;color:var(--text-muted);margin:6px 0 0;">No incluye el delivery</p>
+        <p id="formNotaTotal" style="font-size:11.5px;color:var(--text-muted);margin:6px 0 0;"></p>
       </div>
 
       <!-- Envío / Entrega -->
@@ -4024,6 +4041,10 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
               <span style="font-size:13px;font-weight:600;color:var(--text);">PROVINCIA</span>
             </label>
           </div>
+          <div id="distritoBox" style="margin-top:8px;">
+            <label for="clienteDistrito" style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Distrito *</label>
+            <select id="clienteDistrito" onchange="actualizarTotalForm()" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:16px;font-family:inherit;background:#fff;color:var(--text);"></select>
+          </div>
           <div id="entregaDetalle" style="margin-top:8px;padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);font-size:12px;color:var(--text);line-height:1.5;"></div>
           <div id="avisoTraslado" style="display:none;margin-top:8px;padding:9px 12px;background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:var(--r-sm);font-size:12px;color:#92400E;font-weight:500;">
             📦 Se agregará <strong>S/ 10</strong> por traslado y embalaje a agencia Shalom.
@@ -4041,13 +4062,13 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         </div>
 
         <div>
-          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">¿Cómo pagas al recibir? *</label>
+          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">¿Cómo pagas? *</label>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <label id="formLabelYape" style="display:flex;align-items:center;gap:10px;padding:11px 13px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);">
               <input type="radio" name="formMetodoPago" value="yape" checked style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
               <img src="img/logo-yape.png" alt="Yape" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
               <div>
-                <div style="font-size:13px;font-weight:700;color:var(--text);">Yape o transferencia BCP</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text);">Yape o transferencia BCP — al recibir</div>
                 <div style="font-size:11px;color:var(--text-muted);">Sin costo adicional · no aceptamos efectivo</div>
               </div>
             </label>
@@ -4055,21 +4076,26 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
               <input type="radio" name="formMetodoPago" value="tarjeta" style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
               <img src="img/logo-izipay.png" alt="Izipay" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
               <div>
-                <div style="font-size:13px;font-weight:700;color:var(--text);">Tarjeta al recibir</div>
-                <div style="font-size:11px;color:#dc2626;font-weight:600;">+ 4% de recargo</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text);">Tarjeta — pagas ahora en línea</div>
+                <div style="font-size:11px;color:var(--text-muted);">Débito o crédito, pago seguro con Izipay · <span style="color:#dc2626;font-weight:600;">+ 4% de recargo</span></div>
               </div>
             </label>
           </div>
         </div>
       </div>
 
-      <div style="margin-top:14px;background:#F0FDF4;border-left:3px solid #16A34A;border-radius:var(--r-sm);padding:10px 13px;font-size:12px;color:#166534;line-height:1.5;">
-        ✅ <strong>Pagas al recibir tu pedido.</strong> Te escribimos por WhatsApp para confirmar la entrega y el costo exacto del envío.
+      <div id="emailBox" style="display:none;margin-top:12px;">
+        <label for="clienteEmail" style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Correo electrónico * <span style="font-weight:400;">(ahí te llega el comprobante del pago)</span></label>
+        <input id="clienteEmail" type="email" autocomplete="email" inputmode="email" placeholder="tucorreo@ejemplo.com" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:16px;font-family:inherit;outline:none;">
       </div>
 
-      <button class="cot-confirm-btn" onclick="enviarConDatos()" style="margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <div id="formNotaPago" style="margin-top:14px;background:#F0FDF4;border-left:3px solid #16A34A;border-radius:var(--r-sm);padding:10px 13px;font-size:12px;color:#166534;line-height:1.5;">
+        ✅ <strong>Pagas al recibir tu pedido.</strong> Te escribimos por WhatsApp para confirmar la entrega.
+      </div>
+
+      <button id="btnEnviarPedido" class="cot-confirm-btn" onclick="enviarConDatos()" style="margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.529 5.858L.057 23.5l5.805-1.48A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.368l-.36-.214-3.444.878.908-3.334-.235-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
-        Enviar mi pedido por WhatsApp
+        <span id="btnEnviarTexto">Enviar mi pedido por WhatsApp</span>
       </button>
       <button onclick="cerrarDatosCliente()" style="width:100%;margin-top:8px;background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;padding:6px;font-family:inherit;">Seguir comprando</button>
       <p style="text-align:center;font-size:11.5px;color:var(--text-muted);margin-top:10px;">Compra segura con el respaldo de Zona Bariátrica</p>
@@ -6646,10 +6672,9 @@ function calcularSubtotal() {
    PARA CAMBIAR LOS MONTOS: edita solo DESCUENTO_BN. El carrito, el
    resumen de pago y el mensaje de WhatsApp leen de aquí, así que se
    actualizan solos. */
-const DESCUENTO_BN = {
-  nombre: 'Descuento B&N',
-  tramos: [ { min: 4, desc: 40 }, { min: 3, desc: 25 }, { min: 2, desc: 15 } ]
-};
+/* Los tramos viven en zb-catalogo.js (reglasCobro) desde 2026-10-01:
+   el cobro con tarjeta online calcula con los mismos números. */
+const DESCUENTO_BN = reglasCobro.descuentoBN;
 
 /* Suma las unidades elegibles. Cuenta cantidades reales, no líneas
    del carrito: una whey con cantidad 2 son 2 unidades. */
@@ -6888,8 +6913,7 @@ function actualizarZona() {
   if (det) det.innerHTML = esProv
     ? '📦 Llega en <strong>2 a 5 días hábiles</strong> a la agencia Shalom más cercana a ti.'
     : textoEntregaLima();
-  const envioVal = document.getElementById('formEnvioVal');
-  if (envioVal) envioVal.textContent = esProv ? 'Se paga en agencia Shalom' : 'Se confirma por WhatsApp';
+  document.getElementById('distritoBox').style.display = esProv ? 'none' : 'block';
   document.getElementById('avisoTraslado').style.display = esProv ? 'block' : 'none';
   document.getElementById('formTrasladoFila').style.display = esProv ? 'flex' : 'none';
   document.getElementById('zonaLimaLabel').style.borderColor = esProv ? 'var(--border)' : 'var(--blue)';
@@ -6946,13 +6970,50 @@ function pintarCheckoutLista() {
   }
 }
 
-function actualizarTotalForm() {
-  const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
-  const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
+/* Llena el selector de distritos desde zb-catalogo.js (tarifasDeliveryLima). */
+function llenarDistritos() {
+  const sel = document.getElementById('clienteDistrito');
+  if (!sel || sel.options.length) return;
+  sel.innerHTML = '<option value="">Elige tu distrito</option>' +
+    Object.keys(tarifasDeliveryLima).sort((a, b) => a.localeCompare(b, 'es'))
+      .map(d => '<option value="' + d + '">' + d + ' — S/ ' + tarifasDeliveryLima[d] + '</option>').join('');
+}
+
+/* Desglose del pedido. La función "izipay" en Supabase hace EXACTAMENTE
+   este mismo cálculo con zb-catalogo.js para cobrar con tarjeta. */
+function calcularCobro(metodo, zona, distrito) {
   const sub = calcularSubtotal();
   const descBN = calcularDescuentoBN();
   const base = sub - descBN;
-  const traslado = esProv ? 10 : 0;
+  const esProv = zona === 'provincia';
+  const delivery = esProv ? 0 : (tarifasDeliveryLima[distrito] || 0);
+  const traslado = esProv ? reglasCobro.trasladoProvincia : 0;
+  const recargo = metodo === 'tarjeta' ? Math.round((base + traslado + delivery) * reglasCobro.recargoTarjeta * 100) / 100 : 0;
+  return { sub, descBN, base, delivery, traslado, recargo, total: Math.round((base + traslado + delivery + recargo) * 100) / 100 };
+}
+
+function actualizarTotalForm() {
+  llenarDistritos();
+  const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
+  const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
+  const distrito = document.getElementById('clienteDistrito')?.value || '';
+  const cobro = calcularCobro(metodo, esProv ? 'provincia' : 'lima', distrito);
+  const sub = cobro.sub;
+  const descBN = cobro.descBN;
+  const base = cobro.base;
+  const traslado = cobro.traslado;
+  const esTarjeta = metodo === 'tarjeta';
+  const envioVal = document.getElementById('formEnvioVal');
+  if (envioVal) envioVal.textContent = esProv ? 'Flete Shalom: se paga en agencia' : (distrito ? 'S/ ' + cobro.delivery.toFixed(2) : 'Elige tu distrito');
+  const nota = document.getElementById('formNotaTotal');
+  if (nota) nota.textContent = esProv ? 'El flete de Shalom se paga al recoger en la agencia.' : (distrito ? 'Incluye el delivery a ' + distrito + '.' : 'Elige tu distrito para sumar el delivery.');
+  document.getElementById('emailBox').style.display = esTarjeta ? 'block' : 'none';
+  document.getElementById('formNotaPago').innerHTML = esTarjeta
+    ? '🔒 <strong>Pagas ahora con tarjeta</strong> en un formulario seguro de Izipay. Luego te escribimos por WhatsApp para coordinar la entrega.'
+    : '✅ <strong>Pagas al recibir tu pedido.</strong> Te escribimos por WhatsApp para confirmar la entrega.';
+  const iconoWa = document.querySelector('#btnEnviarPedido svg');
+  if (iconoWa) iconoWa.style.display = esTarjeta ? 'none' : '';
+  document.getElementById('btnEnviarTexto').textContent = esTarjeta ? 'Pagar S/ ' + cobro.total.toFixed(2) + ' con tarjeta' : 'Enviar mi pedido por WhatsApp';
   const recargoFila = document.getElementById('formRecargoFila');
   const recargoVal = document.getElementById('formRecargoVal');
   const totalEl = document.getElementById('formTotal');
@@ -6969,17 +7030,16 @@ function actualizarTotalForm() {
     descFila.style.display = 'none';
   }
   if (metodo === 'tarjeta') {
-    const recargo = Math.round((base + traslado) * 0.04 * 100) / 100;
     recargoFila.style.display = 'flex';
-    recargoVal.textContent = 'S/ ' + recargo.toFixed(2);
-    totalEl.textContent = 'S/ ' + (base + traslado + recargo).toFixed(2);
+    recargoVal.textContent = 'S/ ' + cobro.recargo.toFixed(2);
+    totalEl.textContent = 'S/ ' + cobro.total.toFixed(2);
     labelYape.style.borderColor = 'var(--border)';
     labelYape.style.background = 'var(--surface)';
     labelIzipay.style.borderColor = 'var(--blue)';
     labelIzipay.style.background = 'var(--blue-light)';
   } else {
     recargoFila.style.display = 'none';
-    totalEl.textContent = 'S/ ' + (base + traslado);
+    totalEl.textContent = 'S/ ' + cobro.total;
     labelYape.style.borderColor = 'var(--blue)';
     labelYape.style.background = 'var(--blue-light)';
     labelIzipay.style.borderColor = 'var(--border)';
@@ -7008,8 +7068,24 @@ function enviarConDatos() {
     document.getElementById('clienteNombre').focus();
     return;
   }
+  const distrito = zona === 'lima' ? document.getElementById('clienteDistrito').value : '';
+  if (zona === 'lima' && !distrito) {
+    alert('Elige tu distrito para calcular el delivery.');
+    document.getElementById('clienteDistrito').focus();
+    return;
+  }
+  if (metodo === 'tarjeta') {
+    const email = document.getElementById('clienteEmail').value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      alert('Escribe tu correo: ahí te llega el comprobante del pago.');
+      document.getElementById('clienteEmail').focus();
+      return;
+    }
+    iniciarPagoTarjeta({ nombre, direccion, zona, distrito, email });
+    return;
+  }
   cerrarDatosCliente();
-  enviarCotizacion(nombre, direccion, metodo, zona);
+  enviarCotizacion(nombre, direccion, metodo, zona, distrito, null);
 }
 
 
@@ -7020,7 +7096,7 @@ function enviarConDatos() {
 
 
 
-function enviarCotizacion(nombre, direccion, metodo, zona) {
+function enviarCotizacion(nombre, direccion, metodo, zona, distrito, pago) {
   if (!carrito.length) return;
   const S = '\n';
   const RAYA = '━'.repeat(14);
@@ -7030,14 +7106,12 @@ function enviarCotizacion(nombre, direccion, metodo, zona) {
     if (i.notas) linea += ' (' + i.notas + ')';
     return linea;
   }).join(S);
-  const sub = calcularSubtotal();
-  const descBN = calcularDescuentoBN();
-  const base = sub - descBN;
   const esProv = zona === 'provincia';
-  const traslado = esProv ? 10 : 0;
   const esTarjeta = metodo === 'tarjeta';
-  const recargo = esTarjeta ? Math.round((base + traslado) * 0.04 * 100) / 100 : 0;
-  const total = base + traslado + recargo;
+  const cobro = calcularCobro(metodo, zona, distrito);
+  const sub = cobro.sub, descBN = cobro.descBN, traslado = cobro.traslado, recargo = cobro.recargo;
+  /* Si pagó con tarjeta, manda el monto que cobró Izipay (calculado en Supabase). */
+  const total = pago ? pago.monto : cobro.total;
 
   let msg = '🛒 *CONFIRMO MI PEDIDO — Zona Bariátrica*' + S + S;
   msg += '*MI PEDIDO*' + S + S + lineas + S;
@@ -7045,6 +7119,7 @@ function enviarCotizacion(nombre, direccion, metodo, zona) {
   msg += '*Subtotal productos:* S/ ' + sub + S;
   if (descBN > 0) msg += '💚 *' + DESCUENTO_BN.nombre + ':* - S/ ' + descBN + S;
   if (traslado) msg += '📦 *Traslado y embalaje (Shalom):* S/ ' + traslado + S;
+  if (cobro.delivery) msg += '🛵 *Delivery ' + distrito + ':* S/ ' + cobro.delivery + S;
   if (recargo) msg += '💳 *Recargo tarjeta (4%):* S/ ' + recargo.toFixed(2) + S;
   msg += '💰 *TOTAL:* S/ ' + (esTarjeta ? total.toFixed(2) : total) + S + S;
   msg += RAYA + S + S;
@@ -7053,12 +7128,16 @@ function enviarCotizacion(nombre, direccion, metodo, zona) {
     msg += '📍 *Ciudad / Provincia:* ' + direccion + S;
     msg += '🚚 *Envío:* Agencia Shalom' + S;
   } else {
-    msg += '📍 *Dirección:* ' + direccion + S;
+    msg += '📍 *Dirección:* ' + direccion + (distrito ? ' — ' + distrito : '') + S;
     msg += '🚚 *Envío:* Delivery Lima' + S;
   }
-  msg += '💵 *Pago:* Contra entrega — ' + (esTarjeta ? 'tarjeta al recibir (+4%)' : 'Yape o transferencia BCP') + S;
+  msg += pago
+    ? (pago.prueba ? '⚠️ *PAGO DE PRUEBA — NO ES DINERO REAL, NO DESPACHAR*' : '💳 *Pago:* ✅ PAGADO con tarjeta en línea (Izipay)') + S + '🧾 *N° de orden:* ' + pago.orderId + S
+    : '💵 *Pago:* Contra entrega — Yape o transferencia BCP' + S;
   msg += S + RAYA + S + S;
-  msg += 'Quiero cerrar mi compra. Quedo atento(a) a la *confirmación del costo del delivery* y de la *fecha de entrega*. ¡Gracias! 😊';
+  msg += pago
+    ? 'Ya pagué mi pedido. Quedo atento(a) a la *fecha de entrega*. ¡Gracias! 😊'
+    : 'Quiero cerrar mi compra. Quedo atento(a) a la *confirmación de la fecha de entrega*. ¡Gracias! 😊';
 
   window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank');
   cerrarCarrito();
@@ -7068,6 +7147,119 @@ function enviarCotizacion(nombre, direccion, metodo, zona) {
     document.getElementById('cotConfirmNudge').style.display = session ? 'none' : 'block';
     document.getElementById('cotConfirm').classList.add('open');
   });
+}
+
+/* ── PAGO CON TARJETA EN LÍNEA (Izipay, 2026-10-01) ─────────────
+   1. Se le pide a la función "izipay" de Supabase que cree el pago.
+      El MONTO lo calcula Supabase con zb-catalogo.js, no esta página.
+   2. Se dibuja el formulario de tarjeta de Izipay en #zbPagoForm.
+   3. Al aprobarse, Supabase comprueba la firma del pago y recién ahí
+      se abre WhatsApp con el pedido marcado como PAGADO. */
+let zbPagoDatos = null;
+
+function cargarKrypton(publicKey) {
+  return new Promise((ok, falla) => {
+    if (window.KR) return ok(window.KR);
+    const base = 'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/';
+    const css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = base + 'ext/classic.css';
+    document.head.appendChild(css);
+    const s = document.createElement('script');
+    s.src = base + 'stable/kr-payment-form.min.js';
+    s.setAttribute('kr-public-key', publicKey);
+    s.setAttribute('kr-spa-mode', 'true');
+    s.setAttribute('kr-language', 'es-ES');
+    s.onload = () => {
+      const tema = document.createElement('script');
+      tema.src = base + 'ext/classic.js';
+      tema.onload = () => ok(window.KR);
+      tema.onerror = () => ok(window.KR);
+      document.head.appendChild(tema);
+    };
+    s.onerror = () => falla(new Error('No se pudo cargar Izipay'));
+    document.head.appendChild(s);
+  });
+}
+
+/* Salida de respaldo: si la tarjeta falla, el pedido no se pierde.
+   Se manda por WhatsApp como Yape al recibir (sin el 4%). */
+function cambiarAYape() {
+  const d = zbPagoDatos;
+  cerrarPagoTarjeta();
+  if (d) enviarCotizacion(d.nombre, d.direccion, 'yape', d.zona, d.distrito, null);
+}
+
+function cerrarPagoTarjeta() {
+  document.getElementById('modalPagoTarjeta').classList.remove('open');
+  try { if (window.KR) window.KR.removeForms(); } catch (e) {}
+}
+
+async function iniciarPagoTarjeta(datos) {
+  const estado = document.getElementById('zbPagoEstado');
+  const btn = document.getElementById('btnEnviarPedido');
+  btn.disabled = true;
+  try {
+    const { data, error } = await supa.functions.invoke('izipay', {
+      body: {
+        accion: 'crear',
+        items: carrito.map(i => ({ id: i.id, qty: i.qty, notas: i.notas || '' })),
+        zona: datos.zona, distrito: datos.distrito,
+        nombre: datos.nombre, direccion: datos.direccion, email: datos.email
+      }
+    });
+    if (error || !data || !data.formToken) {
+      let msg = 'No pudimos abrir el pago con tarjeta. Intenta de nuevo o elige Yape.';
+      try { const j = await error.context.json(); if (j && j.error) msg = j.error; } catch (e) {}
+      if (confirm(msg + '\n\n¿Prefieres enviar tu pedido ahora y pagar con Yape al recibir?')) {
+        cerrarDatosCliente();
+        enviarCotizacion(datos.nombre, datos.direccion, 'yape', datos.zona, datos.distrito, null);
+      }
+      return;
+    }
+    zbPagoDatos = { ...datos, orderId: data.orderId, total: data.total };
+    cerrarDatosCliente();
+    document.getElementById('zbPagoResumen').textContent = 'Total a pagar: S/ ' + Number(data.total).toFixed(2);
+    estado.textContent = 'Cargando formulario seguro…';
+    document.getElementById('modalPagoTarjeta').classList.add('open');
+
+    const KR = await cargarKrypton(data.publicKey);
+    try { await KR.removeForms(); } catch (e) {}
+    document.getElementById('zbPagoForm').innerHTML = '<div class="kr-embedded"></div>';
+    await KR.setFormConfig({ formToken: data.formToken, 'kr-language': 'es-ES' });
+    KR.onSubmit(alAprobarPago);
+    KR.onError(e => {
+      estado.innerHTML = '<span style="color:#dc2626;">' + (e && e.errorMessage ? e.errorMessage : 'El pago no se pudo completar.') + ' Puedes intentar otra vez.</span>';
+    });
+    const { result } = await KR.attachForm('#zbPagoForm');
+    await KR.showForm(result.formId);
+    estado.textContent = 'Ingresa los datos de tu tarjeta:';
+  } catch (e) {
+    console.error(e);
+    estado.innerHTML = '<span style="color:#dc2626;">No se pudo cargar el formulario de pago. Revisa tu conexión e intenta de nuevo.</span>';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+/* Izipay llama esto cuando el banco APRUEBA el pago. Antes de dar el
+   pedido por pagado, Supabase verifica la firma con la clave HMAC. */
+function alAprobarPago(paymentData) {
+  const estado = document.getElementById('zbPagoEstado');
+  estado.textContent = 'Confirmando tu pago…';
+  supa.functions.invoke('izipay', {
+    body: { accion: 'validar', krAnswer: paymentData.rawClientAnswer, krHash: paymentData.hash }
+  }).then(({ data }) => {
+    if (!data || !data.valido || data.estado !== 'pagado') {
+      estado.innerHTML = '<span style="color:#dc2626;">No pudimos confirmar el pago. Escríbenos por WhatsApp con tu N° de orden: <strong>' + (zbPagoDatos ? zbPagoDatos.orderId : '') + '</strong></span>';
+      return;
+    }
+    if (typeof gtag === 'function') gtag('event', 'purchase', { transaction_id: data.orderId, value: data.monto, currency: 'PEN' });
+    cerrarPagoTarjeta();
+    const d = zbPagoDatos;
+    enviarCotizacion(d.nombre, d.direccion, 'tarjeta', d.zona, d.distrito, { orderId: data.orderId, monto: data.monto, prueba: data.modo === 'TEST' });
+  });
+  return false; // nos quedamos en la página (no redirigir)
 }
 
 function cerrarConfirm() {
