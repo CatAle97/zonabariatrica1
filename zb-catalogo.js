@@ -832,6 +832,24 @@ const productos = [
     tn: tn.geno }
 ];
 
+/* PRODUCTO DE PRUEBA (2026-10-09) — para probar un cobro real mínimo
+   con Izipay. Invisible para clientes: solo aparece entrando con
+   zonabariatrica.com/?prueba=zb10. La función "izipay" de Supabase
+   siempre lo ve (no tiene "document"), así puede cobrarlo.
+   Para quitarlo, borrar este bloque. */
+if (!window.document || /[?&]prueba=zb10\b/.test(window.location.search)) {
+  productos.push({ id:"prueba10", tipo:"lvl", marcaTipo:"lvl",
+    brand:"Prueba", eligibleForBnQuantityDiscount:false, cat:"colageno", subcat:"fibra", marca:"Prueba",
+    nombre:"PRODUCTO DE PRUEBA (no despachar)",
+    desc:"Producto interno para probar el pago con tarjeta. No se despacha.",
+    tags:["Prueba"],
+    precio:10,
+    img: LVL+"fibra.jpg",
+    galeria: [LVL+"fibra.jpg"],
+    uso:"-",
+    tn: null });
+}
+
 /* =========================================================
    REGLAS COMERCIALES POR PRODUCTO
    ---------------------------------------------------------
