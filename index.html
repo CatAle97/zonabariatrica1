@@ -1632,8 +1632,58 @@ footer {
   transition: background var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
 }
 .cot-confirm-btn:hover {
-  background: var(--green-wa-hover); transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(37,211,102,0.26);
+  background: var(--blue-hover); transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(37,99,235,0.26);
+}
+.cot-confirm-btn:disabled { opacity: .6; cursor: wait; transform: none; }
+
+/* ── CHECKOUT EN PÁGINA COMPLETA (09-10-2026) ───────────────────── */
+.ck-page { display: none; position: fixed; inset: 0; z-index: 1150; background: var(--bg); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.ck-page.open { display: block; animation: zb-fade-in var(--t-base); }
+.ck-top { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 16px; }
+.ck-volver { background: none; border: none; color: var(--blue); font: 600 14px/1 inherit; font-family: inherit; cursor: pointer; padding: 6px 0; }
+.ck-marca { font-weight: 800; letter-spacing: .08em; font-size: 14px; color: var(--text); }
+.ck-seguro { font-size: 12.5px; color: var(--text-muted); white-space: nowrap; }
+.ck-wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 140px; display: grid; gap: 16px; }
+.ck-col { display: grid; gap: 16px; min-width: 0; }
+.ck-h1 { font-size: 24px; font-weight: 700; color: var(--text); margin: 0; }
+.ck-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; }
+.ck-h2 { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 14px; }
+.ck-num { width: 26px; height: 26px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ck-campos { display: grid; gap: 14px; }
+.ck-dos { display: grid; gap: 14px; }
+.ck-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+.ck-input { width: 100%; padding: 11px 12px; border: 1.5px solid var(--border); border-radius: var(--r-sm); font-size: 16px; font-family: inherit; background: #fff; color: var(--text); outline: none; }
+.ck-input:focus { border-color: var(--blue); }
+.ck-opcion { flex: 1; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 2px solid var(--border); border-radius: var(--r-sm); cursor: pointer; background: var(--surface); font-size: 13.5px; font-weight: 600; color: var(--text); }
+.ck-opcion input { accent-color: var(--blue); width: 16px; height: 16px; flex-shrink: 0; margin: 0; }
+.ck-opcion-titulo { font-size: 13.5px; font-weight: 700; color: var(--text); }
+.ck-opcion-sub { font-size: 11.5px; font-weight: 400; color: var(--text-muted); margin-top: 2px; }
+.ck-nota-entrega { margin-top: 10px; padding: 9px 12px; background: var(--blue-light); border-radius: var(--r-sm); font-size: 12.5px; color: var(--text); line-height: 1.5; }
+.ck-aviso-naranja { margin-top: 8px; padding: 9px 12px; background: #FFF7ED; border: 1.5px solid #FED7AA; border-radius: var(--r-sm); font-size: 12.5px; color: #92400E; }
+.ck-nota-pago { margin-top: 12px; background: #F0FDF4; border-left: 3px solid #16A34A; border-radius: var(--r-sm); padding: 10px 13px; font-size: 12.5px; color: #166534; line-height: 1.5; }
+.ck-ayuda { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+.ck-link { background: none; border: none; padding: 0; color: var(--blue); font-weight: 600; font-size: 13px; cursor: pointer; font-family: inherit; text-decoration: underline; }
+.ck-pago-total { font-size: 15px; font-weight: 700; color: var(--text); margin: 14px 0 6px; }
+.ck-chip { background: var(--blue-light); color: var(--blue); font-size: 11.5px; font-weight: 700; padding: 5px 10px; border-radius: 999px; white-space: nowrap; }
+.ck-cuentas { display: grid; gap: 6px; font-size: 13.5px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 12px; }
+.ck-cuentas > div { display: flex; justify-content: space-between; gap: 10px; }
+.ck-total { display: flex; justify-content: space-between; font-size: 19px; font-weight: 700; color: var(--text); margin: 12px 0; }
+.ck-boton { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; }
+@media (min-width: 640px) { .ck-dos { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) {
+  .ck-wrap { grid-template-columns: minmax(0, 1fr) 380px; align-items: start; padding-bottom: 40px; }
+  .ck-resumen { position: sticky; top: 76px; }
+  /* Que el total y el botón quepan en pantalla aunque haya muchos productos */
+  .ck-resumen #checkoutLista { max-height: 34vh; overflow-y: auto; padding-right: 4px; }
+}
+/* En celular: total + botón siempre visibles abajo */
+@media (max-width: 899px) {
+  .ck-accion { position: fixed; left: 0; right: 0; bottom: 0; z-index: 3; background: var(--surface);
+    border-top: 1px solid var(--border); box-shadow: 0 -6px 18px rgba(16,24,40,.08); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); }
+  .ck-accion .ck-total { margin: 0 0 8px; font-size: 17px; }
+  .ck-seguro { display: none; }
 }
 
 @keyframes badge-pulsar {
@@ -3955,154 +4005,143 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   </div>
 </div>
 
-<!-- MODAL DATOS CLIENTE -->
-<!-- PEDIDO (formato del catálogo: lista con fotos + cuentas + datos de entrega) -->
-<!-- Pago con tarjeta (Izipay). El formulario lo dibuja Izipay dentro de #zbPagoForm. -->
-<div class="cot-confirm" id="modalPagoTarjeta">
-  <div class="cot-confirm-box" style="max-width:430px;text-align:left;max-height:94vh;overflow-y:auto;">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-      <div style="flex:1;">
-        <h3 style="font-size:19px;font-weight:700;margin:0;color:var(--text);">Pago con tarjeta</h3>
-        <p id="zbPagoResumen" style="font-size:12.5px;color:var(--text-muted);margin:2px 0 0;"></p>
-      </div>
-      <button onclick="cerrarPagoTarjeta()" aria-label="Cerrar" style="width:38px;height:38px;border:none;background:none;font-size:24px;line-height:1;color:var(--text-muted);cursor:pointer;">&times;</button>
+<!-- CHECKOUT (página completa, estilo tienda online — 09-10-2026)
+     Izquierda: 1. Entrega · 2. Contacto · 3. Pago (la tarjeta se escribe aquí mismo).
+     Derecha: resumen fijo con productos, total y el botón final.
+     En celular: una columna y la barra con total + botón queda fija abajo. -->
+<div class="ck-page" id="modalDatosCliente" role="dialog" aria-modal="true" aria-labelledby="ckTitulo">
+  <header class="ck-top">
+    <button type="button" class="ck-volver" onclick="cerrarDatosCliente()">← Seguir comprando</button>
+    <span class="ck-marca">ZONA BARIÁTRICA</span>
+    <span class="ck-seguro">🔒 Pago seguro</span>
+  </header>
+
+  <div class="ck-wrap">
+    <div class="ck-col">
+      <h1 class="ck-h1" id="ckTitulo">Finalizar compra</h1>
+
+      <!-- 1. ENTREGA -->
+      <section class="ck-card" id="ckSecEntrega">
+        <h2 class="ck-h2"><span class="ck-num">1</span>Entrega</h2>
+        <div class="ck-campos">
+          <div>
+            <label class="ck-label">¿A dónde va tu pedido? *</label>
+            <div style="display:flex;gap:8px;">
+              <label class="ck-opcion" id="zonaLimaLabel">
+                <input type="radio" name="zonaEnvio" value="lima" checked onchange="actualizarZona()">
+                <span>Lima y Callao</span>
+              </label>
+              <label class="ck-opcion" id="zonaProvLabel">
+                <input type="radio" name="zonaEnvio" value="provincia" onchange="actualizarZona()">
+                <span>Provincia</span>
+              </label>
+            </div>
+            <div id="distritoBox" style="margin-top:10px;">
+              <label for="clienteDistrito" class="ck-label">Distrito *</label>
+              <select id="clienteDistrito" class="ck-input" onchange="actualizarTotalForm()"></select>
+            </div>
+            <div id="entregaDetalle" class="ck-nota-entrega"></div>
+            <div id="avisoTraslado" class="ck-aviso-naranja" style="display:none;">
+              📦 Se agregará <strong>S/ 10</strong> por traslado y embalaje a agencia Shalom.
+            </div>
+          </div>
+          <div>
+            <label id="labelDireccion" for="clienteDireccion" class="ck-label">Dirección exacta *</label>
+            <input id="clienteDireccion" class="ck-input" type="text" autocomplete="street-address" placeholder="Ej: Av. Perú 123, dpto 201 — San Miguel">
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. CONTACTO -->
+      <section class="ck-card" id="ckSecContacto">
+        <h2 class="ck-h2"><span class="ck-num">2</span>Tus datos</h2>
+        <div class="ck-campos">
+          <div>
+            <label for="clienteNombre" class="ck-label">Nombre completo *</label>
+            <input id="clienteNombre" class="ck-input" type="text" autocomplete="name" placeholder="Tu nombre y apellido">
+          </div>
+          <div class="ck-dos">
+            <div>
+              <label for="clienteTelefono" class="ck-label">Celular *</label>
+              <input id="clienteTelefono" class="ck-input" type="tel" autocomplete="tel" inputmode="tel" placeholder="Ej: 987 654 321">
+            </div>
+            <div>
+              <label for="clienteEmail" class="ck-label">Correo electrónico *</label>
+              <input id="clienteEmail" class="ck-input" type="email" autocomplete="email" inputmode="email" placeholder="tucorreo@ejemplo.com">
+            </div>
+          </div>
+          <p class="ck-ayuda">Te enviamos la confirmación a tu correo y te llamamos o escribimos para coordinar la entrega.</p>
+        </div>
+      </section>
+
+      <!-- Datos ya confirmados (se muestra al pasar al pago con tarjeta) -->
+      <section class="ck-card ck-confirmados" id="ckConfirmados" style="display:none;">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;">
+          <div id="ckConfirmadosTexto" style="font-size:13.5px;line-height:1.6;color:var(--text);"></div>
+          <button type="button" class="ck-link" onclick="cerrarPagoTarjeta()">Cambiar</button>
+        </div>
+      </section>
+
+      <!-- 3. PAGO -->
+      <section class="ck-card" id="ckSecPago">
+        <h2 class="ck-h2"><span class="ck-num">3</span>Método de pago</h2>
+        <div id="ckMetodos" style="display:flex;flex-direction:column;gap:8px;">
+          <label id="formLabelIzipay" class="ck-opcion ck-opcion-pago">
+            <input type="radio" name="formMetodoPago" value="tarjeta" checked onchange="actualizarTotalForm()">
+            <img src="img/logo-izipay.png" alt="Izipay" style="height:24px;width:auto;object-fit:contain;flex-shrink:0;">
+            <div>
+              <div class="ck-opcion-titulo">Tarjeta de débito o crédito</div>
+              <div class="ck-opcion-sub">Pagas ahora en línea, pago seguro con Izipay · <span style="color:#dc2626;font-weight:600;">+ 4% de recargo</span></div>
+            </div>
+          </label>
+          <label id="formLabelYape" class="ck-opcion ck-opcion-pago">
+            <input type="radio" name="formMetodoPago" value="yape" onchange="actualizarTotalForm()">
+            <img src="img/logo-yape.png" alt="Yape" style="height:24px;width:auto;object-fit:contain;flex-shrink:0;">
+            <div>
+              <div class="ck-opcion-titulo">Yape o transferencia BCP — pagas al recibir</div>
+              <div class="ck-opcion-sub">Sin costo adicional · no aceptamos efectivo</div>
+            </div>
+          </label>
+        </div>
+        <div id="formNotaPago" class="ck-nota-pago"></div>
+
+        <!-- Formulario de tarjeta de Izipay, aquí mismo (sin ventana aparte) -->
+        <div id="ckPagoTarjeta" style="display:none;">
+          <p id="zbPagoResumen" class="ck-pago-total"></p>
+          <div id="zbPagoEstado" style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">Cargando formulario seguro…</div>
+          <div id="zbPagoForm"><div class="kr-embedded"></div></div>
+          <button type="button" class="ck-link" style="margin-top:12px;" onclick="cambiarAYape()">¿Problemas con la tarjeta? Mejor pago con Yape al recibir</button>
+          <p class="ck-ayuda" style="text-align:center;margin-top:10px;">🔒 Tus datos de tarjeta los procesa Izipay. Zona Bariátrica no los ve ni los guarda.</p>
+        </div>
+      </section>
     </div>
-    <div id="zbPagoEstado" style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">Cargando formulario seguro…</div>
-    <div id="zbPagoForm"><div class="kr-embedded"></div></div>
-    <button onclick="cambiarAYape()" style="width:100%;margin-top:12px;background:none;border:1.5px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-size:13px;cursor:pointer;padding:10px;font-family:inherit;">¿Problemas con la tarjeta? Mejor pago con Yape al recibir</button>
-    <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:12px;">🔒 Tus datos de tarjeta los procesa Izipay. Zona Bariátrica no los ve ni los guarda.</p>
-  </div>
-</div>
 
-<div class="cot-confirm" id="modalDatosCliente">
-  <div class="cot-confirm-box" style="max-width:430px;text-align:left;padding:0;max-height:94vh;overflow:hidden;display:flex;flex-direction:column;">
-
-    <!-- Cabecera -->
-    <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border);flex-shrink:0;">
-      <div style="flex:1;">
-        <h3 style="font-size:20px;font-weight:700;margin:0;color:var(--text);">Mi pedido</h3>
-        <p style="font-size:12.5px;color:var(--text-muted);margin:2px 0 0;">Revisa tu pedido y completa tus datos</p>
+    <!-- RESUMEN (fijo a la derecha en computadora) -->
+    <aside class="ck-resumen">
+      <div class="ck-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <h2 class="ck-h2" style="margin:0;">Resumen de la compra</h2>
+          <span id="checkoutChip" class="ck-chip">0 productos</span>
+        </div>
+        <div id="checkoutLista" style="display:grid;gap:10px;margin-bottom:12px;"></div>
+        <div id="checkoutEmpuje"></div>
+        <div class="ck-cuentas">
+          <div><span>Subtotal</span><span id="formSubtotal">S/ 0</span></div>
+          <div id="formDescuentoFila" style="display:none;color:#15803d;font-weight:600;"><span id="formDescuentoLabel">Descuento B&amp;N</span><span id="formDescuentoVal">-S/ 0</span></div>
+          <div id="formEnvioFila"><span>Envío</span><span id="formEnvioVal" style="font-weight:600;">Elige tu distrito</span></div>
+          <div id="formTrasladoFila" style="display:none;color:#92400E;"><span>Traslado y embalaje</span><span>S/ 10.00</span></div>
+          <div id="formRecargoFila" style="display:none;color:#dc2626;"><span>Recargo tarjeta (4%)</span><span id="formRecargoVal">S/ 0.00</span></div>
+        </div>
+        <p id="formNotaTotal" class="ck-ayuda" style="margin-top:6px;"></p>
+        <div class="ck-accion" id="ckAccion">
+          <div class="ck-total"><span>Total</span><span id="formTotal">S/ 0</span></div>
+          <button id="btnEnviarPedido" class="cot-confirm-btn ck-boton" onclick="enviarConDatos()">
+            <span id="btnEnviarTexto">Continuar al pago</span>
+          </button>
+        </div>
+        <p class="ck-ayuda" style="text-align:center;margin-top:10px;">Compra segura con el respaldo de Zona Bariátrica</p>
       </div>
-      <span id="checkoutChip" style="background:var(--blue-light);color:var(--blue);font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:999px;white-space:nowrap;">0 productos</span>
-      <button onclick="cerrarDatosCliente()" aria-label="Cerrar" style="width:38px;height:38px;border:none;background:none;font-size:24px;line-height:1;color:var(--text-muted);cursor:pointer;border-radius:999px;">&times;</button>
-    </div>
-
-    <!-- Cuerpo desplazable -->
-    <div style="overflow-y:auto;flex:1;padding:16px 20px 20px;background:var(--bg);-webkit-overflow-scrolling:touch;">
-
-      <div id="checkoutLista" style="display:grid;gap:10px;margin-bottom:14px;"></div>
-
-      <div id="checkoutEmpuje"></div>
-
-      <!-- Cuentas -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:14px;">
-        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);margin-bottom:4px;">
-          <span>Subtotal</span><span id="formSubtotal">S/ 0</span>
-        </div>
-        <div id="formDescuentoFila" style="display:none;justify-content:space-between;font-size:13px;font-weight:600;color:#15803d;margin-bottom:4px;">
-          <span id="formDescuentoLabel">Descuento B&amp;N</span><span id="formDescuentoVal">-S/ 0</span>
-        </div>
-        <div id="formTrasladoFila" style="display:none;justify-content:space-between;font-size:13px;color:#92400E;margin-bottom:4px;">
-          <span>Traslado y embalaje</span><span>S/ 10.00</span>
-        </div>
-        <div id="formRecargoFila" style="display:none;justify-content:space-between;font-size:13px;color:#dc2626;margin-bottom:4px;">
-          <span>Recargo tarjeta (4%)</span><span id="formRecargoVal">S/ 0.00</span>
-        </div>
-        <div id="formEnvioFila" style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);margin-bottom:4px;">
-          <span>Envío</span><span id="formEnvioVal" style="font-weight:600;">Elige tu distrito</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:700;color:var(--blue);border-top:1px solid var(--border);padding-top:9px;margin-top:5px;">
-          <span>Total</span><span id="formTotal">S/ 0</span>
-        </div>
-        <p id="formNotaTotal" style="font-size:11.5px;color:var(--text-muted);margin:6px 0 0;"></p>
-      </div>
-
-      <!-- Envío / Entrega -->
-      <div style="display:flex;gap:10px;align-items:flex-start;background:var(--blue-light);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:14px;">
-        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:var(--text);">Envío / Entrega</div>
-          <div style="font-size:12px;color:var(--text-muted);line-height:1.45;">Delivery en Lima según tu distrito · Provincias por agencia Shalom.</div>
-        </div>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <div>
-          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">¿A dónde va tu pedido? *</label>
-          <div style="display:flex;gap:8px;">
-            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:11px 13px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);" id="zonaLimaLabel">
-              <input type="radio" name="zonaEnvio" value="lima" checked onchange="actualizarZona()" style="accent-color:var(--blue);width:15px;height:15px;">
-              <span style="font-size:13px;font-weight:600;color:var(--text);">LIMA</span>
-            </label>
-            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:11px 13px;border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;background:var(--surface);" id="zonaProvLabel">
-              <input type="radio" name="zonaEnvio" value="provincia" onchange="actualizarZona()" style="accent-color:var(--blue);width:15px;height:15px;">
-              <span style="font-size:13px;font-weight:600;color:var(--text);">PROVINCIA</span>
-            </label>
-          </div>
-          <div id="distritoBox" style="margin-top:8px;">
-            <label for="clienteDistrito" style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Distrito *</label>
-            <select id="clienteDistrito" onchange="actualizarTotalForm()" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:16px;font-family:inherit;background:#fff;color:var(--text);"></select>
-          </div>
-          <div id="entregaDetalle" style="margin-top:8px;padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);font-size:12px;color:var(--text);line-height:1.5;"></div>
-          <div id="avisoTraslado" style="display:none;margin-top:8px;padding:9px 12px;background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:var(--r-sm);font-size:12px;color:#92400E;font-weight:500;">
-            📦 Se agregará <strong>S/ 10</strong> por traslado y embalaje a agencia Shalom.
-          </div>
-        </div>
-
-        <div>
-          <label id="labelDireccion" for="clienteDireccion" style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Dirección exacta *</label>
-          <input id="clienteDireccion" type="text" autocomplete="street-address" placeholder="Ej: Av. Perú 123, dpto 201 — San Miguel" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:16px;font-family:inherit;outline:none;">
-        </div>
-
-        <div>
-          <label for="clienteNombre" style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Nombre completo *</label>
-          <input id="clienteNombre" type="text" autocomplete="name" placeholder="Tu nombre y apellido" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:16px;font-family:inherit;outline:none;">
-        </div>
-
-        <div>
-          <label for="clienteTelefono" style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Celular * <span style="font-weight:400;">(para coordinar la entrega)</span></label>
-          <input id="clienteTelefono" type="tel" autocomplete="tel" inputmode="tel" placeholder="Ej: 987 654 321" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:16px;font-family:inherit;outline:none;">
-        </div>
-
-        <div>
-          <label for="clienteEmail" style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">Correo electrónico * <span style="font-weight:400;">(ahí te llega la confirmación)</span></label>
-          <input id="clienteEmail" type="email" autocomplete="email" inputmode="email" placeholder="tucorreo@ejemplo.com" style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:16px;font-family:inherit;outline:none;">
-        </div>
-
-        <div>
-          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;">¿Cómo pagas? *</label>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <label id="formLabelIzipay" style="display:flex;align-items:center;gap:10px;padding:11px 13px;border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;background:var(--surface);">
-              <input type="radio" name="formMetodoPago" value="tarjeta" checked style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
-              <img src="img/logo-izipay.png" alt="Izipay" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
-              <div>
-                <div style="font-size:13px;font-weight:700;color:var(--text);">Tarjeta — pagas ahora en línea</div>
-                <div style="font-size:11px;color:var(--text-muted);">Débito o crédito, pago seguro con Izipay · <span style="color:#dc2626;font-weight:600;">+ 4% de recargo</span></div>
-              </div>
-            </label>
-            <label id="formLabelYape" style="display:flex;align-items:center;gap:10px;padding:11px 13px;border:2px solid var(--blue);border-radius:var(--r-sm);cursor:pointer;background:var(--blue-light);">
-              <input type="radio" name="formMetodoPago" value="yape" style="accent-color:var(--blue);width:16px;height:16px;flex-shrink:0;" onchange="actualizarTotalForm()">
-              <img src="img/logo-yape.png" alt="Yape" style="height:26px;width:auto;object-fit:contain;flex-shrink:0;">
-              <div>
-                <div style="font-size:13px;font-weight:700;color:var(--text);">Yape o transferencia BCP — pagas al recibir</div>
-                <div style="font-size:11px;color:var(--text-muted);">Sin costo adicional · no aceptamos efectivo</div>
-              </div>
-            </label>
-          </div>
-        </div>
-      </div>
-
-
-      <div id="formNotaPago" style="margin-top:14px;background:#F0FDF4;border-left:3px solid #16A34A;border-radius:var(--r-sm);padding:10px 13px;font-size:12px;color:#166534;line-height:1.5;">
-
-      </div>
-
-      <button id="btnEnviarPedido" class="cot-confirm-btn" onclick="enviarConDatos()" style="margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;">
-        <span id="btnEnviarTexto">Pagar con tarjeta</span>
-      </button>
-      <button onclick="cerrarDatosCliente()" style="width:100%;margin-top:8px;background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;padding:6px;font-family:inherit;">Seguir comprando</button>
-      <p style="text-align:center;font-size:11.5px;color:var(--text-muted);margin-top:10px;">Compra segura con el respaldo de Zona Bariátrica</p>
-    </div>
+    </aside>
   </div>
 </div>
 
@@ -6723,6 +6762,7 @@ function actualizarCartUI() {
   const pedido = document.getElementById('modalDatosCliente');
   if (pedido && pedido.classList.contains('open')) {
     if (!carrito.length) { cerrarDatosCliente(); return; }
+    if (enModoPago()) cerrarPagoTarjeta();
     pintarCheckoutLista();
     actualizarTotalForm();
   }
@@ -6907,7 +6947,10 @@ async function confirmarEnvio() {
     if (m.celular) document.getElementById('clienteTelefono').value = m.celular;
     if (session.user.email) document.getElementById('clienteEmail').value = session.user.email;
   }
+  salirModoPago();
   document.getElementById('modalDatosCliente').classList.add('open');
+  document.getElementById('modalDatosCliente').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
 }
 
 function actualizarZona() {
@@ -7011,9 +7054,9 @@ function actualizarTotalForm() {
   const nota = document.getElementById('formNotaTotal');
   if (nota) nota.textContent = esProv ? 'El flete de Shalom se paga al recoger en la agencia.' : (distrito ? 'Incluye el delivery a ' + distrito + '.' : 'Elige tu distrito para sumar el delivery.');
   document.getElementById('formNotaPago').innerHTML = esTarjeta
-    ? '🔒 <strong>Pagas ahora con tarjeta</strong> en un formulario seguro de Izipay. Te llamamos o escribimos para coordinar la entrega.'
+    ? '🔒 <strong>Pagas ahora con tarjeta.</strong> Al continuar, escribes los datos de tu tarjeta aquí mismo, en el formulario seguro de Izipay.'
     : '✅ <strong>Pagas con Yape o transferencia al recibir tu pedido.</strong> Te llamamos o escribimos para coordinar la entrega.';
-  document.getElementById('btnEnviarTexto').textContent = esTarjeta ? 'Pagar S/ ' + cobro.total.toFixed(2) + ' con tarjeta' : 'Confirmar mi pedido';
+  document.getElementById('btnEnviarTexto').textContent = esTarjeta ? 'Continuar al pago' : 'Confirmar mi pedido';
   const recargoFila = document.getElementById('formRecargoFila');
   const recargoVal = document.getElementById('formRecargoVal');
   const totalEl = document.getElementById('formTotal');
@@ -7048,7 +7091,9 @@ function actualizarTotalForm() {
 }
 
 function cerrarDatosCliente() {
+  cerrarPagoTarjeta();
   document.getElementById('modalDatosCliente').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 function enviarConDatos() {
@@ -7186,9 +7231,37 @@ function cambiarAYape() {
   if (d) registrarPedidoYape({ nombre: d.nombre, direccion: d.direccion, zona: d.zona, distrito: d.distrito, telefono: d.telefono, email: d.email });
 }
 
+/* "Modo pago": los datos ya validados se resumen arriba y el formulario
+   de tarjeta aparece dentro de la sección 3 (sin ventana aparte). */
+function enModoPago() {
+  return document.getElementById('ckPagoTarjeta').style.display !== 'none';
+}
+
+function entrarModoPago(d) {
+  const destino = d.zona === 'provincia' ? 'Provincia (Shalom): ' + d.direccion : d.direccion + ' — ' + d.distrito;
+  document.getElementById('ckConfirmadosTexto').innerHTML =
+    '<strong>' + escHtml(d.nombre) + '</strong> · ' + escHtml(d.telefono) + ' · ' + escHtml(d.email) + '<br>' + escHtml(destino);
+  ['ckSecEntrega', 'ckSecContacto', 'ckMetodos', 'formNotaPago'].forEach(id => { document.getElementById(id).style.display = 'none'; });
+  document.getElementById('btnEnviarPedido').style.display = 'none';
+  document.getElementById('ckConfirmados').style.display = '';
+  document.getElementById('ckPagoTarjeta').style.display = '';
+  document.getElementById('ckSecPago').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function salirModoPago() {
+  ['ckSecEntrega', 'ckSecContacto', 'ckMetodos', 'formNotaPago'].forEach(id => { document.getElementById(id).style.display = ''; });
+  document.getElementById('btnEnviarPedido').style.display = '';
+  document.getElementById('ckConfirmados').style.display = 'none';
+  document.getElementById('ckPagoTarjeta').style.display = 'none';
+}
+
+function escHtml(t) {
+  return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function cerrarPagoTarjeta() {
-  document.getElementById('modalPagoTarjeta').classList.remove('open');
   try { if (window.KR) window.KR.removeForms(); } catch (e) {}
+  salirModoPago();
 }
 
 async function iniciarPagoTarjeta(datos) {
@@ -7213,10 +7286,9 @@ async function iniciarPagoTarjeta(datos) {
       return;
     }
     zbPagoDatos = { ...datos, orderId: data.orderId, total: data.total };
-    cerrarDatosCliente();
     document.getElementById('zbPagoResumen').textContent = 'Total a pagar: S/ ' + Number(data.total).toFixed(2);
     estado.textContent = 'Cargando formulario seguro…';
-    document.getElementById('modalPagoTarjeta').classList.add('open');
+    entrarModoPago(datos);
 
     const KR = await cargarKrypton(data.publicKey);
     try { await KR.removeForms(); } catch (e) {}
@@ -7251,6 +7323,7 @@ function alAprobarPago(paymentData) {
     }
     if (typeof gtag === 'function') gtag('event', 'purchase', { transaction_id: data.orderId, value: data.monto, currency: 'PEN' });
     cerrarPagoTarjeta();
+    cerrarDatosCliente();
     mostrarGracias({ orderId: data.orderId, total: data.monto, metodo: 'tarjeta', telefono: zbPagoDatos.telefono });
   });
   return false; // nos quedamos en la página (no redirigir)
