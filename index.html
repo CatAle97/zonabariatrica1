@@ -3947,7 +3947,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   <div class="cot-confirm-box">
     <div class="cot-confirm-icon">✅</div>
     <h3>¡Pedido enviado!</h3>
-    <p>Tu lista fue enviada por WhatsApp. Nuestro equipo te contacta pronto para coordinar el pago y la entrega.</p>
+    <p id="cotConfirmTexto">Tu lista fue enviada por WhatsApp. Nuestro equipo te contacta pronto para coordinar el pago y la entrega.</p>
     <div id="cotConfirmNudge" style="display:none;margin-top:16px;padding:14px;background:var(--blue-light);border:1.5px solid var(--blue);border-radius:var(--r);text-align:left">
       <p style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">¿La próxima vez sin llenar nada?</p>
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px">Crea tu cuenta gratis y tus datos se rellenan solos en cada pedido.</p>
@@ -7140,6 +7140,9 @@ function enviarCotizacion(nombre, direccion, metodo, zona, distrito, pago) {
     : 'Quiero cerrar mi compra. Quedo atento(a) a la *confirmación de la fecha de entrega*. ¡Gracias! 😊';
 
   window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank');
+  document.getElementById('cotConfirmTexto').textContent = pago
+    ? '¡Tu pago con tarjeta fue aprobado! Te escribimos por WhatsApp para coordinar la entrega.'
+    : 'Tu lista fue enviada por WhatsApp. Nuestro equipo te contacta pronto para coordinar el pago y la entrega.';
   cerrarCarrito();
   carrito = [];
   actualizarCartUI();
