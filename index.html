@@ -4090,8 +4090,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
             <input type="radio" name="formMetodoPago" value="tarjeta" checked onchange="actualizarTotalForm()">
             <img src="img/logo-izipay.png" alt="Izipay" style="height:24px;width:auto;object-fit:contain;flex-shrink:0;">
             <div>
-              <div class="ck-opcion-titulo">Tarjeta de débito o crédito</div>
-              <div class="ck-opcion-sub">Pagas ahora en línea, pago seguro con Izipay · <span style="color:#dc2626;font-weight:600;">+ 4% de recargo</span></div>
+              <div class="ck-opcion-titulo">Tarjeta de crédito o débito (4%)</div>
             </div>
           </label>
           <label id="formLabelYape" class="ck-opcion ck-opcion-pago">
@@ -4099,11 +4098,10 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
             <img src="img/logo-yape.png" alt="Yape" style="height:24px;width:auto;object-fit:contain;flex-shrink:0;">
             <div>
               <div class="ck-opcion-titulo">Yape o transferencia BCP — pagas al recibir</div>
-              <div class="ck-opcion-sub">Sin costo adicional · no aceptamos efectivo</div>
+              <div class="ck-opcion-sub">No aceptamos efectivo</div>
             </div>
           </label>
         </div>
-        <div id="formNotaPago" class="ck-nota-pago"></div>
 
         <!-- Formulario de tarjeta de Izipay, aquí mismo (sin ventana aparte) -->
         <div id="ckPagoTarjeta" style="display:none;">
@@ -4128,11 +4126,10 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <div class="ck-cuentas">
           <div><span>Subtotal</span><span id="formSubtotal">S/ 0</span></div>
           <div id="formDescuentoFila" style="display:none;color:#15803d;font-weight:600;"><span id="formDescuentoLabel">Descuento B&amp;N</span><span id="formDescuentoVal">-S/ 0</span></div>
-          <div id="formEnvioFila"><span>Envío</span><span id="formEnvioVal" style="font-weight:600;">Elige tu distrito</span></div>
+          <div id="formEnvioFila"><span id="formEnvioLabel">Delivery</span><span id="formEnvioVal" style="font-weight:600;">Elige tu distrito</span></div>
           <div id="formTrasladoFila" style="display:none;color:#92400E;"><span>Traslado y embalaje</span><span>S/ 10.00</span></div>
-          <div id="formRecargoFila" style="display:none;color:#dc2626;"><span>Recargo tarjeta (4%)</span><span id="formRecargoVal">S/ 0.00</span></div>
+          <div id="formRecargoFila" style="display:none;"><span>Pago con tarjeta (4%)</span><span id="formRecargoVal">S/ 0.00</span></div>
         </div>
-        <p id="formNotaTotal" class="ck-ayuda" style="margin-top:6px;"></p>
         <div class="ck-accion" id="ckAccion">
           <div class="ck-total"><span>Total</span><span id="formTotal">S/ 0</span></div>
           <button id="btnEnviarPedido" class="cot-confirm-btn ck-boton" onclick="enviarConDatos()">
@@ -7050,12 +7047,8 @@ function actualizarTotalForm() {
   const traslado = cobro.traslado;
   const esTarjeta = metodo === 'tarjeta';
   const envioVal = document.getElementById('formEnvioVal');
-  if (envioVal) envioVal.textContent = esProv ? 'Flete Shalom: se paga en agencia' : (distrito ? 'S/ ' + cobro.delivery.toFixed(2) : 'Elige tu distrito');
-  const nota = document.getElementById('formNotaTotal');
-  if (nota) nota.textContent = esProv ? 'El flete de Shalom se paga al recoger en la agencia.' : (distrito ? 'Incluye el delivery a ' + distrito + '.' : 'Elige tu distrito para sumar el delivery.');
-  document.getElementById('formNotaPago').innerHTML = esTarjeta
-    ? '🔒 <strong>Pagas ahora con tarjeta.</strong> Al continuar, escribes los datos de tu tarjeta aquí mismo, en el formulario seguro de Izipay.'
-    : '✅ <strong>Pagas con Yape o transferencia al recibir tu pedido.</strong> Te llamamos o escribimos para coordinar la entrega.';
+  document.getElementById('formEnvioLabel').textContent = esProv ? 'Envío Shalom' : 'Delivery';
+  if (envioVal) envioVal.textContent = esProv ? 'Se paga en agencia' : (distrito ? 'S/ ' + cobro.delivery.toFixed(2) : 'Elige tu distrito');
   document.getElementById('btnEnviarTexto').textContent = esTarjeta ? 'Continuar al pago' : 'Confirmar mi pedido';
   const recargoFila = document.getElementById('formRecargoFila');
   const recargoVal = document.getElementById('formRecargoVal');
@@ -7241,7 +7234,7 @@ function entrarModoPago(d) {
   const destino = d.zona === 'provincia' ? 'Provincia (Shalom): ' + d.direccion : d.direccion + ' — ' + d.distrito;
   document.getElementById('ckConfirmadosTexto').innerHTML =
     '<strong>' + escHtml(d.nombre) + '</strong> · ' + escHtml(d.telefono) + ' · ' + escHtml(d.email) + '<br>' + escHtml(destino);
-  ['ckSecEntrega', 'ckSecContacto', 'ckMetodos', 'formNotaPago'].forEach(id => { document.getElementById(id).style.display = 'none'; });
+  ['ckSecEntrega', 'ckSecContacto', 'ckMetodos'].forEach(id => { document.getElementById(id).style.display = 'none'; });
   document.getElementById('btnEnviarPedido').style.display = 'none';
   document.getElementById('ckConfirmados').style.display = '';
   document.getElementById('ckPagoTarjeta').style.display = '';
@@ -7249,7 +7242,7 @@ function entrarModoPago(d) {
 }
 
 function salirModoPago() {
-  ['ckSecEntrega', 'ckSecContacto', 'ckMetodos', 'formNotaPago'].forEach(id => { document.getElementById(id).style.display = ''; });
+  ['ckSecEntrega', 'ckSecContacto', 'ckMetodos'].forEach(id => { document.getElementById(id).style.display = ''; });
   document.getElementById('btnEnviarPedido').style.display = '';
   document.getElementById('ckConfirmados').style.display = 'none';
   document.getElementById('ckPagoTarjeta').style.display = 'none';
