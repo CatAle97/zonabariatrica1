@@ -96,3 +96,7 @@
   .precio-old { font-size: 12.5px !important; }
   .ahorro { font-size: 10.5px !important; padding: 2px 7px !important; }
 }
+
+/* Botón "Agregar al carrito" (09-10-2026): azul de marca, la compra ya no va por WhatsApp. */
+.acciones .btn-wa.btn-carrito { background: var(--blue); box-shadow: 0 2px 8px rgba(37,99,235,0.22); }
+.acciones .btn-wa.btn-carrito:hover { background: var(--blue-hover); box-shadow: 0 8px 20px rgba(37,99,235,0.26); }

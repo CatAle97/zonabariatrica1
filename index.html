@@ -81,7 +81,7 @@
       "name": "¿Hacen envíos a provincias? ¿Cuánto demora?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí. Enviamos a todo el Perú: en Lima el costo depende del distrito, y a provincias despachamos vía Shalom. Los tiempos y el costo exacto se confirman por WhatsApp al cerrar el pedido, según la dirección."
+        "text": "Sí. Enviamos a todo el Perú: en Lima el costo depende del distrito, y a provincias despachamos vía Shalom. El delivery en Lima se calcula según el distrito al finalizar la compra; a provincias llega en 2 a 5 días hábiles."
       }
     },
     {
@@ -89,7 +89,7 @@
       "name": "¿Qué formas de pago aceptan?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Aceptamos Yape e Izipay (tarjeta de débito o crédito). El pago con tarjeta tiene un recargo del 4% que se calcula automáticamente en el pedido. El carrito se arma en la web y se cierra por WhatsApp, donde se coordina el pago y la entrega."
+        "text": "Aceptamos Yape e Izipay (tarjeta de débito o crédito). El pago con tarjeta tiene un recargo del 4% que se calcula automáticamente en el pedido. Puedes pagar con tarjeta en línea al finalizar tu compra o con Yape al recibir tu pedido."
       }
     },
     {
@@ -3790,6 +3790,7 @@ section[id], .productos-header { scroll-margin-top: 92px; }
   .top-btn {
     display: flex; align-items: center; justify-content: center;
     height: 48px; border-radius: 999px; background: #0057FF; color: #FFFFFF;
+    width: 100%; border: none; cursor: pointer;
     font-family: 'Manrope', var(--font); font-size: 15px; font-weight: 600; text-decoration: none;
     transition: background var(--t-fast);
   }
@@ -4340,7 +4341,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <h1 class="hpc-titulo">Proteínas para pacientes bariátricos.</h1>
         <p class="hpc-sub">Encuentre proteínas líquidas y en polvo para cada etapa de su proceso bariátrico.</p>
         <div class="hpc-botones">
-          <a class="hpc-btn hpc-btn-primario" href="https://wa.me/51961841069?text=Hola%2C%20quiero%20comprar%20prote%C3%ADna%20para%20mi%20proceso%20bari%C3%A1trico" target="_blank" rel="noopener">Comprar por WhatsApp</a>
+          <button class="hpc-btn hpc-btn-primario" type="button" onclick="filtrar('proteina');scrollProductos()">Comprar proteínas</button>
           <button class="hpc-btn hpc-btn-secundario" type="button" onclick="filtrar('todos');scrollProductos()">Ver catálogo</button>
         </div>
       </div>
@@ -4862,7 +4863,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
           </div>
           <div class="mp-confianza-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-            <span><strong>Yape o Izipay</strong> · el pago se coordina por WhatsApp</span>
+            <span><strong>Tarjeta o Yape</strong> · paga en línea o al recibir</span>
           </div>
         </div>
 
@@ -5061,7 +5062,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <div class="faq-cuerpo"><div class="faq-cuerpo-in">
           <div class="faq-respuesta">
             <p>Sí. Enviamos a <strong>todo el Perú</strong>: en Lima el costo depende del distrito, y a provincias despachamos <strong>vía Shalom</strong>.</p>
-            <p>Los tiempos y el costo exacto te los confirmamos por WhatsApp al momento de cerrar tu pedido, según tu dirección.</p>
+            <p>En Lima el delivery se calcula según tu distrito al finalizar la compra. A provincias enviamos por agencia Shalom (2 a 5 días hábiles).</p>
             <a class="faq-cta" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Quiero%20consultar%20el%20env%C3%ADo%20a%20mi%20ciudad." target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
               ¿No encontraste la respuesta? Habla con Zoe
@@ -5078,7 +5079,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <div class="faq-cuerpo"><div class="faq-cuerpo-in">
           <div class="faq-respuesta">
             <p>Aceptamos <strong>Yape</strong> e <strong>Izipay</strong> (tarjeta de débito o crédito). El pago con tarjeta tiene un recargo del 4% que se calcula automáticamente en tu pedido.</p>
-            <p>Armas tu carrito en la web y lo cierras por WhatsApp: ahí coordinamos el pago y la entrega.</p>
+            <p>Agregas tus productos al carrito y finalizas la compra en la web: pagas con tarjeta en línea o eliges Yape al recibir. Luego te contactamos para coordinar la entrega.</p>
             <a class="faq-cta" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Tengo%20una%20consulta%20sobre%20el%20pago." target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
               ¿No encontraste la respuesta? Habla con Zoe
@@ -5233,8 +5234,6 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   grid.innerHTML = TOP_VENTAS.map((t, i) => {
     const p = cat.find(x => x.id === t.id);
     if (!p) return '';
-    const wa = 'https://wa.me/51961841069?text=' +
-      encodeURIComponent('Hola, quiero comprar: ' + t.corto + ' (S/ ' + p.precio + ')');
     return '<article class="top-card">' +
       '<span class="top-badge">TOP #' + (i + 1) + '</span>' +
       '<button class="top-img" type="button" onclick="abrirModal(\'' + p.id + '\')" aria-label="Ver ' + esc(t.corto) + '">' +
@@ -5242,13 +5241,13 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       '</button>' +
       '<h3 class="top-nombre">' + esc(t.corto) + '</h3>' +
       '<div class="top-precio">S/ ' + p.precio + '</div>' +
-      '<a class="top-btn" href="' + wa + '" target="_blank" rel="noopener" data-producto="' + p.id + '">Comprar por WhatsApp</a>' +
+      '<button class="top-btn" type="button" onclick="agregarACotizacion(\'' + p.id + '\',true)" data-producto="' + p.id + '">+ Agregar al carrito</button>' +
     '</article>';
   }).join('');
-  // Google Analytics: mismo evento que el catálogo de WhatsApp
+  // Google Analytics
   grid.addEventListener('click', e => {
     const a = e.target.closest('.top-btn');
-    if (a && typeof gtag === 'function') gtag('event', 'clic_whatsapp', { producto: a.dataset.producto, seccion: 'top_pc' });
+    if (a && typeof gtag === 'function') gtag('event', 'agregar_carrito', { producto: a.dataset.producto, seccion: 'top_pc' });
   });
 })();
 </script>
@@ -7274,7 +7273,7 @@ function abrirLegal(tipo) {
     terminos: {
       titulo: 'Términos y Condiciones',
       texto: `<p><strong>1. Productos:</strong> Los precios están en soles peruanos (S/). Las imágenes son referenciales.</p>
-      <p><strong>2. Pedidos:</strong> Los pedidos se coordinan vía WhatsApp. El pago confirma la reserva del producto.</p>
+      <p><strong>2. Pedidos:</strong> Los pedidos se realizan en la web. El pago con tarjeta, o la confirmación del pedido con Yape al recibir, reserva el producto.</p>
       <p><strong>3. Envíos:</strong> Realizamos envíos a Lima y provincias vía Shalom. El costo de envío varía según destino.</p>
       <p><strong>4. Stock:</strong> Nos reservamos el derecho de cancelar un pedido si el producto no está disponible, con devolución íntegra del pago.</p>
       <p><strong>5. Uso:</strong> Los suplementos son complementos alimenticios. Consulta siempre con tu médico antes de consumirlos.</p>`

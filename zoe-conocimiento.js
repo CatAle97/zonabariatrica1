@@ -248,21 +248,21 @@
       response: 'Enviamos a <b>todo el Perú</b>.<br><br>' +
                 '📍 <b>Lima</b> — el costo depende del distrito.<br>' +
                 '🚚 <b>Provincias</b> — vía Shalom.<br><br>' +
-                'El tiempo y el costo exacto te los confirmamos por WhatsApp al cerrar el pedido, según tu dirección.',
+                'En Lima el delivery se calcula según tu distrito al finalizar la compra. A provincias llega en 2 a 5 días hábiles.',
       followUp: '¿A qué ciudad sería tu pedido?'
     },
     {
       intent: 'pagos',
       keywords: ['pago', 'pagar', 'yape', 'izipay', 'tarjeta', 'transferencia', 'como pago', 'formas de pago', 'contraentrega'],
-      response: 'Aceptamos <b>Yape</b> y <b>Izipay</b> (débito o crédito).<br><br>' +
+      response: 'Puedes pagar con <b>tarjeta</b> (débito o crédito, en línea con Izipay) o con <b>Yape</b> al recibir tu pedido.<br><br>' +
                 'El pago con tarjeta tiene un recargo del 4 %, que se calcula solo en tu pedido.<br><br>' +
-                'Armas el carrito en la web y lo cierras por WhatsApp: ahí coordinamos pago y entrega.'
+                'Todo se hace en la web: al finalizar la compra eliges cómo pagar.'
     },
     {
       intent: 'pedido',
       keywords: ['mi pedido', 'como compro', 'como pedir', 'hacer un pedido', 'comprar', 'donde esta mi pedido', 'seguimiento'],
-      response: 'Para comprar: agregas los productos al carrito y pulsas <b>Realizar mi pedido</b>. ' +
-                'Eso abre WhatsApp con tu lista lista para enviar, y ahí coordinamos el pago y la entrega.<br><br>' +
+      response: 'Para comprar: agregas los productos al carrito, pulsas <b>Finalizar compra</b>, completas tus datos y eliges cómo pagar (tarjeta en línea o Yape al recibir). ' +
+                'Luego te contactamos para coordinar la entrega.<br><br>' +
                 'Si ya hiciste un pedido y quieres consultar su estado, lo mejor es escribirnos por WhatsApp.'
     },
     {
