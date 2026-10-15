@@ -4060,6 +4060,11 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
             <label for="clienteNombre" class="ck-label">Nombre completo *</label>
             <input id="clienteNombre" class="ck-input" type="text" autocomplete="name" placeholder="Tu nombre y apellido">
           </div>
+          <div>
+            <label for="clienteDni" class="ck-label">DNI *</label>
+            <input id="clienteDni" class="ck-input" type="text" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="Ej: 45678912"
+              oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          </div>
           <div class="ck-dos">
             <div>
               <label for="clienteTelefono" class="ck-label">Celular *</label>
@@ -6485,6 +6490,9 @@ function toggleTN() {
 
 // ---- COTIZADOR ----
 let carrito = [];
+/* true cuando el carrito llegó desde /catalogo: al terminar la
+   compra se vacía también la lista guardada del catálogo. */
+let pedidoDesdeCatalogo = false;
 
 function elegirSabor(btn) {
   btn.closest('.sabor-pills').querySelectorAll('.sabor-pill').forEach(p => p.classList.remove('active'));
@@ -7106,6 +7114,12 @@ function enviarConDatos() {
     document.getElementById('clienteNombre').focus();
     return;
   }
+  const dni = document.getElementById('clienteDni').value.replace(/\D/g, '');
+  if (!/^[0-9]{8,12}$/.test(dni)) {
+    alert('Escribe tu DNI (8 dígitos) para registrar el pedido.');
+    document.getElementById('clienteDni').focus();
+    return;
+  }
   const distrito = zona === 'lima' ? document.getElementById('clienteDistrito').value : '';
   if (zona === 'lima' && !distrito) {
     alert('Elige tu distrito para calcular el delivery.');
@@ -7124,7 +7138,7 @@ function enviarConDatos() {
     document.getElementById('clienteEmail').focus();
     return;
   }
-  const datos = { nombre, direccion, zona, distrito, telefono, email };
+  const datos = { nombre, dni, direccion, zona, distrito, telefono, email };
   if (metodo === 'tarjeta') iniciarPagoTarjeta(datos);
   else registrarPedidoYape(datos);
 }
@@ -7177,6 +7191,10 @@ function mostrarGracias(r) {
   cerrarCarrito();
   carrito = [];
   actualizarCartUI();
+  if (pedidoDesdeCatalogo) {
+    try { localStorage.removeItem('zb_cotizacion'); } catch (e) {}
+    pedidoDesdeCatalogo = false;
+  }
   supa.auth.getSession().then(({ data: { session } }) => {
     document.getElementById('cotConfirmNudge').style.display = session ? 'none' : 'block';
     document.getElementById('cotConfirm').classList.add('open');
@@ -7221,7 +7239,7 @@ function cargarKrypton(publicKey) {
 function cambiarAYape() {
   const d = zbPagoDatos;
   cerrarPagoTarjeta();
-  if (d) registrarPedidoYape({ nombre: d.nombre, direccion: d.direccion, zona: d.zona, distrito: d.distrito, telefono: d.telefono, email: d.email });
+  if (d) registrarPedidoYape({ nombre: d.nombre, dni: d.dni, direccion: d.direccion, zona: d.zona, distrito: d.distrito, telefono: d.telefono, email: d.email });
 }
 
 /* "Modo pago": los datos ya validados se resumen arriba y el formulario
@@ -7233,7 +7251,7 @@ function enModoPago() {
 function entrarModoPago(d) {
   const destino = d.zona === 'provincia' ? 'Provincia (Shalom): ' + d.direccion : d.direccion + ' — ' + d.distrito;
   document.getElementById('ckConfirmadosTexto').innerHTML =
-    '<strong>' + escHtml(d.nombre) + '</strong> · ' + escHtml(d.telefono) + ' · ' + escHtml(d.email) + '<br>' + escHtml(destino);
+    '<strong>' + escHtml(d.nombre) + '</strong> · DNI ' + escHtml(d.dni) + ' · ' + escHtml(d.telefono) + ' · ' + escHtml(d.email) + '<br>' + escHtml(destino);
   ['ckSecEntrega', 'ckSecContacto', 'ckMetodos'].forEach(id => { document.getElementById(id).style.display = 'none'; });
   document.getElementById('btnEnviarPedido').style.display = 'none';
   document.getElementById('ckConfirmados').style.display = '';
@@ -7267,7 +7285,7 @@ async function iniciarPagoTarjeta(datos) {
         accion: 'crear',
         items: itemsDelCarrito(),
         zona: datos.zona, distrito: datos.distrito,
-        nombre: datos.nombre, direccion: datos.direccion, telefono: datos.telefono, email: datos.email
+        nombre: datos.nombre, dni: datos.dni, direccion: datos.direccion, telefono: datos.telefono, email: datos.email
       }
     });
     if (error || !data || !data.formToken) {
@@ -8730,11 +8748,46 @@ function irAFaq() {
 /* Entradas desde otras páginas mediante la URL:
      /?ver=blog        → abre el BariBlog (Centro de Recursos)
      /?producto=bi5    → abre la ficha de ese producto
-                         (lo usa "Ver producto" del selector) */
+                         (lo usa "Ver producto" del selector)
+     /?pedido=[...]    → carga el pedido armado en /catalogo y abre
+                         el checkout (tarjeta o Yape) */
 (function () {
   const params = new URLSearchParams(location.search);
   const ver = params.get('ver');
   const prod = params.get('producto');
+  const pedido = params.get('pedido');
+
+  if (pedido) {
+    window.addEventListener('load', function () {
+      let items = [];
+      try { items = JSON.parse(pedido); } catch (e) {}
+      if (!Array.isArray(items)) items = [];
+      /* Solo entran productos que existen y tienen precio. El precio
+         NUNCA viaja en el enlace: lo pone la tienda y lo recalcula el
+         cobro. Las notas se limpian porque se pintan como HTML. */
+      carrito = items
+        .filter(i => i && Number.isInteger(i.qty) && i.qty > 0 && i.qty <= 50 &&
+          productos.some(p => p.id === i.id && !sinPrecio(p)))
+        .map(i => ({ id: i.id, qty: i.qty, notas: String(i.notas || '').replace(/[<>&"'`]/g, '').slice(0, 200) }));
+      /* Se quita del enlace para que recargar no lo vuelva a sumar */
+      history.replaceState(null, '', location.pathname);
+      if (!carrito.length) return;
+      pedidoDesdeCatalogo = true;
+      actualizarCartUI();
+      /* Lo que el cliente ya escribió en el catálogo */
+      try {
+        const d = JSON.parse(localStorage.getItem('zb_datos')) || {};
+        if (d.nombre) document.getElementById('clienteNombre').value = d.nombre;
+        if (d.dni) document.getElementById('clienteDni').value = String(d.dni).replace(/\D/g, '');
+        if (d.zona) document.getElementById('clienteDireccion').value = d.zona;
+        if (d.tipo === 'provincia') {
+          const r = document.querySelector('input[name="zonaEnvio"][value="provincia"]');
+          if (r) r.checked = true;
+        }
+      } catch (e) {}
+      irAlCheckout();
+    });
+  }
 
   if (ver === 'blog') {
     /* Tras el render inicial, para que el scroll caiga bien. */

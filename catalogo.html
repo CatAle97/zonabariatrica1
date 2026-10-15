@@ -383,6 +383,18 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
 }
 .btn-pedido[aria-disabled="true"] { background:var(--borde); color:var(--texto-3); pointer-events:none; }
 .btn-pedido svg { width:26px; height:26px; fill:currentColor; }
+/* Pagar en la web: botón principal. WhatsApp queda como segunda opción. */
+.btn-pagar {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  width:100%; min-height:56px; border-radius:var(--radio-sm);
+  background:var(--azul); color:var(--blanco); font-size:19px; font-weight:600; letter-spacing:-.01em;
+}
+.btn-pagar:active { background:var(--azul-osc); }
+.btn-pagar[disabled] { background:var(--borde); color:var(--texto-3); }
+.nota-pagar { text-align:center; font-size:var(--fs-xs); color:var(--texto-3); margin:8px 0 0; }
+.separador-wa { display:flex; align-items:center; gap:10px; font-size:var(--fs-sm); color:var(--texto-3); margin:18px 0 14px; }
+.separador-wa::before, .separador-wa::after { content:""; flex:1; height:1px; background:var(--borde); }
+.btn-pedido.secundario { background:var(--blanco); color:var(--verde-osc); border:2px solid var(--verde); min-height:52px; font-size:17px; }
 .btn-limpiar {
   width:100%; min-height:48px; border-radius:var(--radio-sm);
   border:1px solid var(--borde); background:var(--blanco);
@@ -644,7 +656,7 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
   <div class="panel-cab">
     <div class="panel-titulo">
       <h2>Mi pedido</h2>
-      <p>Revisa tus productos antes de enviar</p>
+      <p>Revisa tus productos antes de pagar</p>
     </div>
     <span class="cuenta-chip" id="chipCuenta">0 productos</span>
     <button type="button" id="btnCerrar" aria-label="Cerrar">×</button>
@@ -657,6 +669,10 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
     <!-- Datos de entrega: campos para escribir, no botones.
          La zona sirve para cotizarle el delivery, que paga el cliente. -->
     <div id="formPedido" hidden>
+      <button class="btn-pagar" id="btnPagar" type="button">
+        <svg class="icono"><use href="#i-carrito"/></svg>Finalizar compra</button>
+      <p class="nota-pagar">🔒 Paga con tarjeta en línea o con Yape al recibir</p>
+      <p class="separador-wa">o pide por WhatsApp</p>
       <div class="bloque-envio">
         <svg class="icono"><use href="#i-camion"/></svg>
         <div><b>Envío / Entrega</b><span>Coordinamos el envío por WhatsApp según tu ubicación.</span></div>
@@ -684,13 +700,13 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
         <input id="inpDni" type="text" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="Ej: 45678912">
         <p class="error" id="errDni" hidden>Escribe tu DNI (8 dígitos) para registrar el pedido.</p>
       </div>
-      <a class="btn-pedido" id="btnPedido" target="_blank" rel="noopener" href="#">
+      <a class="btn-pedido secundario" id="btnPedido" target="_blank" rel="noopener" href="#">
         <svg><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
       <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
     </div>
 
     <div id="pieVacio">
-      <a class="btn-pedido" aria-disabled="true"><svg><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
+      <button class="btn-pagar" type="button" disabled><svg class="icono"><use href="#i-carrito"/></svg>Finalizar compra</button>
       <button class="btn-limpiar" id="btnDeshacer" type="button" hidden>Deshacer, volver a poner mis productos</button>
       <p class="nota-pie">Primero agrega al menos un producto.</p>
     </div>
@@ -1008,7 +1024,7 @@ function imagenHTML(src, alt, extra) {
 function acciones(id) {
   const n = cot[id] || 0;
   if (!n) return '<button class="btn-agregar" type="button" data-mas="' + id + '">' +
-    '<svg class="icono"><use href="#i-mas"/></svg>' +
+    '<svg class="icono"><use href="#i-carrito"/></svg>' +
     '<span class="txt-largo">Agregar a mi pedido</span><span class="txt-corto">Agregar</span></button>';
   return '<div class="contador">' +
     '<button type="button" data-menos="' + id + '" aria-label="Quitar uno">−</button>' +
@@ -1064,11 +1080,11 @@ function tarjetaOferta(i) {
           '" data-sabor="' + i + ':' + pos + ':' + id + '">' + esc(P[id].sabor) + '</button>').join("") +
       '</div></div>').join("") +
       '<button class="btn-agregar" type="button" data-confirmar="' + i + '">' +
-        '<svg class="icono"><use href="#i-mas"/></svg>Agregar al pedido</button>' +
+        '<svg class="icono"><use href="#i-carrito"/></svg>Agregar al pedido</button>' +
     '</div>';
   } else {
     accion = '<button class="btn-agregar" type="button" data-oferta="' + i + '">' +
-      '<svg class="icono"><use href="#i-mas"/></svg>' +
+      '<svg class="icono"><use href="#i-carrito"/></svg>' +
       '<span class="txt-largo">' + (variossabores ? 'Elegir sabores' : 'Agregar esta oferta') + '</span>' +
       '<span class="txt-corto">' + (variossabores ? 'Elegir' : 'Agregar') + '</span></button>';
   }
@@ -1172,7 +1188,7 @@ function pintarPanel() {
   pintarChipCuenta();
 
   if (!ids.length) {
-    lista.innerHTML = '<p class="vacio">Tu pedido está vacío.<br>Agrega los productos que quieres y te confirmamos todo por WhatsApp.</p>';
+    lista.innerHTML = '<p class="vacio">Tu pedido está vacío.<br>Agrega los productos que quieres comprar.</p>';
     document.getElementById("cuentas").innerHTML = "";
     document.getElementById("btnDeshacer").hidden = !copiaPrevia;
     return;
@@ -1222,6 +1238,55 @@ function pintarPanel() {
 
   document.getElementById("btnPedido").href = mensajeWA();
 }
+
+/* =========================================================
+   PAGAR EN LA WEB (15-10-2026)
+   ---------------------------------------------------------
+   El catálogo no cobra por su cuenta: le pasa el pedido al
+   checkout de la tienda (tarjeta o Yape al recibir), el mismo
+   que ya cobra en zonabariatrica.com. Así hay UN solo cobro
+   que mantener.
+   Los pares x2 viajan como las ofertas de la tienda (oferta1…
+   oferta5) y el resto como productos sueltos: el cobro aplica
+   el descuento B&N solo a los sueltos, igual que cuentas(),
+   así el total cobrado es el mismo que el cliente vio aquí.
+   ========================================================= */
+function itemsTienda() {
+  const c = cuentas();
+  const sobran = Object.assign({}, cot);
+  const items = [];
+  /* Mismo armado de pares que el camino A de cuentas() */
+  if (c.ofertas.length) {
+    OFERTAS_X2.forEach((of, i) => {
+      const total = of.ids.reduce((s, id) => s + (sobran[id] || 0), 0);
+      const pares = Math.floor(total / 2);
+      if (!pares) return;
+      let quitar = pares * 2;
+      const sabores = [];
+      of.ids.forEach(id => {
+        const usa = Math.min(quitar, sobran[id] || 0);
+        sobran[id] = (sobran[id] || 0) - usa;
+        quitar -= usa;
+        if (usa && P[id].sabor) sabores.push(usa + "x " + P[id].sabor);
+      });
+      items.push({ id: IDS_OFERTAS[i], qty: pares, notas: of.ids.length > 1 ? sabores.join(" · ") : "" });
+    });
+  }
+  Object.keys(sobran).forEach(id => {
+    if (sobran[id] > 0) items.push({ id: IDS_TIENDA[id], qty: sobran[id], notas: "" });
+  });
+  return items;
+}
+
+function irAPagar() {
+  const items = itemsTienda();
+  if (!items.length || items.some(x => !x.id)) return;
+  if (typeof gtag === "function") {
+    gtag("event", "ir_checkout", { origen: "catalogo", productos: unidades(), total: cuentas().total });
+  }
+  location.href = "/?pedido=" + encodeURIComponent(JSON.stringify(items));
+}
+document.getElementById("btnPagar").addEventListener("click", irAPagar);
 
 /* El contador de la cabecera del pedido */
 function pintarChipCuenta() {

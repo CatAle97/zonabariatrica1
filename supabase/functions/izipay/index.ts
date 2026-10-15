@@ -167,8 +167,8 @@ async function crear(body: any) {
         billingDetails: {
           firstName: partes[0] || "",
           lastName: partes.slice(1).join(" "),
-          identityType: cliente.dni ? "DNI" : undefined,
-          identityCode: cliente.dni || undefined,
+          // El DNI NO se manda a Izipay: hasta el 15-10-2026 nunca viajó y el
+          // cobro funciona así. Se guarda en pagos_web y sale en el aviso.
           country: "PE",
         },
       },
@@ -205,7 +205,7 @@ function nuevoOrderId() {
 function leerCliente(body: any) {
   return {
     nombre: String(body.nombre || "").trim().slice(0, 120),
-    dni: String(body.dni || "").slice(0, 15),
+    dni: String(body.dni || "").replace(/\D/g, "").slice(0, 12),
     email: String(body.email || "").trim().slice(0, 120),
     telefono: String(body.telefono || "").replace(/[^\d+ ]/g, "").trim().slice(0, 20),
     direccion: String(body.direccion || "").trim().slice(0, 250),
@@ -282,6 +282,7 @@ function textoPedido(p: any) {
     "TOTAL: " + monto,
     "",
     "Cliente: " + c.nombre,
+    "DNI: " + (c.dni || "—"),
     "Celular: " + c.telefono + " (https://wa.me/" + celular + ")",
     "Correo: " + c.email,
     "Entrega: " + destino,
