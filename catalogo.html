@@ -338,7 +338,7 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
 .bloque-envio .icono { width:26px; height:26px; color:var(--azul); flex-shrink:0; }
 .bloque-envio b { display:block; font-size:var(--fs-sm); color:var(--azul-osc); }
 .bloque-envio span { display:block; font-size:var(--fs-xs); color:var(--texto-2); margin-top:2px; }
-#formPedido, #pieVacio { background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio); padding:16px; }
+#formPedido, #pieVacio { display:grid; gap:10px; background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio); padding:16px; }
 .cuenta { display:flex; justify-content:space-between; align-items:baseline; gap:16px;
   font-size:var(--fs-sm); color:var(--texto-2); }
 .cuenta span:last-child { white-space:nowrap; font-variant-numeric:tabular-nums; }
@@ -624,7 +624,7 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
   <ul class="datos">
     <li><svg class="icono"><use href="#i-camion"/></svg>Envíos a provincia por agencia <b>Shalom</b></li>
     <li><svg class="icono"><use href="#i-billete"/></svg>Pago contra entrega en <b>Lima y provincias</b></li>
-    <li><svg class="icono"><use href="#i-wa"/></svg>Pedidos: <a href="https://wa.me/51961841069" target="_blank" rel="noopener"><b>961 841 069</b></a></li>
+    <li><svg class="icono"><use href="#i-wa"/></svg>Consultas: <a href="https://wa.me/51961841069" target="_blank" rel="noopener"><b>961 841 069</b></a></li>
   </ul>
 </footer>
 
@@ -666,47 +666,14 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
   <div class="panel-pie">
     <div id="cuentas"></div>
 
-    <!-- Datos de entrega: campos para escribir, no botones.
-         La zona sirve para cotizarle el delivery, que paga el cliente. -->
     <div id="formPedido" hidden>
       <button class="btn-pagar" id="btnPagar" type="button">
-        <svg class="icono"><use href="#i-carrito"/></svg>Finalizar compra</button>
-      <p class="nota-pagar">🔒 Paga con tarjeta en línea o con Yape al recibir</p>
-      <p class="separador-wa">o pide por WhatsApp</p>
-      <div class="bloque-envio">
-        <svg class="icono"><use href="#i-camion"/></svg>
-        <div><b>Envío / Entrega</b><span>Coordinamos el envío por WhatsApp según tu ubicación.</span></div>
-      </div>
-      <div class="campo">
-        <label>¿A dónde va tu pedido?</label>
-        <div class="opciones">
-          <button type="button" class="opcion" data-zona="lima">LIMA</button>
-          <button type="button" class="opcion" data-zona="provincia">PROVINCIA</button>
-        </div>
-        <p class="error" id="errTipo" hidden>Elige Lima o Provincia.</p>
-      </div>
-      <div class="campo" id="campoZona" hidden>
-        <label for="inpZona" id="labelZona">Dirección exacta</label>
-        <input id="inpZona" type="text" autocomplete="street-address" placeholder="Ej: Av. Perú 123, dpto 201 — San Miguel">
-        <p class="error" id="errZona" hidden>Completa este dato para calcular tu envío.</p>
-      </div>
-      <div class="campo">
-        <label for="inpNombre">Nombre</label>
-        <input id="inpNombre" type="text" autocomplete="name" placeholder="Ej: María">
-        <p class="error" id="errNombre" hidden>Escribe tu nombre para registrar el pedido.</p>
-      </div>
-      <div class="campo">
-        <label for="inpDni">DNI</label>
-        <input id="inpDni" type="text" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="Ej: 45678912">
-        <p class="error" id="errDni" hidden>Escribe tu DNI (8 dígitos) para registrar el pedido.</p>
-      </div>
-      <a class="btn-pedido secundario" id="btnPedido" target="_blank" rel="noopener" href="#">
-        <svg><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
+        Continuar<svg class="icono"><use href="#i-flecha"/></svg></button>
       <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
     </div>
 
     <div id="pieVacio">
-      <button class="btn-pagar" type="button" disabled><svg class="icono"><use href="#i-carrito"/></svg>Finalizar compra</button>
+      <button class="btn-pagar" type="button" disabled>Continuar<svg class="icono"><use href="#i-flecha"/></svg></button>
       <button class="btn-limpiar" id="btnDeshacer" type="button" hidden>Deshacer, volver a poner mis productos</button>
       <p class="nota-pie">Primero agrega al menos un producto.</p>
     </div>
@@ -1145,40 +1112,6 @@ function pintarCatalogo() {
 }
 
 /* ---------- PANEL DEL COTIZADOR ---------- */
-function mensajeWA() {
-  const c = cuentas();
-  const S = "\u000A";                 /* salto de línea */
-  const RAYA = "\u2501".repeat(14);   /* la línea divisoria */
-  /* En WhatsApp las negritas van entre asteriscos */
-  let m = "\uD83D\uDED2 *Hola, Zona Bariátrica. Quiero realizar este pedido.*" + S + S;
-  m += "*MI PEDIDO*" + S + S;
-  Object.keys(cot).forEach(id => {
-    const p = P[id];
-    m += "• " + cot[id] + "x " + p.nombre + " — " + soles(p.precio * cot[id]) + S;
-  });
-  const ahorro = c.ofertas.reduce((s, o) => s + o.ahorro, 0) + c.descuento;
-  m += S + RAYA + S + S;
-  m += "*Subtotal productos:* " + soles(c.subtotal) + S;
-  m += "\uD83D\uDC9A *Descuento:* " + (ahorro ? "- " + soles(ahorro) : "S/ 0") + S;
-  m += "\uD83D\uDCB0 *TOTAL PRODUCTOS:* " + soles(c.total) + S + S;
-  m += RAYA + S + S;
-  /* En Lima el cliente escribe su dirección; en provincia, su ciudad */
-  if (datos.tipo === "provincia") {
-    m += "\uD83D\uDCCD *Ciudad / Distrito:* " + datos.zona + S;
-    m += "\uD83D\uDE9A *Envío:* Agencia Shalom" + S;
-  } else {
-    m += "\uD83D\uDCCD *Ciudad / Distrito:* Lima" + S;
-    m += "\uD83C\uDFE0 *Dirección:* " + datos.zona + S;
-    m += "\uD83D\uDE9A *Envío:* Delivery Lima" + S;
-  }
-  m += "\uD83D\uDCB5 *Pago:* Contra entrega" + S;
-  if (datos.nombre) m += "\uD83D\uDC64 *Nombre:* " + datos.nombre + S;
-  if (datos.dni) m += "🪪 *DNI:* " + datos.dni + S;
-  m += S + RAYA + S + S;
-  m += "Quedo atento(a) a la *confirmación del costo de envío* y al *total final de mi pedido*. ¡Muchas gracias! \uD83D\uDE0A";
-  return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(m);
-}
-
 function pintarPanel() {
   const lista = document.getElementById("panelLista");
   const ids = Object.keys(cot);
@@ -1236,7 +1169,6 @@ function pintarPanel() {
       '<p class="sin-delivery">No incluye el delivery</p>' +
     '</div>';
 
-  document.getElementById("btnPedido").href = mensajeWA();
 }
 
 /* =========================================================
@@ -1300,107 +1232,6 @@ function pintarFlotante() {
   globo.hidden = n === 0;
   globo.textContent = n;
 }
-
-/* =========================================================
-   DATOS DE ENTREGA
-   El distrito o provincia sirve para cotizar el delivery, que
-   corre por cuenta del cliente. Se guardan en su celular para
-   que no los vuelva a escribir la próxima vez.
-   ========================================================= */
-let datos = { tipo:"", zona:"", nombre:"", dni:"" };
-try { datos = Object.assign(datos, JSON.parse(localStorage.getItem("zb_datos")) || {}); } catch (e) {}
-
-const inpZona = document.getElementById("inpZona");
-const inpNombre = document.getElementById("inpNombre");
-const inpDni = document.getElementById("inpDni");
-/* DNI peruano = 8 dígitos. Se deja pasar hasta 12 por si es
-   carnet de extranjería. Solo se guardan los números. */
-function dniValido(d) { return /^[0-9]{8,12}$/.test(d); }
-const campoZona = document.getElementById("campoZona");
-const labelZona = document.getElementById("labelZona");
-
-/* Lo que se le pide cambia según haya elegido Lima o provincia */
-const TEXTOS_ZONA = {
-  lima: { label:"Dirección exacta", ayuda:"Ej: Av. Perú 123, dpto 201 — San Miguel" },
-  provincia: { label:"¿A qué provincia?", ayuda:"Ej: Cusco" }
-};
-
-function elegirZona(tipo, limpiarTexto) {
-  datos.tipo = tipo;
-  if (limpiarTexto) { datos.zona = ""; inpZona.value = ""; }
-  document.querySelectorAll(".opcion").forEach(b => b.classList.toggle("elegida", b.dataset.zona === tipo));
-  document.querySelector(".opciones").classList.remove("mal");
-  document.getElementById("errTipo").hidden = true;
-  campoZona.hidden = !tipo;
-  if (tipo) {
-    labelZona.textContent = TEXTOS_ZONA[tipo].label;
-    inpZona.placeholder = TEXTOS_ZONA[tipo].ayuda;
-  }
-  anotar();
-}
-
-function anotar() {
-  datos.zona = inpZona.value.trim();
-  datos.nombre = inpNombre.value.trim();
-  const soloNumeros = inpDni.value.replace(/[^0-9]/g, "");
-  if (inpDni.value !== soloNumeros) inpDni.value = soloNumeros;
-  datos.dni = soloNumeros;
-  try { localStorage.setItem("zb_datos", JSON.stringify(datos)); } catch (e) {}
-  if (datos.zona) {
-    inpZona.classList.remove("mal");
-    document.getElementById("errZona").hidden = true;
-  }
-  if (datos.nombre) {
-    inpNombre.classList.remove("mal");
-    document.getElementById("errNombre").hidden = true;
-  }
-  if (dniValido(datos.dni)) {
-    inpDni.classList.remove("mal");
-    document.getElementById("errDni").hidden = true;
-  }
-  document.getElementById("btnPedido").href = mensajeWA();
-}
-inpZona.addEventListener("input", anotar);
-inpNombre.addEventListener("input", anotar);
-inpDni.addEventListener("input", anotar);
-
-/* Al escribir, el teclado del celular tapa la mitad de abajo.
-   Dos cosas lo evitan: la ventana se encoge a lo que queda
-   visible, y el campo se centra dentro de ella. */
-[inpZona, inpNombre, inpDni].forEach(campo => {
-  campo.addEventListener("focus", () => {
-    setTimeout(() => campo.scrollIntoView({ block: "center", behavior: "smooth" }), 350);
-  });
-});
-/* Con el teclado abierto la ventana util se parte a la mitad. La
-   ventana deja de estar centrada y se pega arriba, que es la zona
-   que sigue viendose, y se encoge a ese alto. */
-function ajustarPorTeclado() {
-  const vv = window.visualViewport;
-  if (!vv || panel.hidden) return;
-  const hayTeclado = vv.height < window.innerHeight * 0.75;
-  if (hayTeclado) {
-    panel.style.top = "8px";
-    panel.style.transform = "translateX(-50%)";
-    panel.style.maxHeight = Math.round(vv.height - 16) + "px";
-  } else {
-    panel.style.top = "";
-    panel.style.transform = "";
-    panel.style.maxHeight = "";
-  }
-}
-if (window.visualViewport) {
-  window.visualViewport.addEventListener("resize", ajustarPorTeclado);
-  window.visualViewport.addEventListener("scroll", ajustarPorTeclado);
-}
-document.querySelectorAll(".opcion").forEach(b => {
-  b.addEventListener("click", () => elegirZona(b.dataset.zona, b.dataset.zona !== datos.tipo));
-});
-
-/* Si ya pidió antes, se le deja puesto lo de la vez pasada */
-inpNombre.value = datos.nombre;
-inpDni.value = datos.dni || "";
-if (datos.tipo) { elegirZona(datos.tipo, false); inpZona.value = datos.zona; anotar(); }
 
 function pintarTodo() { pintarCatalogo(); pintarPanel(); pintarFlotante(); }
 
@@ -1481,42 +1312,6 @@ document.addEventListener("click", e => {
   if (mas) cambiar(mas.dataset.mas, 1);
   else if (menos) cambiar(menos.dataset.menos, -1);
   else if (fuera) sacar(fuera.dataset.sacar);
-  /* HACER PEDIDO: sin distrito no se manda, porque sin eso no se
-     puede cotizar el delivery. */
-  const pedir = e.target.closest("#btnPedido");
-  if (pedir) {
-    if (!datos.tipo) {
-      e.preventDefault();
-      document.querySelector(".opciones").classList.add("mal");
-      document.getElementById("errTipo").hidden = false;
-      return;
-    }
-    if (!datos.zona) {
-      e.preventDefault();
-      inpZona.classList.add("mal");
-      document.getElementById("errZona").hidden = false;
-      inpZona.focus();
-      return;
-    }
-    if (!datos.nombre) {
-      e.preventDefault();
-      inpNombre.classList.add("mal");
-      document.getElementById("errNombre").hidden = false;
-      inpNombre.focus();
-      return;
-    }
-    if (!dniValido(datos.dni)) {
-      e.preventDefault();
-      inpDni.classList.add("mal");
-      document.getElementById("errDni").hidden = false;
-      inpDni.focus();
-      return;
-    }
-    if (typeof gtag === "function") {
-      const c = cuentas();
-      gtag("event", "hacer_pedido", { productos: unidades(), total: c.total, zona: datos.zona });
-    }
-  }
 });
 
 /* ---------- Barra de categorías: marca la sección visible ---------- */
