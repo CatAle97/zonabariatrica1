@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catálogo | Zona Bariátrica</title>
-<meta name="description" content="Catálogo de suplementos bariátricos. Arma tu lista y pide tu cotización por WhatsApp.">
+<meta name="description" content="Suplementos bariátricos: proteínas, vitaminas, fibra y colágeno. Paga con tarjeta o al recibir. Envíos a todo el Perú.">
 <!-- noindex A PROPÓSITO: es el enlace para compartir, no una página de buscador.
      Si Google la indexa, compite con /proteinas, /vitaminas, etc. -->
 <meta name="robots" content="noindex, follow">
@@ -12,7 +12,7 @@
 <meta name="theme-color" content="#2563EB">
 <!-- Vista previa al compartir por WhatsApp / Facebook -->
 <meta property="og:title" content="Catálogo Zona Bariátrica">
-<meta property="og:description" content="Arma tu lista y pide tu cotización por WhatsApp.">
+<meta property="og:description" content="Suplementos bariátricos: proteínas, vitaminas, fibra y colágeno. Paga con tarjeta o al recibir. Envíos a todo el Perú.">
 <meta property="og:image" content="https://zonabariatrica.com/img/logo-og.png">
 <meta property="og:url" content="https://zonabariatrica.com/catalogo">
 <meta property="og:type" content="website">
@@ -163,7 +163,7 @@ body.bloqueado .btn-arriba { display:none; }
 .sello {
   position:absolute; top:12px; left:12px; padding:6px 12px; border-radius:var(--pill);
   font-size:var(--fs-xs); font-weight:800; letter-spacing:.04em; text-transform:uppercase;
-  background:var(--azul); color:var(--blanco);
+  background:var(--azul-claro); color:var(--azul-osc); border:1px solid var(--azul-borde);
 }
 .info { padding:16px; display:flex; flex-direction:column; gap:14px; flex:1; }
 /* Tipografía al estilo Apple: pesos medios, nada de negritas duras,
@@ -171,6 +171,15 @@ body.bloqueado .btn-arriba { display:none; }
 .marca { font-size:12px; font-weight:500; letter-spacing:.07em; text-transform:uppercase; color:var(--texto-3); }
 .cabeza { display:flex; flex-direction:column; gap:7px; }
 .nombre { font-size:var(--fs-h3); line-height:1.32; font-weight:500; letter-spacing:-.01em; color:var(--texto); }
+/* Para qué sirve: una línea bajo el nombre */
+.para { font-size:13px; line-height:1.35; color:var(--texto-2); }
+@media (min-width:600px) { .para { font-size:13.5px; } }
+.linea-cu { font-size:var(--fs-xs); color:var(--texto-3); margin-top:2px; }
+/* Franja de confianza bajo la cabecera */
+.confia { display:flex; justify-content:center; flex-wrap:wrap; gap:6px 14px; padding:10px 0 0; }
+.confia li { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:var(--texto-2); white-space:nowrap; }
+.confia .icono { width:17px; height:17px; color:var(--azul); }
+@media (min-width:600px) { .confia { justify-content:flex-start; gap:8px 22px; padding-top:14px; } .confia li { font-size:14px; } }
 .precios { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; }
 .precio { font-size:var(--fs-precio); font-weight:600; color:var(--azul-osc); line-height:1.1; letter-spacing:-.02em; }
 /* Aviso de oferta x2 dentro de la tarjeta */
@@ -202,10 +211,10 @@ body.bloqueado .btn-arriba { display:none; }
 
 /* Se toca el producto y se abre su ficha */
 .foto[data-abrir], .cabeza { cursor:pointer; }
-.lupa { position:absolute; right:8px; bottom:8px; width:30px; height:30px; border-radius:var(--pill);
+.lupa { position:absolute; right:8px; bottom:8px; width:38px; height:38px; border-radius:var(--pill);
   background:rgba(255,255,255,.92); border:1px solid var(--borde);
   display:flex; align-items:center; justify-content:center; color:var(--texto-2); }
-.lupa .icono { width:16px; height:16px; }
+.lupa .icono { width:19px; height:19px; }
 
 /* Boton para abrir la ficha del producto */
 .ver-ficha { display:flex; align-items:center; justify-content:center; gap:6px;
@@ -256,13 +265,13 @@ body.bloqueado .btn-arriba { display:none; }
 .contador .cant small { display:block; font-size:var(--fs-xs); font-weight:600; color:var(--texto-3); }
 
 /* ---------- BOTÓN FLOTANTE = COTIZADOR ---------- */
-/* Carrito flotante: círculo de 58px, verde de WhatsApp */
+/* Carrito flotante: círculo de 58px, azul de compra (el verde es solo WhatsApp) */
 .flotante {
   position:fixed; right:16px; bottom:16px; bottom:calc(16px + env(safe-area-inset-bottom));
   z-index:30;
   display:flex; align-items:center; justify-content:center;
   width:58px; height:58px; border-radius:var(--pill);
-  background:#16A34A; color:var(--blanco);
+  background:var(--azul); color:var(--blanco);
   box-shadow:0 6px 18px rgba(16,24,40,.24);
 }
 .flotante svg { width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
@@ -271,7 +280,7 @@ body.bloqueado .flotante { display:none; } /* con la ventana abierta estorba */
 .flotante .globo {
   position:absolute; top:-2px; right:-2px;
   width:22px; height:22px; border-radius:var(--pill);
-  background:var(--blanco); color:#16A34A; font-size:12px; font-weight:800;
+  background:var(--blanco); color:var(--azul-osc); font-size:12px; font-weight:800;
   display:flex; align-items:center; justify-content:center;
   box-shadow:0 1px 3px rgba(16,24,40,.2);
 }
@@ -471,10 +480,8 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
   .cab-marca, .cab-titulo { text-align:left; }
   .cab-titulo { text-align:center; }
 
-  /* Banner primero, a lo ancho; se recorta el aire de arriba y abajo */
+  /* Las 4 categorías en una fila: los productos quedan a la vista */
   .mosaico { gap:10px; padding-top:16px; }
-  .tile-nuevos { order:-1; margin-bottom:6px; }
-  .tile-nuevos img { aspect-ratio:2.4 / 1; object-fit:cover; object-position:center 68%; }
 
   .nav-cat { margin-top:20px; }
   .nav-cat a { height:42px; font-size:15px; color:var(--texto); }
@@ -546,6 +553,11 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
 </header>
 
 <div class="envoltura">
+  <ul class="confia">
+    <li><svg class="icono"><use href="#i-billete"/></svg>Pago al recibir</li>
+    <li><svg class="icono"><use href="#i-camion"/></svg>Envíos a todo el Perú</li>
+    <li><svg class="icono"><use href="#i-escudo"/></svg>Pago seguro con tarjeta</li>
+  </ul>
   <!-- 4 cuadros -->
   <nav class="mosaico">
     <a class="tile" href="#proteinas">
@@ -564,12 +576,6 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
       <picture><source srcset="img/cat-tile-ofertas.webp" type="image/webp">
       <img src="img/cat-tile-ofertas.jpg" alt="Ofertas — tus favoritos a mejor precio" width="760" height="619" loading="lazy"></picture>
     </a>
-    <!-- Nuevos ingresos: hecha en código, con las fotos reales de
-         los dos productos que de verdad acaban de entrar. -->
-    <a class="tile tile-nuevos" href="#nuevos">
-      <picture><source srcset="img/cat-tile-nuevos.webp" type="image/webp">
-      <img src="img/cat-tile-nuevos.jpg" alt="Nuevos ingresos — siempre algo nuevo para ti" width="1000" height="508" loading="lazy"></picture>
-    </a>
 </nav>
 
 </div>
@@ -581,7 +587,6 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
     <li><a href="#vitaminas">Vitaminas</a></li>
     <li><a href="#fibra-colageno">Fibra y Colágeno</a></li>
     <li><a href="#ofertas">Ofertas</a></li>
-    <li><a href="#nuevos">Nuevos ingresos</a></li>
   </ul>
 </nav>
 
@@ -614,10 +619,6 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
     <div class="grilla" id="grillaOfertas"></div>
   </section>
 
-  <section class="seccion" id="nuevos">
-    <h2><svg class="icono"><use href="#i-nuevo"/></svg>Nuevos ingresos</h2>
-    <div class="grilla" data-lista="nuevos"></div>
-  </section>
 </main>
 
 <footer>
@@ -629,7 +630,7 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
 </footer>
 
 <!-- Botón flotante del carrito: abre el resumen del pedido -->
-<button class="flotante" id="btnFlotante" type="button" aria-label="Ver mi pedido">
+<button class="flotante" id="btnFlotante" type="button" aria-label="Ver mi carrito">
   <svg><use href="#i-carrito"/></svg>
   <span class="globo" id="globo" hidden>0</span>
 </button>
@@ -652,10 +653,10 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
 
 <!-- Panel del cotizador -->
 <div class="fondo-panel" id="fondoPanel" hidden></div>
-<section class="panel" id="panel" hidden aria-label="Mi pedido">
+<section class="panel" id="panel" hidden aria-label="Mi carrito">
   <div class="panel-cab">
     <div class="panel-titulo">
-      <h2>Mi pedido</h2>
+      <h2>Mi carrito</h2>
       <p>Revisa tus productos antes de pagar</p>
     </div>
     <span class="cuenta-chip" id="chipCuenta">0 productos</span>
@@ -669,7 +670,7 @@ footer { margin-top:36px; background:var(--blanco); border-top:1px solid var(--b
     <div id="formPedido" hidden>
       <button class="btn-pagar" id="btnPagar" type="button">
         Continuar<svg class="icono"><use href="#i-flecha"/></svg></button>
-      <button class="btn-limpiar" id="btnLimpiar" type="button">LIMPIAR</button>
+      <button class="btn-limpiar" id="btnLimpiar" type="button">Vaciar carrito</button>
     </div>
 
     <div id="pieVacio">
@@ -712,7 +713,7 @@ const P = {
     foto:"img/cat-whey-chocolate.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
   isolate: { uso:"Vía oral. Adultos: 1 porción (25 g, 1 cuchara) al día disuelta en 200-300 ml de agua.", marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295, nuevo:true,
     foto:"img/nf-whey-isolate-v2.jpg", tabla:"img/tn-nutrifath.jpg", chips:["23 g proteína","Sin lactosa","Sin gluten","Sabor neutro"] },
-  geno: { uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.", marca:"Safie Pharma", nombre:"GENO DEEP CARE ADVANCE – Proteína Bariátrica 400 g", precio:180, nuevo:true,
+  geno: { uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.", marca:"Safie Pharma", nombre:"Geno Deep Care Advance — Proteína Bariátrica 400 g", precio:180, nuevo:true,
     foto:"img/sp-geno-frente.jpg", tabla:"img/tn-geno.jpg", chips:["19 g proteína","Whey Isolate","Colágeno hidrolizado","0 g azúcar"] },
 
   multivit: { uso:"4 gomitas al día.", marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150, bn:true,
@@ -777,6 +778,30 @@ const IDS_TIENDA = {
   bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9",
   lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4"
 };
+/* Para qué sirve cada producto: una línea bajo el nombre en la tarjeta.
+   Texto corto y sin promesas médicas. */
+const PARA = {
+  liquidaFresa: "Lista para tomar, ideal el primer mes",
+  liquidaMaracumango: "Lista para tomar, ideal el primer mes",
+  wheyVainilla: "Para tu batido diario de proteína",
+  wheyChocolate: "Para tu batido diario de proteína",
+  isolate: "Sabor neutro: combina con tus bebidas",
+  geno: "Proteína con colágeno y 0 g de azúcar",
+  multivit: "Tus vitaminas diarias en gomita",
+  b12: "Pensada para pacientes de bypass gástrico",
+  hierro: "Con vitamina C para absorber mejor el hierro",
+  biotina: "Apoyo para cabello, piel y uñas",
+  bfBayas: "Multivitamínico bariátrico, 1 tableta al día",
+  bfTropical: "Multivitamínico bariátrico, 1 tableta al día",
+  colageno: "Colágeno con calcio y vitamina D",
+  fibra: "Fibra sin azúcar para tu digestión",
+  lvlVainilla: "Proteína aislada endulzada con stevia",
+  lvlChocolate: "Proteína aislada endulzada con stevia",
+  lvlColageno: "Colágeno con biotina para piel y cabello",
+  lvlFibra: "Fibra sabor manzana verde para tu digestión"
+};
+Object.keys(PARA).forEach(k => { if (P[k]) P[k].para = PARA[k]; });
+
 const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4", "oferta5"];
 
 (function sincronizarPrecios() {
@@ -808,7 +833,9 @@ const CATALOGO = {
   packs: [],
   /* Ofertas = los productos que tienen precio especial llevando 2.
      Sale de OFERTAS_X2, asi no hay dos listas que mantener. */
-  nuevos: ["geno","isolate","colageno"]
+  /* "Nuevos ingresos" salió del catálogo (16-10-2026): repetía
+     productos que ya están en su categoría con el sello "Nuevo". */
+  nuevos: []
 };
 
 /* =========================================================
@@ -828,7 +855,7 @@ const OFERTAS_X2 = [
     foto:"img/oferta-2multivit-v2.jpg", incluye:"1 bayas mixtas + 1 tropical" },
   { nombre:"2 Whey Protein Isolate Nutrifath", ids:["isolate"], precioPar:580,
     foto:"img/oferta-2nutrifath-v2.jpg", incluye:"2 envases de 1 kg, sabor neutro" },
-  { nombre:"2 GENO DEEP CARE ADVANCE", ids:["geno"], precioPar:350,
+  { nombre:"2 Geno Deep Care Advance", ids:["geno"], precioPar:350,
     foto:"img/oferta-2geno.jpg", incluye:"2 frascos de 400 g" }
 ];
 
@@ -992,7 +1019,7 @@ function acciones(id) {
   const n = cot[id] || 0;
   if (!n) return '<button class="btn-agregar" type="button" data-mas="' + id + '">' +
     '<svg class="icono"><use href="#i-carrito"/></svg>' +
-    '<span class="txt-largo">Agregar a mi pedido</span><span class="txt-corto">Agregar</span></button>';
+    '<span class="txt-largo">Agregar al carrito</span><span class="txt-corto">Agregar</span></button>';
   return '<div class="contador">' +
     '<button type="button" data-menos="' + id + '" aria-label="Quitar uno">−</button>' +
     '<span class="cant">' + n + '</span>' +
@@ -1019,6 +1046,7 @@ function tarjeta(id) {
       '<div class="cabeza" data-abrir="' + id + '">' +
         '<div class="marca">' + esc(p.marca) + '</div>' +
         '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
+        (p.para ? '<p class="para">' + esc(p.para) + '</p>' : '') +
         '<div class="precios"><span class="precio">' + soles(p.precio) + '</span>' + antes + '</div>' +
       '</div>' +
       incluye +
@@ -1035,7 +1063,7 @@ function tarjetaOferta(i) {
   const unitario = P[of.ids[0]].precio;
   const antes = unitario * 2;
   const enPedido = of.ids.reduce((n, id) => n + (cot[id] || 0), 0);
-  const yaTiene = enPedido ? '<div class="ya-tienes">Ya tienes ' + enPedido + ' en tu pedido</div>' : "";
+  const yaTiene = enPedido ? '<div class="ya-tienes">Ya tienes ' + enPedido + ' en tu carrito</div>' : "";
   const variossabores = of.ids.length > 1;
 
   /* Mientras elige sabores, la tarjeta muestra los dos selectores */
@@ -1047,22 +1075,28 @@ function tarjetaOferta(i) {
           '" data-sabor="' + i + ':' + pos + ':' + id + '">' + esc(P[id].sabor) + '</button>').join("") +
       '</div></div>').join("") +
       '<button class="btn-agregar" type="button" data-confirmar="' + i + '">' +
-        '<svg class="icono"><use href="#i-carrito"/></svg>Agregar al pedido</button>' +
+        '<svg class="icono"><use href="#i-carrito"/></svg>Agregar al carrito</button>' +
     '</div>';
   } else {
     accion = '<button class="btn-agregar" type="button" data-oferta="' + i + '">' +
       '<svg class="icono"><use href="#i-carrito"/></svg>' +
       '<span class="txt-largo">' + (variossabores ? 'Elegir sabores' : 'Agregar esta oferta') + '</span>' +
-      '<span class="txt-corto">' + (variossabores ? 'Elegir' : 'Agregar') + '</span></button>';
+      '<span class="txt-corto">' + (variossabores ? 'Elegir sabores' : 'Agregar') + '</span></button>';
   }
 
+  /* Si el ahorro es menor al 5% no se anuncia como rebaja (S/ 10 en
+     S/ 560 parece truco): se muestra como pack x2 con su precio c/u. */
+  const ahorroReal = (antes - of.precioPar) / antes >= 0.05;
+  const cintaTxt = ahorroReal ? 'Ahorras ' + soles(antes - of.precioPar) : 'Pack x2';
+  const debajo = ahorroReal
+    ? '<span class="antes">Antes ' + soles(antes) + '</span>'
+    : '<span class="incluye">' + soles(of.precioPar / 2) + ' c/u</span>';
   return '<article class="tarjeta oferta">' +
-    '<div class="cinta">Ahorras ' + soles(antes - of.precioPar) + '</div>' +
+    '<div class="cinta">' + cintaTxt + '</div>' +
     '<div class="foto">' + imagenHTML(of.foto, of.nombre, 'loading="lazy" decoding="async"') + '</div>' +
     '<div class="info">' +
       '<h3 class="nombre">' + esc(of.nombre) + '</h3>' +
-      '<div class="precios"><span class="precio">' + soles(of.precioPar) + '</span>' +
-        '<span class="antes">Antes ' + soles(antes) + '</span></div>' +
+      '<div class="precios"><span class="precio">' + soles(of.precioPar) + '</span>' + debajo + '</div>' +
       yaTiene +
       '<div class="acciones">' + accion + '</div>' +
     '</div></article>';
@@ -1112,6 +1146,14 @@ function pintarCatalogo() {
 }
 
 /* ---------- PANEL DEL COTIZADOR ---------- */
+/* El delivery se elige en el checkout; aquí se adelanta desde cuánto
+   cuesta, con la tarifa más barata de Lima (sale de zb-catalogo.js). */
+function textoDelivery() {
+  const t = window.ZB_TARIFAS_LIMA ? Object.values(window.ZB_TARIFAS_LIMA) : [];
+  return t.length
+    ? "+ delivery desde " + soles(Math.min.apply(null, t)) + " · lo eliges en el siguiente paso"
+    : "+ delivery · lo eliges en el siguiente paso";
+}
 function pintarPanel() {
   const lista = document.getElementById("panelLista");
   const ids = Object.keys(cot);
@@ -1121,7 +1163,7 @@ function pintarPanel() {
   pintarChipCuenta();
 
   if (!ids.length) {
-    lista.innerHTML = '<p class="vacio">Tu pedido está vacío.<br>Agrega los productos que quieres comprar.</p>';
+    lista.innerHTML = '<p class="vacio">Tu carrito está vacío.<br>Agrega los productos que quieres comprar.</p>';
     document.getElementById("cuentas").innerHTML = "";
     document.getElementById("btnDeshacer").hidden = !copiaPrevia;
     return;
@@ -1135,9 +1177,11 @@ function pintarPanel() {
       imagenHTML(p.foto, "", 'width="150" height="150" loading="lazy"') +
       '<div class="linea-datos">' +
         '<div class="linea-nombre">' + esc(p.nombre) + '</div>' +
+        '<div class="linea-precio">' + soles(p.precio * cot[id]) + '</div>' +
+        (cot[id] > 1 ? '<div class="linea-cu">' + soles(p.precio) + ' c/u</div>' : '') +
       '</div>' +
       '<div class="linea-lado">' +
-        '<button type="button" class="linea-borrar" data-sacar="' + id + '" aria-label="Quitar del pedido">' +
+        '<button type="button" class="linea-borrar" data-sacar="' + id + '" aria-label="Quitar del carrito">' +
           '<svg class="icono"><use href="#i-basura"/></svg></button>' +
         '<div class="contador-mini">' +
           '<button type="button" data-menos="' + id + '" aria-label="Quitar uno">−</button>' +
@@ -1155,7 +1199,7 @@ function pintarPanel() {
     ? '<div class="aviso-dcto"><svg class="icono"><use href="#i-oferta"/></svg><div>' +
       '<b>¡Estás a un paso de ahorrar!</b>' +
       '<span>Agrega ' + faltan + ' producto' + (faltan > 1 ? "s" : "") +
-      ' Bari&amp;Nutrition más y obtén un descuento de ' + soles(siguiente.desc) + ' en tu pedido.</span>' +
+      ' Bari&amp;Nutrition más y obtén un descuento de ' + soles(siguiente.desc) + ' en tu compra.</span>' +
       '</div></div>'
     : "";
 
@@ -1166,7 +1210,7 @@ function pintarPanel() {
       '<div class="cuenta"><span>Subtotal</span><span>' + soles(c.subtotal) + '</span></div>' +
       (ahorroTotal ? '<div class="cuenta dcto"><span>Descuentos</span><span>− ' + soles(ahorroTotal) + '</span></div>' : "") +
       '<div class="cuenta total"><span>Total</span><span>' + soles(c.total) + '</span></div>' +
-      '<p class="sin-delivery">No incluye el delivery</p>' +
+      '<p class="sin-delivery">' + textoDelivery() + '</p>' +
     '</div>';
 
 }
