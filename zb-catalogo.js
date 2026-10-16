@@ -367,7 +367,7 @@ const tn = {
       ["Sodio","0 mg","0%"],
       ["Fibra dietética","0 g","0%"]
     ],
-    nota: "Los porcentajes de valores diarios están basados en una dieta de 2000 calorías. Consumir según las recomendaciones de tu profesional de salud."
+    nota: "Los porcentajes de valores diarios están basados en una dieta de 2000 calorías."
   }
 };
 const productos = [
@@ -381,7 +381,7 @@ const productos = [
     precio:360, precioN:400, ahorro:40,
     img: "img/oferta-2liquidas.jpg",
     seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
-    uso:"Consume según indicación de tu equipo médico. Ideal para la etapa post operatoria.", tn:null },
+    uso:"Ideal para la etapa post operatoria.", tn:null },
 
   { id:"oferta2", tipo:"oferta", marcaTipo:"bn",
     brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"oferta", destacado:true, fiestas:true, marca:"Bari&Nutrition",
@@ -392,7 +392,7 @@ const productos = [
     precio:520, precioN:560, ahorro:40,
     img: "img/oferta-2whey-limpia.jpg",
     seleccionSabor:[{label:"Whey Protein 1",sabores:["Vainilla","Chocolate"]},{label:"Whey Protein 2",sabores:["Vainilla","Chocolate"]}],
-    uso:"Disolver 3 scoops (48g) en 250ml de agua o leche. Consumir según indicación de tu equipo médico.", tn: tn.whey },
+    uso:"Disolver 3 scoops (48g) en 250ml de agua o leche.", tn: tn.whey },
 
   /* Oferta de los multivitamínicos Bariatric Fusion.
      Actualizada el 04-09-2026: llegó el stock del sabor tropical,
@@ -435,7 +435,7 @@ const productos = [
     tags:["800 g en total","19 g proteína","Whey Isolate","Colágeno hidrolizado"],
     precio:350, precioN:360, ahorro:10,
     img: "img/oferta-2geno.jpg",
-    uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.",
+    uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.",
     tn: tn.geno },
 
   // BARI&NUTRITION PACKS
@@ -448,7 +448,7 @@ const productos = [
     precio:722, precioN:785, ahorro:63,
     img: "img/bn-pack-inicial.jpg",
     seleccionSabor:[{label:"Proteína Líquida 1",sabores:["Maracumango","Fresa"]},{label:"Proteína Líquida 2",sabores:["Maracumango","Fresa"]}],
-    uso:"Combina cada producto según indicación de tu equipo médico. Consulta las dosis en cada envase.", tn:null },
+    uso:"Consulta las dosis en cada envase.", tn:null },
 
   { id:"bp2", tipo:"pack", marcaTipo:"bn",
     brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"Bari&Nutrition",
@@ -459,7 +459,7 @@ const productos = [
     precio:672, precioN:730, ahorro:58,
     img: "img/bn-pack-polvo-vitaminas.jpg",
     seleccionSabor:[{label:"Proteína en Polvo (Whey)",sabores:["Vainilla","Chocolate"]}],
-    uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
+    uso:"Sigue el modo de uso de cada envase.", tn:null },
 
   { id:"bp3", tipo:"pack", marcaTipo:"bn",
     brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"Bari&Nutrition",
@@ -469,7 +469,7 @@ const productos = [
     tags:["Biotina 10,000 mcg","Hierro 45mg","Cabello y uñas"],
     precio:552, precioN:600, ahorro:48,
     img: "img/bn-pack-energia-cabello.jpg",
-    uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
+    uso:"Sigue el modo de uso de cada envase.", tn:null },
 
   { id:"bp4", tipo:"pack", marcaTipo:"bn",
     brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"pack", destacado:true, marca:"Bari&Nutrition",
@@ -480,7 +480,7 @@ const productos = [
     precio:1060, precioN:1165, ahorro:105,
     img: "img/bn-pack-suplementacion-completa.jpg",
     seleccionSabor:[{label:"Proteína Líquida",sabores:["Maracumango","Fresa"]},{label:"Proteína en Polvo (Whey)",sabores:["Vainilla","Chocolate"]}],
-    uso:"Combina cada producto según indicación de tu equipo médico.", tn:null },
+    uso:"Sigue el modo de uso de cada envase.", tn:null },
 
   // LVL DRINK PACKS
   { id:"lp1", tipo:"pack", marcaTipo:"lvl",
@@ -714,7 +714,7 @@ const productos = [
     precio:150,
     img: BN+"colageno.jpg",
     galeria: [BN+"colageno.jpg", "img/tn-colageno-bn.jpg"],
-    uso:"1 scoop (10 g) al día. La cantidad que te corresponde la define tu médico o tu nutricionista.",
+    uso:"1 scoop (10 g) al día.",
     tn: tn.colageno_bn },
 
   // LVL DRINK INDIVIDUALES
@@ -823,12 +823,12 @@ const productos = [
   { id:"sp1", tipo:"sp", marcaTipo:"sp",
     brand:"Safie Pharma", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", destacado:true, marca:"Safie Pharma",
     nombre:"GENO DEEP CARE ADVANCE – Proteína Bariátrica 400 g",
-    desc:"Proteína especializada con Whey Isolate, colágeno hidrolizado y micronutrientes: 19 g de proteína por porción de 20 g. Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos, según la orientación de su profesional de salud.",
+    desc:"Proteína especializada con Whey Isolate, colágeno hidrolizado y micronutrientes: 19 g de proteína por porción de 20 g. Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos.",
     tags:["19g proteína","Whey Isolate","Colágeno hidrolizado","0g azúcar","20 porciones"],
     precio:180,
     img: SP+"geno-frente.jpg",
     galeria: [SP+"geno-frente.jpg", "img/tn-geno.jpg"],
-    uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.",
+    uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.",
     tn: tn.geno }
 ];
 

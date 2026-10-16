@@ -171,9 +171,6 @@ body.bloqueado .btn-arriba { display:none; }
 .marca { font-size:12px; font-weight:500; letter-spacing:.07em; text-transform:uppercase; color:var(--texto-3); }
 .cabeza { display:flex; flex-direction:column; gap:7px; }
 .nombre { font-size:var(--fs-h3); line-height:1.32; font-weight:500; letter-spacing:-.01em; color:var(--texto); }
-/* Para qué sirve: una línea bajo el nombre */
-.para { font-size:13px; line-height:1.35; color:var(--texto-2); }
-@media (min-width:600px) { .para { font-size:13.5px; } }
 .linea-cu { font-size:var(--fs-xs); color:var(--texto-3); margin-top:2px; }
 /* Franja de confianza bajo la cabecera */
 .confia { display:flex; justify-content:center; flex-wrap:wrap; gap:6px 14px; padding:10px 0 0; }
@@ -713,7 +710,7 @@ const P = {
     foto:"img/cat-whey-chocolate.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
   isolate: { uso:"Vía oral. Adultos: 1 porción (25 g, 1 cuchara) al día disuelta en 200-300 ml de agua.", marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295, nuevo:true,
     foto:"img/nf-whey-isolate-v2.jpg", tabla:"img/tn-nutrifath.jpg", chips:["23 g proteína","Sin lactosa","Sin gluten","Sabor neutro"] },
-  geno: { uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.", marca:"Safie Pharma", nombre:"Geno Deep Care Advance — Proteína Bariátrica 400 g", precio:180, nuevo:true,
+  geno: { uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.", marca:"Safie Pharma", nombre:"Geno Deep Care Advance — Proteína Bariátrica 400 g", precio:180, nuevo:true,
     foto:"img/sp-geno-frente.jpg", tabla:"img/tn-geno.jpg", chips:["19 g proteína","Whey Isolate","Colágeno hidrolizado","0 g azúcar"] },
 
   multivit: { uso:"4 gomitas al día.", marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150, bn:true,
@@ -729,7 +726,7 @@ const P = {
   bfTropical: { sabor:"Tropical", uso:"Vía oral. Adultos: 1 tableta masticable al día. No exceder la dosis recomendada.", marca:"Bariatric Fusion", nombre:"Multivitamínico Completo Tropical — 120 tabletas", precio:280,
     foto:"img/cat-bf-tropical.jpg", tabla:"img/tn-bf-multivit.jpg", chips:["120 tabletas","Masticables","Sin gluten","1 al día"] },
 
-  colageno: { uso:"Seguir el modo de preparación del envase. La cantidad que te corresponde la define tu médico o tu nutricionista.", marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150, bn:true, nuevo:true,
+  colageno: { uso:"Seguir el modo de preparación del envase.", marca:"Bari&Nutrition", nombre:"Colágeno Hidrolizado 500 g", precio:150, bn:true, nuevo:true,
     foto:"img/cat-colageno-bn.jpg", tabla:"img/tn-colageno-bn.jpg", chips:["Calcio + vitamina D","Sabor arándano","500 g"] },
   fibra: { uso:"1 scoop (5 g) disuelto en 250 ml de agua, una vez al día.", marca:"Bari&Nutrition", nombre:"Fibra Soluble 320 g", precio:85, bn:true,
     foto:"img/cat-fibra.jpg", tabla:"img/tn-fibra.jpg", chips:["320 g","A base de maíz","Sin azúcar"] },
@@ -778,30 +775,6 @@ const IDS_TIENDA = {
   bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9",
   lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4"
 };
-/* Para qué sirve cada producto: una línea bajo el nombre en la tarjeta.
-   Texto corto y sin promesas médicas. */
-const PARA = {
-  liquidaFresa: "Lista para tomar, ideal el primer mes",
-  liquidaMaracumango: "Lista para tomar, ideal el primer mes",
-  wheyVainilla: "Para tu batido diario de proteína",
-  wheyChocolate: "Para tu batido diario de proteína",
-  isolate: "Sabor neutro: combina con tus bebidas",
-  geno: "Proteína con colágeno y 0 g de azúcar",
-  multivit: "Tus vitaminas diarias en gomita",
-  b12: "Pensada para pacientes de bypass gástrico",
-  hierro: "Con vitamina C para absorber mejor el hierro",
-  biotina: "Apoyo para cabello, piel y uñas",
-  bfBayas: "Multivitamínico bariátrico, 1 tableta al día",
-  bfTropical: "Multivitamínico bariátrico, 1 tableta al día",
-  colageno: "Colágeno con calcio y vitamina D",
-  fibra: "Fibra sin azúcar para tu digestión",
-  lvlVainilla: "Proteína aislada endulzada con stevia",
-  lvlChocolate: "Proteína aislada endulzada con stevia",
-  lvlColageno: "Colágeno con biotina para piel y cabello",
-  lvlFibra: "Fibra sabor manzana verde para tu digestión"
-};
-Object.keys(PARA).forEach(k => { if (P[k]) P[k].para = PARA[k]; });
-
 const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4", "oferta5"];
 
 (function sincronizarPrecios() {
@@ -1046,7 +1019,6 @@ function tarjeta(id) {
       '<div class="cabeza" data-abrir="' + id + '">' +
         '<div class="marca">' + esc(p.marca) + '</div>' +
         '<h3 class="nombre">' + esc(p.nombre) + '</h3>' +
-        (p.para ? '<p class="para">' + esc(p.para) + '</p>' : '') +
         '<div class="precios"><span class="precio">' + soles(p.precio) + '</span>' + antes + '</div>' +
       '</div>' +
       incluye +
@@ -1318,7 +1290,6 @@ function abrirTabla(id) {
       (p.chips ? '<ul class="chips">' + p.chips.map(c => '<li>' + esc(c) + '</li>').join("") + '</ul>' : "") +
       (p.incluye ? '<div class="ficha-bloque"><h4>Qué incluye</h4><p>' + esc(p.incluye) + '</p></div>' : "") +
       (p.uso ? '<div class="ficha-bloque"><h4>Modo de uso</h4><p>' + esc(p.uso) + '</p></div>' : "") +
-      '<div class="ficha-bloque"><h4>Importante</h4><p>Consumir únicamente bajo indicación de su médico o nutricionista.</p></div>' +
       '<div class="acciones">' + acciones(id) + '</div>' +
     '</div>';
 

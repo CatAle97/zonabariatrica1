@@ -37,8 +37,7 @@
     nfIsolate: 295, nfIsolatePack: 580
   };
 
-  var AVISO = 'La indicación puede variar según cada paciente. ' +
-              'Sigue siempre las recomendaciones de tu médico o nutricionista.';
+  var AVISO = 'La información es referencial y puede variar según cada paciente.';
 
   /* --- Intenciones -------------------------------------- */
   var INTENCIONES = [
@@ -203,8 +202,7 @@
       intent: 'suplementacion_de_por_vida',
       keywords: ['de por vida', 'para siempre', 'toda la vida', 'cuanto tiempo tomar', 'hasta cuando tomo', 'siempre voy a tomar'],
       response: 'En las técnicas quirúrgicas la suplementación suele mantenerse <b>a largo plazo</b>, ' +
-                'porque el cuerpo sigue absorbiendo menos que antes de la cirugía.<br><br>' +
-                'La duración y las dosis las determina tu equipo médico según tus analíticas.',
+                'porque el cuerpo sigue absorbiendo menos que antes de la cirugía.',
       aviso: true
     },
     {
@@ -340,7 +338,7 @@
       texto: 'En esta etapa lo habitual son <b>líquidos claros</b>, según lo que indique tu equipo médico. ' +
              'La prioridad es la hidratación y la tolerancia, no la cantidad.<br><br>' +
              'La suplementación suele empezar un poco más adelante, cuando se pasa a líquidos completos. ' +
-             'Si ya te indicaron algo, dime qué y te ubico el producto.',
+             'Si buscas algo en particular, dime qué y te ubico el producto.',
       productos: []
     },
     '1-4s': {

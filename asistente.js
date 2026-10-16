@@ -927,8 +927,7 @@
     panel.appendChild(body);
     panel.appendChild(construirEntrada());
     panel.appendChild(el('div', 'zb-foot',
-      'La información brindada es referencial y no reemplaza la orientación ' +
-      'de tu médico o nutricionista.'));
+      'La información brindada es referencial.'));
     document.body.appendChild(panel);
 
     document.addEventListener('keydown', function (e) {

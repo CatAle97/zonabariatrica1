@@ -35,9 +35,9 @@
 (function () {
   'use strict';
 
-  /* Frase legal obligatoria: se muestra en TODAS las fichas.
-     No quitar. */
-  var LEYENDA = 'Consumir únicamente bajo indicación de su médico o nutricionista.';
+  /* Leyenda de las fichas: vacía a pedido de Roberto (16-10-2026),
+     los suplementos son de venta libre. Si está vacía no se muestra. */
+  var LEYENDA = '';
 
   /* --- Artículos del BariBlog disponibles -----------------
      'fn' es la función de index.html que abre cada artículo. */
@@ -71,11 +71,11 @@
         'Habitualmente mejor tolerado que las texturas sólidas en el post operatorio inicial',
         'Formulado sin lactosa, una intolerancia frecuente después de la cirugía'
       ],
-      consumo: 'Se suele repartir en varias tomas pequeñas a lo largo del día, a sorbos y separado de las comidas. La cantidad y la frecuencia las indica el profesional que hace tu seguimiento.',
+      consumo: 'Se suele repartir en varias tomas pequeñas a lo largo del día, a sorbos y separado de las comidas.',
       faq: [
-        { q: '¿Se puede tomar desde el primer día?', r: 'El momento de inicio lo define tu equipo médico. Lo habitual es incorporarlo cuando se avanza de líquidos claros a líquidos completos, no antes.' },
+        { q: '¿Se puede tomar desde el primer día?', r: 'Lo habitual es incorporarlo cuando se avanza de líquidos claros a líquidos completos, no antes.' },
         { q: '¿Hay que diluirlo?', r: 'La proteína líquida viene lista para consumir. Si te resulta muy intensa, algunos equipos permiten diluirla con agua: consúltalo en tu control.' },
-        { q: '¿Sustituye una comida?', r: 'Es un suplemento, no un reemplazo de comida por sí solo. Su lugar dentro de tu plan lo define tu nutricionista.' }
+        { q: '¿Sustituye una comida?', r: 'Es un suplemento, no un reemplazo de comida por sí solo.' }
       ],
       articulos: ['etapas', 'suplementos']
     },
@@ -85,33 +85,33 @@
       etapa: 'Habitualmente a partir de la etapa de blandos, y de forma sostenida durante el mantenimiento a largo plazo.',
       beneficios: [
         'Aporte concentrado de proteína por servicio',
-        'Permite ajustar la cantidad según la indicación recibida',
+        'Permite ajustar la cantidad con facilidad',
         'Formulado sin lactosa y sin azúcar añadida',
         'Se asocia habitualmente al cuidado de la masa muscular durante la pérdida de peso'
       ],
-      consumo: 'Suele disolverse en agua y repartirse en una o varias tomas al día, separado de las comidas principales. Las medidas exactas dependen de la indicación de tu profesional.',
+      consumo: 'Suele disolverse en agua y repartirse en una o varias tomas al día, separado de las comidas principales.',
       faq: [
-        { q: '¿Cuándo se pasa de proteína líquida a proteína en polvo?', r: 'Suele ocurrir cuando ya toleras texturas blandas, orientativamente a partir del segundo mes. El momento lo marca tu equipo médico, no la etiqueta del producto.' },
-        { q: '¿Se puede mezclar con leche?', r: 'Depende de tu tolerancia y de la etapa en la que estés. Muchos pacientes bariátricos tienen intolerancia a la lactosa: consúltalo con tu nutricionista.' },
-        { q: '¿Cuántas medidas al día?', r: 'Depende de cuánta proteína cubras con la comida. La cantidad exacta la define tu médico o nutricionista en tu control.' }
+        { q: '¿Cuándo se pasa de proteína líquida a proteína en polvo?', r: 'Suele ocurrir cuando ya toleras texturas blandas, orientativamente a partir del segundo mes.' },
+        { q: '¿Se puede mezclar con leche?', r: 'Depende de tu tolerancia y de la etapa en la que estés. Muchos pacientes bariátricos tienen intolerancia a la lactosa.' },
+        { q: '¿Cuántas medidas al día?', r: 'Depende de cuánta proteína cubras con la comida.' }
       ],
       articulos: ['suplementos', 'etapas']
     },
 
     vitaminas: {
       paraQuien: 'Suele utilizarse en pacientes bariátricos que necesitan cubrir el aporte de vitaminas y minerales que la alimentación, por el volumen reducido, no alcanza a cubrir.',
-      etapa: 'Habitualmente desde las primeras semanas y de forma sostenida en el tiempo, según el esquema que indique el equipo médico.',
+      etapa: 'Habitualmente desde las primeras semanas y de forma sostenida en el tiempo.',
       beneficios: [
         'Formato en gomitas, cómodo cuando cuesta tragar cápsulas',
         'Aporte de micronutrientes de control frecuente tras la cirugía',
         'Facilita la adherencia diaria al esquema de suplementación',
         'Presentación pensada para el volumen reducido del post operatorio'
       ],
-      consumo: 'Se toma según la cantidad indicada en el envase, preferiblemente acompañando una comida. La dosis que te corresponde la define tu médico o tu nutricionista a partir de tus controles.',
+      consumo: 'Se toma según la cantidad indicada en el envase, preferiblemente acompañando una comida.',
       faq: [
-        { q: '¿Por cuánto tiempo se toman?', r: 'En las técnicas quirúrgicas la suplementación suele mantenerse a largo plazo. La duración exacta la determina tu equipo médico según tus analíticas.' },
-        { q: '¿Se pueden tomar varias vitaminas juntas?', r: 'Algunos micronutrientes compiten entre sí en la absorción y por eso suele indicarse separarlos. La combinación y los horarios los define tu profesional.' },
-        { q: '¿Reemplazan a las pastillas que me recetaron?', r: 'No necesariamente. Antes de sustituir cualquier suplemento indicado, revísalo con quien lleva tu seguimiento.' }
+        { q: '¿Por cuánto tiempo se toman?', r: 'En las técnicas quirúrgicas la suplementación suele mantenerse a largo plazo.' },
+        { q: '¿Se pueden tomar varias vitaminas juntas?', r: 'Algunos micronutrientes compiten entre sí en la absorción y por eso suele indicarse separarlos.' },
+        { q: '¿Reemplazan a las vitaminas en pastillas?', r: 'Son otra presentación: lo importante es que cubran los mismos nutrientes. Compara la tabla nutricional de cada uno.' }
       ],
       articulos: ['suplementos', 'cabello']
     },
@@ -125,7 +125,7 @@
         'Complementa el esquema de suplementación, sin reemplazarlo',
         'Presentación cómoda de integrar en la rutina diaria'
       ],
-      consumo: 'Suele disolverse en agua y tomarse una vez al día. La forma de incorporarlo a tu plan la define tu profesional.',
+      consumo: 'Suele disolverse en agua y tomarse una vez al día.',
       faq: [
         { q: '¿El colágeno reemplaza a la proteína?', r: 'No. El colágeno no aporta el perfil completo de aminoácidos que se busca con la proteína del post operatorio. Son suplementos con finalidades distintas.' },
         { q: '¿Desde cuándo se puede tomar?', r: 'Suele incorporarse cuando la suplementación esencial —proteína y micronutrientes— ya está cubierta. Consúltalo en tu control.' }
@@ -142,9 +142,9 @@
         'Se disuelve sin alterar el sabor de la bebida',
         'Formato práctico para sostener el hábito a diario'
       ],
-      consumo: 'Suele disolverse en agua y tomarse una vez al día, acompañado de una buena hidratación a lo largo de la jornada. La cantidad la indica tu profesional.',
+      consumo: 'Suele disolverse en agua y tomarse una vez al día, acompañado de una buena hidratación a lo largo de la jornada.',
       faq: [
-        { q: '¿Se puede tomar junto con la proteína?', r: 'Suele recomendarse separarlas para no interferir en la tolerancia. La distribución concreta la define tu nutricionista.' },
+        { q: '¿Se puede tomar junto con la proteína?', r: 'Suele recomendarse separarlas para no interferir en la tolerancia.' },
         { q: '¿Es necesaria si ya como verduras?', r: 'Depende de cuánto volumen toleres. Después de la cirugía suele ser difícil cubrir la fibra solo con alimentos: valóralo en tu control.' }
       ],
       articulos: ['etapas', 'suplementos']
@@ -159,7 +159,7 @@
         'Facilita mantener la constancia del esquema diario',
         'Pensado para cubrir una etapa completa del proceso'
       ],
-      consumo: 'Cada producto del pack mantiene su propia forma de consumo. Combínalos siguiendo la indicación de tu equipo médico y las instrucciones de cada envase.',
+      consumo: 'Cada producto del pack mantiene su propia forma de consumo. Combínalos siguiendo las instrucciones de cada envase.',
       faq: [
         { q: '¿El pack sirve para cualquier etapa?', r: 'No todos. Cada pack está pensado para un momento del proceso. Si no estás seguro de cuál te corresponde, consúltalo antes de comprar.' },
         { q: '¿Se pueden cambiar productos dentro del pack?', r: 'Escríbenos por WhatsApp y vemos qué alternativas hay según lo que necesites.' }
@@ -202,7 +202,7 @@
         'Presentación pensada para el volumen reducido del post operatorio'
       ],
       faq: [
-        { q: '¿La biotina detiene la caída del cabello?', r: 'La caída post operatoria suele responder a varios factores a la vez —pérdida de peso rápida, déficit de proteína y de hierro, entre otros—. La biotina es uno de los apoyos habituales, pero no actúa sola. Revísalo con tu nutricionista.' },
+        { q: '¿La biotina detiene la caída del cabello?', r: 'La caída post operatoria suele responder a varios factores a la vez —pérdida de peso rápida, déficit de proteína y de hierro, entre otros—. La biotina es uno de los apoyos habituales, pero no actúa sola.' },
         { q: '¿Cuándo se empieza a notar?', r: 'El cabello crece despacio: los cambios suelen valorarse después de varios meses de constancia.' },
         { q: '¿Interfiere con análisis de laboratorio?', r: 'Sí. La biotina en dosis altas puede alterar algunos análisis, sobre todo los de tiroides. Avisa siempre en el laboratorio que la estás tomando.' }
       ],
@@ -213,8 +213,8 @@
       paraQuien: 'Suele utilizarse en pacientes bariátricos que necesitan apoyar su aporte de hierro, un control frecuente sobre todo después de un bypass gástrico.',
       faq: [
         { q: '¿Por qué se combina el hierro con vitamina C?', r: 'La vitamina C favorece la absorción del hierro, por eso es habitual encontrarlos juntos en la misma presentación.' },
-        { q: '¿Se puede tomar junto con el calcio?', r: 'Suele indicarse separarlos, porque el calcio interfiere en la absorción del hierro. Los horarios los define tu profesional.' },
-        { q: '¿Cómo sé si necesito hierro?', r: 'Se determina con analíticas. No se debe iniciar ni suspender por cuenta propia.' }
+        { q: '¿Se puede tomar junto con el calcio?', r: 'Suele indicarse separarlos, porque el calcio interfiere en la absorción del hierro.' },
+        { q: '¿Cómo sé si necesito hierro?', r: 'Se determina con analíticas.' }
       ],
       articulos: ['suplementos', 'cabello']
     },
@@ -223,7 +223,7 @@
       paraQuien: 'Suele utilizarse en pacientes bariátricos que necesitan apoyar su aporte de vitamina B12, un control habitual tras el bypass gástrico por la menor absorción.',
       faq: [
         { q: '¿Por qué la B12 es tan importante tras el bypass?', r: 'Parte de la absorción de la B12 ocurre en el tramo del estómago e intestino que la cirugía modifica, por eso suele requerir suplementación sostenida.' },
-        { q: '¿Se toma de por vida?', r: 'En muchos casos sí, aunque la duración y la dosis las determina tu equipo médico según tus analíticas.' }
+        { q: '¿Se toma de por vida?', r: 'En muchos casos sí: la suplementación bariátrica suele mantenerse a largo plazo.' }
       ],
       articulos: ['suplementos']
     },
@@ -231,7 +231,7 @@
     bi9: { // Fibra Soluble
       faq: [
         { q: '¿Cuánta agua hay que tomar con la fibra?', r: 'La fibra necesita líquido para funcionar bien. Suele recomendarse acompañarla de una hidratación adecuada durante el día: puedes ver un rango orientativo en nuestra calculadora de hidratación.' },
-        { q: '¿Se puede tomar todos los días?', r: 'La frecuencia la indica tu nutricionista según tu tránsito y tu alimentación.' }
+        { q: '¿Se puede tomar todos los días?', r: 'Sí, una vez al día, siguiendo el modo de uso del envase.' }
       ]
     },
 
@@ -244,16 +244,16 @@
         'Sabor neutro: no cambia el gusto de aquello con lo que se mezcla',
         'Sin gluten y sin lactosa'
       ],
-      consumo: 'El envase indica 1 porción (25g, una cuchara medidora) al día por vía oral, disuelta en 200 a 300ml de agua. La cantidad que te corresponde a ti la define tu médico o tu nutricionista.',
+      consumo: 'El envase indica 1 porción (25g, una cuchara medidora) al día por vía oral, disuelta en 200 a 300ml de agua.',
       faq: [
-        { q: '¿Qué diferencia hay entre una proteína aislada y una concentrada?', r: 'La proteína aislada pasa por un filtrado adicional que retira buena parte de la grasa y la lactosa, por lo que queda un polvo más puro en proteína por gramo. Cuál te conviene a ti lo define tu equipo médico según tu tolerancia y tus controles.' },
+        { q: '¿Qué diferencia hay entre una proteína aislada y una concentrada?', r: 'La proteína aislada pasa por un filtrado adicional que retira buena parte de la grasa y la lactosa, por lo que queda un polvo más puro en proteína por gramo.' },
         { q: '¿A qué sabe si es sabor neutro?', r: 'Prácticamente a nada. Al no llevar saborizante se puede disolver en agua o sumar a caldos, yogur o preparaciones sin cambiarles el gusto, algo útil cuando los sabores dulces cansan tras la cirugía.' },
         { q: '¿Cuánto dura un envase de 1000g?', r: 'A razón de una porción de 25g al día, un envase rinde unos 40 días. Si tu indicación es de más de una porción diaria, durará proporcionalmente menos.' }
       ]
     },
 
     sp1: { // GENO DEEP CARE ADVANCE — Safie Pharma, 400 g
-      paraQuien: 'Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos, según la orientación de su profesional de salud.',
+      paraQuien: 'Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos.',
       beneficios: [
         '19 g de proteína por porción de 20 g',
         'Proteína de suero aislada (Whey Isolate)',
@@ -262,10 +262,10 @@
         '0 g de azúcar y 0 g de grasa por porción',
         '20 porciones por envase de 400 g'
       ],
-      consumo: 'Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua o en la bebida indicada por su nutricionista o médico tratante. Consumir según las recomendaciones de su profesional de salud.',
+      consumo: 'Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.',
       faq: [
-        { q: '¿Cuánto rinde un frasco de 400 g?', r: 'Trae 20 porciones de 20 g (2 cucharadas). Cuánto te dura depende de las porciones que te indique tu profesional de salud.' },
-        { q: '¿Con qué se mezcla?', r: 'Con unos 200 ml de agua o con la bebida que te indique tu nutricionista o médico tratante.' },
+        { q: '¿Cuánto rinde un frasco de 400 g?', r: 'Trae 20 porciones de 20 g (2 cucharadas). Cuánto te dura depende de cuántas porciones tomes al día.' },
+        { q: '¿Con qué se mezcla?', r: 'Con unos 200 ml de agua.' },
         { q: '¿Hay precio especial llevando dos?', r: 'Sí. Un frasco cuesta S/ 180 y llevando 2 pagas S/ 350: ahorras S/ 10.' }
       ]
     }
