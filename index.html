@@ -132,11 +132,11 @@
    ============================================================ */
 :root {
   /* --- COLOR: marca --- */
-  --blue: #2563EB;          /* azul eléctrico — acción principal */
-  --blue-hover: #1D4ED8;
+  --blue: #0057FF;          /* azul de marca — ÚNICO azul de acción (oct 2026) */
+  --blue-hover: #0046CC;
   --blue-dark: #1E40AF;
   --blue-light: #EFF6FF;    /* fondo azul sutil */
-  --blue-ring: rgba(37,99,235,0.12);   /* halo de foco */
+  --blue-ring: rgba(0,87,255,0.12);   /* halo de foco */
 
   /* --- COLOR: neutros --- */
   --text: #111827;          /* texto principal */
@@ -202,7 +202,7 @@
   --green: #059669;
   --green-dark: #047857;
   --green-light: #ECFDF5;
-  --azul: #2563EB;
+  --azul: #0057FF;
   --mint-dark: #10B981;
   --verde-wa: #25D366;
   --borde: #E5E7EB;
@@ -636,11 +636,11 @@ a.nav-link {
   box-shadow: 0 4px 14px rgba(5,42,120,0.14), 0 1px 3px rgba(5,42,120,0.08);
 }
 .promo-slider .slider-arrow:hover {
-  background: #fff; color: #0A4BFF; transform: translateY(-50%) scale(1.06);
+  background: #fff; color: var(--blue); transform: translateY(-50%) scale(1.06);
   box-shadow: 0 8px 22px rgba(5,42,120,0.2), 0 2px 4px rgba(5,42,120,0.08);
 }
 .promo-slider .slider-dot { background: #C9D2E2; }
-.promo-slider .slider-dot.active { background: #0A4BFF; width: 24px; }
+.promo-slider .slider-dot.active { background: var(--blue); width: 24px; }
 
 /* Banner que no es formato tira (más alto de lo que cabe): se muestra entero
    y centrado, y el espacio sobrante se rellena con el mismo banner ampliado
@@ -663,7 +663,7 @@ a.nav-link {
    salte de tamaño al rotar. Las botellas son los PNG originales sin
    tocar la etiqueta, pasados a WebP (39 KB c/u). */
 .slide.slide-pro {
-  --pro-azul: #0A4BFF; --pro-azul-osc: #052A78; --pro-verde: #28B446; --pro-onda: #EDF4FF;
+  --pro-azul: var(--blue); --pro-azul-osc: #052A78; --pro-verde: #28B446; --pro-onda: #EDF4FF;
   display: none; position: relative; overflow: hidden;
   padding: 0 !important; min-height: 0; background: #fff; color: var(--pro-azul-osc);
   text-align: left; font-family: 'Inter', var(--font);
@@ -3871,6 +3871,134 @@ section[id], .productos-header { scroll-margin-top: 92px; }
   }
   .top-ver-todos:hover { background: #EAF2FF; }
 }
+
+/* ============================================================
+   MENOS ES MÁS  (octubre 2026)
+
+   Limpieza visual pensada para quien llega desde un anuncio en
+   el celular. Va al final del <style> a propósito: corrige lo
+   anterior sin borrar reglas viejas, así se puede deshacer
+   quitando solo este bloque.
+   ============================================================ */
+
+/* --- Un solo azul: los tres azules distintos que había (#2563EB,
+   #0A4BFF y #0057FF) se unificaron en var(--blue). Aquí se
+   alinean los botones del escritorio que lo tenían escrito a mano. */
+.hpc-badge, .hpc-btn-secundario, .hpc-confianza svg { color: var(--blue); }
+.hpc-btn-primario { background: var(--blue); border-color: var(--blue); }
+.hpc-btn-primario:hover { background: var(--blue-hover); border-color: var(--blue-hover); }
+.hpc-btn-secundario { border-color: var(--blue); }
+
+/* --- Rojo solo para el precio de oferta: la tarjeta ya no lleva
+   borde rojo ni la etiqueta fondo rojo; basta el precio. */
+.card.oferta, .card.oferta:hover { border-color: var(--border-light); }
+.badge-oferta { color: var(--success); background: var(--success-bg); border-color: var(--success-br); }
+
+/* --- Banner principal: precio y una línea de confianza ------ */
+.pro-precio {
+  margin: 0 0 16px; font-size: 15px; color: #475A80; line-height: 1.4;
+}
+.pro-precio strong { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+.pro-confianza { margin: 12px 0 0; font-size: 13px; color: #6B7A99; }
+
+/* --- Catálogo corto del inicio + botón "Ver todos" ---------- */
+.ver-todo-wrap { text-align: center; padding: var(--s-5) var(--gutter) var(--s-2); }
+.ver-todo-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0 28px; border-radius: var(--r-pill);
+  background: var(--surface); color: var(--blue); border: 1.5px solid var(--blue);
+  font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: background var(--t-fast);
+}
+.ver-todo-btn:hover { background: var(--blue-light); }
+
+/* --- Testimonios: compactos, sin estrellas ni avatares ------- */
+.testi-section { padding: var(--s-8) var(--gutter); background: var(--surface); }
+.testi-header { margin-bottom: var(--s-5); }
+.testi-grid { gap: var(--s-4); }
+.testi-grid.testi-uno { grid-template-columns: minmax(0, 640px); justify-content: center; }
+.testi-card {
+  margin: 0; padding: var(--s-5); gap: var(--s-4);
+  background: var(--bg-soft, #F8FAFC); border: 1px solid var(--border-light);
+  box-shadow: none;
+}
+.testi-card:hover { transform: none; box-shadow: none; }
+.testi-texto { font-size: 15px; line-height: 1.65; color: var(--text); margin: 0; }
+.testi-persona {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  padding-top: 0; border-top: none;
+}
+.testi-nombre { font-size: 14px; font-weight: 600; }
+.testi-meta { font-size: 12.5px; color: var(--text-light); }
+
+@media (max-width: 640px) {
+  /* Varios testimonios: fila deslizable de lado, así no alargan la
+     página. Con uno solo, ocupa el ancho normal. */
+  .testi-section { padding: var(--s-7) 0; }
+  .testi-header { padding: 0 var(--gutter); text-align: left; }
+  .testi-titulo { font-size: 21px; }
+  .testi-grid {
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 0 var(--gutter) 4px; scrollbar-width: none;
+  }
+  .testi-grid::-webkit-scrollbar { display: none; }
+  .testi-card { flex: 0 0 86%; scroll-snap-align: center; padding: var(--s-4); }
+  .testi-grid.testi-uno .testi-card { flex-basis: 100%; }
+  .testi-texto { font-size: 14.5px; }
+}
+
+/* --- TABLET: "Mi cuenta" se salía por la derecha a 1024 px; queda
+   solo el ícono, igual que en el escritorio. */
+@media (min-width: 641px) and (max-width: 1279px) {
+  .btn-cuenta span.cuenta-texto { display: none; }
+  .btn-cuenta { padding: 0; width: 42px; height: 42px; justify-content: center; }
+}
+
+/* --- CELULAR ------------------------------------------------- */
+@media (max-width: 640px) {
+
+  /* Header: una sola fila de 64 px. El buscador vive detrás de la
+     lupa (antes ocupaba otra fila completa arriba del todo). */
+  .search-bar, header.scrolled .search-bar {
+    max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0;
+  }
+  header.buscando .search-bar, header.scrolled.buscando .search-bar {
+    max-height: 90px; padding: var(--s-2) var(--gutter) var(--s-3); opacity: 1;
+  }
+  .btn-lupa, header.scrolled .btn-lupa { display: flex; }
+  header.buscando .btn-lupa { display: none; }
+
+  /* Logo oficial completo en lugar de "ZONA BARIÁT…" cortado. */
+  .logo-h { display: block; width: 118px; height: auto; }
+  .logo-zb, .logo > div { display: none !important; }
+
+  /* "Mi cuenta" sigue en el menú lateral; en el header sobraba. */
+  #authHeaderBtn { display: none; }
+
+  /* Banner: solo el principal. Los otros cuatro eran tiras de
+     imagen que en el celular quedaban de 120 px y no se leían. */
+  .promo-slider > .slide:not(.slide-pro) { display: none !important; }
+  .promo-slider .slider-dots, .promo-slider .slider-arrow { display: none !important; }
+
+  /* Primera pantalla: botellas más bajas para que titular, precio
+     y botón entren sin bajar. La píldora y los chips repetían el
+     "20 g de proteína" que ahora va junto al precio. */
+  .pro-inner { gap: 12px !important; padding-top: 12px !important; padding-bottom: 20px !important; }
+  .pro-botellas { height: 190px; }
+  .pro-pill, .pro-chips { display: none !important; }
+  .pro-titulo { font-size: 28px; margin-bottom: 8px; }
+  .pro-sub { margin-bottom: 12px; }
+
+  /* Pie de página compacto: columnas de enlaces de dos en dos y
+     fuera lo que se repetía. */
+  .footer-inner {
+    grid-template-columns: 1fr 1fr !important; gap: var(--s-5) var(--s-4) !important;
+    padding: var(--s-6) var(--gutter) !important;
+  }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-brand-desc { display: none; }
+  .footer-bottom-links { display: none !important; }
+}
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -3913,7 +4041,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   <nav class="sidemenu-nav">
     <div id="sidemenuUserArea"><a href="#" onclick="abrirAuth();cerrarMenu();return false;">👤 Mi cuenta</a></div>
     <a href="#" onclick="irInicio();cerrarMenu();return false;" style="border-top:2px solid var(--border)">Inicio</a>
-    <a href="#" onclick="filtrar('todos');cerrarMenu();scrollCategorias();return false;">Suplementos</a>
+    <a href="#" onclick="verTodosLosProductos();cerrarMenu();scrollCategorias();return false;">Suplementos</a>
     <a href="#" onclick="filtrar('pack');cerrarMenu();scrollProductos();return false;">Ofertas</a>
     <a href="#" onclick="filtrar('proteina');cerrarMenu();scrollProductos();return false;">Proteínas</a>
     <a href="#" onclick="filtrar('vitaminas');cerrarMenu();scrollProductos();return false;">Vitaminas &amp; Minerales</a>
@@ -4329,7 +4457,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     </div>
     <nav class="main-nav">
       <div class="nav-mega-wrap">
-        <button class="nav-link nav-suplementos" data-filter="suplementos" onclick="filtrar('todos');scrollProductos()" data-i18n="nav_suplementos">Suplementos</button>
+        <button class="nav-link nav-suplementos" data-filter="suplementos" onclick="verTodosLosProductos();scrollProductos()" data-i18n="nav_suplementos">Suplementos</button>
         <div class="mega-menu" id="megaMenu">
           <div class="mega-cols">
             <div class="mega-col">
@@ -4423,7 +4551,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <p class="hpc-sub">Encuentre proteínas líquidas y en polvo para cada etapa de su proceso bariátrico.</p>
         <div class="hpc-botones">
           <button class="hpc-btn hpc-btn-primario" type="button" onclick="filtrar('proteina');scrollProductos()">Comprar proteínas</button>
-          <button class="hpc-btn hpc-btn-secundario" type="button" onclick="filtrar('todos');scrollProductos()">Ver catálogo</button>
+          <button class="hpc-btn hpc-btn-secundario" type="button" onclick="verTodosLosProductos();scrollProductos()">Ver catálogo</button>
         </div>
       </div>
     </div>
@@ -4444,7 +4572,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     </div>
     <div class="top-grid" id="topGrid"></div>
     <div class="top-pie">
-      <button class="top-ver-todos" type="button" onclick="filtrar('todos');scrollProductos()">Ver todos los suplementos</button>
+      <button class="top-ver-todos" type="button" onclick="verTodosLosProductos();scrollProductos()">Ver todos los suplementos</button>
     </div>
   </div>
   <!-- ========================================================
@@ -4486,10 +4614,14 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
           <li>Sin lactosa</li>
           <li>Lista para tomar</li>
         </ul>
+        <!-- Precio leído de zb-catalogo.js (ver iniciarMenosEsMas), así
+             nunca queda desactualizado si cambia en el catálogo. -->
+        <p class="pro-precio" id="proPrecio" data-id="bi3" hidden></p>
         <button class="pro-cta" onclick="megaFiltrar('proteina',null)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
           Comprar proteínas
         </button>
+        <p class="pro-confianza">Envíos a todo el Perú · Paga con Yape o tarjeta</p>
       </div>
     </div>
   </div>
@@ -4542,48 +4674,6 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   <div class="slider-dots" id="sliderDots"></div>
 </section>
 
-<!-- HERO: propuesta de valor + 2 llamados a la acción.
-     Vive junto al slider: se oculta y se muestra con él. -->
-<section class="hero-intro vista-inicio" id="heroIntro">
-  <div class="hero-intro-inner">
-    <span class="hero-eyebrow">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-      Especialistas en suplementación bariátrica
-    </span>
-    <h1 class="hero-titulo">Suplementos formulados para tu vida <em>después de la cirugía</em></h1>
-    <p class="hero-sub">
-      Proteínas, vitaminas y suplementos especializados para acompañarte en las
-      diferentes etapas después de una cirugía bariátrica.
-    </p>
-    <div class="hero-ctas">
-      <button class="btn-zb btn-zb-primario" onclick="filtrar('todos');scrollProductos()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        Comprar suplementos
-      </button>
-      <a class="btn-zb btn-zb-wa" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Quiero%20orientaci%C3%B3n%20sobre%20qu%C3%A9%20suplementos%20me%20tocan." target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-        Hablar con Zoe
-      </a>
-    </div>
-    <div class="hero-trust">
-      <div class="hero-trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Marcas especializadas en bariátrica
-      </div>
-      <div class="hero-trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 17h4V5H2v12h3M15 17h6v-5l-3-4h-3v9M6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
-        Envíos a todo el Perú
-      </div>
-      <div class="hero-trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Asesoría sin costo por WhatsApp
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
 <!-- RECOMENDADOS -->
 <section class="recom-section" id="recomSectionStatic" style="display:none">
   <div class="recom-inner">
@@ -4607,7 +4697,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       </select>
     </div>
     <div class="filtros-chips" id="filtrosChips">
-      <button class="filtro-chip active" data-chip="todos" onclick="filtrar('todos')">Todos</button>
+      <button class="filtro-chip active" data-chip="todos" onclick="verTodosLosProductos()">Todos</button>
       <button class="filtro-chip" data-chip="pack" onclick="filtrar('pack')">Packs</button>
       <button class="filtro-chip" data-chip="proteina" onclick="filtrar('proteina')">Proteínas</button>
       <button class="filtro-chip" data-chip="vitaminas" onclick="filtrar('vitaminas')">Vitaminas</button>
@@ -4617,6 +4707,23 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     <div class="subfiltros" id="subfiltros" style="display:none"></div>
   </div>
   <div id="contenido"></div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIOS — "Lo que dicen nuestros clientes"
+     Van justo después del catálogo: la prueba social se lee
+     cuando el cliente está decidiendo. Las tarjetas se dibujan
+     desde el array TESTIMONIOS (bloque de JavaScript): para
+     agregar o cambiar uno se edita solo ese array.
+     ============================================================ -->
+<section class="testi-section vista-inicio" id="testimonios-section">
+  <div class="testi-inner">
+    <div class="testi-header">
+      <h2 class="testi-titulo">Lo que dicen nuestros clientes</h2>
+      <p class="testi-sub">Experiencias reales de personas que ya compran en Zona Bariátrica.</p>
+    </div>
+    <div class="testi-grid" id="testiGrid"></div>
+  </div>
 </section>
 
 <!-- NOSOTROS -->
@@ -5069,21 +5176,6 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- ============================================================
-     TESTIMONIOS — "Lo que dicen nuestros pacientes"
-     Las tarjetas se dibujan desde el array TESTIMONIOS, más abajo
-     en el bloque de JavaScript. Para cambiarlos, edita ese array:
-     no hace falta tocar este HTML.
-     ============================================================ -->
-<section class="testi-section vista-inicio" id="testimonios-section">
-  <div class="testi-inner">
-    <div class="testi-header">
-      <h2 class="testi-titulo">Lo que dicen nuestros pacientes</h2>
-      <p class="testi-sub">Personas que ya pasaron por donde tú estás pasando.</p>
-    </div>
-    <div class="testi-grid" id="testiGrid"></div>
-  </div>
-</section>
 
 <!-- ============================================================
      PREGUNTAS FRECUENTES — acordeón
@@ -5217,7 +5309,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     <div>
       <div class="footer-col-title">Navegación</div>
       <a class="footer-nav-link" href="#" onclick="irInicio();return false;">Inicio</a>
-      <a class="footer-nav-link" href="#" onclick="filtrar('todos');scrollProductos();return false;">Suplementos</a>
+      <a class="footer-nav-link" href="#" onclick="verTodosLosProductos();scrollProductos();return false;">Suplementos</a>
       <a class="footer-nav-link" href="#" onclick="filtrar('oferta');scrollProductos();return false;">Ofertas</a>
       <a class="footer-nav-link" href="#" onclick="mostrarBlog();return false;">BariBlog</a>
       <a class="footer-nav-link" href="#" onclick="mostrarNosotros();return false;">Quiénes somos</a>
@@ -5990,6 +6082,16 @@ function renderizar(f, sub) {
   switch(f) {
     case 'todos':
       titulo = __('tit_todos');
+      /* Menos es más: en el inicio se muestran solo los más vendidos.
+         El catálogo completo aparece con el botón "Ver todos" o con
+         los filtros de arriba. */
+      if (!catalogoCompleto) {
+        titulo = 'Los más vendidos';
+        const lista = INICIO_DESTACADOS.map(id => productos.find(p => p.id === id)).filter(Boolean);
+        html += sec('', lista);
+        html += `<div class="ver-todo-wrap"><button class="ver-todo-btn" type="button" onclick="verCatalogoCompleto()">Ver todos los suplementos (${productos.length})</button></div>`;
+        break;
+      }
       html += carouselSec(__('sec_ofertas'), productos.filter(p => p.cat === 'oferta'), 'todos-ofertas');
       html += carouselSec(__('sec_proteinas'), productos.filter(p => p.cat === 'proteina' && p.tipo !== 'pack'), 'todos-prot');
       html += carouselSec(__('sec_vitaminas'), productos.filter(p => p.cat === 'vitaminas'), 'todos-vit');
@@ -6049,6 +6151,23 @@ function renderizar(f, sub) {
   el.innerHTML = html || `<div style="padding:40px 32px;text-align:center;color:var(--text-light);font-size:14px">No hay productos disponibles para este filtro.</div>`;
   aplicarVistaActual();
   setTimeout(inicializarFlechasCarouseles, 50);
+}
+
+/* Los 8 del inicio: ranking real de ventas (mismo de "Los más
+   buscados") + uno de cada familia que faltaba. Para cambiarlos,
+   tocar solo esta lista de ids de zb-catalogo.js. */
+const INICIO_DESTACADOS = ['bi3', 'bi7', 'bi5', 'bf2', 'bi1', 'bi4', 'oferta1', 'bp4'];
+let catalogoCompleto = false;
+/* Desde el menú, el chip "Todos" y los enlaces "Ver catálogo" el
+   cliente pidió ver todo: ahí se abre el catálogo completo. */
+function verTodosLosProductos() {
+  catalogoCompleto = true;
+  filtrar('todos');
+}
+function verCatalogoCompleto() {
+  catalogoCompleto = true;
+  renderizar('todos');
+  if (typeof gtag === 'function') gtag('event', 'ver_catalogo_completo');
 }
 
 function sec(titulo, lista) {
@@ -6311,10 +6430,9 @@ function cardHTML(p) {
       loading="lazy" decoding="async"
       onerror="this.style.background='#e8eeff'" onclick="abrirModal('${p.id}')" style="cursor:pointer">
     <div class="card-body">
-      ${oferta ? `<span class="badge-oferta">🔥 ${__('pack_ahorra')} S/${p.ahorro}</span>` : ''}
-      ${pack ? `<span class="badge-pack">PACK &nbsp;·&nbsp; ${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
+      ${oferta ? `<span class="badge-oferta">${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
+      ${pack ? `<span class="badge-pack">${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
       ${esProximo(p) ? `<span class="badge-proximo">Próximamente</span>` : ''}
-      ${p.destacado && !pack && !oferta && !esProximo(p) ? `<span class="badge-recomendado">${__('badge_recom')}</span>` : ''}
       <div class="nombre" onclick="abrirModal('${p.id}')" style="cursor:pointer">${p.nombre}</div>
       ${badgesEtapaHTML(p, 2)}
       <span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>
@@ -8707,85 +8825,40 @@ function enlaceFichaHTML(p) {
 }
 
 /* ============================================================
-   FASE 1 — TESTIMONIOS
+   TESTIMONIOS — reales, enviados por Roberto (oct 2026)
    ------------------------------------------------------------
-   ⚠️ CONTENIDO DE EJEMPLO: reemplázalo por testimonios reales
-   antes de publicar. Campos de cada testimonio:
-     nombre    (obligatorio)
-     inicial   (opcional) — inicial del apellido, ej: "M."
-     ciudad    (opcional) — ej: "Arequipa"
-     foto      (opcional) — ruta, ej: "img/testi-maria.jpg".
-                            Si no hay foto se muestra la inicial.
-     estrellas (1 a 5)
-     texto     (obligatorio)
-     verificado(opcional) — true muestra el sello "Compra verificada"
-   ============================================================ */
-/* ============================================================
-   SECCIÓN OCULTA — a la espera de testimonios reales
-   ------------------------------------------------------------
-   Con la lista vacía, renderizarTestimonios() esconde la
-   sección entera: no queda ni el título ni un hueco en blanco.
-
-   PARA REACTIVARLA cuando tengas testimonios de verdad:
-   escribe uno o más dentro de los corchetes, con este formato:
-
-     { nombre: 'María', inicial: 'C.', ciudad: 'Lima',
-       foto: null, estrellas: 5, verificado: true,
-       texto: 'Lo que te escribió la paciente, tal cual.' },
-
-   Campos:
-     nombre     obligatorio
-     inicial    opcional — inicial del apellido ("C.")
-     ciudad     opcional
-     foto       opcional — 'img/testi-maria.jpg'; si es null se
-                muestra la inicial sobre un círculo azul
-     estrellas  de 1 a 5
-     texto      obligatorio — palabras de la persona
-     verificado true SOLO si de verdad compró. Pone el sello
-                "Compra verificada": no lo uses si no lo es.
-
+   Cada testimonio lleva SOLO lo que dijo la persona:
+     nombre  — tal como autorizó publicarlo
+     ciudad  — se muestra discreta debajo del nombre
+     texto   — sus palabras, sin retocar ni agregar frases
+   A propósito NO hay estrellas, fotos, cargos ni sellos: no
+   inventamos nada que el cliente no haya dicho.
+   Si la lista queda vacía, la sección entera se oculta.
    Pide siempre permiso antes de publicar el nombre de alguien.
    ============================================================ */
-const TESTIMONIOS = [];
-
-const ESTRELLA_SVG =
-  '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>';
-
-const CHECK_SVG =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+const TESTIMONIOS = [
+  { nombre: 'Enrique', ciudad: 'Lima',
+    texto: 'La atención es rápida y personalizada, y los productos son de buena calidad. Además, comprar directamente con Zona Bariátrica me permite acceder a promociones y recibir los productos por delivery en mi casa u oficina, algo que para mí es genial porque no dispongo de mucho tiempo.' }
+];
 
 function testimonioHTML(t) {
-  const estrellas = ESTRELLA_SVG.repeat(Math.max(1, Math.min(5, t.estrellas || 5)));
-  const avatar = t.foto
-    ? `<img src="${t.foto}" alt="${t.nombre}">`
-    : (t.nombre || '?').charAt(0).toUpperCase();
-  /* Nombre + inicial + ciudad: solo se arma con lo que exista. */
-  const nombre = t.nombre + (t.inicial ? ' ' + t.inicial : '');
-  const meta = [t.ciudad].filter(Boolean).join(' · ');
-
-  return `<article class="testi-card">
-    <div class="testi-estrellas" role="img" aria-label="${t.estrellas || 5} de 5 estrellas">${estrellas}</div>
-    <p class="testi-texto">"${t.texto}"</p>
-    <div class="testi-persona">
-      <div class="testi-avatar">${avatar}</div>
-      <div>
-        <div class="testi-nombre">${nombre}</div>
-        ${meta ? `<div class="testi-meta">${meta}</div>` : ''}
-        ${t.verificado ? `<div class="testi-verificado">${CHECK_SVG}Compra verificada</div>` : ''}
-      </div>
-    </div>
-  </article>`;
+  const esc = x => String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  return `<figure class="testi-card">
+    <blockquote class="testi-texto">“${esc(t.texto)}”</blockquote>
+    <figcaption class="testi-persona">
+      <span class="testi-nombre">${esc(t.nombre)}</span>
+      ${t.ciudad ? `<span class="testi-meta">${esc(t.ciudad)}</span>` : ''}
+    </figcaption>
+  </figure>`;
 }
 
 function renderizarTestimonios() {
   const grid = document.getElementById('testiGrid');
   if (!grid) return;
-  /* Sin testimonios cargados, la sección entera se oculta:
-     mejor nada que un bloque vacío. */
   const sec = document.getElementById('testimonios-section');
   if (!TESTIMONIOS.length) { if (sec) sec.style.display = 'none'; return; }
+  grid.classList.toggle('testi-uno', TESTIMONIOS.length === 1);
   grid.innerHTML = TESTIMONIOS.map(testimonioHTML).join('');
-  if (window.ZBUX) window.ZBUX.animar('.testi-card', 60);
 }
 
 /* ============================================================
@@ -8909,6 +8982,35 @@ function irAFaq() {
 
 /* Arranque de las secciones nuevas. */
 renderizarTestimonios();
+
+/* ============================================================
+   MENOS ES MÁS (oct 2026)
+   1) Precio del banner principal leído del catálogo.
+   2) Lupa del header en celular: abre y cierra el buscador.
+      (El botón existía pero su función nunca se había escrito.)
+   ============================================================ */
+(function iniciarMenosEsMas() {
+  const pp = document.getElementById('proPrecio');
+  const p = pp && productos.find(x => x.id === pp.dataset.id);
+  if (p && p.precio) {
+    pp.innerHTML = '<strong>S/ ' + p.precio + '</strong> · 1 litro · 20 g de proteína por porción';
+    pp.hidden = false;
+  }
+})();
+
+function abrirBusquedaMovil() {
+  /* OJO: hay otro <header> antes (el del checkout): se busca el que
+     contiene el buscador. */
+  const header = document.querySelector('.search-bar').closest('header');
+  const input = document.getElementById('searchInput');
+  header.classList.add('buscando');
+  setTimeout(() => input.focus(), 50);
+  input.addEventListener('blur', function cerrar() {
+    input.removeEventListener('blur', cerrar);
+    /* Se deja un respiro para que el toque en una sugerencia llegue. */
+    setTimeout(() => { if (!input.value) header.classList.remove('buscando'); }, 200);
+  });
+}
 iniciarFaq();
 
 /* ============================================================
