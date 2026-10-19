@@ -3881,25 +3881,10 @@ section[id], .productos-header { scroll-margin-top: 92px; }
    quitando solo este bloque.
    ============================================================ */
 
-/* --- Un solo azul: los tres azules distintos que había (#2563EB,
-   #0A4BFF y #0057FF) se unificaron en var(--blue). Aquí se
-   alinean los botones del escritorio que lo tenían escrito a mano. */
-.hpc-badge, .hpc-btn-secundario, .hpc-confianza svg { color: var(--blue); }
-.hpc-btn-primario { background: var(--blue); border-color: var(--blue); }
-.hpc-btn-primario:hover { background: var(--blue-hover); border-color: var(--blue-hover); }
-.hpc-btn-secundario { border-color: var(--blue); }
-
 /* --- Rojo solo para el precio de oferta: la tarjeta ya no lleva
    borde rojo ni la etiqueta fondo rojo; basta el precio. */
 .card.oferta, .card.oferta:hover { border-color: var(--border-light); }
 .badge-oferta { color: var(--success); background: var(--success-bg); border-color: var(--success-br); }
-
-/* --- Banner principal: precio y una línea de confianza ------ */
-.pro-precio {
-  margin: 0 0 16px; font-size: 15px; color: #475A80; line-height: 1.4;
-}
-.pro-precio strong { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
-.pro-confianza { margin: 12px 0 0; font-size: 13px; color: #6B7A99; }
 
 /* --- Catálogo corto del inicio + botón "Ver todos" ---------- */
 .ver-todo-wrap { text-align: center; padding: var(--s-5) var(--gutter) var(--s-2); }
@@ -3975,20 +3960,6 @@ section[id], .productos-header { scroll-margin-top: 92px; }
   /* "Mi cuenta" sigue en el menú lateral; en el header sobraba. */
   #authHeaderBtn { display: none; }
 
-  /* Banner: solo el principal. Los otros cuatro eran tiras de
-     imagen que en el celular quedaban de 120 px y no se leían. */
-  .promo-slider > .slide:not(.slide-pro) { display: none !important; }
-  .promo-slider .slider-dots, .promo-slider .slider-arrow { display: none !important; }
-
-  /* Primera pantalla: botellas más bajas para que titular, precio
-     y botón entren sin bajar. La píldora y los chips repetían el
-     "20 g de proteína" que ahora va junto al precio. */
-  .pro-inner { gap: 12px !important; padding-top: 12px !important; padding-bottom: 20px !important; }
-  .pro-botellas { height: 190px; }
-  .pro-pill, .pro-chips { display: none !important; }
-  .pro-titulo { font-size: 28px; margin-bottom: 8px; }
-  .pro-sub { margin-bottom: 12px; }
-
   /* Pie de página compacto: columnas de enlaces de dos en dos y
      fuera lo que se repetía. */
   .footer-inner {
@@ -3998,6 +3969,178 @@ section[id], .productos-header { scroll-margin-top: 92px; }
   .footer-brand { grid-column: 1 / -1; }
   .footer-brand-desc { display: none; }
   .footer-bottom-links { display: none !important; }
+}
+
+/* ============================================================
+   INICIO SIMPLE  (octubre 2026)
+   Banner · confianza · categorías · marcas · más vendidos ·
+   ofertas · testimonios. Mismo diseño en celular, tablet y PC;
+   solo cambian tamaños. Colores: blanco, azul de marca y gris.
+   ============================================================ */
+.promo-slider.zb-inicio { background: var(--surface); padding: 0; min-height: 0; overflow: visible; }
+
+/* --- Banner -------------------------------------------------- */
+.zbh { background: var(--blue-light); }
+.zbh-inner {
+  max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter);
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  gap: var(--s-6); min-height: 380px;
+}
+.zbh-titulo {
+  font-family: 'Manrope', var(--font); font-weight: 800;
+  font-size: clamp(30px, 4.2vw, 56px); line-height: 1.05; letter-spacing: -0.03em;
+  color: var(--text); margin: 0 0 var(--s-3);
+}
+.zbh-titulo span { display: block; color: var(--blue); }
+.zbh-sub { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.5; color: var(--text-muted); margin: 0 0 var(--s-5); max-width: 34ch; }
+.zbh-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 52px; padding: 0 32px; border: none; border-radius: var(--r-pill);
+  background: var(--blue); color: #fff; cursor: pointer;
+  font-family: 'Manrope', var(--font); font-size: 16px; font-weight: 700;
+  transition: background var(--t-fast);
+}
+.zbh-btn:hover { background: var(--blue-hover); }
+/* Espacio reservado para la foto del banner (pendiente). */
+.zbh-media { align-self: stretch; min-height: 380px; }
+.zbh-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* --- Franja de confianza ------------------------------------ */
+.zb-confianza {
+  list-style: none; margin: 0 auto; padding: var(--s-4) var(--gutter);
+  max-width: var(--maxw);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-3);
+  border-bottom: 1px solid var(--border-light);
+}
+.zb-confianza li {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.3;
+}
+.zb-confianza svg { width: 24px; height: 24px; color: var(--blue); flex: none; }
+
+/* --- Bloques: categorías y marcas --------------------------- */
+.zb-bloque { max-width: var(--maxw); margin: 0 auto; padding: var(--s-6) var(--gutter) 0; }
+.zb-bloque-tit {
+  font-family: 'Manrope', var(--font); font-size: 22px; font-weight: 800;
+  letter-spacing: -0.02em; color: var(--text); margin: 0 0 var(--s-4);
+}
+.zb-cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-3); max-width: 720px; }
+.zb-cat {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  background: none; border: none; padding: 0; cursor: pointer;
+  font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text); text-align: center;
+}
+.zb-cat-ico {
+  width: 72px; height: 72px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--blue-light); color: var(--blue);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.zb-cat-ico svg { width: 30px; height: 30px; }
+.zb-cat:hover .zb-cat-ico { background: var(--blue); color: #fff; }
+
+.zb-marcas { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--s-3); }
+.zb-marca {
+  height: 84px; padding: 14px 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--r-sm);
+  transition: border-color var(--t-fast);
+}
+.zb-marca:hover { border-color: var(--blue); }
+.zb-marca img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+
+/* --- Más vendidos (catálogo en modo inicio) ----------------- */
+.ver-todo-link {
+  display: none; background: none; border: none; cursor: pointer; padding: 6px 0;
+  font-family: inherit; font-size: 14px; font-weight: 600; color: var(--blue);
+}
+#productos-section.modo-inicio .ver-todo-link { display: inline-block; margin-left: auto; }
+#productos-section.modo-inicio .orden-select,
+#productos-section.modo-inicio .filtros-chips,
+#productos-section.modo-inicio .subfiltros { display: none !important; }
+#productos-section.modo-inicio .productos-header h2 {
+  font-family: 'Manrope', var(--font); font-size: 22px; font-weight: 800; letter-spacing: -0.02em;
+}
+
+/* --- Ofertas especiales ------------------------------------- */
+.zb-ofertas { padding: var(--s-6) var(--gutter); }
+.zb-ofertas-inner {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-5);
+  background: var(--blue); color: #fff; border-radius: var(--r-lg);
+  padding: var(--s-6) var(--s-7); overflow: hidden;
+}
+.zb-ofertas h2 {
+  font-family: 'Manrope', var(--font); font-size: 28px; font-weight: 800;
+  letter-spacing: -0.02em; margin: 0 0 var(--s-2); color: #fff;
+}
+.zb-ofertas p { font-size: 16px; line-height: 1.5; margin: 0 0 var(--s-5); color: rgba(255,255,255,0.9); max-width: 30ch; }
+.zb-ofertas-btn {
+  height: 48px; padding: 0 28px; border: none; border-radius: var(--r-pill);
+  background: #fff; color: var(--blue); cursor: pointer;
+  font-family: 'Manrope', var(--font); font-size: 15px; font-weight: 700;
+}
+.zb-ofertas-btn:hover { background: var(--blue-light); }
+.zb-ofertas-img { width: 220px; height: 220px; object-fit: contain; background: #fff; border-radius: var(--r); flex: none; }
+
+/* --- Tablet -------------------------------------------------- */
+@media (max-width: 1024px) {
+  .zbh-inner { min-height: 320px; }
+  .zbh-media { min-height: 320px; }
+  .zb-marcas { grid-template-columns: repeat(5, minmax(120px, 1fr)); overflow-x: auto; scrollbar-width: none; }
+}
+
+/* --- Celular ------------------------------------------------- */
+@media (max-width: 640px) {
+  /* Banner: texto a la izquierda y la foto (cuando llegue) a la
+     derecha, como en el ejemplo. Alto contenido: 240 px. */
+  .zbh-inner {
+    grid-template-columns: 1fr; position: relative;
+    min-height: 240px; padding: var(--s-6) var(--gutter); gap: 0;
+  }
+  .zbh-texto { position: relative; z-index: 1; max-width: 62%; }
+  .zbh-media { position: absolute; top: 0; right: 0; bottom: 0; width: 40%; min-height: 0; }
+  .zbh-titulo { font-size: 27px; }
+  .zbh-sub { font-size: 14px; margin-bottom: var(--s-4); }
+  .zbh-btn { height: 44px; padding: 0 22px; font-size: 15px; }
+
+  .zb-confianza { padding: var(--s-3) var(--gutter); gap: var(--s-2); }
+  .zb-confianza li { flex-direction: column; gap: 6px; font-size: 11.5px; text-align: center; }
+  .zb-confianza svg { width: 22px; height: 22px; }
+
+  .zb-bloque { padding-top: var(--s-5); }
+  .zb-bloque-tit { font-size: 18px; margin-bottom: var(--s-3); }
+  .zb-cats { gap: var(--s-2); }
+  .zb-cat { font-size: 12px; gap: 8px; }
+  .zb-cat-ico { width: 60px; height: 60px; }
+  .zb-cat-ico svg { width: 26px; height: 26px; }
+
+  /* Marcas en fila deslizable */
+  .zb-marcas {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter) 2px; gap: 10px;
+    scroll-padding: 0 var(--gutter); scrollbar-width: none;
+  }
+  .zb-marcas::-webkit-scrollbar { display: none; }
+  .zb-marca { flex: 0 0 132px; height: 64px; padding: 10px 14px; scroll-snap-align: start; }
+
+  /* Más vendidos en fila deslizable: 8 productos en ~330 px de
+     alto en lugar de cuatro filas. */
+  #productos-section.modo-inicio .productos-header h2 { font-size: 18px; }
+  #productos-section.modo-inicio #contenido .grid {
+    display: flex !important; overflow-x: auto; scroll-snap-type: x mandatory;
+    gap: 10px; padding: 0 var(--gutter) 4px; scrollbar-width: none;
+    scroll-padding: 0 var(--gutter);
+  }
+  #productos-section.modo-inicio #contenido .grid::-webkit-scrollbar { display: none; }
+  #productos-section.modo-inicio #contenido .grid > .card { flex: 0 0 46%; scroll-snap-align: start; }
+
+  .zb-ofertas { padding: var(--s-5) var(--gutter); }
+  .zb-ofertas-inner { padding: var(--s-5); gap: var(--s-3); border-radius: var(--r); }
+  .zb-ofertas h2 { font-size: 21px; }
+  .zb-ofertas p { font-size: 14px; margin-bottom: var(--s-4); }
+  .zb-ofertas-btn { height: 42px; padding: 0 20px; font-size: 14px; }
+  .zb-ofertas-img { width: 110px; height: 110px; }
 }
 </style>
 <!-- Meta Pixel Code -->
@@ -4534,144 +4677,69 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   </div>
 </header>
 
-<!-- PROMO SLIDER -->
-<section class="promo-slider">
-  <!-- HERO PC (≥1280px) — Bloque 02. Estático, sin carrusel. En celular
-       no se ve: allí sigue el slider de siempre. -->
-  <div class="hero-pc">
-    <svg class="hpc-forma" viewBox="0 0 600 460" aria-hidden="true"><path fill="#EAF2FF" d="M600 0v400c-60 44-150 70-236 44-92-28-120-110-196-150C98 257 22 214 4 136-10 76 20 26 60 0z"/></svg>
-    <div class="hpc-grid">
-      <div class="hpc-producto">
-        <img src="img/hero-liquid-fresa.webp" width="260" height="760" alt="Liquid Protein Bari&amp;Nutrition sabor fresa, 1 litro">
-        <img src="img/hero-liquid-maracumango.webp" width="269" height="760" alt="Liquid Protein Bari&amp;Nutrition sabor maracumango, 1 litro">
+<!-- ============================================================
+     INICIO SIMPLE (oct 2026) — banner + confianza + categorías +
+     marcas. Reemplaza al slider de 5 banners y al hero de PC.
+     Se conserva la clase .promo-slider porque el JS de la tienda
+     la usa para ocultar/mostrar el inicio al entrar a Nosotros o
+     al Blog.
+     ============================================================ -->
+<section class="promo-slider zb-inicio">
+  <!-- BANNER — la foto va en .zbh-media (espacio reservado, se
+       define después). Para ponerla: <img src="img/..." alt="...">
+       dentro de ese div. -->
+  <div class="zbh">
+    <div class="zbh-inner">
+      <div class="zbh-texto">
+        <h1 class="zbh-titulo">Tu nutrición <span>después de la cirugía</span></h1>
+        <p class="zbh-sub">Suplementos bariátricos de calidad para cada etapa de tu vida.</p>
+        <button class="zbh-btn" type="button" onclick="verTodosLosProductos();scrollProductos()">Ver productos</button>
       </div>
-      <div class="hpc-texto">
-        <span class="hpc-badge">20 g de proteína por porción</span>
-        <h1 class="hpc-titulo">Proteínas para pacientes bariátricos.</h1>
-        <p class="hpc-sub">Encuentre proteínas líquidas y en polvo para cada etapa de su proceso bariátrico.</p>
-        <div class="hpc-botones">
-          <button class="hpc-btn hpc-btn-primario" type="button" onclick="filtrar('proteina');scrollProductos()">Comprar proteínas</button>
-          <button class="hpc-btn hpc-btn-secundario" type="button" onclick="verTodosLosProductos();scrollProductos()">Ver catálogo</button>
-        </div>
-      </div>
-    </div>
-    <ul class="hpc-confianza">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>Envíos a todo el Perú</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>Yape · Izipay</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>Contraentrega en Lima y provincias</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>Marcas seleccionadas para pacientes bariátricos</li>
-    </ul>
-  </div>
-  <!-- LOS MÁS BUSCADOS (≥1280px) — Bloque 03. Las tarjetas se dibujan
-       desde zb-catalogo.js (script junto a su <script src>), así el
-       precio nunca queda desactualizado. -->
-  <div class="top-pc">
-    <div class="top-head">
-      <h2>Los más buscados por pacientes bariátricos</h2>
-      <p>Los suplementos con mayor demanda en Zona Bariátrica.</p>
-    </div>
-    <div class="top-grid" id="topGrid"></div>
-    <div class="top-pie">
-      <button class="top-ver-todos" type="button" onclick="verTodosLosProductos();scrollProductos()">Ver todos los suplementos</button>
-    </div>
-  </div>
-  <!-- ========================================================
-       BANNERS — una sola línea gráfica (Fase 3)
-       Los 5 comparten plantilla: eyebrow, título, subtítulo,
-       botón y foto a la derecha. Solo cambian texto, imagen y
-       data-acento. Ver el bloque "BANNERS DEL SLIDER" del CSS.
-
-       Las imágenes de banner anteriores siguen en /img
-       (slide-lvl-pack-wellness.png, slide-envios.png,
-       slide-proteina-liquida.png) por si se quieren recuperar:
-       basta volver a añadir un <div class="slide slide-img">.
-       ======================================================== -->
-
-  <!-- 0 · Banner principal "Proteína para cada etapa" (HTML, ver el
-       bloque "BANNER PRINCIPAL" del CSS). El banner anterior de Canva
-       sigue en img/banner-hero-1.jpg por si se quiere recuperar. -->
-  <div class="slide slide-pro active">
-    <svg class="pro-ondas" viewBox="0 0 1920 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <path fill="#EDF4FF" d="M0 600V392c170-62 340-44 480 26 150 74 300 84 450 20 190-82 330-76 520 8 170 74 320 68 470 6v148z"/>
-      <path fill="#EDF4FF" d="M1480 0h440v236c-90 54-206 50-290-10-92-66-190-118-150-226z"/>
-    </svg>
-    <div class="pro-inner">
-      <div class="pro-botellas">
-        <img src="img/hero-liquid-fresa.webp" width="260" height="760" fetchpriority="high"
-             alt="Liquid Protein Bari&amp;Nutrition sabor fresa, 1 litro">
-        <img src="img/hero-liquid-maracumango.webp" width="269" height="760" fetchpriority="high"
-             alt="Liquid Protein Bari&amp;Nutrition sabor maracumango, 1 litro">
-      </div>
-      <div class="pro-texto">
-        <span class="pro-pill">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#28B446"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          20 g proteína por porción
-        </span>
-        <h2 class="pro-titulo">PROTEÍNA<span>PARA CADA ETAPA</span></h2>
-        <p class="pro-sub">Encuentra la proteína ideal para cada etapa de tu proceso bariátrico.</p>
-        <ul class="pro-chips">
-          <li>20 g proteína</li>
-          <li>Sin lactosa</li>
-          <li>Lista para tomar</li>
-        </ul>
-        <!-- Precio leído de zb-catalogo.js (ver iniciarMenosEsMas), así
-             nunca queda desactualizado si cambia en el catálogo. -->
-        <p class="pro-precio" id="proPrecio" data-id="bi3" hidden></p>
-        <button class="pro-cta" onclick="megaFiltrar('proteina',null)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-          Comprar proteínas
-        </button>
-        <p class="pro-confianza">Envíos a todo el Perú · Paga con Yape o tarjeta</p>
-      </div>
+      <div class="zbh-media" aria-hidden="true"></div>
     </div>
   </div>
 
-  <!-- 0b · Banner proteínas (imagen 1920x600). Texto centrado,
-       así que el botón usa la variante centrada. -->
-  <div class="slide slide-hero">
-    <img src="img/banner-hero-2.jpg" width="1920" height="600" loading="lazy"
-         alt="Proteína para cada etapa — encuentra la opción que se adapte mejor a tu proceso bariátrico">
-    <button class="hero-cta hero-cta-centro" onclick="megaFiltrar('proteina',null)">
-      Ir a proteínas
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-    </button>
+  <!-- Franja de confianza: solo lo que de verdad ofrecemos. -->
+  <ul class="zb-confianza">
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg><span>Envíos a todo el Perú</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><span>Pago contra entrega</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg><span>Asesoría personalizada</span></li>
+  </ul>
+
+  <!-- Compra por categoría: las 4 que existen en el catálogo. -->
+  <div class="zb-bloque">
+    <h2 class="zb-bloque-tit">Compra por categoría</h2>
+    <div class="zb-cats">
+      <button type="button" class="zb-cat" onclick="filtrar('proteina');scrollProductos()">
+        <span class="zb-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8 1-6h2"/></svg></span>
+        Proteínas
+      </button>
+      <button type="button" class="zb-cat" onclick="filtrar('vitaminas');scrollProductos()">
+        <span class="zb-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg></span>
+        Vitaminas
+      </button>
+      <button type="button" class="zb-cat" onclick="filtrar('colageno');scrollProductos()">
+        <span class="zb-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
+        Colágeno y fibra
+      </button>
+      <button type="button" class="zb-cat" onclick="filtrar('pack');scrollProductos()">
+        <span class="zb-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"/></svg></span>
+        Packs
+      </button>
+    </div>
   </div>
 
-  <!-- 0c · Banner vitaminas (imagen 1920x600). Texto a la izquierda
-       y paleta verde/teal: el botón usa la variante teal para no
-       meter un azul que no está en el diseño. -->
-  <div class="slide slide-hero">
-    <img src="img/banner-hero-3.jpg" width="1920" height="600" loading="lazy"
-         alt="Vitaminas que te acompañan — nutrientes esenciales para tu bienestar en cada etapa de tu proceso bariátrico">
-    <button class="hero-cta hero-cta-teal" onclick="megaFiltrar('vitaminas',null)">
-      Ir a vitaminas
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-    </button>
+  <!-- Marcas: las 5 que vendemos. Logos en img/marcas/. -->
+  <div class="zb-bloque">
+    <h2 class="zb-bloque-tit">Nuestras marcas</h2>
+    <div class="zb-marcas">
+      <button type="button" class="zb-marca" onclick="filtrarMarca('bn');scrollProductos()"><img src="img/marcas/bari-nutrition.png" alt="Bari&amp;Nutrition" width="480" height="107" loading="lazy"></button>
+      <button type="button" class="zb-marca" onclick="filtrarMarca('bf');scrollProductos()"><img src="img/marcas/bariatric-fusion.png" alt="Bariatric Fusion" width="480" height="124" loading="lazy"></button>
+      <button type="button" class="zb-marca" onclick="filtrarMarca('lvl');scrollProductos()"><img src="img/marcas/lvl-drink.png" alt="LVL Drink" width="275" height="160" loading="lazy"></button>
+      <button type="button" class="zb-marca" onclick="filtrarMarca('nf');scrollProductos()"><img src="img/marcas/nutrifath.png" alt="Nutrifath" width="480" height="135" loading="lazy"></button>
+      <button type="button" class="zb-marca" onclick="filtrarMarca('sp');scrollProductos()"><img src="img/marcas/geno-deep-care.png" alt="GENO Deep Care Advance" width="175" height="160" loading="lazy"></button>
+    </div>
   </div>
-
-  <!-- 0d · Banner de envíos (1920x600, la misma proporción que los
-       tres anteriores). Es informativo y su diseño ya ocupa las dos
-       mitades, así que NO lleva botón superpuesto. -->
-  <div class="slide slide-hero">
-    <img src="img/banner-envios.jpg" width="1920" height="600" loading="lazy"
-         alt="Delivery a todo el Perú: enviamos a través de Shalom. Compra desde casa y recibe tu pedido en la agencia más cercana">
-  </div>
-
-  <!-- 0e · Banner de Zoe. La imagen ya trae DIBUJADO el boton "Habla
-       con Zoe", asi que en lugar de superponer otro boton se coloca
-       encima un area transparente (.hero-hotspot) que abre WhatsApp.
-       Sus porcentajes estan medidos sobre esta imagen concreta: si
-       algun dia se cambia el banner, hay que volver a medirlos. -->
-  <div class="slide slide-hero">
-    <img src="img/banner-zoe.jpg" width="1920" height="600" loading="lazy"
-         alt="Zoe te acompaña: resuelve tus dudas sobre nuestros productos, sus características y las etapas en las que suelen utilizarse">
-    <a class="hero-hotspot" href="https://wa.me/51961841069?text=Hola%2C%20quisiera%20una%20orientaci%C3%B3n%20sobre%20los%20suplementos"
-       target="_blank" rel="noopener" aria-label="Habla con Zoe por WhatsApp"></a>
-  </div>
-
-  <button class="slider-arrow prev" onclick="sliderMove(-1)" aria-label="Anterior"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-  <button class="slider-arrow next" onclick="sliderMove(1)" aria-label="Siguiente"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
-  <div class="slider-dots" id="sliderDots"></div>
 </section>
 
 <!-- RECOMENDADOS -->
@@ -4690,6 +4758,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   <div class="productos-header">
     <div class="productos-header-top">
       <h2 id="productos-titulo">Tienda</h2>
+      <button type="button" class="ver-todo-link" onclick="verTodosLosProductos()">Ver todos <span aria-hidden="true">→</span></button>
       <select id="ordenSelect" onchange="aplicarOrden()" class="orden-select">
         <option value="">Ordenar por</option>
         <option value="asc">Precio: menor a mayor</option>
@@ -4707,6 +4776,18 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     <div class="subfiltros" id="subfiltros" style="display:none"></div>
   </div>
   <div id="contenido"></div>
+</section>
+
+<!-- OFERTAS ESPECIALES — un solo bloque que lleva a los packs x2. -->
+<section class="zb-ofertas vista-inicio" id="zbOfertas">
+  <div class="zb-ofertas-inner">
+    <div class="zb-ofertas-texto">
+      <h2>Ofertas especiales</h2>
+      <p>Tus suplementos favoritos en packs x2, a mejor precio.</p>
+      <button type="button" class="zb-ofertas-btn" onclick="filtrar('oferta');scrollProductos()">Ver ofertas</button>
+    </div>
+    <img class="zb-ofertas-img" src="img/oferta-2liquidas.jpg" alt="Pack x2 Proteínas Líquidas Bari&amp;Nutrition" loading="lazy">
+  </div>
 </section>
 
 <!-- ============================================================
@@ -5129,53 +5210,6 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
 </div>
 
 <!-- FOOTER -->
-<!-- ============================================================
-     ACCESO AL CENTRO DE RECURSOS (Fase 2)
-     Franja compacta en la home que lleva a las herramientas
-     educativas. Se oculta en BariBlog / Quiénes somos.
-     ============================================================ -->
-<section class="home-rec vista-inicio" id="home-recursos">
-  <div class="home-rec-inner">
-    <div class="home-rec-head">
-      <h2>Recursos para tu proceso</h2>
-      <p>Herramientas educativas gratuitas, sin registro.</p>
-    </div>
-    <div class="home-rec-grid">
-      <a class="home-rec-card" href="/encuentra-tu-suplemento">
-        <span class="home-rec-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        </span>
-        <span class="home-rec-tit">¿Qué suplemento necesito?</span>
-        <span class="home-rec-sub">Según tu procedimiento y tu etapa</span>
-      </a>
-      <a class="home-rec-card" href="/comparador-bariatrico">
-        <span class="home-rec-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/><path d="M8 3v18M16 3v18"/></svg>
-        </span>
-        <span class="home-rec-tit">Comparador Bariátrico</span>
-        <span class="home-rec-sub">Manga, bypass y balón lado a lado</span>
-      </a>
-      <a class="home-rec-card" href="/calculadora-hidratacion">
-        <span class="home-rec-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6 5.4 6 10.1a6 6 0 0 1-12 0C6 8.1 12 2.7 12 2.7z"/></svg>
-        </span>
-        <span class="home-rec-tit">Calculadora de Hidratación</span>
-        <span class="home-rec-sub">Cuánta agua al día</span>
-      </a>
-      <a class="home-rec-card" href="/etapas-postoperatorias">
-        <span class="home-rec-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        </span>
-        <span class="home-rec-tit">Etapas Postoperatorias</span>
-        <span class="home-rec-sub">De líquidos a sólidos, paso a paso</span>
-      </a>
-    </div>
-    <div style="text-align:center;margin-top:var(--s-5)">
-      <a class="btn-zb btn-zb-outline" href="/recursos">Ver todos los recursos</a>
-    </div>
-  </div>
-</section>
-
 
 <!-- ============================================================
      PREGUNTAS FRECUENTES — acordeón
@@ -5884,6 +5918,7 @@ function ejecutarBusqueda(q, textoOriginal) {
   document.querySelectorAll('.nav-link[data-filter]').forEach(b => b.classList.remove('active'));
   document.getElementById('subfiltros').style.display = 'none';
   const tEl = document.getElementById('productos-titulo');
+  document.getElementById('productos-section').classList.remove('modo-inicio');
   if (tEl) tEl.textContent = '';
 
   const tokens = tokenizar(q);
@@ -5926,6 +5961,7 @@ function filtrarMarca(tipo) {
   document.querySelectorAll('.nav-link[data-filter]').forEach(b => b.classList.remove('active'));
   document.getElementById('subfiltros').style.display = 'none';
   const tEl = document.getElementById('productos-titulo');
+  document.getElementById('productos-section').classList.remove('modo-inicio');
   if (tEl) tEl.textContent = '';
   const resultado = productos.filter(p => p.marcaTipo === tipo);
   const packs = resultado.filter(p => p.tipo === 'pack');
@@ -5957,7 +5993,7 @@ function mostrarSlider() {
   slider.style.display = '';
   const slides = slider.querySelectorAll('.slide');
   const hayActivo = [...slides].some(s => s.classList.contains('active'));
-  if (!hayActivo) sliderGoTo(sliderIdx);
+  if (slides.length && !hayActivo) sliderGoTo(sliderIdx);
 }
 
 function limpiarBusqueda() {
@@ -6070,6 +6106,7 @@ function actualizarSubfiltros(f) {
 function renderizar(f, sub) {
   const el = document.getElementById('contenido');
   const tEl = document.getElementById('productos-titulo');
+  document.getElementById('productos-section').classList.remove('modo-inicio');
 
   const packs_bn  = productos.filter(p => p.tipo === 'pack' && p.marcaTipo === 'bn');
   const packs_lvl = productos.filter(p => p.tipo === 'pack' && p.marcaTipo === 'lvl');
@@ -6086,7 +6123,8 @@ function renderizar(f, sub) {
          El catálogo completo aparece con el botón "Ver todos" o con
          los filtros de arriba. */
       if (!catalogoCompleto) {
-        titulo = 'Los más vendidos';
+        titulo = 'Más vendidos';
+        document.getElementById('productos-section').classList.add('modo-inicio');
         const lista = INICIO_DESTACADOS.map(id => productos.find(p => p.id === id)).filter(Boolean);
         html += sec('', lista);
         html += `<div class="ver-todo-wrap"><button class="ver-todo-btn" type="button" onclick="verCatalogoCompleto()">Ver todos los suplementos (${productos.length})</button></div>`;
@@ -8063,6 +8101,7 @@ function mostrarVistaFavoritos() {
   ocultarSlider();
   actualizarChips('');
   const tEl = document.getElementById('productos-titulo');
+  document.getElementById('productos-section').classList.remove('modo-inicio');
   if (tEl) tEl.textContent = 'Mis Favoritos';
   const favProds = productos.filter(p => favoritosSet.has(p.id));
   const el = document.getElementById('contenido');
@@ -8989,19 +9028,9 @@ renderizarTestimonios();
 
 /* ============================================================
    MENOS ES MÁS (oct 2026)
-   1) Precio del banner principal leído del catálogo.
-   2) Lupa del header en celular: abre y cierra el buscador.
+   Lupa del header en celular: abre y cierra el buscador.
       (El botón existía pero su función nunca se había escrito.)
    ============================================================ */
-(function iniciarMenosEsMas() {
-  const pp = document.getElementById('proPrecio');
-  const p = pp && productos.find(x => x.id === pp.dataset.id);
-  if (p && p.precio) {
-    pp.innerHTML = '<strong>S/ ' + p.precio + '</strong> · 1 litro · 20 g de proteína por porción';
-    pp.hidden = false;
-  }
-})();
-
 function abrirBusquedaMovil() {
   /* OJO: hay otro <header> antes (el del checkout): se busca el que
      contiene el buscador. */
