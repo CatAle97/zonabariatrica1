@@ -3913,38 +3913,38 @@ section[id], .productos-header { scroll-margin-top: 92px; }
 .ver-todo-btn:hover { background: var(--blue-light); }
 
 /* --- Testimonios: compactos, sin estrellas ni avatares ------- */
-.testi-section { padding: var(--s-8) var(--gutter); background: var(--surface); }
+.testi-section { padding: var(--s-7) var(--gutter); background: var(--surface); }
 .testi-header { margin-bottom: var(--s-5); }
-.testi-grid { gap: var(--s-4); }
+.testi-grid { gap: var(--s-3); max-width: 1000px; }
 .testi-grid.testi-uno { grid-template-columns: minmax(0, 640px); justify-content: center; }
 .testi-card {
-  margin: 0; padding: var(--s-5); gap: var(--s-4);
+  margin: 0; padding: var(--s-4); gap: var(--s-3);
   background: var(--bg-soft, #F8FAFC); border: 1px solid var(--border-light);
   box-shadow: none;
 }
 .testi-card:hover { transform: none; box-shadow: none; }
-.testi-texto { font-size: 15px; line-height: 1.65; color: var(--text); margin: 0; }
+.testi-texto { font-size: 13.5px; line-height: 1.6; color: var(--text); margin: 0; }
 .testi-persona {
   display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
   padding-top: 0; border-top: none;
 }
-.testi-nombre { font-size: 14px; font-weight: 600; }
-.testi-meta { font-size: 12.5px; color: var(--text-light); }
+.testi-nombre { font-size: 13px; font-weight: 600; }
+.testi-meta { font-size: 12px; color: var(--text-light); }
 
 @media (max-width: 640px) {
   /* Varios testimonios: fila deslizable de lado, así no alargan la
      página. Con uno solo, ocupa el ancho normal. */
-  .testi-section { padding: var(--s-7) 0; }
+  .testi-section { padding: var(--s-6) 0; }
   .testi-header { padding: 0 var(--gutter); text-align: left; }
-  .testi-titulo { font-size: 21px; }
+  .testi-titulo { font-size: 19px; }
   .testi-grid {
     display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory;
     padding: 0 var(--gutter) 4px; scrollbar-width: none;
   }
   .testi-grid::-webkit-scrollbar { display: none; }
-  .testi-card { flex: 0 0 86%; scroll-snap-align: center; padding: var(--s-4); }
+  .testi-card { flex: 0 0 82%; scroll-snap-align: center; padding: 14px; }
   .testi-grid.testi-uno .testi-card { flex-basis: 100%; }
-  .testi-texto { font-size: 14.5px; }
+  .testi-texto { font-size: 13.5px; }
 }
 
 /* --- TABLET: "Mi cuenta" se salía por la derecha a 1024 px; queda
@@ -8838,7 +8838,11 @@ function enlaceFichaHTML(p) {
    ============================================================ */
 const TESTIMONIOS = [
   { nombre: 'Enrique', ciudad: 'Lima',
-    texto: 'La atención es rápida y personalizada, y los productos son de buena calidad. Además, comprar directamente con Zona Bariátrica me permite acceder a promociones y recibir los productos por delivery en mi casa u oficina, algo que para mí es genial porque no dispongo de mucho tiempo.' }
+    texto: 'La atención es rápida y personalizada, y los productos son de buena calidad. Además, comprar directamente con Zona Bariátrica me permite acceder a promociones y recibir los productos por delivery en mi casa u oficina, algo que para mí es genial porque no dispongo de mucho tiempo.' },
+  { nombre: 'Dani', ciudad: 'Iquitos',
+    texto: 'Lo que más destaco es la atención A1. No solo tratan de venderte el producto, también se preocupan por el bienestar del cliente. Los productos son buenos, los precios son accesibles y los envíos son rápidos. Eso me da mucha confianza para seguir comprando.' },
+  { nombre: 'Kelly', ciudad: 'Comas, Lima',
+    texto: 'Los conocí por Instagram cuando estaba buscando una opción y me apareció Zona Bariátrica 😅. Lo que más me gustó fue la atención y la rapidez para entregar el producto. Además, me da mucha confianza poder pagar contra entrega. También me parecen buenos y accesibles los precios. Sí recomendaría Zona Bariátrica y seguiría comprando con ellos.' }
 ];
 
 function testimonioHTML(t) {
