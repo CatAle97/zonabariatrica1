@@ -4061,6 +4061,14 @@ section[id], .productos-header { scroll-margin-top: 92px; }
 #productos-section.modo-inicio .productos-header h2 {
   font-family: 'Manrope', var(--font); font-size: 22px; font-weight: 800; letter-spacing: -0.02em;
 }
+/* Tablet y PC: una sola fila de 4 (los más vendidos de verdad).
+   En el celular siguen los 8 en fila deslizable. */
+@media (min-width: 641px) {
+  #productos-section.modo-inicio #contenido .grid { grid-template-columns: repeat(4, 1fr) !important; }
+  #productos-section.modo-inicio #contenido .grid > .card:nth-child(n+5) { display: none; }
+  #productos-section.modo-inicio #contenido.v-dt-grande .card-img { height: 220px; }
+  #productos-section.modo-inicio #contenido.v-dt-grande .precio { font-size: 21px; }
+}
 
 /* --- Ofertas especiales ------------------------------------- */
 .zb-ofertas { padding: var(--s-6) var(--gutter); }
