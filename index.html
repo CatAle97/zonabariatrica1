@@ -4005,6 +4005,22 @@ section[id], .productos-header { scroll-margin-top: 92px; }
 .zbh-media { align-self: stretch; min-height: 380px; }
 .zbh-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+/* --- Banner de imagen (reemplaza al banner de texto) -------- */
+.zb-oculto {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.zb-banner-img { max-width: var(--maxw); margin: 0 auto; padding: var(--s-4) var(--gutter) 0; }
+.zb-banner-img button { display: block; width: 100%; padding: 0; border: none; background: none; cursor: pointer; }
+.zb-banner-img img {
+  display: block; width: 100%; height: auto; aspect-ratio: 2000 / 731;
+  border-radius: var(--r-lg); object-fit: cover;
+}
+@media (max-width: 640px) {
+  .zb-banner-img { padding-top: var(--s-3); }
+  .zb-banner-img img { border-radius: var(--r); }
+}
+
 /* --- Franja de confianza ------------------------------------ */
 .zb-confianza {
   list-style: none; margin: 0 auto; padding: var(--s-4) var(--gutter);
@@ -4693,18 +4709,18 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
      al Blog.
      ============================================================ -->
 <section class="promo-slider zb-inicio">
-  <!-- BANNER — la foto va en .zbh-media (espacio reservado, se
-       define después). Para ponerla: <img src="img/..." alt="...">
-       dentro de ese div. -->
-  <div class="zbh">
-    <div class="zbh-inner">
-      <div class="zbh-texto">
-        <h1 class="zbh-titulo">Tu nutrición <span>después de la cirugía</span></h1>
-        <p class="zbh-sub">Suplementos bariátricos de calidad para cada etapa de tu vida.</p>
-        <button class="zbh-btn" type="button" onclick="verTodosLosProductos();scrollProductos()">Ver productos</button>
-      </div>
-      <div class="zbh-media" aria-hidden="true"></div>
-    </div>
+  <!-- BANNER — una imagen de ancho completo (ya trae su texto).
+       Para cambiarla: reemplazar img/banner-envios-2000.jpg y
+       -1000.jpg (proporción 2000 × 731). El H1 queda oculto a la
+       vista pero lo sigue leyendo Google. -->
+  <h1 class="zb-oculto">Suplementos bariátricos con envío a todo el Perú</h1>
+  <div class="zb-banner-img">
+    <button type="button" onclick="verTodosLosProductos();scrollProductos()" aria-label="Ver productos">
+      <img src="img/banner-envios-2000.jpg"
+           srcset="img/banner-envios-1000.jpg 1000w, img/banner-envios-2000.jpg 2000w"
+           sizes="(max-width: 1280px) 100vw, 1216px"
+           width="2000" height="731" alt="Zona Bariátrica llega a todo el Perú" fetchpriority="high">
+    </button>
   </div>
 
   <!-- Franja de confianza: solo lo que de verdad ofrecemos. -->
