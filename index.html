@@ -4089,11 +4089,20 @@ section[id], .productos-header { scroll-margin-top: 92px; }
 #productos-section.modo-inicio .productos-header h2 {
   font-family: 'Manrope', var(--font); font-size: 22px; font-weight: 800; letter-spacing: -0.02em;
 }
-/* Tablet y PC: una sola fila de 4 (los más vendidos de verdad).
-   En el celular siguen los 8 en fila deslizable. */
+/* PC: los 5 más vendidos en una sola fila. Tablet: fila
+   deslizable, como en el celular. */
+@media (min-width: 1025px) {
+  #productos-section.modo-inicio #contenido .grid { grid-template-columns: repeat(5, 1fr) !important; }
+}
+@media (min-width: 641px) and (max-width: 1024px) {
+  #productos-section.modo-inicio #contenido .grid {
+    display: flex !important; overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-padding: 0 var(--gutter); scrollbar-width: none;
+  }
+  #productos-section.modo-inicio #contenido .grid::-webkit-scrollbar { display: none; }
+  #productos-section.modo-inicio #contenido .grid > .card { flex: 0 0 30%; scroll-snap-align: start; }
+}
 @media (min-width: 641px) {
-  #productos-section.modo-inicio #contenido .grid { grid-template-columns: repeat(4, 1fr) !important; }
-  #productos-section.modo-inicio #contenido .grid > .card:nth-child(n+5) { display: none; }
   #productos-section.modo-inicio #contenido.v-dt-grande .card-img { height: 220px; }
   #productos-section.modo-inicio #contenido.v-dt-grande .precio { font-size: 21px; }
 }
@@ -6243,10 +6252,10 @@ function renderizar(f, sub) {
   setTimeout(inicializarFlechasCarouseles, 50);
 }
 
-/* Los 8 del inicio: ranking real de ventas (mismo de "Los más
-   buscados") + uno de cada familia que faltaba. Para cambiarlos,
-   tocar solo esta lista de ids de zb-catalogo.js. */
-const INICIO_DESTACADOS = ['bi3', 'bi7', 'bi5', 'bf2', 'bi1', 'bi4', 'oferta1', 'bp4'];
+/* "Más vendidos" del inicio: los que Roberto confirmó como los más
+   vendidos (20-10-2026). Para cambiarlos, tocar solo esta lista de
+   ids de zb-catalogo.js. */
+const INICIO_DESTACADOS = ['bi3', 'bi4', 'bi7', 'bf2', 'bi10'];
 let catalogoCompleto = false;
 /* Desde el menú, el chip "Todos" y los enlaces "Ver catálogo" el
    cliente pidió ver todo: ahí se abre el catálogo completo. */
