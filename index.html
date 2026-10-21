@@ -4011,14 +4011,26 @@ section[id], .productos-header { scroll-margin-top: 92px; }
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 .zb-banner-img { max-width: var(--maxw); margin: 0 auto; padding: var(--s-4) var(--gutter) 0; }
-.zb-banner-img button { display: block; width: 100%; padding: 0; border: none; background: none; cursor: pointer; }
-.zb-banner-img img {
-  display: block; width: 100%; height: auto; aspect-ratio: 2000 / 731;
-  border-radius: var(--r-lg); object-fit: cover;
+.zbb-pista {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  border-radius: var(--r-lg); scrollbar-width: none;
 }
+.zbb-pista::-webkit-scrollbar { display: none; }
+.zbb-item {
+  flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always;
+  display: block; padding: 0; border: none; background: none; cursor: pointer;
+}
+.zbb-item img { display: block; width: 100%; height: auto; aspect-ratio: 12 / 5; object-fit: cover; }
+.zbb-puntos { display: flex; justify-content: center; gap: 8px; padding-top: 10px; }
+.zbb-punto {
+  width: 8px; height: 8px; padding: 0; border: none; border-radius: 50%;
+  background: var(--border); cursor: pointer; transition: width var(--t-fast), background var(--t-fast);
+}
+.zbb-punto.activo { width: 22px; border-radius: 4px; background: var(--blue); }
 @media (max-width: 640px) {
   .zb-banner-img { padding-top: var(--s-3); }
-  .zb-banner-img img { border-radius: var(--r); }
+  .zbb-pista { border-radius: var(--r); }
+  .zbb-puntos { padding-top: 8px; }
 }
 
 /* --- Franja de confianza ------------------------------------ */
@@ -4709,18 +4721,28 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
      al Blog.
      ============================================================ -->
 <section class="promo-slider zb-inicio">
-  <!-- BANNER — una imagen de ancho completo (ya trae su texto).
-       Para cambiarla: reemplazar img/banner-envios-2000.jpg y
-       -1000.jpg (proporción 2000 × 731). El H1 queda oculto a la
-       vista pero lo sigue leyendo Google. -->
+  <!-- BANNERS — imágenes de ancho completo (ya traen su texto) que
+       pasan solas cada 6 s y se deslizan con el dedo. Todas en
+       proporción 2.4 : 1, en dos tamaños: -1800.jpg y -1000.jpg.
+       Para agregar otra: copiar un <button class="zbb-item">.
+       El H1 queda oculto a la vista pero lo sigue leyendo Google. -->
   <h1 class="zb-oculto">Suplementos bariátricos con envío a todo el Perú</h1>
   <div class="zb-banner-img">
-    <button type="button" onclick="verTodosLosProductos();scrollProductos()" aria-label="Ver productos">
-      <img src="img/banner-envios-2000.jpg"
-           srcset="img/banner-envios-1000.jpg 1000w, img/banner-envios-2000.jpg 2000w"
-           sizes="(max-width: 1280px) 100vw, 1216px"
-           width="2000" height="731" alt="Zona Bariátrica llega a todo el Perú" fetchpriority="high">
-    </button>
+    <div class="zbb-pista" id="zbbPista">
+      <button type="button" class="zbb-item" onclick="verTodosLosProductos();scrollProductos()" aria-label="Ver productos">
+        <img src="img/banner-envios-1800.jpg"
+             srcset="img/banner-envios-1000.jpg 1000w, img/banner-envios-1800.jpg 1800w"
+             sizes="(max-width: 1280px) 100vw, 1216px"
+             width="1800" height="750" alt="Zona Bariátrica llega a todo el Perú" fetchpriority="high">
+      </button>
+      <button type="button" class="zbb-item" onclick="abrirModal('bi7')" aria-label="Ver Gomitas Multivitamínico">
+        <img src="img/banner-gomitas-1800.jpg"
+             srcset="img/banner-gomitas-1000.jpg 1000w, img/banner-gomitas-1800.jpg 1800w"
+             sizes="(max-width: 1280px) 100vw, 1216px"
+             width="1800" height="750" alt="Gomitas multivitamínicas Bari&amp;Nutrition" loading="lazy">
+      </button>
+    </div>
+    <div class="zbb-puntos" id="zbbPuntos"></div>
   </div>
 
   <!-- Franja de confianza: solo lo que de verdad ofrecemos. -->
@@ -7679,6 +7701,31 @@ function abrirLegal(tipo) {
 
 // ---- SLIDER ----
 let sliderIdx = 0;
+// Banners de imagen del inicio: puntos debajo y avance automático
+// cada 6 s. Se detiene mientras la persona toca o pasa el mouse,
+// y no avanza si la pestaña no está visible.
+(function iniciarBanners() {
+  const pista = document.getElementById('zbbPista');
+  const puntos = document.getElementById('zbbPuntos');
+  if (!pista || !puntos) return;
+  const items = [...pista.querySelectorAll('.zbb-item')];
+  if (items.length < 2) return;
+  let actual = 0, pausa = false;
+  puntos.innerHTML = items.map((_, i) =>
+    `<button type="button" class="zbb-punto" aria-label="Banner ${i + 1}" data-i="${i}"></button>`).join('');
+  const marcar = () => [...puntos.children].forEach((p, i) => p.classList.toggle('activo', i === actual));
+  const ir = i => { actual = (i + items.length) % items.length; pista.scrollTo({ left: actual * pista.clientWidth }); marcar(); };
+  puntos.addEventListener('click', e => { if (e.target.dataset.i) ir(+e.target.dataset.i); });
+  pista.addEventListener('scroll', () => {
+    const i = Math.round(pista.scrollLeft / pista.clientWidth);
+    if (i !== actual) { actual = i; marcar(); }
+  }, { passive: true });
+  ['mouseenter', 'touchstart'].forEach(ev => pista.addEventListener(ev, () => { pausa = true; }, { passive: true }));
+  ['mouseleave', 'touchend'].forEach(ev => pista.addEventListener(ev, () => { pausa = false; }, { passive: true }));
+  setInterval(() => { if (!pausa && !document.hidden && pista.offsetParent) ir(actual + 1); }, 6000);
+  marcar();
+})();
+
 function sliderGoTo(n) {
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.slider-dot');
