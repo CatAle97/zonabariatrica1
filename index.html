@@ -4425,10 +4425,11 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <h2 class="ck-h2">¿Cómo quieres pagar?</h2>
         <div id="ckMetodos" style="display:flex;flex-direction:column;gap:8px;">
           <label id="formLabelIzipay" class="ck-opcion ck-opcion-pago">
-            <input type="radio" name="formMetodoPago" value="tarjeta" checked onchange="actualizarTotalForm()">
+            <input type="radio" name="formMetodoPago" value="tarjeta" onchange="actualizarTotalForm()">
             <img src="img/logo-izipay.png" alt="Izipay" style="height:24px;width:auto;object-fit:contain;flex-shrink:0;">
             <div>
               <div class="ck-opcion-titulo">Tarjeta de crédito o débito (4%)</div>
+              <img src="img/logos-tarjetas.png" alt="Visa, Mastercard, American Express y Diners Club" width="524" height="72" loading="lazy" style="height:18px;width:auto;margin-top:6px;display:block;">
             </div>
           </label>
           <label id="formLabelYape" class="ck-opcion ck-opcion-pago">
@@ -5398,6 +5399,11 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <div style="flex:0 0 auto;display:flex;align-items:center">
           <img src="img/shalom.png" alt="Shalom Courier" loading="lazy" decoding="async" style="height:42px;width:auto;object-fit:contain">
         </div>
+      </div>
+      <div class="footer-col-title" style="margin-top:18px;">Medios de pago</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff;border-radius:8px;padding:8px 12px;width:fit-content;">
+        <img src="img/logos-tarjetas.png" alt="Visa, Mastercard, American Express y Diners Club" width="524" height="72" loading="lazy" decoding="async" style="height:22px;width:auto;">
+        <img src="img/logo-yape.png" alt="Yape" loading="lazy" decoding="async" style="height:22px;width:auto;">
       </div>
     </div>
     <!-- Col 2: Navegación -->
@@ -7176,7 +7182,9 @@ async function irAlCheckout() {
 
 async function confirmarEnvio() {
   cerrarModalEnvio();
-  document.querySelectorAll('input[name="formMetodoPago"]').forEach(r => { r.checked = r.value === 'tarjeta'; });
+  /* Ningún método marcado de inicio: el cliente elige (y el 4% de
+     la tarjeta solo aparece si la elige). */
+  document.querySelectorAll('input[name="formMetodoPago"]').forEach(r => { r.checked = false; });
   actualizarZona();
   pintarCheckoutLista();
   // Auto-rellenar con datos del perfil si hay sesión
@@ -7210,13 +7218,13 @@ function actualizarZona() {
   document.getElementById('zonaLimaLabel').style.background = esProv ? 'var(--surface)' : 'var(--blue-light)';
   document.getElementById('zonaProvLabel').style.borderColor = esProv ? 'var(--blue)' : 'var(--border)';
   document.getElementById('zonaProvLabel').style.background = esProv ? 'var(--blue-light)' : 'var(--surface)';
-  /* En Lima se pide la dirección exacta; en provincia, la ciudad:
-     ahí la entrega es en agencia Shalom. */
+  /* En Lima se pide la dirección exacta; en provincia, la dirección
+     de la agencia Shalom donde el cliente recoge (obligatoria). */
   const lbl = document.getElementById('labelDireccion');
   const inp = document.getElementById('clienteDireccion');
   if (lbl && inp) {
-    lbl.textContent = esProv ? '¿A qué ciudad o provincia? *' : 'Dirección exacta *';
-    inp.placeholder = esProv ? 'Ej: Cusco' : 'Ej: Av. Perú 123, dpto 201 — San Miguel';
+    lbl.textContent = esProv ? 'Dirección de la agencia Shalom *' : 'Dirección exacta *';
+    inp.placeholder = esProv ? 'Ej: Agencia Shalom Av. La Cultura 1020 — Cusco' : 'Ej: Av. Perú 123, dpto 201 — San Miguel';
   }
   actualizarTotalForm();
 }
@@ -7284,7 +7292,8 @@ function calcularCobro(metodo, zona, distrito) {
 
 function actualizarTotalForm() {
   llenarDistritos();
-  const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
+  const metodo = document.querySelector('input[name="formMetodoPago"]:checked')?.value || '';
+  if (metodo) ckLimpiarError(document.getElementById('ckMetodos'));
   const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
   const distrito = document.getElementById('clienteDistrito')?.value || '';
   const cobro = calcularCobro(metodo, esProv ? 'provincia' : 'lima', distrito);
@@ -7323,8 +7332,8 @@ function actualizarTotalForm() {
   } else {
     recargoFila.style.display = 'none';
     totalEl.textContent = 'S/ ' + cobro.total;
-    labelYape.style.borderColor = 'var(--blue)';
-    labelYape.style.background = 'var(--blue-light)';
+    labelYape.style.borderColor = metodo === 'yape' ? 'var(--blue)' : 'var(--border)';
+    labelYape.style.background = metodo === 'yape' ? 'var(--blue-light)' : 'var(--surface)';
     labelIzipay.style.borderColor = 'var(--border)';
     labelIzipay.style.background = 'var(--surface)';
   }
@@ -7392,7 +7401,7 @@ function validarPaso(p) {
   if (p === 1) {
     if (zona === 'lima' && !val('clienteDistrito')) { ckError('clienteDistrito', 'Elige tu distrito para calcular el delivery.'); ok = false; }
     if (!val('clienteDireccion')) {
-      ckError('clienteDireccion', zona === 'provincia' ? 'Escribe a qué ciudad o provincia va tu pedido.' : 'Escribe tu dirección exacta.');
+      ckError('clienteDireccion', zona === 'provincia' ? 'Escribe la dirección de la agencia Shalom donde recogerás tu pedido.' : 'Escribe tu dirección exacta.');
       ok = false;
     }
   }
@@ -7402,6 +7411,9 @@ function validarPaso(p) {
     if (val('clienteTelefono').replace(/\D/g, '').length < 9) { ckError('clienteTelefono', 'Escribe tu celular (9 dígitos).'); ok = false; }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val('clienteEmail'))) { ckError('clienteEmail', 'Escribe un correo válido: ahí te llega la confirmación.'); ok = false; }
   }
+  if (p === 3 && !document.querySelector('input[name="formMetodoPago"]:checked')) {
+    ckError('ckMetodos', 'Elige cómo quieres pagar.'); ok = false;
+  }
   return ok;
 }
 
@@ -7409,7 +7421,7 @@ function validarPaso(p) {
 function pintarRevision() {
   const val = id => document.getElementById(id).value.trim();
   const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
-  const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
+  const metodo = document.querySelector('input[name="formMetodoPago"]:checked')?.value || '';
   document.getElementById('revEntrega').innerHTML = esProv
     ? 'Provincia — agencia Shalom<br>' + escHtml(val('clienteDireccion'))
     : escHtml(val('clienteDistrito')) + '<br>' + escHtml(val('clienteDireccion'));
@@ -7437,11 +7449,12 @@ function cerrarDatosCliente() {
 function enviarConDatos() {
   const nombre = document.getElementById('clienteNombre').value.trim();
   const direccion = document.getElementById('clienteDireccion').value.trim();
-  const metodo = document.querySelector('input[name="formMetodoPago"]:checked').value;
+  const metodo = document.querySelector('input[name="formMetodoPago"]:checked')?.value || '';
   const zona = document.querySelector('input[name="zonaEnvio"]:checked')?.value || 'lima';
+  if (!metodo) { irPaso(3); validarPaso(3); return; }
   if (!direccion) {
     alert(zona === 'provincia'
-      ? 'Escribe a qué ciudad o provincia enviamos tu pedido.'
+      ? 'Escribe la dirección de la agencia Shalom donde recogerás tu pedido.'
       : 'Escribe tu dirección para coordinar la entrega.');
     document.getElementById('clienteDireccion').focus();
     return;
