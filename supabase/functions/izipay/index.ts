@@ -15,6 +15,8 @@
 //     servidor) cada vez que un pago se aprueba o rechaza.
 //  4. accion "pedido": registra un pedido "Yape al recibir"
 //     (sin recargo, sin pasar por Izipay).
+//  5. accion "pedidos_crm": le pasa al CRM los pedidos web
+//     reales para registrarlos allá (ver pedidosCrm).
 //
 // Cada pedido confirmado (tarjeta pagada o Yape registrado) le
 // avisa a Roberto por Slack y por correo (ver avisarPedido).
@@ -342,6 +344,37 @@ async function ipn(req: Request) {
   return new Response("OK " + r.estado, { status: 200 });
 }
 
+// ---------- Bandeja de pedidos web del CRM ----------
+// El CRM (genre18.github.io/Zona-Bariatrica-CMR) vive en OTRO proyecto de Supabase.
+// Para leer los pedidos manda la sesión de su usuario logueado; aquí se pregunta a ese
+// proyecto si la sesión es válida. Así no hace falta ninguna clave nueva en el CRM
+// (su repo es público). La clave de abajo es la pública (anon) del CRM.
+const CRM_URL = "https://zuispovrhevalznsrdax.supabase.co";
+const CRM_CLAVE_PUBLICA = "sb_publishable_PhNcFR421xTZxfXhSr6wfg_t1HJA2rf";
+const BANDEJA_DESDE = "2026-10-17T05:00:00Z"; // mismo arranque que el tablero de Envíos del CRM
+
+async function pedidosCrm(body: any) {
+  const token = String(body.token || "");
+  if (!token) return json({ error: "Falta la sesión del CRM." }, 401);
+  const r = await fetch(CRM_URL + "/auth/v1/user", {
+    headers: { apikey: CRM_CLAVE_PUBLICA, Authorization: "Bearer " + token },
+  });
+  if (!r.ok) return json({ error: "Sesión del CRM no válida." }, 401);
+  const { data, error } = await db.from("pagos_web")
+    .select("order_id,creado_en,metodo,estado,monto,zona,distrito,cliente,items,desglose,izipay_respuesta")
+    .gte("creado_en", BANDEJA_DESDE)
+    .order("creado_en", { ascending: true });
+  if (error) throw new Error("No se pudieron leer los pedidos web.");
+  // Solo pedidos reales: Yape al recibir, o tarjeta PAGADA que no sea de prueba.
+  // Los "creado" de tarjeta son intentos que no terminaron de pagar.
+  const pedidos = (data || []).filter((p: any) =>
+    p.metodo === "yape"
+      ? p.estado === "por_cobrar"
+      : p.estado === "pagado" && p.izipay_respuesta?.orderDetails?.mode !== "TEST"
+  ).map(({ izipay_respuesta, ...p }: any) => p);
+  return json({ pedidos });
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST") return new Response("Zona Bariátrica — pagos", { status: 200 });
@@ -354,6 +387,7 @@ Deno.serve(async (req) => {
     if (body.accion === "crear") return await crear(body);
     if (body.accion === "validar") return await validar(body);
     if (body.accion === "pedido") return await pedidoYape(body);
+    if (body.accion === "pedidos_crm") return await pedidosCrm(body);
     return json({ error: "Acción desconocida" }, 400);
   } catch (e) {
     console.error(e);
