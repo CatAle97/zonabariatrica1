@@ -282,7 +282,10 @@ function textoPedido(p: any) {
   const celular = String(c.telefono || "").replace(/\D/g, "").replace(/^(9\d{8})$/, "51$1");
   const titulo = p.metodo === "tarjeta"
     ? "🛒 Pedido " + p.order_id + " — PAGADO con tarjeta (" + monto + ")"
-    : "🛒 Pedido " + p.order_id + " — YAPE AL RECIBIR (cobrar " + monto + ")";
+    : p.zona === "provincia"
+      // Provincia al contado (2026-10-23): se cobra ANTES de despachar a Shalom.
+      ? "🛒 Pedido " + p.order_id + " — YAPE ANTES DEL ENVÍO (cobrar " + monto + " y recién despachar)"
+      : "🛒 Pedido " + p.order_id + " — YAPE AL RECIBIR (cobrar " + monto + ")";
   const cuerpo = [
     lineas,
     "",

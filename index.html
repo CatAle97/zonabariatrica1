@@ -89,7 +89,7 @@
       "name": "¿Qué formas de pago aceptan?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Aceptamos Yape e Izipay (tarjeta de débito o crédito). El pago con tarjeta tiene un recargo del 4% que se calcula automáticamente en el pedido. Puedes pagar con tarjeta en línea al finalizar tu compra o con Yape al recibir tu pedido."
+        "text": "Aceptamos Yape e Izipay (tarjeta de débito o crédito). El pago con tarjeta tiene un recargo del 4% que se calcula automáticamente en el pedido. Puedes pagar con tarjeta en línea al finalizar tu compra o con Yape (en Lima al recibir tu pedido; a provincias, antes del envío)."
       }
     },
     {
@@ -4479,7 +4479,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
             <input type="radio" name="formMetodoPago" value="yape" onchange="actualizarTotalForm()">
             <img src="img/logo-yape.png" alt="Yape" style="height:24px;width:auto;object-fit:contain;flex-shrink:0;">
             <div>
-              <div class="ck-opcion-titulo">Yape o transferencia BCP — pagas al recibir</div>
+              <div class="ck-opcion-titulo" id="formYapeTitulo">Yape o transferencia BCP — pagas al recibir</div>
               <div class="ck-opcion-sub">No aceptamos efectivo</div>
             </div>
           </label>
@@ -4514,7 +4514,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
           <p id="zbPagoResumen" class="ck-pago-total"></p>
           <div id="zbPagoEstado" style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">Cargando formulario seguro…</div>
           <div id="zbPagoForm"><div class="kr-embedded"></div></div>
-          <button type="button" class="ck-link" style="margin-top:12px;" onclick="cambiarAYape()">¿Problemas con la tarjeta? Mejor pago con Yape al recibir</button>
+          <button type="button" class="ck-link" style="margin-top:12px;" onclick="cambiarAYape()">¿Problemas con la tarjeta? Mejor pago con Yape</button>
           <p class="ck-ayuda" style="text-align:center;margin-top:10px;">🔒 Tus datos de tarjeta los procesa Izipay. Zona Bariátrica no los ve ni los guarda.</p>
         </div>
       </section>
@@ -4807,7 +4807,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
   <!-- Franja de confianza: solo lo que de verdad ofrecemos. -->
   <ul class="zb-confianza">
     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg><span>Envíos a todo el Perú</span></li>
-    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><span>Pago contra entrega</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><span>Pago contra entrega en Lima</span></li>
     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg><span>Asesoría personalizada</span></li>
   </ul>
 
@@ -5388,7 +5388,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
         <div class="faq-cuerpo"><div class="faq-cuerpo-in">
           <div class="faq-respuesta">
             <p>Aceptamos <strong>Yape</strong> e <strong>Izipay</strong> (tarjeta de débito o crédito). El pago con tarjeta tiene un recargo del 4% que se calcula automáticamente en tu pedido.</p>
-            <p>Agregas tus productos al carrito y finalizas la compra en la web: pagas con tarjeta en línea o eliges Yape al recibir. Luego te contactamos para coordinar la entrega.</p>
+            <p>Agregas tus productos al carrito y finalizas la compra en la web: pagas con tarjeta en línea o eliges Yape (al recibir en Lima; antes del envío a provincias). Luego te contactamos para coordinar la entrega.</p>
             <a class="faq-cta" href="https://wa.me/51961841069?text=Hola%20Zoe%20%F0%9F%91%8B%20Tengo%20una%20consulta%20sobre%20el%20pago." target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.379l-.374-.217-3.754.894.944-3.653-.24-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
               ¿No encontraste la respuesta? Habla con Zoe
@@ -7339,12 +7339,18 @@ function pareceDireccionAgencia(t) {
 function enlaceMapsValido(u) {
   return /^https:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|maps\.app\.goo\.gl|goo\.gl\/maps)/i.test(String(u || '').trim());
 }
+/* PROVINCIA AL CONTADO (2026-10-23): a provincia ya no hay contra entrega.
+   Con Yape se paga antes del envío; en Lima sigue siendo al recibir. */
+function textoYape(esProv) {
+  return esProv ? 'Yape o transferencia BCP — pagas antes del envío' : 'Yape o transferencia BCP — pagas al recibir';
+}
 function actualizarZona() {
   const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
   const det = document.getElementById('entregaDetalle');
   if (det) det.innerHTML = esProv
     ? '📦 Llega en <strong>2 a 5 días hábiles</strong> a la agencia Shalom más cercana a ti.'
     : textoEntregaLima();
+  document.getElementById('formYapeTitulo').textContent = textoYape(esProv);
   document.getElementById('distritoBox').style.display = esProv ? 'none' : 'block';
   document.getElementById('avisoTraslado').style.display = esProv ? 'block' : 'none';
   document.getElementById('formTrasladoFila').style.display = esProv ? 'flex' : 'none';
@@ -7577,7 +7583,7 @@ function pintarRevision() {
     escHtml(val('clienteTelefono')) + ' · ' + escHtml(val('clienteEmail'));
   document.getElementById('revPago').textContent = metodo === 'tarjeta'
     ? 'Tarjeta de crédito o débito (+4%)'
-    : 'Yape o transferencia BCP — pagas al recibir';
+    : textoYape(esProv);
   actualizarTotalForm();
 }
 
@@ -7662,7 +7668,7 @@ async function registrarPedidoYape(datos) {
     }
     if (typeof gtag === 'function') gtag('event', 'pedido_yape', { transaction_id: data.orderId, value: data.total, currency: 'PEN' });
     cerrarDatosCliente();
-    mostrarGracias({ orderId: data.orderId, total: data.total, metodo: 'yape', telefono: datos.telefono });
+    mostrarGracias({ orderId: data.orderId, total: data.total, metodo: 'yape', telefono: datos.telefono, provincia: datos.zona === 'provincia' });
   } finally {
     btn.disabled = false;
   }
@@ -7684,7 +7690,9 @@ function mostrarGracias(r) {
     'Tu número de pedido es <strong>' + r.orderId + '</strong>.<br>' +
     (r.metodo === 'tarjeta'
       ? 'Tu pago de <strong>' + total + '</strong> fue aprobado. Te llega el comprobante a tu correo.'
-      : 'Total a pagar al recibir: <strong>' + total + '</strong> con Yape o transferencia.') +
+      : r.provincia
+        ? 'Total a pagar: <strong>' + total + '</strong> con Yape o transferencia, <strong>antes del envío</strong>. Te escribimos con los datos para pagar y despachamos a Shalom apenas lo confirmemos.'
+        : 'Total a pagar al recibir: <strong>' + total + '</strong> con Yape o transferencia.') +
     '<br>Te contactamos al <strong>' + r.telefono + '</strong> para coordinar la entrega.';
   { const c = zbMetaCarrito(); c.value = Number(r.total) || c.value; c.metodo_pago = r.metodo;
     zbMeta('Purchase', c, { eventID: 'pedido-' + r.orderId }); }
@@ -7735,7 +7743,7 @@ function cargarKrypton(publicKey) {
 }
 
 /* Salida de respaldo: si la tarjeta falla, el pedido no se pierde.
-   Se registra como Yape al recibir (sin el 4%). */
+   Se registra como Yape (sin el 4%): al recibir en Lima, antes del envío en provincia. */
 function cambiarAYape() {
   const d = zbPagoDatos;
   cerrarPagoTarjeta();
@@ -7784,7 +7792,7 @@ async function iniciarPagoTarjeta(datos) {
     if (error || !data || !data.formToken) {
       let msg = 'No pudimos abrir el pago con tarjeta. Intenta de nuevo o elige Yape.';
       try { const j = await error.context.json(); if (j && j.error) msg = j.error; } catch (e) {}
-      if (confirm(msg + '\n\n¿Prefieres hacer tu pedido ahora y pagar con Yape al recibir?')) {
+      if (confirm(msg + '\n\n¿Prefieres hacer tu pedido ahora y pagar con Yape?')) {
         registrarPedidoYape(datos);
       }
       return;

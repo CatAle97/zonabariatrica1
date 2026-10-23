@@ -252,14 +252,14 @@
     {
       intent: 'pagos',
       keywords: ['pago', 'pagar', 'yape', 'izipay', 'tarjeta', 'transferencia', 'como pago', 'formas de pago', 'contraentrega'],
-      response: 'Puedes pagar con <b>tarjeta</b> (débito o crédito, en línea con Izipay) o con <b>Yape</b> al recibir tu pedido.<br><br>' +
+      response: 'Puedes pagar con <b>tarjeta</b> (débito o crédito, en línea con Izipay) o con <b>Yape</b>: en Lima al recibir tu pedido; a provincias se paga <b>antes del envío</b>.<br><br>' +
                 'El pago con tarjeta tiene un recargo del 4 %, que se calcula solo en tu pedido.<br><br>' +
                 'Todo se hace en la web: al finalizar la compra eliges cómo pagar.'
     },
     {
       intent: 'pedido',
       keywords: ['mi pedido', 'como compro', 'como pedir', 'hacer un pedido', 'comprar', 'donde esta mi pedido', 'seguimiento'],
-      response: 'Para comprar: agregas los productos al carrito, pulsas <b>Finalizar compra</b>, completas tus datos y eliges cómo pagar (tarjeta en línea o Yape al recibir). ' +
+      response: 'Para comprar: agregas los productos al carrito, pulsas <b>Finalizar compra</b>, completas tus datos y eliges cómo pagar (tarjeta en línea o Yape). ' +
                 'Luego te contactamos para coordinar la entrega.<br><br>' +
                 'Si ya hiciste un pedido y quieres consultar su estado, lo mejor es escribirnos por WhatsApp.'
     },
