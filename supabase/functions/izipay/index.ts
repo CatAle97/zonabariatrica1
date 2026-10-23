@@ -215,6 +215,9 @@ function leerCliente(body: any) {
     email: String(body.email || "").trim().slice(0, 120),
     telefono: String(body.telefono || "").replace(/[^\d+ ]/g, "").trim().slice(0, 20),
     direccion: String(body.direccion || "").trim().slice(0, 250),
+    // Enlace de Google Maps (opcional, solo Lima). Cualquier otra cosa se descarta.
+    ubicacion: /^https:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|maps\.app\.goo\.gl|goo\.gl\/maps)/i.test(String(body.ubicacion || "").trim())
+      ? String(body.ubicacion).trim().slice(0, 300) : "",
   };
 }
 
@@ -292,6 +295,7 @@ function textoPedido(p: any) {
     "Celular: " + c.telefono + " (https://wa.me/" + celular + ")",
     "Correo: " + c.email,
     "Entrega: " + destino,
+    ...(c.ubicacion ? ["Ubicación: " + c.ubicacion] : []),
   ].join("\n");
   return { titulo, cuerpo };
 }
@@ -421,18 +425,19 @@ async function stockCrm(body: any) {
   const lista = (x: any) => Array.isArray(x) ? x.map((s) => String(s).slice(0, 40)).slice(0, 200) : [];
   const sabores: Record<string, string[]> = {};
   for (const [id, l] of Object.entries(body.sabores || {}).slice(0, 100)) sabores[String(id).slice(0, 40)] = lista(l).map((s) => s.toLowerCase());
-  const valor = { agotados: lista(body.agotados), sabores };
+  // masVendidos: ids de la web ordenados por unidades vendidas en el CRM (últimos 60 días).
+  const valor = { agotados: lista(body.agotados), sabores, masVendidos: lista(body.masVendidos).slice(0, 10) };
   const { error } = await db.from("estado_web").upsert({ clave: "disponibilidad", valor, actualizado_en: new Date().toISOString() });
   if (error) throw new Error("No se pudo guardar la disponibilidad.");
   cacheDisp = null;
   return json({ ok: true });
 }
 
-let cacheDisp: { datos: { agotados: string[]; sabores: Record<string, string[]> }; hasta: number } | null = null;
+let cacheDisp: { datos: { agotados: string[]; sabores: Record<string, string[]>; masVendidos: string[] }; hasta: number } | null = null;
 async function leerDisponibilidad() {
   if (cacheDisp && cacheDisp.hasta > Date.now()) return cacheDisp.datos;
   const { data } = await db.from("estado_web").select("valor").eq("clave", "disponibilidad").maybeSingle();
-  const datos = { agotados: data?.valor?.agotados || [], sabores: data?.valor?.sabores || {} };
+  const datos = { agotados: data?.valor?.agotados || [], sabores: data?.valor?.sabores || {}, masVendidos: data?.valor?.masVendidos || [] };
   cacheDisp = { datos, hasta: Date.now() + 60 * 1000 };
   return datos;
 }

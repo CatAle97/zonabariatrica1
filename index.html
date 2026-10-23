@@ -1656,6 +1656,7 @@ footer {
 .ck-nota-entrega { margin-top: 10px; padding: 9px 12px; background: var(--blue-light); border-radius: var(--r-sm); font-size: 12.5px; color: var(--text); line-height: 1.5; }
 .ck-aviso-naranja { margin-top: 8px; padding: 9px 12px; background: #FFF7ED; border: 1.5px solid #FED7AA; border-radius: var(--r-sm); font-size: 12.5px; color: #92400E; }
 .ck-nota-pago { margin-top: 12px; background: #F0FDF4; border-left: 3px solid #16A34A; border-radius: var(--r-sm); padding: 10px 13px; font-size: 12.5px; color: #166534; line-height: 1.5; }
+.ck-btn-ubic { flex-shrink: 0; padding: 0 12px; min-height: 44px; border: 1.5px solid var(--border); border-radius: var(--r-sm); background: #fff; color: var(--text); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 .ck-ayuda { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 0; }
 .ck-link { background: none; border: none; padding: 0; color: var(--blue); font-weight: 600; font-size: 13px; cursor: pointer; font-family: inherit; text-decoration: underline; }
 .ck-pago-total { font-size: 15px; font-weight: 700; color: var(--text); margin: 14px 0 6px; }
@@ -4404,6 +4405,15 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
           <div>
             <label id="labelDireccion" for="clienteDireccion" class="ck-label">Dirección exacta *</label>
             <input id="clienteDireccion" class="ck-input" type="text" autocomplete="street-address" placeholder="Ej: Av. Perú 123, dpto 201 — San Miguel">
+            <p id="ayudaShalom" class="ck-ayuda" style="display:none;margin-top:6px;">Escribe la dirección de la <strong>agencia Shalom</strong> donde recogerás tu pedido (calle y número), no la de tu casa ni solo tu ciudad. ¿No la sabes? <a href="https://shalom.com.pe/agencias" target="_blank" rel="noopener">Busca tu agencia aquí</a>.</p>
+          </div>
+          <div id="ubicacionBox">
+            <label for="clienteUbicacion" class="ck-label">Ubicación en Google Maps <span style="font-weight:400;">(opcional, ayuda al repartidor)</span></label>
+            <div style="display:flex;gap:8px;">
+              <input id="clienteUbicacion" class="ck-input" type="url" inputmode="url" placeholder="Pega el enlace de Google Maps" style="flex:1;min-width:0;">
+              <button type="button" class="ck-btn-ubic" onclick="usarMiUbicacion()">📍 Mi ubicación</button>
+            </div>
+            <p id="ubicacionEstado" class="ck-ayuda" style="margin-top:6px;">Usa el botón solo si estás ahora en la dirección de entrega.</p>
           </div>
         </div>
         <div class="ck-nav"><button type="button" class="ck-continuar" onclick="irPaso(2)">Continuar</button></div>
@@ -6580,6 +6590,14 @@ async function cargarDisponibilidad() {
       if (card) card.outerHTML = cardHTML(p);
     });
   });
+  /* MÁS VENDIDOS DESDE EL CRM (2026-10-22): el CRM manda los productos con más
+     unidades vendidas en los últimos 60 días (sin agotados). Si llegan al menos 4,
+     reemplazan la lista fija INICIO_DESTACADOS y se repinta el inicio. */
+  const mv = (DISPONIBILIDAD.masVendidos || []).filter(id => productos.some(p => p.id === id && !sinPrecio(p)));
+  if (mv.length >= 4) {
+    INICIO_DESTACADOS.splice(0, INICIO_DESTACADOS.length, ...mv.slice(0, 5));
+    if (currentCat === 'todos' && !catalogoCompleto) renderizar('todos', null);
+  }
 }
 
 function enlaceConsulta(p) {
@@ -6756,15 +6774,9 @@ function abrirModal(id) {
 
   // Selector de sabores
   const mSabores = document.getElementById('mSabores');
-  if (p.sabores && p.sabores.length) {
-    const pred = p.saborPredeterminado || p.sabores[0];
-    mSabores.style.display = 'block';
-    mSabores.innerHTML = `<div class="sabor-section">
-      <div class="sabor-section-title">Elige tu sabor</div>
-      <div class="sabor-pills">${p.sabores.map(s =>
-        `<button class="sabor-pill${s===pred?' active':''}" onclick="elegirSabor(this)">${s}</button>`
-      ).join('')}</div></div>`;
-  } else if (p.seleccionSabor && p.seleccionSabor.length) {
+  /* Pastillas de sabor solo en ofertas x2 y packs. Un producto suelto ya es un
+     sabor, así que no se le ofrece elegir otro (ver agregarACotizacion). */
+  if (p.seleccionSabor && p.seleccionSabor.length) {
     mSabores.style.display = 'block';
     mSabores.innerHTML = `<div class="sabor-section">
       <div class="sabor-section-title">Elige los sabores del pack</div>
@@ -6989,7 +7001,10 @@ function agregarACotizacion(id, silencioso = false) {
      entra al carrito por ninguna vía (tarjeta, buscador, selector);
      se deriva a WhatsApp para que el total nunca quede mal sumado. */
   if (sinPrecio(prod)) { consultarPrecio(id); return; }
-  if (prod && ((prod.seleccionSabor && prod.seleccionSabor.length) || (prod.sabores && prod.sabores.length > 1))) {
+  /* El selector de sabor solo sale en ofertas x2 y packs (seleccionSabor). Un producto
+     suelto ya ES un sabor (la maracumango es maracumango): se agrega directo, sin
+     preguntar otro sabor (pedido de Roberto, 2026-10-22). */
+  if (prod && prod.seleccionSabor && prod.seleccionSabor.length) {
     mostrarSaborPopup(id);
     return;
   }
@@ -7291,6 +7306,32 @@ async function confirmarEnvio() {
   document.body.style.overflow = 'hidden';
 }
 
+/* UBICACIÓN Y AGENCIA SHALOM (2026-10-22) */
+// Provincia: se recoge en agencia, así que la dirección debe ser la de la agencia (calle y número),
+// no solo "Arequipa" o "Cusco". Se pide un número o una palabra de calle (Av., Jr., Calle...).
+function pareceDireccionAgencia(t) {
+  t = String(t || '').trim();
+  if (t.length < 10) return false;
+  return /\d/.test(t) || /(^|[\s.,])(av|avenida|jr|jir[oó]n|calle|ca|psje|pasaje|pje|mz|manzana|lt|lote|km|carretera|prolongaci[oó]n|prol|urb|plaza|esq|esquina|cdra|cuadra|mercado|terminal|paradero)([\s.,]|$)/i.test(t);
+}
+function enlaceMapsValido(u) {
+  return /^https:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|maps\.app\.goo\.gl|goo\.gl\/maps)/i.test(String(u || '').trim());
+}
+function usarMiUbicacion() {
+  const est = document.getElementById('ubicacionEstado');
+  if (!navigator.geolocation) { est.textContent = 'Tu navegador no permite compartir ubicación. Pega el enlace de Google Maps.'; return; }
+  est.textContent = 'Buscando tu ubicación...';
+  navigator.geolocation.getCurrentPosition(pos => {
+    const { latitude, longitude } = pos.coords;
+    const inp = document.getElementById('clienteUbicacion');
+    inp.value = 'https://www.google.com/maps?q=' + latitude.toFixed(6) + ',' + longitude.toFixed(6);
+    if (typeof ckLimpiarError === 'function') ckLimpiarError(inp);
+    est.innerHTML = '✓ Ubicación agregada. <a href="' + inp.value + '" target="_blank" rel="noopener">Revisar en el mapa</a>';
+  }, () => {
+    est.textContent = 'No pudimos obtener tu ubicación. Activa el GPS y dale permiso, o pega el enlace de Google Maps.';
+  }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
+}
+
 function actualizarZona() {
   const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
   const det = document.getElementById('entregaDetalle');
@@ -7312,6 +7353,11 @@ function actualizarZona() {
     lbl.textContent = esProv ? 'Dirección de la agencia Shalom *' : 'Dirección exacta *';
     inp.placeholder = esProv ? 'Ej: Agencia Shalom Av. La Cultura 1020 — Cusco' : 'Ej: Av. Perú 123, dpto 201 — San Miguel';
   }
+  /* Provincia: ayuda para encontrar la agencia. Lima: ubicación de Google Maps (en provincia no aplica: se recoge en agencia). */
+  const ayuda = document.getElementById('ayudaShalom');
+  if (ayuda) ayuda.style.display = esProv ? 'block' : 'none';
+  const ubic = document.getElementById('ubicacionBox');
+  if (ubic) ubic.style.display = esProv ? 'none' : 'block';
   actualizarTotalForm();
 }
 
@@ -7489,6 +7535,13 @@ function validarPaso(p) {
     if (!val('clienteDireccion')) {
       ckError('clienteDireccion', zona === 'provincia' ? 'Escribe la dirección de la agencia Shalom donde recogerás tu pedido.' : 'Escribe tu dirección exacta.');
       ok = false;
+    } else if (zona === 'provincia' && !pareceDireccionAgencia(val('clienteDireccion'))) {
+      ckError('clienteDireccion', 'Escribe la dirección de la agencia Shalom (calle y número), no solo tu ciudad o departamento. Búscala con el enlace de abajo.');
+      ok = false;
+    }
+    if (zona === 'lima' && val('clienteUbicacion') && !enlaceMapsValido(val('clienteUbicacion'))) {
+      ckError('clienteUbicacion', 'Pega un enlace de Google Maps o usa el botón 📍 Mi ubicación.');
+      ok = false;
     }
   }
   if (p === 2) {
@@ -7510,7 +7563,8 @@ function pintarRevision() {
   const metodo = document.querySelector('input[name="formMetodoPago"]:checked')?.value || '';
   document.getElementById('revEntrega').innerHTML = esProv
     ? 'Provincia — agencia Shalom<br>' + escHtml(val('clienteDireccion'))
-    : escHtml(val('clienteDistrito')) + '<br>' + escHtml(val('clienteDireccion'));
+    : escHtml(val('clienteDistrito')) + '<br>' + escHtml(val('clienteDireccion')) +
+      (val('clienteUbicacion') ? '<br>📍 Ubicación en Google Maps agregada' : '');
   document.getElementById('revDatos').innerHTML =
     escHtml(val('clienteNombre')) + ' · DNI ' + escHtml(val('clienteDni')) + '<br>' +
     escHtml(val('clienteTelefono')) + ' · ' + escHtml(val('clienteEmail'));
@@ -7574,7 +7628,8 @@ function enviarConDatos() {
     document.getElementById('clienteEmail').focus();
     return;
   }
-  const datos = { nombre, dni, direccion, zona, distrito, telefono, email };
+  const ubicacion = zona === 'lima' ? document.getElementById('clienteUbicacion').value.trim() : '';
+  const datos = { nombre, dni, direccion, zona, distrito, telefono, email, ubicacion };
   if (metodo === 'tarjeta') iniciarPagoTarjeta(datos);
   else registrarPedidoYape(datos);
 }
@@ -7677,7 +7732,7 @@ function cargarKrypton(publicKey) {
 function cambiarAYape() {
   const d = zbPagoDatos;
   cerrarPagoTarjeta();
-  if (d) registrarPedidoYape({ nombre: d.nombre, dni: d.dni, direccion: d.direccion, zona: d.zona, distrito: d.distrito, telefono: d.telefono, email: d.email });
+  if (d) registrarPedidoYape({ nombre: d.nombre, dni: d.dni, direccion: d.direccion, zona: d.zona, distrito: d.distrito, telefono: d.telefono, email: d.email, ubicacion: d.ubicacion });
 }
 
 /* "Modo pago": los datos ya validados se resumen arriba y el formulario
@@ -7716,7 +7771,7 @@ async function iniciarPagoTarjeta(datos) {
         accion: 'crear',
         items: itemsDelCarrito(),
         zona: datos.zona, distrito: datos.distrito,
-        nombre: datos.nombre, dni: datos.dni, direccion: datos.direccion, telefono: datos.telefono, email: datos.email
+        nombre: datos.nombre, dni: datos.dni, direccion: datos.direccion, telefono: datos.telefono, email: datos.email, ubicacion: datos.ubicacion
       }
     });
     if (error || !data || !data.formToken) {
