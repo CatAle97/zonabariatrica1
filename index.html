@@ -7354,12 +7354,54 @@ function cargarLeaflet() {
     document.head.appendChild(s);
   });
 }
-async function buscarEnMapa(texto) {
-  const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=pe' +
+/* Búsqueda de la dirección. Lecciones del primer caso real (Bellavista cayó en Comas):
+   - Los distritos del Callao se buscan como "Callao", no "Lima".
+   - En OpenStreetMap muchas calles no tienen números de casa y el tipo de vía puede no
+     coincidir ("Jirón" vs "Calle"): si no aparece completa, se busca la calle sola.
+   - Solo vale un resultado que esté DENTRO del distrito elegido (hay barrios con nombre de
+     distrito en otros distritos, como el "Bellavista" de Comas). */
+const DISTRITOS_CALLAO = ['Bellavista', 'Callao', 'Carmen de la Legua Reynoso', 'La Perla', 'La Punta', 'Ventanilla', 'Mi Perú'];
+const sinTildes = t => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+// El buscador devuelve el distrito en address.city (Comas, Bellavista, Miraflores, Lima...).
+const soloLetras = t => sinTildes(t).replace(/[^a-z]/g, '');
+function enDistrito(address, distrito) {
+  const ciudad = soloLetras((address || {}).city || (address || {}).town || '');
+  const especiales = { 'Cercado de Lima': 'lima', 'Lurigancho - Chosica': 'lurigancho' };
+  return !!ciudad && ciudad === (especiales[distrito] || soloLetras(distrito));
+}
+async function buscarEnMapa(texto, distrito) {
+  const url = 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=8&countrycodes=pe&accept-language=es' +
     '&viewbox=-77.25,-11.70,-76.70,-12.55&bounded=1&q=' + encodeURIComponent(texto);
-  const r = await fetch(url, { headers: { 'Accept-Language': 'es' } });
+  // Sin cabeceras extra: algunas hacen que el navegador bloquee la consulta (CORS).
+  const r = await fetch(url);
   const j = await r.json();
-  return j && j[0] ? [Number(j[0].lat), Number(j[0].lon)] : null;
+  const ok = (j || []).find(x => enDistrito(x.address, distrito));
+  return ok ? [Number(ok.lat), Number(ok.lon)] : null;
+}
+// Nombre de la calle sin tipo de vía, número, manzana/lote ni el distrito repetido al final.
+function soloCalle(direccion, distrito) {
+  let t = ' ' + sinTildes(direccion) + ' ';
+  t = t.replace(sinTildes(distrito), ' ');
+  t = t.replace(/(,|#|\sn°|\snº|\snro\.?|\sno\.)\s*\d+.*$/, ' ').replace(/\s(mz|mza|manzana|lt|lote|dpto|dep|int|piso|block|blq)\b.*$/, ' ');
+  t = t.replace(/\s\d+.*$/, ' ');
+  t = t.replace(/\s(av|avda|avenida|jr|jiron|calle|ca|cl|psje|pasaje|pje|prolongacion|prol|urb|urbanizacion|aa ?hh|asoc|asociacion)\b\.?/g, ' ');
+  return t.replace(/\s+/g, ' ').trim();
+}
+const esperaMs = ms => new Promise(r => setTimeout(r, ms));
+// Devuelve { punto, nivel } con nivel 'exacto' | 'calle' | 'distrito' | null.
+async function ubicarDireccion(direccion, distrito) {
+  const region = DISTRITOS_CALLAO.includes(distrito) ? 'Callao' : 'Lima';
+  let p = await buscarEnMapa(direccion + ', ' + distrito + ', ' + region + ', Perú', distrito);
+  if (p) return { punto: p, nivel: 'exacto' };
+  const calle = soloCalle(direccion, distrito);
+  if (calle.length >= 3) {
+    await esperaMs(1000); // el buscador gratuito pide máximo 1 consulta por segundo
+    p = await buscarEnMapa(calle + ', ' + distrito + ', ' + region, distrito);
+    if (p) return { punto: p, nivel: 'calle' };
+  }
+  await esperaMs(1000);
+  p = await buscarEnMapa(distrito + ', ' + region + ', Perú', distrito);
+  return { punto: p, nivel: p ? 'distrito' : null };
 }
 function ponerPin(latlng, zoom) {
   if (!pinEntrega) {
@@ -7404,15 +7446,18 @@ async function abrirMapaEntregaReal() {
   if (mapaBuscadoPara !== clave) {
     mapaBuscadoPara = clave;
     est.textContent = 'Buscando tu dirección...';
-    let punto = null, exacto = true;
-    try {
-      punto = await buscarEnMapa(direccion + ', ' + distrito + ', Lima, Perú');
-      if (!punto) { exacto = false; punto = await buscarEnMapa(distrito + ', Lima, Perú'); }
-    } catch (e) { punto = null; }
-    ponerPin(punto || LIMA_CENTRO, punto ? (exacto ? 17 : 15) : 12);
-    est.textContent = punto && exacto
-      ? 'Revisa que el pin esté en tu puerta. Si no, muévelo y luego toca "Sí, aquí es".'
-      : 'No encontramos la dirección exacta: mueve el pin hasta tu casa y toca "Sí, aquí es".';
+    let res = { punto: null, nivel: null };
+    try { res = await ubicarDireccion(direccion, distrito); } catch (e) {}
+    ponerPin(res.punto || LIMA_CENTRO, { exacto: 18, calle: 17, distrito: 15 }[res.nivel] || 12);
+    est.textContent = {
+      exacto: 'Revisa que el pin esté en tu puerta. Si no, muévelo y luego toca "Sí, aquí es".',
+      calle: 'Encontramos tu calle: mueve el pin hasta tu número de casa y toca "Sí, aquí es".',
+      distrito: 'No encontramos tu calle: el mapa está en tu distrito. Mueve el pin hasta tu casa y toca "Sí, aquí es".'
+    }[res.nivel] || 'No encontramos la dirección: mueve el pin hasta tu casa y toca "Sí, aquí es".';
+    est.dataset.ultimo = est.textContent;
+  } else {
+    // Se reabre el mismo mapa (por ejemplo con "Cambiar"): se repite el último aviso.
+    est.textContent = est.dataset.ultimo || 'Mueve el pin hasta tu casa y toca "Sí, aquí es".';
   }
   document.getElementById('mapaEntregaBox').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
