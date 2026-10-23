@@ -4411,7 +4411,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
           </div>
           <div>
             <label id="labelDireccion" for="clienteDireccion" class="ck-label">Dirección exacta *</label>
-            <input id="clienteDireccion" class="ck-input" type="text" autocomplete="street-address" placeholder="Ej: Av. Perú 123, dpto 201 — San Miguel">
+            <input id="clienteDireccion" class="ck-input" type="text" autocomplete="street-address" enterkeyhint="search" placeholder="Ej: Av. Perú 123, dpto 201 — San Miguel">
             <p id="ayudaShalom" class="ck-ayuda" style="display:none;margin-top:6px;">Escribe la dirección de la <strong>agencia Shalom</strong> donde recogerás tu pedido (calle y número), no la de tu casa ni solo tu ciudad. ¿No la sabes? <a href="https://shalom.com.pe/agencias" target="_blank" rel="noopener">Busca tu agencia aquí</a>.</p>
           </div>
           <div id="ubicacionBox">
@@ -7368,7 +7368,14 @@ function ponerPin(latlng, zoom) {
   } else pinEntrega.setLatLng(latlng);
   mapaEntrega.setView(latlng, zoom || mapaEntrega.getZoom());
 }
+// Enter + salir del campo pueden pedir el mapa casi a la vez: solo corre una apertura.
+let mapaAbriendo = false;
 async function abrirMapaEntrega() {
+  if (mapaAbriendo) return;
+  mapaAbriendo = true;
+  try { await abrirMapaEntregaReal(); } finally { mapaAbriendo = false; }
+}
+async function abrirMapaEntregaReal() {
   const est = document.getElementById('ubicacionEstado');
   const direccion = document.getElementById('clienteDireccion').value.trim();
   const distrito = document.getElementById('clienteDistrito').value.trim();
@@ -7431,7 +7438,25 @@ function desconfirmarUbicacion() {
 }
 ['clienteDireccion', 'clienteDistrito'].forEach(id => {
   const el = document.getElementById(id);
-  if (el) el.addEventListener('change', () => { desconfirmarUbicacion(); mapaBuscadoPara = ''; });
+  if (el) el.addEventListener('change', () => {
+    desconfirmarUbicacion();
+    mapaBuscadoPara = '';
+    mapaAutomatico();
+  });
+});
+/* El mapa se abre solo: al presionar Enter en la dirección ("Ir" en el celular) o al salir del
+   campo, siempre que sea Lima y ya haya distrito y dirección. */
+function mapaAutomatico() {
+  const esLima = document.querySelector('input[name="zonaEnvio"]:checked')?.value !== 'provincia';
+  const dir = document.getElementById('clienteDireccion').value.trim();
+  const dist = document.getElementById('clienteDistrito').value.trim();
+  if (esLima && dir && dist && !mapaNoDisponible) abrirMapaEntrega();
+}
+document.getElementById('clienteDireccion').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  e.target.blur(); // cierra el teclado del celular; el "change" que dispara el blur abre el mapa
+  mapaAutomatico();
 });
 function usarMiUbicacion() {
   const est = document.getElementById('ubicacionEstado');
