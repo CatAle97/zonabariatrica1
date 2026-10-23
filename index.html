@@ -7691,7 +7691,10 @@ function mostrarGracias(r) {
     (r.metodo === 'tarjeta'
       ? 'Tu pago de <strong>' + total + '</strong> fue aprobado. Te llega el comprobante a tu correo.'
       : r.provincia
-        ? 'Total a pagar: <strong>' + total + '</strong> con Yape o transferencia, <strong>antes del envío</strong>. Te escribimos con los datos para pagar y despachamos a Shalom apenas lo confirmemos.'
+        ? 'Total a pagar: <strong>' + total + '</strong>, <strong>antes del envío</strong>.<br>' +
+          'Realiza tu Yape al <strong>961 841 069</strong> — <strong>ROBERTO GOMEZ SALAS</strong> — y envía la captura al mismo número: ' +
+          '<a href="https://wa.me/51961841069?text=' + encodeURIComponent('Hola, envío la captura de mi Yape del pedido ' + r.orderId) + '" target="_blank" rel="noopener">enviar captura por WhatsApp</a>.<br>' +
+          'Despachamos a Shalom apenas confirmemos tu pago.'
         : 'Total a pagar al recibir: <strong>' + total + '</strong> con Yape o transferencia.') +
     '<br>Te contactamos al <strong>' + r.telefono + '</strong> para coordinar la entrega.';
   { const c = zbMetaCarrito(); c.value = Number(r.total) || c.value; c.metodo_pago = r.metodo;
