@@ -4201,6 +4201,25 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1281144750767995');
 fbq('track', 'PageView');
+/* Eventos de Meta (2026-10-22): ver producto, carrito, pago y compra.
+   Así Meta sabe quién compra y puede buscar gente parecida. */
+function zbMeta(evento, datos, opciones) {
+  try { if (typeof fbq === 'function') fbq('track', evento, datos || {}, opciones || {}); } catch (e) {}
+}
+function zbMetaProd(p, qty) {
+  qty = qty || 1;
+  return { content_ids: [p.id], content_type: 'product', content_name: p.nombre,
+           value: (Number(p.precio) || 0) * qty, currency: 'PEN' };
+}
+function zbMetaCarrito() {
+  let value = 0, num = 0; const ids = [];
+  (typeof carrito !== 'undefined' ? carrito : []).forEach(function (i) {
+    const p = productos.find(function (x) { return x.id === i.id; });
+    num += i.qty; ids.push(i.id);
+    if (p) value += (Number(p.precio) || 0) * i.qty;
+  });
+  return { content_ids: ids, content_type: 'product', num_items: num, value: value, currency: 'PEN' };
+}
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
@@ -6621,6 +6640,7 @@ function abrirModal(id) {
   const p = productos.find(x => x.id === id);
   if (!p) return;
   currentModalId = id;
+  zbMeta('ViewContent', zbMetaProd(p));
 
   document.getElementById('mTitulo').textContent = p.nombre;
   document.getElementById('mImg').src = p.img;
@@ -6928,6 +6948,7 @@ function confirmarSaborPopup() {
   const idx = carrito.findIndex(function(i) { return i.id === _spId; });
   if (idx >= 0) { carrito[idx].qty += qty; carrito[idx].notas = notas; }
   else carrito.push({ id: _spId, qty: qty, notas: notas });
+  { const pm = productos.find(function (x) { return x.id === _spId; }); if (pm) zbMeta('AddToCart', zbMetaProd(pm, qty)); }
 
   cerrarSaborPopup();
   actualizarCartUI();
@@ -6956,6 +6977,7 @@ function _agregarDirecto(id, silencioso) {
   if (prod && prod.sabores && prod.saborPredeterminado) notas = 'Sabor: ' + prod.saborPredeterminado;
   if (idx >= 0) carrito[idx].qty++;
   else carrito.push({ id: id, qty: 1, notas: notas });
+  if (prod) zbMeta('AddToCart', zbMetaProd(prod, 1));
   actualizarCartUI();
   pulsarBadgeCot();
 }
@@ -6982,6 +7004,7 @@ function agregarDesdeModalCot() {
   const idx = carrito.findIndex(i => i.id === currentModalId);
   if (idx >= 0) { carrito[idx].qty++; if (notas) carrito[idx].notas = notas; }
   else carrito.push({ id: currentModalId, qty: 1, notas });
+  if (prodModal) zbMeta('AddToCart', zbMetaProd(prodModal, 1));
   actualizarCartUI();
   pulsarBadgeCot();
   cerrarModal();
@@ -7244,6 +7267,7 @@ async function irAlCheckout() {
 
 async function confirmarEnvio() {
   cerrarModalEnvio();
+  if (carrito.length) zbMeta('InitiateCheckout', zbMetaCarrito());
   /* Ningún método marcado de inicio: el cliente elige (y el 4% de
      la tarjeta solo aparece si la elige). */
   document.querySelectorAll('input[name="formMetodoPago"]').forEach(r => { r.checked = false; });
@@ -7600,6 +7624,8 @@ function mostrarGracias(r) {
       ? 'Tu pago de <strong>' + total + '</strong> fue aprobado. Te llega el comprobante a tu correo.'
       : 'Total a pagar al recibir: <strong>' + total + '</strong> con Yape o transferencia.') +
     '<br>Te contactamos al <strong>' + r.telefono + '</strong> para coordinar la entrega.';
+  { const c = zbMetaCarrito(); c.value = Number(r.total) || c.value; c.metodo_pago = r.metodo;
+    zbMeta('Purchase', c, { eventID: 'pedido-' + r.orderId }); }
   cerrarCarrito();
   carrito = [];
   actualizarCartUI();
