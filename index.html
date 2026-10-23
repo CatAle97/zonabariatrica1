@@ -2437,6 +2437,8 @@ footer {
 .auth-msg { font-size: 12.5px; text-align: center; margin-top: 12px; min-height: 18px; }
 .auth-msg.ok { color: #059669; }
 .auth-msg.err { color: #DC2626; }
+.auth-link { display: block; margin: 10px auto 0; background: none; border: 0; color: var(--blue); font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: underline; padding: 6px; }
+.auth-texto { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin: 0 0 14px; }
 
 /* USUARIO LOGUEADO */
 .user-wrap { position: relative; }
@@ -7309,6 +7311,7 @@ async function confirmarEnvio() {
     if (nombre) document.getElementById('clienteNombre').value = nombre;
     if (m.direccion) document.getElementById('clienteDireccion').value = m.direccion + (m.referencia ? ' — ' + m.referencia : '');
     if (m.celular) document.getElementById('clienteTelefono').value = m.celular;
+    if (m.numero_documento && !document.getElementById('clienteDni').value) document.getElementById('clienteDni').value = String(m.numero_documento).replace(/\D/g, '');
     if (session.user.email) document.getElementById('clienteEmail').value = session.user.email;
   }
   salirModoPago();
@@ -8385,6 +8388,32 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <button class="auth-btn" onclick="hacerLogin()">Entrar</button>
       <div class="auth-msg" id="loginMsg"></div>
+      <button type="button" class="auth-link" onclick="mostrarRecuperar()">¿Olvidaste tu contraseña?</button>
+    </div>
+    <!-- RECUPERAR CONTRASEÑA (pide el enlace por correo) -->
+    <div id="formRecuperar" style="display:none">
+      <p class="auth-texto">Escribe tu correo y te enviamos un enlace para crear una contraseña nueva.</p>
+      <div class="auth-input-wrap">
+        <label>Correo electrónico</label>
+        <input type="email" id="recEmail" class="auth-input" placeholder="tu@correo.com">
+      </div>
+      <button class="auth-btn" onclick="enviarRecuperacion()">Enviarme el enlace</button>
+      <div class="auth-msg" id="recMsg"></div>
+      <button type="button" class="auth-link" onclick="switchTab('login')">← Volver a iniciar sesión</button>
+    </div>
+    <!-- NUEVA CONTRASEÑA (se abre sola al entrar desde el enlace del correo) -->
+    <div id="formNuevaPass" style="display:none">
+      <p class="auth-texto">Crea tu nueva contraseña.</p>
+      <div class="auth-input-wrap">
+        <label>Nueva contraseña</label>
+        <input type="password" id="nuevaPass" class="auth-input" placeholder="Mínimo 6 caracteres">
+      </div>
+      <div class="auth-input-wrap">
+        <label>Repítela</label>
+        <input type="password" id="nuevaPass2" class="auth-input" placeholder="Igual a la de arriba">
+      </div>
+      <button class="auth-btn" onclick="guardarNuevaPass()">Guardar contraseña</button>
+      <div class="auth-msg" id="nuevaPassMsg"></div>
     </div>
     <!-- REGISTER -->
     <div id="formRegister" style="display:none">
@@ -8568,13 +8597,15 @@ const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
 })();
 
 supa.auth.onAuthStateChange((_event, session) => {
+  // Llegó desde el enlace de "Olvidé mi contraseña": se le pide la nueva de una vez.
+  if (_event === 'PASSWORD_RECOVERY') { abrirAuth(); switchTab('nuevaPass'); }
   if (session) { mostrarUsuarioLogueado(session.user); cargarFavoritos(session.user); }
   else { mostrarBtnLogin(); favoritosSet = new Set(); actualizarCorazones(); }
 });
 
 function abrirAuth(tab) {
   document.getElementById('authOverlay').classList.add('open');
-  if (tab === 'registro') switchTab('register');
+  switchTab(tab === 'registro' ? 'register' : 'login'); // nunca reabre en un formulario a medias
 }
 function cerrarAuth() {
   document.getElementById('authOverlay').classList.remove('open');
@@ -8587,6 +8618,9 @@ function cerrarAuthFuera(e) {
 function switchTab(tab) {
   document.getElementById('formLogin').style.display = tab === 'login' ? 'block' : 'none';
   document.getElementById('formRegister').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('formRecuperar').style.display = tab === 'recuperar' ? 'block' : 'none';
+  document.getElementById('formNuevaPass').style.display = tab === 'nuevaPass' ? 'block' : 'none';
+  document.querySelector('.auth-tabs').style.display = tab === 'nuevaPass' ? 'none' : '';
   document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
   document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
 }
@@ -8597,8 +8631,63 @@ async function hacerLogin() {
   const msg = document.getElementById('loginMsg');
   msg.textContent = 'Ingresando...'; msg.className = 'auth-msg';
   const { error } = await supa.auth.signInWithPassword({ email, password: pass });
-  if (error) { msg.textContent = 'Correo o contraseña incorrectos'; msg.className = 'auth-msg err'; }
-  else { cerrarAuth(); }
+  if (!error) { cerrarAuth(); return; }
+  msg.className = 'auth-msg err';
+  if (/not confirmed/i.test(error.message)) {
+    // Se registró pero no confirmó el correo: se le ofrece reenviarlo.
+    msg.innerHTML = 'Aún no confirmas tu correo. Revisa tu bandeja (y spam) o ' +
+      '<button type="button" class="auth-link" style="display:inline;margin:0;padding:0" onclick="reenviarConfirmacion()">reenvíame el correo</button>.';
+  } else msg.textContent = mensajeAuth(error, 'Correo o contraseña incorrectos.');
+}
+
+/* CUENTAS DE CLIENTES (mejoras 2026-10-22): Roberto mantiene las cuentas porque más adelante
+   darán beneficios (descuentos por cantidad de compras). Mensajes en español, recuperar
+   contraseña y reenviar la confirmación. */
+function mensajeAuth(error, porDefecto) {
+  const m = String((error && error.message) || '');
+  if (/invalid login credentials/i.test(m)) return 'Correo o contraseña incorrectos.';
+  if (/already registered|already exists/i.test(m)) return 'Ese correo ya tiene una cuenta. Inicia sesión o recupera tu contraseña.';
+  if (/rate limit|too many|after \d+ seconds/i.test(m)) return 'Hiciste varios intentos seguidos. Espera unos minutos y vuelve a intentarlo.';
+  if (/password should be|weak|at least/i.test(m)) return 'La contraseña es muy débil: usa al menos 6 caracteres.';
+  if (/invalid.*email|email.*invalid/i.test(m)) return 'Revisa que el correo esté bien escrito.';
+  if (/same password|different from the old/i.test(m)) return 'La nueva contraseña debe ser distinta de la anterior.';
+  return porDefecto || 'No se pudo completar. Inténtalo de nuevo en unos minutos.';
+}
+function mostrarRecuperar() {
+  document.getElementById('recEmail').value = document.getElementById('loginEmail').value.trim();
+  document.getElementById('recMsg').textContent = '';
+  switchTab('recuperar');
+}
+async function enviarRecuperacion() {
+  const email = document.getElementById('recEmail').value.trim();
+  const msg = document.getElementById('recMsg');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { msg.textContent = 'Escribe tu correo.'; msg.className = 'auth-msg err'; return; }
+  msg.textContent = 'Enviando...'; msg.className = 'auth-msg';
+  const { error } = await supa.auth.resetPasswordForEmail(email, { redirectTo: 'https://zonabariatrica.com' });
+  if (error) { msg.textContent = mensajeAuth(error); msg.className = 'auth-msg err'; return; }
+  // Por seguridad no se dice si el correo existe o no.
+  msg.textContent = 'Si ese correo tiene cuenta, te llegó un enlace para crear tu nueva contraseña. Revisa también spam.';
+  msg.className = 'auth-msg ok';
+}
+async function guardarNuevaPass() {
+  const p1 = document.getElementById('nuevaPass').value;
+  const p2 = document.getElementById('nuevaPass2').value;
+  const msg = document.getElementById('nuevaPassMsg');
+  if (p1.length < 6) { msg.textContent = 'Usa al menos 6 caracteres.'; msg.className = 'auth-msg err'; return; }
+  if (p1 !== p2) { msg.textContent = 'Las dos contraseñas no coinciden.'; msg.className = 'auth-msg err'; return; }
+  msg.textContent = 'Guardando...'; msg.className = 'auth-msg';
+  const { error } = await supa.auth.updateUser({ password: p1 });
+  if (error) { msg.textContent = mensajeAuth(error); msg.className = 'auth-msg err'; return; }
+  msg.textContent = '¡Listo! Tu contraseña se cambió y ya tienes tu sesión iniciada.'; msg.className = 'auth-msg ok';
+  history.replaceState(null, '', location.pathname + location.search);
+  setTimeout(() => { cerrarAuth(); switchTab('login'); }, 1800);
+}
+async function reenviarConfirmacion() {
+  const email = document.getElementById('loginEmail').value.trim() || document.getElementById('regEmail').value.trim();
+  const msg = document.getElementById(document.getElementById('formLogin').style.display === 'none' ? 'registerMsg' : 'loginMsg');
+  const { error } = await supa.auth.resend({ type: 'signup', email, options: { emailRedirectTo: 'https://zonabariatrica.com' } });
+  msg.className = error ? 'auth-msg err' : 'auth-msg ok';
+  msg.textContent = error ? mensajeAuth(error) : 'Te reenviamos el correo de confirmación. Revisa también spam.';
 }
 
 async function hacerRegistro() {
@@ -8613,15 +8702,25 @@ async function hacerRegistro() {
   if (!nombre || !apellido || !email || !pass) { msg.textContent = 'Completa los campos obligatorios (*)'; msg.className = 'auth-msg err'; return; }
   if (pass.length < 6) { msg.textContent = 'La contraseña debe tener al menos 6 caracteres'; msg.className = 'auth-msg err'; return; }
   msg.textContent = 'Creando cuenta...'; msg.className = 'auth-msg';
-  const { error } = await supa.auth.signUp({
+  const { data, error } = await supa.auth.signUp({
     email, password: pass,
     options: {
       emailRedirectTo: 'https://zonabariatrica.com',
       data: { name: nombre + ' ' + apellido, full_name: nombre + ' ' + apellido, nombre, apellido, celular, tipo_documento: tipoDoc, numero_documento: numDoc }
     }
   });
-  if (error) { msg.textContent = error.message; msg.className = 'auth-msg err'; }
-  else { msg.textContent = '¡Cuenta creada! Revisa tu correo para confirmar.'; msg.className = 'auth-msg ok'; }
+  if (error) { msg.textContent = mensajeAuth(error); msg.className = 'auth-msg err'; return; }
+  // Si el correo ya tenía cuenta, Supabase no da error (para no revelar quién está registrado)
+  // pero devuelve el usuario sin "identities": se le explica y se le lleva a iniciar sesión.
+  if (data && data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+    document.getElementById('loginEmail').value = email;
+    switchTab('login');
+    const lm = document.getElementById('loginMsg');
+    lm.textContent = 'Ese correo ya tiene una cuenta: escribe tu contraseña o toca "¿Olvidaste tu contraseña?".';
+    lm.className = 'auth-msg err';
+    return;
+  }
+  msg.textContent = '¡Cuenta creada! Te enviamos un correo: ábrelo y confirma tu cuenta (revisa también spam).'; msg.className = 'auth-msg ok';
 }
 
 async function cerrarSesion() {
