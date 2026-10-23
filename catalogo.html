@@ -160,6 +160,9 @@ body.bloqueado .btn-arriba { display:none; }
 .foto { position:relative; aspect-ratio:4 / 3; background:var(--blanco); border-bottom:1px solid var(--borde); }
 .foto picture { display:block; width:100%; height:100%; }
 .foto img { width:100%; height:100%; object-fit:contain; padding:12px; }
+.sello-agotado { background:#F3F4F6 !important; color:#6B7280 !important; border-color:#E5E7EB !important; }
+.btn-agregar[disabled] { background:#E5E7EB; color:#6B7280; cursor:not-allowed; }
+.chip-sabor[disabled] { opacity:.45; text-decoration:line-through; cursor:not-allowed; }
 .sello {
   position:absolute; top:12px; left:12px; padding:6px 12px; border-radius:var(--pill);
   font-size:var(--fs-xs); font-weight:800; letter-spacing:.04em; text-transform:uppercase;
@@ -777,6 +780,14 @@ const IDS_TIENDA = {
 };
 const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4", "oferta5"];
 
+/* AGOTADOS (2026-10-22): ids de la tienda sin stock según el CRM (función
+   izipay, acción disponibilidad). Se declara AQUÍ arriba a propósito: acciones()
+   lo usa al pintar el catálogo y, si quedara más abajo, el catálogo saldría
+   vacío (mismo tropiezo que OFERTAS_X2). Un sabor agotado es su producto
+   suelto agotado (fresa = bi3), así que sirve también para las ofertas x2. */
+let AGOTADOS = new Set();
+function agotado(id) { return AGOTADOS.has(IDS_TIENDA[id]); }
+
 (function sincronizarPrecios() {
   const lista = window.ZB_CATALOGO;
   if (!lista || !lista.length) { console.warn("No cargó zb-catalogo.js: se usan los precios de respaldo"); return; }
@@ -927,6 +938,7 @@ function cuentas() {
 }
 
 function cambiar(id, delta) {
+  if (delta > 0 && agotado(id)) return;
   cot[id] = (cot[id] || 0) + delta;
   if (cot[id] <= 0) delete cot[id];
   guardar(); refrescar(id);
@@ -990,6 +1002,7 @@ function imagenHTML(src, alt, extra) {
 
 function acciones(id) {
   const n = cot[id] || 0;
+  if (!n && agotado(id)) return '<button class="btn-agregar" type="button" disabled>Agotado</button>';
   if (!n) return '<button class="btn-agregar" type="button" data-mas="' + id + '">' +
     '<svg class="icono"><use href="#i-carrito"/></svg>' +
     '<span class="txt-largo">Agregar al carrito</span><span class="txt-corto">Agregar</span></button>';
@@ -1002,7 +1015,7 @@ function acciones(id) {
 
 function tarjeta(id) {
   const p = P[id];
-  const sello = p.nuevo ? '<span class="sello">Nuevo</span>' : "";
+  const sello = agotado(id) ? '<span class="sello sello-agotado">Agotado</span>' : p.nuevo ? '<span class="sello">Nuevo</span>' : "";
   const lupa = '<span class="lupa"><svg class="icono"><use href="#i-lupa"/></svg></span>';
   /* Un pack con precioAntes se viste igual que una oferta x2:
      borde verde, cinta de ahorro arriba y el precio de lista tachado. */
@@ -1040,11 +1053,14 @@ function tarjetaOferta(i) {
 
   /* Mientras elige sabores, la tarjeta muestra los dos selectores */
   let accion;
-  if (eligiendo === i && variossabores) {
+  const sinStock = AGOTADOS.has(IDS_OFERTAS[i]) || of.ids.every(agotado);
+  if (sinStock) {
+    accion = '<button class="btn-agregar" type="button" disabled>Agotado</button>';
+  } else if (eligiendo === i && variossabores) {
     accion = '<div class="sabores">' +
       [0, 1].map(pos => '<div class="sabor-fila"><span>Envase ' + (pos + 1) + '</span><div>' +
         of.ids.map(id => '<button type="button" class="chip-sabor' + (elegidos[pos] === id ? ' elegido' : '') +
-          '" data-sabor="' + i + ':' + pos + ':' + id + '">' + esc(P[id].sabor) + '</button>').join("") +
+          '" data-sabor="' + i + ':' + pos + ':' + id + '"' + (agotado(id) ? ' disabled title="Agotado"' : '') + '>' + esc(P[id].sabor) + '</button>').join("") +
       '</div></div>').join("") +
       '<button class="btn-agregar" type="button" data-confirmar="' + i + '">' +
         '<svg class="icono"><use href="#i-carrito"/></svg>Agregar al carrito</button>' +
@@ -1080,11 +1096,14 @@ function abrirOferta(i) {
   const of = OFERTAS_X2[i];
   if (of.ids.length === 1) { agregarOferta(i, [of.ids[0], of.ids[0]]); return; }
   eligiendo = i;
-  elegidos = [of.ids[0], of.ids[1]];
+  const libres = of.ids.filter(id => !agotado(id));
+  if (!libres.length) return;
+  elegidos = [libres[0], libres[1] || libres[0]];
   pintarOfertas();
 }
 
 function elegirSabor(i, pos, id) {
+  if (agotado(id)) return;
   elegidos[pos] = id;
   pintarOfertas();
 }
@@ -1359,6 +1378,19 @@ const btnArriba = document.getElementById("btnArriba");
 btnArriba.addEventListener("click", () => window.scrollTo(0, 0));
 
 pintarTodo();
+
+(async function cargarDisponibilidad() {
+  try {
+    const r = await fetch('https://pcdjuajibqhhlqcllmgr.supabase.co/functions/v1/izipay', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ accion: 'disponibilidad' })
+    });
+    if (!r.ok) return;
+    const d = await r.json();
+    AGOTADOS = new Set(d.agotados || []);
+    if (AGOTADOS.size) pintarTodo();
+  } catch (e) {}
+})();
 </script>
 </body>
 </html>

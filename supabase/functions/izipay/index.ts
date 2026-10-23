@@ -16,7 +16,10 @@
 //  4. accion "pedido": registra un pedido "Yape al recibir"
 //     (sin recargo, sin pasar por Izipay).
 //  5. accion "pedidos_crm": le pasa al CRM los pedidos web
-//     reales para registrarlos allá (ver pedidosCrm).
+//     reales y las compras con tarjeta sin terminar.
+//  6. accion "stock_crm" / "disponibilidad": el CRM marca qué
+//     está agotado y la web lo muestra (y no deja pagarlo).
+//  7. accion "reclamo": Libro de Reclamaciones virtual.
 //
 // Cada pedido confirmado (tarjeta pagada o Yape registrado) le
 // avisa a Roberto por Slack y por correo (ver avisarPedido).
@@ -78,6 +81,7 @@ async function catalogo(): Promise<Catalogo> {
 async function calcularMonto(items: any[], zona: string, distrito: string, metodo = "tarjeta") {
   const { productos, reglasCobro, tarifasDeliveryLima } = await catalogo();
   if (!Array.isArray(items) || items.length === 0) throw new Error("El carrito está vacío.");
+  await revisarAgotados(items, productos);
   let subtotal = 0;
   let unidadesBN = 0;
   const lineas = items.map((i) => {
@@ -294,6 +298,10 @@ function textoPedido(p: any) {
 
 async function avisarPedido(p: any) {
   const { titulo, cuerpo } = textoPedido(p);
+  await avisarTexto(titulo, cuerpo);
+}
+
+async function avisarTexto(titulo: string, cuerpo: string) {
   const tareas: Promise<unknown>[] = [];
   const slack = Deno.env.get("SLACK_BOT_TOKEN");
   const canal = Deno.env.get("SLACK_DM_CHANNEL");
@@ -354,12 +362,7 @@ const CRM_CLAVE_PUBLICA = "sb_publishable_PhNcFR421xTZxfXhSr6wfg_t1HJA2rf";
 const BANDEJA_DESDE = "2026-10-17T05:00:00Z"; // mismo arranque que el tablero de Envíos del CRM
 
 async function pedidosCrm(body: any) {
-  const token = String(body.token || "");
-  if (!token) return json({ error: "Falta la sesión del CRM." }, 401);
-  const r = await fetch(CRM_URL + "/auth/v1/user", {
-    headers: { apikey: CRM_CLAVE_PUBLICA, Authorization: "Bearer " + token },
-  });
-  if (!r.ok) return json({ error: "Sesión del CRM no válida." }, 401);
+  if (!(await sesionCrmValida(String(body.token || "")))) return json({ error: "Sesión del CRM no válida." }, 401);
   const { data, error } = await db.from("pagos_web")
     .select("order_id,creado_en,metodo,estado,monto,zona,distrito,cliente,items,desglose,izipay_respuesta")
     .gte("creado_en", BANDEJA_DESDE)
@@ -372,7 +375,117 @@ async function pedidosCrm(body: any) {
       ? p.estado === "por_cobrar"
       : p.estado === "pagado" && p.izipay_respuesta?.orderDetails?.mode !== "TEST"
   ).map(({ izipay_respuesta, ...p }: any) => p);
-  return json({ pedidos });
+  return json({ pedidos, intentos: await intentosSinTerminar() });
+}
+
+// "Compras sin terminar": intentos de pago con tarjeta que no se completaron, para escribirle
+// al cliente. Se quitan los de quien después compró de verdad (mismo celular) y, si una persona
+// intentó varias veces, queda solo el último intento. Los de los últimos 30 min no salen
+// (puede estar pagando en ese momento).
+const INTENTOS_DESDE = "2026-10-10T05:00:00Z";
+async function intentosSinTerminar() {
+  const { data } = await db.from("pagos_web")
+    .select("order_id,creado_en,metodo,estado,monto,zona,distrito,cliente,items,izipay_respuesta")
+    .gte("creado_en", INTENTOS_DESDE)
+    .order("creado_en", { ascending: true });
+  const filas = data || [];
+  const cel = (p: any) => String(p.cliente?.telefono || "").replace(/\D/g, "").slice(-9);
+  const real = (p: any) =>
+    p.metodo === "yape" ? p.estado === "por_cobrar" : p.estado === "pagado" && p.izipay_respuesta?.orderDetails?.mode !== "TEST";
+  const limite = Date.now() - 30 * 60 * 1000;
+  const porCelular = new Map<string, any>();
+  for (const p of filas) {
+    if (p.metodo !== "tarjeta" || real(p) || !cel(p)) continue;
+    if (new Date(p.creado_en).getTime() > limite) continue;
+    const compro = filas.some((q: any) => real(q) && cel(q) === cel(p) && q.creado_en >= p.creado_en);
+    if (compro) continue;
+    porCelular.set(cel(p), p); // queda el último intento
+  }
+  return [...porCelular.values()].map(({ izipay_respuesta, ...p }: any) => p);
+}
+
+// ---------- Disponibilidad (stock del CRM → "Agotado" en la web) ----------
+// El CRM manda qué productos de la web están agotados (ids de zb-catalogo.js) y, por producto,
+// qué sabores no se pueden elegir (ofertas/packs con selector de sabor): { agotados, sabores }. La web lo lee con "disponibilidad" y el cobro lo
+// respeta en calcularMonto: no se puede pagar algo agotado aunque la página esté desactualizada.
+async function sesionCrmValida(token: string) {
+  if (!token) return false;
+  const r = await fetch(CRM_URL + "/auth/v1/user", {
+    headers: { apikey: CRM_CLAVE_PUBLICA, Authorization: "Bearer " + token },
+  });
+  return r.ok;
+}
+
+async function stockCrm(body: any) {
+  if (!(await sesionCrmValida(String(body.token || "")))) return json({ error: "Sesión del CRM no válida." }, 401);
+  const lista = (x: any) => Array.isArray(x) ? x.map((s) => String(s).slice(0, 40)).slice(0, 200) : [];
+  const sabores: Record<string, string[]> = {};
+  for (const [id, l] of Object.entries(body.sabores || {}).slice(0, 100)) sabores[String(id).slice(0, 40)] = lista(l).map((s) => s.toLowerCase());
+  const valor = { agotados: lista(body.agotados), sabores };
+  const { error } = await db.from("estado_web").upsert({ clave: "disponibilidad", valor, actualizado_en: new Date().toISOString() });
+  if (error) throw new Error("No se pudo guardar la disponibilidad.");
+  cacheDisp = null;
+  return json({ ok: true });
+}
+
+let cacheDisp: { datos: { agotados: string[]; sabores: Record<string, string[]> }; hasta: number } | null = null;
+async function leerDisponibilidad() {
+  if (cacheDisp && cacheDisp.hasta > Date.now()) return cacheDisp.datos;
+  const { data } = await db.from("estado_web").select("valor").eq("clave", "disponibilidad").maybeSingle();
+  const datos = { agotados: data?.valor?.agotados || [], sabores: data?.valor?.sabores || {} };
+  cacheDisp = { datos, hasta: Date.now() + 60 * 1000 };
+  return datos;
+}
+
+async function disponibilidad() {
+  return json(await leerDisponibilidad());
+}
+
+// Lanza error si el carrito trae algo agotado (producto o sabor elegido).
+async function revisarAgotados(items: any[], productos: any[]) {
+  const { agotados, sabores: saboresPorId } = await leerDisponibilidad();
+  for (const i of items || []) {
+    if (agotados.includes(i.id)) throw new Error("Lo sentimos: " + (productos.find((x) => x.id === i.id)?.nombre || "un producto") + " se acaba de agotar. Quítalo del carrito para continuar.");
+    const sabores = String(i.notas || "").split("·").map((s) => (s.split(":")[1] || "").trim().toLowerCase()).filter(Boolean);
+    const sinStock = sabores.find((s) => (saboresPorId[i.id] || []).includes(s));
+    if (sinStock) throw new Error("Lo sentimos: el sabor " + sinStock + " se agotó. Elige otro sabor para continuar.");
+  }
+}
+
+// ---------- Libro de Reclamaciones virtual ----------
+// Guarda la hoja con un código correlativo (LR-2026-000001) y avisa a Roberto por Slack y correo
+// (mismo canal que los pedidos). La web muestra la hoja completa para que el cliente la guarde.
+const txt = (v: unknown, max: number) => String(v ?? "").trim().slice(0, max);
+async function reclamo(body: any) {
+  const consumidor = {
+    nombre: txt(body.nombre, 120), documento: txt(body.documento, 20), domicilio: txt(body.domicilio, 250),
+    telefono: txt(body.telefono, 20), email: txt(body.email, 120), apoderado: txt(body.apoderado, 120),
+  };
+  const bien = { tipo: body.bienTipo === "servicio" ? "servicio" : "producto", monto: Number(body.monto) || 0, descripcion: txt(body.descripcion, 300) };
+  const tipo = body.tipo === "queja" ? "queja" : "reclamo";
+  const detalle = txt(body.detalle, 3000);
+  const pedido = txt(body.pedido, 1500);
+  if (!consumidor.nombre || !consumidor.documento || !consumidor.domicilio || !detalle || !pedido) {
+    return json({ error: "Completa los campos obligatorios." }, 400);
+  }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(consumidor.email)) return json({ error: "Escribe un correo válido." }, 400);
+  const temporal = "tmp-" + crypto.randomUUID();
+  const { data, error } = await db.from("libro_reclamaciones")
+    .insert({ codigo: temporal, tipo, consumidor, bien, detalle, pedido }).select("numero,creado_en").single();
+  if (error || !data) throw new Error("No se pudo registrar. Intenta de nuevo.");
+  const codigo = "LR-" + new Date(data.creado_en).getFullYear() + "-" + String(data.numero).padStart(6, "0");
+  await db.from("libro_reclamaciones").update({ codigo }).eq("numero", data.numero);
+  const titulo = "📕 Libro de Reclamaciones " + codigo + " — " + tipo.toUpperCase() + " (responder en máx. 15 días hábiles)";
+  const cuerpo = [
+    "Consumidor: " + consumidor.nombre + " · Doc: " + consumidor.documento,
+    "Domicilio: " + consumidor.domicilio,
+    "Celular: " + (consumidor.telefono || "—") + " · Correo: " + consumidor.email,
+    consumidor.apoderado ? "Padre/madre/apoderado: " + consumidor.apoderado : "",
+    "Bien: " + bien.tipo + " — " + (bien.descripcion || "—") + " · Monto: S/ " + bien.monto,
+    "", "Detalle: " + detalle, "", "Pedido del consumidor: " + pedido,
+  ].filter(Boolean).join("\n");
+  try { await avisarTexto(titulo, cuerpo); } catch (e) { console.error("Aviso de reclamo falló", e); }
+  return json({ codigo, fecha: data.creado_en });
 }
 
 Deno.serve(async (req) => {
@@ -388,6 +501,9 @@ Deno.serve(async (req) => {
     if (body.accion === "validar") return await validar(body);
     if (body.accion === "pedido") return await pedidoYape(body);
     if (body.accion === "pedidos_crm") return await pedidosCrm(body);
+    if (body.accion === "stock_crm") return await stockCrm(body);
+    if (body.accion === "disponibilidad") return await disponibilidad();
+    if (body.accion === "reclamo") return await reclamo(body);
     return json({ error: "Acción desconocida" }, 400);
   } catch (e) {
     console.error(e);

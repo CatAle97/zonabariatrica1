@@ -1238,6 +1238,7 @@ a.nav-link {
 }
 .sabor-pill:hover { border-color: #D8DEE7; background: var(--bg-soft); color: var(--text); }
 .sabor-pill.active { border-color: var(--blue); background: var(--blue-light); color: var(--blue); font-weight: 600; }
+.sabor-pill.sabor-agotado { opacity: .45; text-decoration: line-through; cursor: not-allowed; }
 
 /* SABOR POPUP */
 .sp-overlay {
@@ -6490,7 +6491,7 @@ function badgesEtapaHTML(p, max) {
    nunca se descuadra. En cuanto el producto tenga precio en
    zb-catalogo.js, vuelve solo al comportamiento normal. */
 function sinPrecio(p) {
-  return !!(p && (p.consultar || p.precio == null));
+  return !!(p && (p.consultar || p.precio == null || p.agotado));
 }
 
 /* Productos anunciados que todavía no tienen stock.
@@ -6506,11 +6507,66 @@ function esProximo(p) {
 
 /* Etiqueta que ocupa el lugar del precio. */
 function textoSinPrecio(p) {
+  if (esAgotado(p)) return 'Agotado';
   return esProximo(p) ? 'Próximamente' : 'Consultar precio';
 }
 
+/* AGOTADOS (2026-10-22): el CRM manda qué está sin stock a la función izipay
+   (acción disponibilidad). Aquí se marca p.agotado y, como sinPrecio() lo
+   incluye, el producto queda fuera del carrito por cualquier vía y el botón
+   pasa a "Avísame". En ofertas/packs con selector, solo se bloquea el sabor
+   sin stock (DISPONIBILIDAD.sabores[id]). El cobro también lo revisa en la
+   función, así que una página vieja tampoco puede vender algo agotado. */
+let DISPONIBILIDAD = { agotados: [], sabores: {} };
+function esAgotado(p) {
+  return !!(p && p.agotado);
+}
+function saborAgotado(id, sabor) {
+  return ((DISPONIBILIDAD.sabores || {})[id] || []).includes(String(sabor).trim().toLowerCase());
+}
+/* Deshabilita las pastillas de sabor sin stock dentro de un contenedor y, si
+   la elegida por defecto quedó deshabilitada, elige la primera disponible. */
+function marcarSaboresAgotados(cont, id) {
+  if (!cont) return;
+  cont.querySelectorAll('.sabor-pills').forEach(grupo => {
+    const pills = [...grupo.querySelectorAll('.sabor-pill')];
+    pills.forEach(b => {
+      if (saborAgotado(id, b.textContent)) {
+        b.disabled = true; b.classList.add('sabor-agotado'); b.classList.remove('active');
+        b.title = 'Agotado';
+      }
+    });
+    if (!grupo.querySelector('.sabor-pill.active')) {
+      const libre = pills.find(b => !b.disabled);
+      if (libre) libre.classList.add('active');
+    }
+  });
+}
+async function cargarDisponibilidad() {
+  try {
+    const r = await fetch('https://pcdjuajibqhhlqcllmgr.supabase.co/functions/v1/izipay', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ accion: 'disponibilidad' })
+    });
+    if (!r.ok) return;
+    DISPONIBILIDAD = await r.json();
+  } catch (e) { return; }
+  const agotados = new Set(DISPONIBILIDAD.agotados || []);
+  productos.forEach(p => {
+    if (!agotados.has(p.id)) return;
+    p.agotado = true;
+    // Las tarjetas ya pintadas se rehacen en su lugar, sin repintar la página.
+    document.querySelectorAll('.fav-btn[data-id="' + p.id + '"]').forEach(b => {
+      const card = b.closest('.card');
+      if (card) card.outerHTML = cardHTML(p);
+    });
+  });
+}
+
 function enlaceConsulta(p) {
-  const texto = esProximo(p)
+  const texto = esAgotado(p)
+    ? 'Hola Zoe 👋 Avísame cuando vuelva a haber stock de: ' + p.nombre
+    : esProximo(p)
     ? 'Hola Zoe 👋 Avísame cuando llegue: ' + p.nombre
     : 'Hola Zoe 👋 Quiero consultar el precio de: ' + p.nombre;
   return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(texto);
@@ -6538,6 +6594,7 @@ function cardHTML(p) {
       ${oferta ? `<span class="badge-oferta">${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
       ${pack ? `<span class="badge-pack">${__('pack_ahorra')} S/ ${p.ahorro}</span>` : ''}
       ${esProximo(p) ? `<span class="badge-proximo">Próximamente</span>` : ''}
+      ${esAgotado(p) ? `<span class="badge-proximo">Agotado</span>` : ''}
       <div class="nombre" onclick="abrirModal('${p.id}')" style="cursor:pointer">${p.nombre}</div>
       ${badgesEtapaHTML(p, 2)}
       <span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>
@@ -6551,7 +6608,7 @@ function cardHTML(p) {
       <div class="card-btns">
         <button class="btn-ver-sm" onclick="abrirModal('${p.id}')">${__('btn_ver')}</button>
         ${consultar
-          ? `<button class="btn-agregar btn-consultar" onclick="consultarPrecio('${p.id}',event)">${esProximo(p) ? 'Avísame' : 'Consultar'}</button>`
+          ? `<button class="btn-agregar btn-consultar" onclick="consultarPrecio('${p.id}',event)">${esProximo(p) || esAgotado(p) ? 'Avísame' : 'Consultar'}</button>`
           : `<button class="btn-agregar" onclick="agregarACotizacion('${p.id}',true)">+ ${__('btn_agregar')}</button>`}
       </div>
     </div>
@@ -6573,7 +6630,8 @@ function abrirModal(id) {
     `<span class="marca${p.marcaTipo==='lvl'?' lvl':''}">${p.marca}</span>` +
     (p.tipo === 'pack'   ? ' <span class="badge-pack">PACK</span>' : '') +
     (p.tipo === 'oferta' ? ' <span class="badge-oferta">🔥 OFERTA · Ahorra S/ ' + p.ahorro + '</span>' : '') +
-    (esProximo(p) ? ' <span class="badge-proximo">Próximamente</span>' : '');
+    (esProximo(p) ? ' <span class="badge-proximo">Próximamente</span>' : '') +
+    (esAgotado(p) ? ' <span class="badge-proximo">Agotado</span>' : '');
 
   const nombreEl = document.getElementById('mNombre');
   nombreEl.textContent = p.nombre;
@@ -6602,7 +6660,9 @@ function abrirModal(id) {
   const consultar = sinPrecio(p);
   let ph;
   if (consultar) {
-    const nota = esProximo(p)
+    const nota = esAgotado(p)
+      ? 'Se nos agotó por ahora. Escríbenos por WhatsApp y te avisamos apenas vuelva.'
+      : esProximo(p)
       ? 'Este producto todavía no está disponible. Escríbenos por WhatsApp y te avisamos apenas llegue el stock.'
       : 'Producto recién llegado. Escríbenos por WhatsApp y te confirmamos precio y disponibilidad.';
     ph = `<div class="modal-precio precio-consultar">${textoSinPrecio(p)}</div>
@@ -6699,6 +6759,7 @@ function abrirModal(id) {
     mSabores.style.display = 'none';
     mSabores.innerHTML = '';
   }
+  marcarSaboresAgotados(mSabores, p.id);
 
   resetZoom();
   document.getElementById('modalOverlay').classList.add('open');
@@ -6818,6 +6879,7 @@ function mostrarSaborPopup(id) {
     _agregarDirecto(id, false);
     return;
   }
+  if (_spTipo === 'seleccionSabor') marcarSaboresAgotados(body, id);
 
   document.getElementById('spOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -7835,6 +7897,7 @@ let vistaDesktop = 'normal';
 let vistaMobile = window.innerWidth <= 600 ? '2col' : '1col';
 
 renderizar('todos', null);
+cargarDisponibilidad();
 // Filtro por URL (?cat=proteina) para llegar desde las páginas de categoría
 (function() {
   const catURL = new URLSearchParams(location.search).get('cat');
@@ -8880,7 +8943,7 @@ function pintarBarraCompra(p) {
   const consultar = sinPrecio(p);
 
   if (val) {
-    val.textContent = consultar ? (esProximo(p) ? 'Próximamente' : 'Consultar') : 'S/ ' + p.precio;
+    val.textContent = consultar ? (esAgotado(p) ? 'Agotado' : esProximo(p) ? 'Próximamente' : 'Consultar') : 'S/ ' + p.precio;
     val.classList.toggle('precio-consultar', consultar);
   }
 
