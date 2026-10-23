@@ -4118,6 +4118,21 @@ section[id], .productos-header { scroll-margin-top: 92px; }
   #productos-section.modo-inicio #contenido.v-dt-grande .precio { font-size: 21px; }
 }
 
+/* Filas por categoría del inicio: siempre deslizables, aunque el
+   cliente tenga elegida la vista de 2 columnas. */
+#productos-section.modo-inicio #contenido .seccion-titulo {
+  font-family: 'Manrope', var(--font); font-size: 18px; font-weight: 800;
+  text-transform: none; letter-spacing: -0.02em; color: var(--text); padding-bottom: 0;
+}
+#productos-section.modo-inicio #contenido .carousel { flex-wrap: nowrap; overflow-x: auto !important; }
+#productos-section.modo-inicio #contenido .carousel .card { width: 252px !important; }
+#productos-section.modo-inicio #contenido .carousel-btn { display: flex; }
+@media (max-width: 600px) {
+  #productos-section.modo-inicio #contenido .carousel .card { width: 46% !important; flex: 0 0 46%; }
+  #productos-section.modo-inicio #contenido .carousel-btn { display: none; }
+  #productos-section.modo-inicio #contenido .carousel-wrap { padding: 0 var(--gutter) var(--s-4); }
+}
+
 /* --- Ofertas especiales ------------------------------------- */
 .zb-ofertas { padding: var(--s-6) var(--gutter); }
 .zb-ofertas-inner {
@@ -6239,6 +6254,14 @@ function renderizar(f, sub) {
         document.getElementById('productos-section').classList.add('modo-inicio');
         const lista = INICIO_DESTACADOS.map(id => productos.find(p => p.id === id)).filter(Boolean);
         html += sec('', lista);
+        /* Debajo de los más vendidos, el resto por categoría en filas
+           deslizables, en el orden que pidió Roberto (23-10-2026). */
+        const fila = (tit, lista, key) => carouselSec(tit, lista.filter(p => !esAgotado(p)).concat(lista.filter(esAgotado)), key, true);
+        html += fila('Ofertas', productos.filter(p => p.cat === 'oferta'), 'inicio-ofertas');
+        html += fila('Proteínas', productos.filter(p => p.cat === 'proteina' && p.tipo !== 'pack'), 'inicio-prot');
+        html += fila('Vitaminas', productos.filter(p => p.cat === 'vitaminas'), 'inicio-vit');
+        html += fila('Packs', allPacks, 'inicio-packs');
+        html += fila('Fibra y Colágeno', productos.filter(p => p.cat === 'colageno' && p.tipo !== 'pack'), 'inicio-col');
         html += `<div class="ver-todo-wrap"><button class="ver-todo-btn" type="button" onclick="verCatalogoCompleto()">Ver todos los suplementos (${productos.length})</button></div>`;
         break;
       }
@@ -6326,12 +6349,12 @@ function sec(titulo, lista) {
   return `${tit}<div class="grid">${lista.map(cardHTML).join('')}</div>`;
 }
 
-function carouselSec(titulo, lista, key) {
+function carouselSec(titulo, lista, key, sinBucle) {
   if (!lista.length) return '';
   const id = 'car-' + key;
   const tit = titulo ? `<div class="seccion-titulo">${titulo}</div>` : '';
   const cards = lista.map(cardHTML).join('');
-  const infinite = lista.length >= 5;
+  const infinite = !sinBucle && lista.length >= 5;
   return `${tit}<div class="carousel-wrap">
     <button class="carousel-btn prev" id="${id}-prev" onclick="moverCarousel('${id}',-1)" aria-label="Anterior"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
     <div class="carousel" id="${id}" data-inf="${infinite}">${infinite ? cards+cards : cards}</div>
