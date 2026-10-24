@@ -4413,6 +4413,46 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
               <label for="clienteDistrito" class="ck-label">Distrito *</label>
               <select id="clienteDistrito" class="ck-input" onchange="actualizarTotalForm()"></select>
             </div>
+            <div id="provBox" style="margin-top:10px;display:none;">
+              <label for="clienteDepartamento" class="ck-label">Departamento *</label>
+              <select id="clienteDepartamento" class="ck-input">
+                <option value="">Elige tu departamento</option>
+                <option value="Amazonas">Amazonas</option>
+                <option value="Áncash">Áncash</option>
+                <option value="Apurímac">Apurímac</option>
+                <option value="Arequipa">Arequipa</option>
+                <option value="Ayacucho">Ayacucho</option>
+                <option value="Cajamarca">Cajamarca</option>
+                <option value="Cusco">Cusco</option>
+                <option value="Huancavelica">Huancavelica</option>
+                <option value="Huánuco">Huánuco</option>
+                <option value="Ica">Ica</option>
+                <option value="Junín">Junín</option>
+                <option value="La Libertad">La Libertad</option>
+                <option value="Lambayeque">Lambayeque</option>
+                <option value="Lima (provincias)">Lima (provincias)</option>
+                <option value="Loreto">Loreto</option>
+                <option value="Madre de Dios">Madre de Dios</option>
+                <option value="Moquegua">Moquegua</option>
+                <option value="Pasco">Pasco</option>
+                <option value="Piura">Piura</option>
+                <option value="Puno">Puno</option>
+                <option value="San Martín">San Martín</option>
+                <option value="Tacna">Tacna</option>
+                <option value="Tumbes">Tumbes</option>
+                <option value="Ucayali">Ucayali</option>
+              </select>
+              <div class="ck-dos" style="margin-top:10px;">
+                <div>
+                  <label for="clienteProvincia" class="ck-label">Provincia *</label>
+                  <input id="clienteProvincia" class="ck-input" type="text" autocomplete="address-level2" placeholder="Ej: Cusco">
+                </div>
+                <div>
+                  <label for="clienteDistritoProv" class="ck-label">Distrito o ciudad *</label>
+                  <input id="clienteDistritoProv" class="ck-input" type="text" autocomplete="address-level3" placeholder="Ej: Wanchaq">
+                </div>
+              </div>
+            </div>
             <div id="entregaDetalle" class="ck-nota-entrega"></div>
             <div id="avisoTraslado" class="ck-aviso-naranja" style="display:none;">
               📦 Se agregará <strong>S/ 10</strong> por traslado y embalaje a agencia Shalom.
@@ -7352,6 +7392,7 @@ function actualizarZona() {
     : textoEntregaLima();
   document.getElementById('formYapeTitulo').textContent = textoYape(esProv);
   document.getElementById('distritoBox').style.display = esProv ? 'none' : 'block';
+  document.getElementById('provBox').style.display = esProv ? 'block' : 'none';
   document.getElementById('avisoTraslado').style.display = esProv ? 'block' : 'none';
   document.getElementById('formTrasladoFila').style.display = esProv ? 'flex' : 'none';
   document.getElementById('zonaLimaLabel').style.borderColor = esProv ? 'var(--border)' : 'var(--blue)';
@@ -7545,6 +7586,11 @@ function validarPaso(p) {
   let ok = true;
   if (p === 1) {
     if (zona === 'lima' && !val('clienteDistrito')) { ckError('clienteDistrito', 'Elige tu distrito para calcular el delivery.'); ok = false; }
+    if (zona === 'provincia') {
+      if (!val('clienteDepartamento')) { ckError('clienteDepartamento', 'Elige tu departamento.'); ok = false; }
+      if (!val('clienteProvincia')) { ckError('clienteProvincia', 'Escribe tu provincia.'); ok = false; }
+      if (!val('clienteDistritoProv')) { ckError('clienteDistritoProv', 'Escribe tu distrito o ciudad.'); ok = false; }
+    }
     if (!val('clienteDireccion')) {
       ckError('clienteDireccion', zona === 'provincia' ? 'Escribe la dirección de la agencia Shalom donde recogerás tu pedido.' : 'Escribe tu dirección exacta.');
       ok = false;
@@ -7575,7 +7621,7 @@ function pintarRevision() {
   const esProv = document.querySelector('input[name="zonaEnvio"]:checked')?.value === 'provincia';
   const metodo = document.querySelector('input[name="formMetodoPago"]:checked')?.value || '';
   document.getElementById('revEntrega').innerHTML = esProv
-    ? 'Provincia — agencia Shalom<br>' + escHtml(val('clienteDireccion'))
+    ? escHtml(ubicacionProvincia()) + ' — agencia Shalom<br>' + escHtml(val('clienteDireccion'))
     : escHtml(val('clienteDistrito')) + '<br>' + escHtml(val('clienteDireccion')) +
       (val('clienteUbicacion') ? '<br>📍 Enlace de ubicación agregado' : '');
   document.getElementById('revDatos').innerHTML =
@@ -7599,12 +7645,22 @@ function cerrarDatosCliente() {
   document.body.style.overflow = '';
 }
 
+/* Provincia: "Distrito, Provincia, Departamento" (2026-10-24). */
+function ubicacionProvincia() {
+  const v = id => document.getElementById(id).value.trim();
+  return [v('clienteDistritoProv'), v('clienteProvincia'), v('clienteDepartamento').replace(' (provincias)', '')].filter(Boolean).join(', ');
+}
+
 function enviarConDatos() {
   const nombre = document.getElementById('clienteNombre').value.trim();
-  const direccion = document.getElementById('clienteDireccion').value.trim();
   const metodo = document.querySelector('input[name="formMetodoPago"]:checked')?.value || '';
   const zona = document.querySelector('input[name="zonaEnvio"]:checked')?.value || 'lima';
   if (!metodo) { irPaso(3); validarPaso(3); return; }
+  if (zona === 'provincia' && !validarPaso(1)) { irPaso(1); return; }
+  /* La ubicación viaja pegada a la dirección con " · Ubicación: " (así la
+     lee el CRM y la ve el aviso de pedido, sin tocar la función de Supabase). */
+  const agencia = document.getElementById('clienteDireccion').value.trim();
+  const direccion = zona === 'provincia' && agencia ? agencia + ' · Ubicación: ' + ubicacionProvincia() : agencia;
   if (!direccion) {
     alert(zona === 'provincia'
       ? 'Escribe la dirección de la agencia Shalom donde recogerás tu pedido.'
