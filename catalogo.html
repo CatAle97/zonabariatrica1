@@ -687,6 +687,12 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
     <div id="formPedido" hidden>
       <button class="btn-pagar" id="btnPagar" type="button">
         Continuar<svg class="icono"><use href="#i-flecha"/></svg></button>
+      <div id="armarLink" hidden>
+        <p class="separador-wa">Link de compra para el cliente</p>
+        <button class="btn-pedido" id="btnLinkWa" type="button">Mandar por WhatsApp</button>
+        <button class="btn-limpiar" id="btnLinkCopiar" type="button" style="margin-top:8px;">Copiar link</button>
+        <p class="nota-pagar" id="linkAviso"></p>
+      </div>
       <button class="btn-limpiar" id="btnLimpiar" type="button">Vaciar carrito</button>
     </div>
 
@@ -1271,6 +1277,48 @@ function irAPagar() {
   location.href = "/?pedido=" + encodeURIComponent(JSON.stringify(items));
 }
 document.getElementById("btnPagar").addEventListener("click", irAPagar);
+
+/* =========================================================
+   LINK DE COMPRA (26-10-2026)
+   ---------------------------------------------------------
+   /catalogo?armar=1 (lo abre el botón "Link de compra" del CRM):
+   Roberto arma aquí lo que le cotizó al cliente y en vez de
+   pagar él, copia o manda por WhatsApp el enlace /?pedido=...
+   El cliente lo abre, cae en el checkout con esos productos,
+   llena sus datos y paga. Es el mismo enlace que usa "Continuar",
+   así que el precio lo pone la tienda (no viaja en el link).
+   ========================================================= */
+const MODO_ARMAR = (function () {
+  try {
+    if (new URLSearchParams(location.search).get("armar") === "1") sessionStorage.setItem("zb_armar", "1");
+    return sessionStorage.getItem("zb_armar") === "1";
+  } catch (e) { return new URLSearchParams(location.search).get("armar") === "1"; }
+})();
+function linkDeCompra() {
+  const items = itemsTienda();
+  if (!items.length || items.some(x => !x.id)) return "";
+  return "https://zonabariatrica.com/?pedido=" + encodeURIComponent(JSON.stringify(items));
+}
+function mensajeLinkDeCompra(link) {
+  const lineas = Object.keys(cot).map(id => "• " + cot[id] + "x " + P[id].nombre);
+  return "¡Hola! Este es tu pedido de Zona Bariátrica:\n\n" + lineas.join("\n") +
+    "\n\nTotal: " + soles(cuentas().total) + " + delivery\n\n" +
+    "Entra aquí, completa tus datos y elige cómo pagar (tarjeta o Yape):\n" + link;
+}
+if (MODO_ARMAR) {
+  document.getElementById("armarLink").hidden = false;
+  document.getElementById("btnLinkWa").addEventListener("click", () => {
+    const link = linkDeCompra();
+    if (link) window.open("https://wa.me/?text=" + encodeURIComponent(mensajeLinkDeCompra(link)), "_blank");
+  });
+  document.getElementById("btnLinkCopiar").addEventListener("click", async () => {
+    const link = linkDeCompra();
+    if (!link) return;
+    const aviso = document.getElementById("linkAviso");
+    try { await navigator.clipboard.writeText(mensajeLinkDeCompra(link)); aviso.textContent = "Copiado: pégalo en el chat del cliente."; }
+    catch (e) { window.prompt("Copia el link:", link); }
+  });
+}
 
 /* El contador de la cabecera del pedido */
 function pintarChipCuenta() {
