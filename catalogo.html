@@ -1009,8 +1009,10 @@ function refrescar(id) {
 
 /* ---------- TARJETAS ---------- */
 /* Las fotos se sirven en WebP (pesan la mitad) con el JPG de
-   respaldo para celulares viejos que no lo soportan. Si el .webp
-   no existiera, el navegador usa el .jpg sin romper nada. */
+   respaldo para celulares viejos que no lo soportan. OJO: cada
+   foto nueva necesita su .webp al lado del .jpg; si falta, el
+   navegador NO vuelve al .jpg y la foto sale en blanco (pasó con
+   Nutranex el 26-10-2026). */
 /* Fotos sin versión .webp al día.
    Las fotos de producto (cat-*) se renovaron el 16-09-2026 y sus .webp
    quedaron desactualizados: como el <source> gana sobre el <img>, el
