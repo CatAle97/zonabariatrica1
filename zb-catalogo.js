@@ -17,6 +17,7 @@ const LVL = "img/lvl-";
 const BF = "img/bf-";
 const NF = "img/nf-";
 const SP = "img/sp-";
+const NX = "img/nx-";
 
 const tn = {
   fibra_bn: {
@@ -438,6 +439,18 @@ const productos = [
     uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.",
     tn: tn.geno },
 
+  /* Oferta por cantidad de Nutranex D-Protin (26-10-2026).
+     La unidad cuesta S/135; llevando 2 salen S/260 (ahorro S/10). */
+  { id:"oferta6", tipo:"oferta", marcaTipo:"nx",
+    brand:"Nutranex", eligibleForBnQuantityDiscount:false, cat:"oferta", destacado:true, marca:"Nutranex",
+    nombre:"Pack x2 Nutranex D-Protin",
+    desc:"Llévate 2 latas de 275 g de Nutranex D-Protin, proteína en polvo sabor neutro con doble fuente de proteínas: caseinato de calcio y proteína de suero de leche aislada.",
+    incluye:"Nutranex D-Protin 275 g x2 · Sabor neutro",
+    tags:["550 g en total","Doble fuente de proteínas","Sabor neutro","Sin azúcar"],
+    precio:260, precioN:270, ahorro:10,
+    img: "img/oferta-2nutranex.jpg",
+    uso:"Sigue el modo de preparación indicado en la etiqueta de la lata." },
+
   // BARI&NUTRITION PACKS
   { id:"bp1", tipo:"pack", marcaTipo:"bn",
     brand:"B&N", eligibleForBnQuantityDiscount:false, cat:"pack", marca:"Bari&Nutrition",
@@ -829,7 +842,23 @@ const productos = [
     img: SP+"geno-frente.jpg",
     galeria: [SP+"geno-frente.jpg", "img/tn-geno.jpg"],
     uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.",
-    tn: tn.geno }
+    tn: tn.geno },
+
+  // NUTRANEX
+  /* Alta del 26-10-2026. Marca nueva en la tienda: Nutranex.
+     En el CRM es NDP-PP-NE. Sabor neutro y no participa del
+     descuento por cantidad de B&N — su oferta por cantidad es
+     el pack x2 (oferta6). Falta la tabla nutricional (foto de
+     la parte de atrás de la lata) para completar uso y tn. */
+  { id:"nx1", tipo:"nx", marcaTipo:"nx",
+    brand:"Nutranex", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", destacado:true, marca:"Nutranex",
+    nombre:"Nutranex D-Protin 275 g — Sabor Neutro",
+    desc:"Proteína en polvo con doble fuente de proteínas: caseinato de calcio y proteína de suero de leche aislada, con 18 aminoácidos y antioxidante. Sabor neutro, libre de gluten, azúcar y grasas, y sin preservantes.",
+    tags:["Doble fuente de proteínas","18 aminoácidos","Sabor neutro","Sin azúcar","Sin gluten"],
+    precio:135,
+    img: NX+"dprotin-frente.jpg",
+    galeria: [NX+"dprotin-frente.jpg"],
+    uso:"Sigue el modo de preparación indicado en la etiqueta de la lata." }
 ];
 
 /* =========================================================
@@ -905,7 +934,8 @@ const slugs = {
   bf1: "multivitaminico-tropical-tabletas",
   bf2: "multivitaminico-bayas-tabletas",
   nf1: "whey-protein-isolate-nutrifath",
-  sp1: "geno-deep-care-advance"
+  sp1: "geno-deep-care-advance",
+  nx1: "nutranex-d-protin"
 };
 
 /* Devuelve la dirección de la ficha de un producto, o null si

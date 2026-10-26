@@ -738,6 +738,8 @@ const P = {
     foto:"img/nf-whey-isolate-v2.jpg", tabla:"img/tn-nutrifath.jpg", chips:["23 g proteína","Sin lactosa","Sin gluten","Sabor neutro"] },
   geno: { uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.", marca:"Safie Pharma", nombre:"Geno Deep Care Advance — Proteína Bariátrica 400 g", precio:180, nuevo:true,
     foto:"img/sp-geno-frente.jpg", tabla:"img/tn-geno.jpg", chips:["19 g proteína","Whey Isolate","Colágeno hidrolizado","0 g azúcar"] },
+  nutranex: { uso:"Seguir el modo de preparación de la lata.", marca:"Nutranex", nombre:"Nutranex D-Protin 275 g — Sabor Neutro", precio:135, nuevo:true,
+    foto:"img/nx-dprotin-frente.jpg", chips:["Doble fuente de proteínas","18 aminoácidos","Sabor neutro","Sin azúcar"] },
 
   multivit: { uso:"4 gomitas al día.", marca:"Bari&Nutrition", nombre:"Multivitamínico en Gomitas — 120 und", precio:150, bn:true,
     foto:"img/cat-gomita-multivit.jpg", tabla:"img/tn-multivitaminico.jpg", chips:["120 gomitas","23 vitaminas","Sin azúcar añadida"] },
@@ -797,11 +799,11 @@ const P = {
    ========================================================= */
 const IDS_TIENDA = {
   liquidaFresa:"bi3", liquidaMaracumango:"bi4", wheyVainilla:"bi1", wheyChocolate:"bi2",
-  isolate:"nf1", geno:"sp1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
+  isolate:"nf1", geno:"sp1", nutranex:"nx1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
   bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9",
   lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4"
 };
-const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4", "oferta5"];
+const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4", "oferta5", "oferta6"];
 
 /* AGOTADOS (2026-10-22): ids de la tienda sin stock según el CRM (función
    izipay, acción disponibilidad). Se declara AQUÍ arriba a propósito: acciones()
@@ -830,7 +832,7 @@ function agotado(id) { return AGOTADOS.has(IDS_TIENDA[id]); }
 
 /* Qué producto va en cada sección (un mismo producto puede repetirse) */
 const CATALOGO = {
-  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","geno","lvlVainilla","lvlChocolate"],
+  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","geno","nutranex","lvlVainilla","lvlChocolate"],
   vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical"],
   fibraColageno: ["colageno","fibra","lvlColageno","lvlFibra"],
   /* Packs con precio rebajado, dibujados en la sección de Ofertas
@@ -863,7 +865,9 @@ const OFERTAS_X2 = [
   { nombre:"2 Whey Protein Isolate Nutrifath", ids:["isolate"], precioPar:580,
     foto:"img/oferta-2nutrifath-v2.jpg", incluye:"2 envases de 1 kg, sabor neutro" },
   { nombre:"2 Geno Deep Care Advance", ids:["geno"], precioPar:350,
-    foto:"img/oferta-2geno.jpg", incluye:"2 frascos de 400 g" }
+    foto:"img/oferta-2geno.jpg", incluye:"2 frascos de 400 g" },
+  { nombre:"2 Nutranex D-Protin", ids:["nutranex"], precioPar:260,
+    foto:"img/oferta-2nutranex.jpg", incluye:"2 latas de 275 g, sabor neutro" }
 ];
 
 /* Descuento por cantidad — mismos tramos que la tienda */

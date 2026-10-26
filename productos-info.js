@@ -268,6 +268,24 @@
         { q: '¿Con qué se mezcla?', r: 'Con unos 200 ml de agua.' },
         { q: '¿Hay precio especial llevando dos?', r: 'Sí. Un frasco cuesta S/ 180 y llevando 2 pagas S/ 350: ahorras S/ 10.' }
       ]
+    },
+
+    nx1: { // Nutranex D-Protin — 275 g, sabor neutro
+      paraQuien: 'Suele utilizarse en pacientes bariátricos que necesitan completar su aporte diario de proteína y prefieren un polvo sin sabor que se pueda sumar a sus preparaciones.',
+      beneficios: [
+        'Doble fuente de proteínas: caseinato de calcio y proteína de suero de leche aislada',
+        '18 aminoácidos',
+        'Contiene antioxidante',
+        'Libre de gluten, azúcar y grasas',
+        'Sin preservantes',
+        'Sabor neutro: no cambia el gusto de aquello con lo que se mezcla'
+      ],
+      consumo: 'Sigue el modo de preparación indicado en la etiqueta de la lata.',
+      faq: [
+        { q: '¿Qué significa doble fuente de proteínas?', r: 'Que combina dos proteínas de la leche: el caseinato de calcio, que se digiere más lento, y la proteína de suero aislada, que se absorbe más rápido.' },
+        { q: '¿A qué sabe si es sabor neutro?', r: 'Prácticamente a nada. Se puede sumar a caldos, purés, yogur o bebidas sin cambiarles el gusto, algo útil cuando los sabores dulces cansan tras la cirugía.' },
+        { q: '¿Hay precio especial llevando dos?', r: 'Sí. Una lata cuesta S/ 135 y llevando 2 pagas S/ 260: ahorras S/ 10.' }
+      ]
     }
 
   };
