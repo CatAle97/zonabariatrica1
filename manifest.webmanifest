@@ -1,0 +1,16 @@
+{
+  "name": "Zona Bariátrica",
+  "short_name": "Zona Bariátrica",
+  "description": "Suplementos para pacientes bariátricos: vitaminas, proteínas, colágeno y packs. Envíos a todo el Perú.",
+  "lang": "es",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0057FF",
+  "icons": [
+    { "src": "/img/app/icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/img/app/icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/img/app/icono-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
