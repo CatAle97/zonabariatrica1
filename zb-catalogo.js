@@ -42,7 +42,7 @@ const tn = {
     nota: "2 gomitas al día, preferiblemente con una comida. La biotina puede interferir con pruebas de laboratorio."
   },
   hierro: {
-    srv: "1 gomita masticable", srvs: "30 gomitas por envase",
+    srv: "1 gomita masticable", srvs: "90 gomitas por envase",
     filas: [
       ["Calorías","15 kcal",""],
       ["Grasa total","0.5 g","1%"],
@@ -672,7 +672,7 @@ const productos = [
 
   { id:"bi6", tipo:"bn", marcaTipo:"bn",
     brand:"B&N", eligibleForBnQuantityDiscount:true, cat:"vitaminas", subcat:"hierro", formato:"gomitas", marca:"Bari&Nutrition",
-    nombre:"Gomitas Hierro 45mg + Vitamina C — 30 und",
+    nombre:"Gomitas Hierro 45mg + Vitamina C — 90 und",
     desc:"Gomitas de gelatina sabor naranja. 45mg de hierro (250% VD) + 60mg de vitamina C. La vitamina C potencia la absorción del hierro.",
     tags:["45mg hierro","Vitamina C 60mg","250% VD","Sabor naranja","Sin azúcares"],
     precio:150,
