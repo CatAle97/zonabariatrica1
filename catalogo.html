@@ -1310,7 +1310,7 @@ const MODO_ARMAR = (function () {
 function linkDeCompra() {
   const items = itemsTienda();
   if (!items.length || items.some(x => !x.id)) return "";
-  return "https://zonabariatrica.com/?pedido=" + encodeURIComponent(JSON.stringify(items));
+  return "https://zonabariatrica.com/?l=1&pedido=" + encodeURIComponent(JSON.stringify(items));
 }
 function mensajeLinkDeCompra(link) {
   const lineas = Object.keys(cot).map(id => "• " + cot[id] + "x " + P[id].nombre);

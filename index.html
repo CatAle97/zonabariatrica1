@@ -1633,6 +1633,8 @@ footer {
 /* ── CHECKOUT EN PÁGINA COMPLETA (09-10-2026) ───────────────────── */
 .ck-page { display: none; position: fixed; inset: 0; z-index: 1150; background: var(--bg); overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .ck-page.open { display: block; animation: zb-fade-in var(--t-base); }
+/* Link de compra: solo el pedido y el pago, sin salidas a la tienda */
+.zb-link-compra #ckVolver, .zb-link-compra #checkoutEmpuje { display: none !important; }
 .ck-top { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 12px;
   background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 16px; }
 .ck-volver { background: none; border: none; color: var(--blue); font: 600 14px/1 inherit; font-family: inherit; cursor: pointer; padding: 6px 0; }
@@ -9424,8 +9426,16 @@ function irAFaq() {
   const prod = params.get('producto');
   const pedido = params.get('pedido');
 
+  /* LINK DE COMPRA (28-10-2026): el enlace que Roberto manda desde el
+     CRM lleva &l=1. El cliente cae DIRECTO en la pantalla de pago: sin
+     "Volver al catálogo" ni sugerencias de otros productos; solo su
+     pedido, sus datos y cómo pagar. */
+  if (pedido && params.get('l') === '1') document.documentElement.classList.add('zb-link-compra');
+
+  /* Se abre apenas se lee la página (DOMContentLoaded), sin esperar a
+     que bajen todas las fotos de la tienda ('load' tardaba segundos). */
   if (pedido) {
-    window.addEventListener('load', function () {
+    const abrirPedido = function () {
       let items = [];
       try { items = JSON.parse(pedido); } catch (e) {}
       if (!Array.isArray(items)) items = [];
@@ -9443,7 +9453,9 @@ function irAFaq() {
       actualizarCartUI();
       document.getElementById('ckVolver').textContent = '← Volver al catálogo';
       irAlCheckout();
-    });
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', abrirPedido);
+    else abrirPedido();
   }
 
   if (ver === 'blog') {
