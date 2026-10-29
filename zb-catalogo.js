@@ -387,7 +387,7 @@ const tn = {
     nota: "Sabor a chocolate, endulzado con stevia. Sin azúcar, sin lactosa, sin gluten. Los porcentajes de valores diarios están basados en una dieta de 2000 calorías."
   },
   /* READY-GDC proteína líquida 1 L (Safie Pharma). Transcrita de la
-     etiqueta (foto del 29-10-2026); la misma para naranja y neutro. */
+     etiqueta del sabor naranja (foto del 29-10-2026). */
   ready: {
     srv: "30 mL (1 medida)", srvs: "33 porciones por envase",
     filas: [
@@ -408,6 +408,29 @@ const tn = {
       ["Magnesio","400 mg","95%"]
     ],
     nota: "Con colágeno hidrolizado, L-arginina (4 g por porción), L-triptófano y glutamina. Sin azúcar, sin grasa, sin gluten y sin lactosa. Los porcentajes de valores diarios están basados en una dieta de 2000 calorías."
+  },
+  /* READY-GDC sabor neutro: su etiqueta trae otros %VD (zinc, B1, B6)
+     y no lleva saborizante ni colorante. Transcrita tal cual. */
+  ready_neutro: {
+    srv: "30 mL (1 vaso)", srvs: "33 porciones por envase",
+    filas: [
+      ["Calorías","80 kcal","4%"],
+      ["Grasa total","0 g","0%"],
+      ["Grasa saturada","0 g","0%"],
+      ["Colesterol","0 mg","0%"],
+      ["Sodio","0 mg","0%"],
+      ["Carbohidratos totales","0 g","0%"],
+      ["Fibra dietética","0 g","0%"],
+      ["Azúcares","0 g","—"],
+      ["Proteína","20 g","27%"],
+      ["Vitamina C","90 mg","100%"],
+      ["Vitamina D3","20 mcg","100%"],
+      ["Zinc","11 mg","168%"],
+      ["Vitamina B1","1 mg","67%"],
+      ["Vitamina B6","1.5 mg","67%"],
+      ["Magnesio","400 mg","95%"]
+    ],
+    nota: "Sin saborizante ni colorante. Con colágeno hidrolizado, L-arginina, L-triptófano y glutamina. Sin azúcar, sin grasa, sin gluten y sin lactosa. Los porcentajes de valores diarios están basados en una dieta de 2000 calorías."
   }
 };
 const productos = [
@@ -935,9 +958,9 @@ const productos = [
     tags:["20g proteína","4g L-arginina","Sabor neutro","Sin azúcar","Sin lactosa"],
     precio:199,
     img: SP+"ready-frente.jpg",
-    galeria: [SP+"ready-frente.jpg", SP+"ready-posterior.jpg"],
-    uso:"Porción: 30 mL (1 medida). 33 porciones por botella.",
-    tn: tn.ready },
+    galeria: [SP+"ready-frente.jpg", SP+"ready-neutro-posterior.jpg"],
+    uso:"Porción: 30 mL (1 vaso). 33 porciones por botella.",
+    tn: tn.ready_neutro },
 
   // NUTRANEX
   /* Alta del 26-10-2026. Marca nueva en la tienda: Nutranex.

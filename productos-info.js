@@ -316,7 +316,7 @@
         'Sin azúcar, sin grasa, sin gluten y sin lactosa',
         '33 porciones por botella de 1 L'
       ],
-      consumo: 'Porción: 30 mL (1 medida).',
+      consumo: 'Porción: 30 mL (1 vaso).',
       faq: [
         { q: '¿Cuánto rinde una botella de 1 L?', r: 'Trae 33 porciones de 30 mL. Cuánto te dura depende de cuántas porciones tomes al día.' },
         { q: '¿Tiene azúcar o lactosa?', r: 'No. Es sin azúcar, sin grasa, sin gluten y sin lactosa.' },
