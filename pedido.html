@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu pedido — Zona Bariátrica</title>
+<!-- Link de compra: página privada para cada cliente, no se indexa -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0F52FF">
+<link rel="icon" type="image/png" href="/img/app/favicon-48.png">
+<style>
+/* =========================================================
+   LINK DE COMPRA — /pedido (2026-10-29)
+   ---------------------------------------------------------
+   Roberto marca en el CRM lo que el cliente pidió por WhatsApp
+   y le manda este enlace. El cliente ve SOLO 3 pasos: su
+   pedido (puede agregar algo), sus datos y el pago. No hay
+   salidas a la tienda ni al catálogo, a propósito.
+
+   El enlace dura 24 horas (parámetro t = cuándo se creó).
+   El precio NUNCA viaja en el enlace: lo pone zb-catalogo.js y
+   lo vuelve a calcular la función "izipay" al cobrar, igual
+   que en la tienda. El pedido cae en la bandeja de Envíos del
+   CRM como cualquier compra de la web.
+   ========================================================= */
+:root {
+  --azul: #0F52FF; --azul-suave: #EEF3FF; --texto: #0F172A; --gris: #64748B;
+  --borde: #DCE1EA; --fondo: #F5F7FB; --verde: #15803D; --rojo: #DC2626; --r: 14px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 16px; color: var(--texto); background: var(--fondo); }
+button, input, select { font: inherit; }
+.top { background: #fff; border-bottom: 1px solid var(--borde); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+.marca { font-weight: 800; letter-spacing: .04em; color: var(--azul); font-size: 15px; }
+.seguro { font-size: 13px; color: var(--gris); }
+.wrap { max-width: 560px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 22px; margin: 4px 0 14px; }
+h2 { font-size: 17px; margin: 0 0 12px; }
+.pasos { display: flex; gap: 6px; list-style: none; padding: 0; margin: 0 0 16px; }
+.pasos li { flex: 1; text-align: center; font-size: 12.5px; color: var(--gris); border-top: 4px solid var(--borde); padding-top: 6px; }
+.pasos li.activo { color: var(--azul); border-color: var(--azul); font-weight: 700; }
+.pasos li.hecho { color: var(--verde); border-color: var(--verde); cursor: pointer; }
+.card { background: #fff; border: 1px solid var(--borde); border-radius: var(--r); padding: 16px; margin-bottom: 14px; }
+.item { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--borde); }
+.item:last-child { border-bottom: none; }
+.item img { width: 48px; height: 48px; object-fit: contain; border-radius: 8px; background: #fff; flex-shrink: 0; }
+.item-txt { flex: 1; min-width: 0; }
+.item-nombre { font-size: 14px; font-weight: 600; line-height: 1.3; }
+.item-notas { font-size: 12.5px; color: var(--gris); margin-top: 2px; }
+.item-precio { font-size: 15px; font-weight: 700; color: var(--azul); margin-top: 3px; }
+.qty { display: flex; align-items: center; gap: 6px; }
+.qty button { width: 32px; height: 32px; border: 1.5px solid var(--borde); background: #fff; border-radius: 8px; font-size: 17px; font-weight: 700; cursor: pointer; }
+.qty span { min-width: 18px; text-align: center; font-weight: 700; }
+.cuentas div { display: flex; justify-content: space-between; padding: 4px 0; font-size: 15px; }
+.cuentas .total { font-size: 18px; font-weight: 800; border-top: 1px solid var(--borde); margin-top: 6px; padding-top: 10px; }
+.desc { color: var(--verde); font-weight: 600; }
+.btn { display: block; width: 100%; background: var(--azul); color: #fff; border: none; border-radius: 12px; padding: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
+.btn:disabled { opacity: .6; cursor: default; }
+.btn-sec { background: #fff; color: var(--azul); border: 1.5px solid var(--azul); }
+.nav { display: flex; gap: 10px; margin-top: 16px; }
+.nav .btn-sec { flex: 0 0 34%; }
+.link { background: none; border: none; color: var(--azul); font-weight: 600; padding: 0; cursor: pointer; text-decoration: underline; font-size: 14px; }
+label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 12px 0 5px; }
+.inp { width: 100%; padding: 11px 12px; border: 1.5px solid var(--borde); border-radius: 10px; background: #fff; font-size: 16px; }
+.inp:focus { outline: none; border-color: var(--azul); }
+.inp.mal { border-color: var(--rojo); }
+.error { color: var(--rojo); font-size: 13px; margin: 4px 0 0; }
+.ayuda { font-size: 13px; color: var(--gris); margin: 6px 0 0; line-height: 1.45; }
+.opciones { display: flex; gap: 8px; }
+.opcion { flex: 1; display: flex; gap: 10px; align-items: center; border: 1.5px solid var(--borde); border-radius: 12px; padding: 12px; cursor: pointer; background: #fff; }
+.opcion.sel { border-color: var(--azul); background: var(--azul-suave); }
+.opcion input { accent-color: var(--azul); width: 18px; height: 18px; margin: 0; }
+.opciones.col { flex-direction: column; }
+.opcion-titulo { font-weight: 600; font-size: 15px; }
+.opcion-sub { font-size: 13px; color: var(--gris); margin-top: 2px; }
+.aviso { background: #FFF7ED; border: 1px solid #FED7AA; color: #92400E; border-radius: 10px; padding: 10px 12px; font-size: 14px; margin-top: 10px; }
+.nota { background: var(--azul-suave); border-radius: 10px; padding: 10px 12px; font-size: 14px; margin-top: 10px; }
+/* Agregar algo más: lista por nombre y precio, sin fotos */
+.agregar-lista { margin-top: 12px; }
+.agregar-cat { font-size: 13px; font-weight: 700; color: var(--gris); text-transform: uppercase; letter-spacing: .04em; margin: 14px 0 4px; }
+.agregar-fila { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--borde); font-size: 14px; }
+.agregar-fila button { flex-shrink: 0; background: var(--azul-suave); color: var(--azul); border: none; border-radius: 8px; padding: 7px 12px; font-weight: 700; cursor: pointer; }
+.agregar-fila button:disabled { background: #F1F5F9; color: var(--gris); cursor: default; }
+.sabores { display: flex; flex-direction: column; gap: 6px; padding: 8px 0 12px; border-bottom: 1px solid var(--borde); }
+.sabores select { padding: 8px; border: 1.5px solid var(--borde); border-radius: 8px; font-size: 15px; }
+.centro { text-align: center; }
+.grande { font-size: 44px; margin: 6px 0; }
+.oculto { display: none !important; }
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="marca">ZONA BARIÁTRICA</span>
+  <span class="seguro">🔒 Pago seguro</span>
+</header>
+
+<main class="wrap">
+  <!-- Enlace vencido o inválido -->
+  <section id="vencido" class="card centro oculto">
+    <div class="grande">⏰</div>
+    <h2 id="vencidoTitulo">Este enlace ya venció</h2>
+    <p class="ayuda" id="vencidoTexto">Los enlaces de compra duran 24 horas. Escríbenos y te mandamos uno nuevo al toque.</p>
+    <a class="btn" style="text-decoration:none;margin-top:14px;" href="https://wa.me/51961841069?text=Hola%2C%20mi%20enlace%20de%20compra%20venci%C3%B3%2C%20%C2%BFme%20mandan%20uno%20nuevo%3F" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+  </section>
+
+  <div id="app" class="oculto">
+    <h1 id="titulo">Tu pedido</h1>
+    <ol class="pasos" id="pasos">
+      <li data-paso="1">1. Tu pedido</li>
+      <li data-paso="2">2. Tus datos</li>
+      <li data-paso="3">3. Pago</li>
+    </ol>
+
+    <!-- PASO 1: el pedido que armó Roberto (y lo que el cliente agregue) -->
+    <section id="paso1">
+      <div class="card">
+        <h2>Lo que pediste</h2>
+        <div id="lista"></div>
+        <p id="avisoQuitados" class="aviso oculto"></p>
+        <div class="cuentas" style="margin-top:10px;">
+          <div><span>Subtotal</span><span id="c1Sub"></span></div>
+          <div id="c1DescFila" class="desc oculto"><span id="c1DescLbl"></span><span id="c1Desc"></span></div>
+        </div>
+        <p class="ayuda">El delivery se calcula en el siguiente paso, según tu distrito.</p>
+      </div>
+      <div class="card">
+        <button type="button" class="link" id="btnAgregar">+ ¿Quieres agregar algo más?</button>
+        <div id="agregarLista" class="agregar-lista oculto"></div>
+      </div>
+      <button type="button" class="btn" id="btnPaso1">Continuar</button>
+    </section>
+
+    <!-- PASO 2: entrega y datos (los mismos campos que la tienda) -->
+    <section id="paso2" class="oculto">
+      <div class="card">
+        <h2>¿Dónde entregamos?</h2>
+        <div class="opciones">
+          <label class="opcion sel" id="zLima"><input type="radio" name="zona" value="lima" checked> <span>Lima y Callao</span></label>
+          <label class="opcion" id="zProv"><input type="radio" name="zona" value="provincia"> <span>Provincia</span></label>
+        </div>
+        <div id="boxLima">
+          <label class="lbl" for="distrito">Distrito *</label>
+          <select id="distrito" class="inp"></select>
+          <p class="nota" id="entregaLima"></p>
+        </div>
+        <div id="boxProv" class="oculto">
+          <label class="lbl" for="departamento">Departamento *</label>
+          <select id="departamento" class="inp">
+            <option value="">Elige tu departamento</option>
+            <option>Amazonas</option><option>Áncash</option><option>Apurímac</option><option>Arequipa</option>
+            <option>Ayacucho</option><option>Cajamarca</option><option>Cusco</option><option>Huancavelica</option>
+            <option>Huánuco</option><option>Ica</option><option>Junín</option><option>La Libertad</option>
+            <option>Lambayeque</option><option>Lima (provincias)</option><option>Loreto</option><option>Madre de Dios</option>
+            <option>Moquegua</option><option>Pasco</option><option>Piura</option><option>Puno</option>
+            <option>San Martín</option><option>Tacna</option><option>Tumbes</option><option>Ucayali</option>
+          </select>
+          <label class="lbl" for="provincia">Provincia *</label>
+          <input id="provincia" class="inp" type="text" autocomplete="address-level2" placeholder="Ej: Cusco">
+          <label class="lbl" for="distritoProv">Distrito o ciudad *</label>
+          <input id="distritoProv" class="inp" type="text" autocomplete="address-level3" placeholder="Ej: Wanchaq">
+          <p class="nota">📦 Llega en <strong>2 a 5 días hábiles</strong> a la agencia Shalom más cercana a ti.</p>
+          <p class="aviso">Se agregará <strong id="trasladoMonto">S/ 10</strong> por traslado y embalaje a agencia Shalom.</p>
+        </div>
+        <label class="lbl" for="direccion" id="lblDireccion">Dirección exacta *</label>
+        <input id="direccion" class="inp" type="text" autocomplete="street-address" placeholder="Ej: Av. Perú 123, dpto 201 — San Miguel">
+        <p id="ayudaShalom" class="ayuda oculto">Escribe la dirección de la <strong>agencia Shalom</strong> donde recogerás (calle y número), no solo tu ciudad. ¿No la sabes? <a href="https://shalom.com.pe/agencias" target="_blank" rel="noopener">Busca tu agencia aquí</a>.</p>
+        <div id="boxUbicacion">
+          <label class="lbl" for="ubicacion">Enlace de tu ubicación <span style="font-weight:400;color:var(--gris);">(opcional)</span></label>
+          <input id="ubicacion" class="inp" type="url" inputmode="url" autocomplete="off" placeholder="Pega aquí tu enlace de Google Maps">
+          <p class="ayuda">Ayuda al repartidor a llegar a tu puerta. En Google Maps toca tu ubicación → Compartir → Copiar enlace.</p>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Tus datos</h2>
+        <label class="lbl" for="nombre">Nombre completo *</label>
+        <input id="nombre" class="inp" type="text" autocomplete="name" placeholder="Tu nombre y apellido">
+        <label class="lbl" for="dni">DNI *</label>
+        <input id="dni" class="inp" type="text" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="Ej: 45678912">
+        <label class="lbl" for="telefono">Celular *</label>
+        <input id="telefono" class="inp" type="tel" inputmode="tel" autocomplete="tel" placeholder="Ej: 987 654 321">
+        <label class="lbl" for="email">Correo electrónico *</label>
+        <input id="email" class="inp" type="email" inputmode="email" autocomplete="email" placeholder="tucorreo@ejemplo.com">
+        <p class="ayuda">Te enviamos la confirmación a tu correo y te escribimos para coordinar la entrega.</p>
+      </div>
+      <div class="nav">
+        <button type="button" class="btn btn-sec" data-ir="1">Atrás</button>
+        <button type="button" class="btn" id="btnPaso2">Continuar</button>
+      </div>
+    </section>
+
+    <!-- PASO 3: método de pago y total -->
+    <section id="paso3" class="oculto">
+      <div class="card">
+        <h2>¿Cómo quieres pagar?</h2>
+        <div class="opciones col" id="metodos">
+          <label class="opcion" id="mTarjeta"><input type="radio" name="metodo" value="tarjeta">
+            <div><div class="opcion-titulo">Tarjeta de crédito o débito (+4%)</div><div class="opcion-sub">Visa, Mastercard, American Express, Diners</div></div></label>
+          <label class="opcion" id="mYape"><input type="radio" name="metodo" value="yape">
+            <div><div class="opcion-titulo" id="yapeTitulo">Yape o transferencia BCP — pagas al recibir</div><div class="opcion-sub">No aceptamos efectivo</div></div></label>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Resumen</h2>
+        <div class="cuentas">
+          <div><span>Productos</span><span id="c3Sub"></span></div>
+          <div id="c3DescFila" class="desc oculto"><span id="c3DescLbl"></span><span id="c3Desc"></span></div>
+          <div><span id="c3EnvioLbl">Delivery</span><span id="c3Envio"></span></div>
+          <div id="c3TrasFila" class="oculto"><span>Traslado y embalaje</span><span id="c3Tras"></span></div>
+          <div id="c3RecFila" class="oculto"><span>Pago con tarjeta (4%)</span><span id="c3Rec"></span></div>
+          <div class="total"><span>Total</span><span id="c3Total"></span></div>
+        </div>
+        <p class="ayuda" id="c3Entrega"></p>
+      </div>
+      <div id="accion">
+        <div class="nav">
+          <button type="button" class="btn btn-sec" data-ir="2">Atrás</button>
+          <button type="button" class="btn" id="btnFinalizar">Finalizar compra</button>
+        </div>
+      </div>
+      <!-- Formulario de tarjeta de Izipay, aquí mismo -->
+      <div id="pagoTarjeta" class="card oculto">
+        <p id="pagoResumen" style="font-weight:800;font-size:18px;margin:0 0 8px;"></p>
+        <div id="pagoEstado" class="ayuda" style="margin-bottom:10px;">Cargando formulario seguro…</div>
+        <div id="pagoForm"><div class="kr-embedded"></div></div>
+        <button type="button" class="link" style="margin-top:12px;" id="btnAYape">¿Problemas con la tarjeta? Mejor pago con Yape</button>
+        <p class="ayuda centro">🔒 Tus datos de tarjeta los procesa Izipay. Zona Bariátrica no los ve ni los guarda.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Gracias -->
+  <section id="gracias" class="card centro oculto">
+    <div class="grande">✅</div>
+    <h2 id="graciasTitulo"></h2>
+    <p id="graciasTexto" style="line-height:1.55;"></p>
+  </section>
+</main>
+
+<script src="/zb-catalogo.js"></script>
+<script>
+const FUNCION = 'https://pcdjuajibqhhlqcllmgr.supabase.co/functions/v1/izipay';
+const WA = '51961841069';
+const DURACION_MS = 24 * 60 * 60 * 1000;
+// "productos" ya lo declara zb-catalogo.js (no se vuelve a declarar o la página no arranca)
+const reglas = window.ZB_REGLAS_COBRO;
+const tarifas = window.ZB_TARIFAS_LIMA;
+const CATEGORIAS = [['proteina', 'Proteínas'], ['vitaminas', 'Vitaminas'], ['colageno', 'Fibra y colágeno'], ['oferta', 'Ofertas x2'], ['pack', 'Packs']];
+
+let carrito = [];
+let disponibilidad = { agotados: [], sabores: {} };
+let paso = 1;
+let pagoDatos = null;
+
+const $ = id => document.getElementById(id);
+const prod = id => productos.find(p => p.id === id);
+const soles = n => 'S/ ' + (Number.isInteger(n) ? n : n.toFixed(2));
+const esc = t => String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const sinPrecio = p => !p || p.consultar || p.precio == null || p.proximamente || disponibilidad.agotados.includes(p.id);
+
+/* ---------- Leer el enlace ---------- */
+function leerEnlace() {
+  const q = new URLSearchParams(location.search);
+  const t = Number(q.get('t'));
+  let items = [];
+  try { items = JSON.parse(q.get('p') || '[]'); } catch (e) {}
+  if (!Array.isArray(items) || !items.length || !t) return { error: 'invalido' };
+  const ahora = Date.now();
+  if (ahora - t > DURACION_MS || t - ahora > 10 * 60 * 1000) return { error: 'vencido' };
+  return { items };
+}
+
+/* Lo que se vende suelto con un solo sabor lleva "Sabor: X" (igual que la tienda) */
+function notasPorDefecto(p) {
+  return p.sabores && p.saborPredeterminado ? 'Sabor: ' + p.saborPredeterminado : '';
+}
+
+/* ---------- Cuentas: mismas reglas que la tienda y el cobro ---------- */
+function subtotal() { return carrito.reduce((s, i) => s + prod(i.id).precio * i.qty, 0); }
+function descuentoBN() {
+  const u = carrito.reduce((n, i) => n + (prod(i.id).eligibleForBnQuantityDiscount ? i.qty : 0), 0);
+  const tramo = reglas.descuentoBN.tramos.find(t => u >= t.min);
+  return tramo ? tramo.desc : 0;
+}
+function cobro() {
+  const zona = zonaElegida();
+  const metodo = metodoElegido();
+  const sub = subtotal(), desc = descuentoBN(), base = sub - desc;
+  const esProv = zona === 'provincia';
+  const delivery = esProv ? 0 : (tarifas[$('distrito').value] || 0);
+  const traslado = esProv ? reglas.trasladoProvincia : 0;
+  const recargo = metodo === 'tarjeta' ? Math.round((base + traslado + delivery) * reglas.recargoTarjeta * 100) / 100 : 0;
+  return { sub, desc, delivery, traslado, recargo, total: Math.round((base + traslado + delivery + recargo) * 100) / 100 };
+}
+const zonaElegida = () => (document.querySelector('input[name="zona"]:checked') || {}).value || 'lima';
+const metodoElegido = () => (document.querySelector('input[name="metodo"]:checked') || {}).value || '';
+
+/* ---------- Paso 1: el pedido ---------- */
+function pintarLista() {
+  $('lista').innerHTML = carrito.map((i, k) => {
+    const p = prod(i.id);
+    return `<div class="item">
+      <img src="/${esc(p.img)}" alt="" loading="lazy">
+      <div class="item-txt">
+        <div class="item-nombre">${esc(p.nombre)}</div>
+        ${i.notas ? `<div class="item-notas">${esc(i.notas)}</div>` : ''}
+        <div class="item-precio">${soles(p.precio * i.qty)}</div>
+      </div>
+      <div class="qty">
+        <button type="button" aria-label="Quitar uno" onclick="cambiarQty(${k},-1)">−</button>
+        <span>${i.qty}</span>
+        <button type="button" aria-label="Agregar uno" onclick="cambiarQty(${k},1)">+</button>
+      </div>
+    </div>`;
+  }).join('') || '<p class="ayuda">Tu pedido está vacío. Agrega un producto para continuar.</p>';
+  const c = cobro();
+  $('c1Sub').textContent = soles(c.sub);
+  $('c1DescFila').classList.toggle('oculto', !c.desc);
+  $('c1DescLbl').textContent = reglas.descuentoBN.nombre;
+  $('c1Desc').textContent = '-' + soles(c.desc);
+  $('btnPaso1').disabled = !carrito.length;
+}
+function cambiarQty(k, d) {
+  const i = carrito[k];
+  if (!i) return;
+  i.qty = Math.min(50, i.qty + d);
+  if (i.qty <= 0) carrito.splice(k, 1);
+  pintarLista();
+}
+function agregar(id, notas) {
+  const ya = carrito.find(i => i.id === id && i.notas === notas);
+  if (ya) ya.qty++;
+  else carrito.push({ id, qty: 1, notas });
+  pintarLista();
+  if (typeof gtag === 'function') gtag('event', 'link_compra_agrega', { producto: id });
+}
+
+/* "Agregar algo más": solo nombres y precios. Ofertas y packs con
+   sabor a elegir muestran sus selectores antes de agregar. */
+function pintarAgregar() {
+  $('agregarLista').innerHTML = CATEGORIAS.map(([cat, titulo]) => {
+    const lista = productos.filter(p => p.cat === cat && !sinPrecio(p));
+    if (!lista.length) return '';
+    return `<div class="agregar-cat">${titulo}</div>` + lista.map(p => `
+      <div class="agregar-fila"><span>${esc(p.nombre)} — <strong>${soles(p.precio)}</strong></span>
+        <button type="button" onclick="pedirAgregar('${p.id}', this)">Agregar</button></div>
+      <div class="sabores oculto" id="sab-${p.id}"></div>`).join('');
+  }).join('');
+}
+function pedirAgregar(id, btn) {
+  const p = prod(id);
+  if (!p.seleccionSabor) { agregar(id, notasPorDefecto(p)); avisarAgregado(btn); return; }
+  const box = $('sab-' + id);
+  if (!box.classList.contains('oculto')) return;
+  const bloqueados = (disponibilidad.sabores || {})[id] || [];
+  box.innerHTML = p.seleccionSabor.map((g, k) => {
+    const opciones = g.sabores.filter(s => !bloqueados.includes(s.toLowerCase()));
+    return `<label style="font-size:13px;font-weight:600;">${esc(g.label)}
+      <select data-grupo="${k}" style="width:100%;margin-top:3px;">${opciones.map(s => `<option>${esc(s)}</option>`).join('')}</select></label>`;
+  }).join('') + `<button type="button" class="btn" style="padding:10px;font-size:15px;" onclick="confirmarSabores('${id}')">Agregar al pedido</button>`;
+  box.classList.remove('oculto');
+}
+function confirmarSabores(id) {
+  const p = prod(id);
+  const box = $('sab-' + id);
+  const notas = p.seleccionSabor.map((g, k) => g.label + ': ' + box.querySelector('[data-grupo="' + k + '"]').value).join(' · ');
+  box.classList.add('oculto');
+  agregar(id, notas);
+  avisarAgregado(box.previousElementSibling.querySelector('button'));
+}
+function avisarAgregado(btn) {
+  if (!btn) return;
+  btn.textContent = '✓ Agregado';
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = 'Agregar'; btn.disabled = false; }, 1500);
+}
+
+/* ---------- Paso 2: entrega y datos ---------- */
+function llenarDistritos() {
+  $('distrito').innerHTML = '<option value="">Elige tu distrito</option>' +
+    Object.keys(tarifas).sort((a, b) => a.localeCompare(b, 'es'))
+      .map(d => `<option value="${esc(d)}">${esc(d)} — S/ ${tarifas[d]}</option>`).join('');
+}
+function textoEntregaLima() {
+  const ahora = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Lima' }));
+  const h = ahora.getHours() + ahora.getMinutes() / 60;
+  if (ahora.getDay() === 0) return '🚚 <strong>Entrega el lunes.</strong> Atendemos de lunes a sábado, 9:00 AM – 8:00 PM.';
+  if (h < 12) return '🚚 <strong>Entrega HOY</strong> entre 3:00 PM y 8:00 PM.';
+  if (h < 20) return '🚚 <strong>Entrega MAÑANA</strong> entre 10:00 AM y 1:00 PM.';
+  return '🚚 <strong>Entrega MAÑANA</strong> entre 3:00 PM y 8:00 PM.';
+}
+function actualizarZona() {
+  const prov = zonaElegida() === 'provincia';
+  $('zLima').classList.toggle('sel', !prov);
+  $('zProv').classList.toggle('sel', prov);
+  $('boxLima').classList.toggle('oculto', prov);
+  $('boxProv').classList.toggle('oculto', !prov);
+  $('boxUbicacion').classList.toggle('oculto', prov);
+  $('ayudaShalom').classList.toggle('oculto', !prov);
+  $('lblDireccion').textContent = prov ? 'Dirección de la agencia Shalom *' : 'Dirección exacta *';
+  $('direccion').placeholder = prov ? 'Ej: Agencia Shalom Av. La Cultura 1020 — Cusco' : 'Ej: Av. Perú 123, dpto 201 — San Miguel';
+  $('yapeTitulo').textContent = prov ? 'Yape o transferencia BCP — pagas antes del envío' : 'Yape o transferencia BCP — pagas al recibir';
+}
+function pareceDireccionAgencia(t) {
+  t = String(t || '').trim();
+  if (t.length < 10) return false;
+  return /\d/.test(t) || /(^|[\s.,])(av|avenida|jr|jir[oó]n|calle|ca|psje|pasaje|pje|mz|manzana|lt|lote|km|carretera|prolongaci[oó]n|prol|urb|plaza|esq|esquina|cdra|cuadra|mercado|terminal|paradero)([\s.,]|$)/i.test(t);
+}
+function enlaceMapsValido(u) {
+  return /^https:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|maps\.app\.goo\.gl|goo\.gl\/maps)/i.test(String(u || '').trim());
+}
+function error(id, msg) {
+  const el = $(id);
+  el.classList.add('mal');
+  let p = el.nextElementSibling;
+  if (!p || !p.classList.contains('error')) { p = document.createElement('p'); p.className = 'error'; el.insertAdjacentElement('afterend', p); }
+  p.textContent = msg;
+}
+function limpiarErrores() {
+  document.querySelectorAll('.mal').forEach(e => e.classList.remove('mal'));
+  document.querySelectorAll('p.error').forEach(e => e.remove());
+}
+function validarPaso2() {
+  limpiarErrores();
+  const v = id => $(id).value.trim();
+  const prov = zonaElegida() === 'provincia';
+  if (!prov && !v('distrito')) error('distrito', 'Elige tu distrito para calcular el delivery.');
+  if (prov) {
+    if (!v('departamento')) error('departamento', 'Elige tu departamento.');
+    if (!v('provincia')) error('provincia', 'Escribe tu provincia.');
+    if (!v('distritoProv')) error('distritoProv', 'Escribe tu distrito o ciudad.');
+  }
+  if (!v('direccion')) error('direccion', prov ? 'Escribe la dirección de la agencia Shalom donde recogerás tu pedido.' : 'Escribe tu dirección exacta.');
+  else if (prov && !pareceDireccionAgencia(v('direccion'))) error('direccion', 'Escribe la dirección de la agencia Shalom (calle y número), no solo tu ciudad.');
+  if (!prov && v('ubicacion') && !enlaceMapsValido(v('ubicacion'))) error('ubicacion', 'Ese enlace no es de Google Maps. Pega el enlace de Google Maps o deja el campo vacío.');
+  if (!v('nombre')) error('nombre', 'Escribe tu nombre y apellido.');
+  if (!/^[0-9]{8,12}$/.test(v('dni'))) error('dni', 'Escribe tu DNI (8 dígitos).');
+  if (v('telefono').replace(/\D/g, '').length < 9) error('telefono', 'Escribe tu celular (9 dígitos).');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))) error('email', 'Escribe un correo válido: ahí te llega la confirmación.');
+  const primero = document.querySelector('.mal');
+  if (primero) { primero.focus(); return false; }
+  return true;
+}
+function datosCliente() {
+  const v = id => $(id).value.trim();
+  const prov = zonaElegida() === 'provincia';
+  const ubicProv = [v('distritoProv'), v('provincia'), v('departamento').replace(' (provincias)', '')].filter(Boolean).join(', ');
+  return {
+    nombre: v('nombre'), dni: v('dni').replace(/\D/g, ''), telefono: v('telefono'), email: v('email'),
+    zona: prov ? 'provincia' : 'lima', distrito: prov ? '' : v('distrito'),
+    // Igual que la tienda: en provincia la ubicación va pegada a la dirección (así la lee el CRM)
+    direccion: prov ? v('direccion') + ' · Ubicación: ' + ubicProv : v('direccion'),
+    ubicacion: prov ? '' : v('ubicacion')
+  };
+}
+
+/* ---------- Paso 3: pago ---------- */
+function pintarResumen() {
+  const c = cobro(), prov = zonaElegida() === 'provincia', tarjeta = metodoElegido() === 'tarjeta';
+  $('mTarjeta').classList.toggle('sel', tarjeta);
+  $('mYape').classList.toggle('sel', metodoElegido() === 'yape');
+  $('c3Sub').textContent = soles(c.sub);
+  $('c3DescFila').classList.toggle('oculto', !c.desc);
+  $('c3DescLbl').textContent = reglas.descuentoBN.nombre;
+  $('c3Desc').textContent = '-' + soles(c.desc);
+  $('c3EnvioLbl').textContent = prov ? 'Envío Shalom' : 'Delivery (' + $('distrito').value + ')';
+  $('c3Envio').textContent = prov ? 'Se paga en agencia' : soles(c.delivery);
+  $('c3TrasFila').classList.toggle('oculto', !prov);
+  $('c3Tras').textContent = soles(c.traslado);
+  $('c3RecFila').classList.toggle('oculto', !tarjeta);
+  $('c3Rec').textContent = 'S/ ' + c.recargo.toFixed(2);
+  $('c3Total').textContent = tarjeta ? 'S/ ' + c.total.toFixed(2) : soles(c.total);
+  $('c3Entrega').innerHTML = prov ? '📦 Llega en 2 a 5 días hábiles a tu agencia Shalom.' : textoEntregaLima();
+}
+function itemsParaCobro() { return carrito.map(i => ({ id: i.id, qty: i.qty, notas: i.notas || '' })); }
+
+async function llamarFuncion(body) {
+  const r = await fetch(FUNCION, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || 'error ' + r.status);
+  return j;
+}
+
+async function finalizar() {
+  if (!metodoElegido()) { error('metodos', 'Elige cómo quieres pagar.'); return; }
+  const datos = datosCliente();
+  if (metodoElegido() === 'tarjeta') pagarConTarjeta(datos);
+  else registrarYape(datos);
+}
+
+async function registrarYape(datos) {
+  const btn = $('btnFinalizar');
+  btn.disabled = true;
+  try {
+    const r = await llamarFuncion({ accion: 'pedido', items: itemsParaCobro(), ...datos });
+    if (!r.orderId) throw new Error('');
+    if (typeof gtag === 'function') gtag('event', 'pedido_yape', { transaction_id: r.orderId, value: r.total, currency: 'PEN', origen: 'link_compra' });
+    gracias({ orderId: r.orderId, total: r.total, metodo: 'yape', telefono: datos.telefono, provincia: datos.zona === 'provincia' });
+  } catch (e) {
+    alert(e.message && e.message.indexOf('error ') !== 0 ? e.message : 'No pudimos registrar tu pedido. Intenta de nuevo en un momento.');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function cargarKrypton(publicKey) {
+  return new Promise((ok, falla) => {
+    if (window.KR) return ok(window.KR);
+    const base = 'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/';
+    const css = document.createElement('link');
+    css.rel = 'stylesheet'; css.href = base + 'ext/classic.css';
+    document.head.appendChild(css);
+    const s = document.createElement('script');
+    s.src = base + 'stable/kr-payment-form.min.js';
+    s.setAttribute('kr-public-key', publicKey);
+    s.setAttribute('kr-spa-mode', 'true');
+    s.setAttribute('kr-language', 'es-ES');
+    s.onload = () => {
+      const tema = document.createElement('script');
+      tema.src = base + 'ext/classic.js';
+      tema.onload = tema.onerror = () => ok(window.KR);
+      document.head.appendChild(tema);
+    };
+    s.onerror = () => falla(new Error('No se pudo cargar Izipay'));
+    document.head.appendChild(s);
+  });
+}
+async function pagarConTarjeta(datos) {
+  const btn = $('btnFinalizar'), estado = $('pagoEstado');
+  btn.disabled = true;
+  try {
+    let r;
+    try { r = await llamarFuncion({ accion: 'crear', items: itemsParaCobro(), ...datos }); }
+    catch (e) {
+      if (confirm((e.message || 'No pudimos abrir el pago con tarjeta.') + '\n\n¿Prefieres hacer tu pedido ahora y pagar con Yape?')) registrarYape(datos);
+      return;
+    }
+    pagoDatos = { ...datos, orderId: r.orderId, total: r.total };
+    $('pagoResumen').textContent = 'Total a pagar: S/ ' + Number(r.total).toFixed(2);
+    $('accion').classList.add('oculto');
+    $('pagoTarjeta').classList.remove('oculto');
+    $('pagoTarjeta').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const KR = await cargarKrypton(r.publicKey);
+    try { await KR.removeForms(); } catch (e) {}
+    $('pagoForm').innerHTML = '<div class="kr-embedded"></div>';
+    await KR.setFormConfig({ formToken: r.formToken, 'kr-language': 'es-ES' });
+    KR.onSubmit(alAprobarPago);
+    KR.onError(e => { estado.innerHTML = '<span style="color:var(--rojo);">' + esc(e && e.errorMessage ? e.errorMessage : 'El pago no se pudo completar.') + ' Puedes intentar otra vez.</span>'; });
+    const { result } = await KR.attachForm('#pagoForm');
+    await KR.showForm(result.formId);
+    estado.textContent = 'Ingresa los datos de tu tarjeta:';
+  } catch (e) {
+    estado.innerHTML = '<span style="color:var(--rojo);">No se pudo cargar el formulario de pago. Revisa tu conexión e intenta de nuevo.</span>';
+  } finally {
+    btn.disabled = false;
+  }
+}
+function alAprobarPago(paymentData) {
+  $('pagoEstado').textContent = 'Confirmando tu pago…';
+  llamarFuncion({ accion: 'validar', krAnswer: paymentData.rawClientAnswer, krHash: paymentData.hash })
+    .then(d => {
+      if (!d || !d.valido || d.estado !== 'pagado') throw new Error('');
+      if (typeof gtag === 'function') gtag('event', 'purchase', { transaction_id: d.orderId, value: d.monto, currency: 'PEN', origen: 'link_compra' });
+      gracias({ orderId: d.orderId, total: d.monto, metodo: 'tarjeta', telefono: pagoDatos.telefono });
+    })
+    .catch(() => {
+      $('pagoEstado').innerHTML = '<span style="color:var(--rojo);">No pudimos confirmar el pago. Escríbenos al WhatsApp 961 841 069 con tu N° de orden: <strong>' + esc(pagoDatos ? pagoDatos.orderId : '') + '</strong></span>';
+    });
+  return false;
+}
+function cerrarTarjeta() {
+  try { if (window.KR) window.KR.removeForms(); } catch (e) {}
+  $('pagoTarjeta').classList.add('oculto');
+  $('accion').classList.remove('oculto');
+}
+
+function gracias(r) {
+  cerrarTarjeta();
+  const total = '<strong>S/ ' + Number(r.total).toFixed(2) + '</strong>';
+  $('app').classList.add('oculto');
+  $('graciasTitulo').textContent = r.metodo === 'tarjeta' ? '¡Gracias por tu compra!' : '¡Pedido recibido!';
+  $('graciasTexto').innerHTML = 'Tu número de pedido es <strong>' + esc(r.orderId) + '</strong>.<br>' +
+    (r.metodo === 'tarjeta'
+      ? 'Tu pago de ' + total + ' fue aprobado. Te llega el comprobante a tu correo.'
+      : r.provincia
+        ? 'Total a pagar: ' + total + ', <strong>antes del envío</strong>.<br>Realiza tu Yape al <strong>961 841 069</strong> — <strong>ROBERTO GOMEZ SALAS</strong> — y envía la captura: ' +
+          '<a href="https://wa.me/' + WA + '?text=' + encodeURIComponent('Hola, envío la captura de mi Yape del pedido ' + r.orderId) + '" target="_blank" rel="noopener">enviar captura por WhatsApp</a>.'
+        : 'Total a pagar al recibir: ' + total + ' con Yape o transferencia.') +
+    '<br>Te contactamos al <strong>' + esc(r.telefono) + '</strong> para coordinar la entrega.';
+  $('gracias').classList.remove('oculto');
+  window.scrollTo(0, 0);
+  // El enlace ya se usó: recargar no debe volver a armar el pedido
+  try { sessionStorage.setItem('zb_link_usado', location.search); } catch (e) {}
+  history.replaceState(null, '', location.pathname);
+}
+
+/* ---------- Pasos ---------- */
+function irPaso(n) {
+  if (n > 1 && !carrito.length) n = 1;
+  if (n > 2 && !validarPaso2()) n = 2;
+  if (n !== 3) cerrarTarjeta();
+  paso = n;
+  [1, 2, 3].forEach(k => $('paso' + k).classList.toggle('oculto', k !== n));
+  document.querySelectorAll('#pasos li').forEach(li => {
+    const k = Number(li.dataset.paso);
+    li.classList.toggle('activo', k === n);
+    li.classList.toggle('hecho', k < n);
+  });
+  $('titulo').textContent = n === 1 ? 'Tu pedido' : n === 2 ? 'Tus datos' : 'Pago';
+  if (n === 3) pintarResumen();
+  window.scrollTo(0, 0);
+}
+
+/* ---------- Arranque ---------- */
+async function iniciar() {
+  const enlace = leerEnlace();
+  if (enlace.error) {
+    if (enlace.error === 'invalido') {
+      $('vencidoTitulo').textContent = 'Este enlace no es válido';
+      $('vencidoTexto').textContent = 'Puede que se haya copiado incompleto. Escríbenos y te mandamos uno nuevo.';
+    }
+    $('vencido').classList.remove('oculto');
+    return;
+  }
+  try {
+    const r = await fetch(FUNCION, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ accion: 'disponibilidad' }) });
+    if (r.ok) disponibilidad = await r.json();
+  } catch (e) {}
+  const quitados = [];
+  enlace.items.forEach(i => {
+    const p = prod(i && i.id);
+    const qty = Number(i && i.qty);
+    if (!p || !Number.isInteger(qty) || qty < 1 || qty > 50) return;
+    if (sinPrecio(p)) { quitados.push(p.nombre); return; }
+    carrito.push({ id: p.id, qty, notas: String(i.notas || notasPorDefecto(p)).replace(/[<>&"'`]/g, '').slice(0, 200) });
+  });
+  if (quitados.length) {
+    $('avisoQuitados').textContent = 'Sin stock por ahora: ' + quitados.join(', ') + '. Puedes agregar otro producto abajo o escribirnos.';
+    $('avisoQuitados').classList.remove('oculto');
+  }
+  llenarDistritos();
+  $('entregaLima').innerHTML = textoEntregaLima();
+  $('trasladoMonto').textContent = soles(reglas.trasladoProvincia);
+  pintarLista();
+  pintarAgregar();
+  $('app').classList.remove('oculto');
+  irPaso(1);
+  if (typeof gtag === 'function') gtag('event', 'link_compra_abierto', { productos: carrito.length });
+}
+
+$('btnPaso1').addEventListener('click', () => irPaso(2));
+$('btnPaso2').addEventListener('click', () => irPaso(3));
+$('btnFinalizar').addEventListener('click', finalizar);
+$('btnAYape').addEventListener('click', () => { const d = pagoDatos; cerrarTarjeta(); if (d) registrarYape(d); });
+$('btnAgregar').addEventListener('click', () => $('agregarLista').classList.toggle('oculto'));
+document.querySelectorAll('[data-ir]').forEach(b => b.addEventListener('click', () => irPaso(Number(b.dataset.ir))));
+document.querySelectorAll('input[name="zona"]').forEach(r => r.addEventListener('change', actualizarZona));
+document.querySelectorAll('input[name="metodo"]').forEach(r => r.addEventListener('change', () => { limpiarErrores(); pintarResumen(); }));
+$('pasos').addEventListener('click', e => { const li = e.target.closest('li.hecho'); if (li) irPaso(Number(li.dataset.paso)); });
+$('dni').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); });
+document.addEventListener('input', e => { if (e.target.classList.contains('mal')) { e.target.classList.remove('mal'); const p = e.target.nextElementSibling; if (p && p.classList.contains('error')) p.remove(); } });
+iniciar();
+</script>
+<!-- Google Analytics (mismo ID que la tienda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DB7VQ9PWM"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3DB7VQ9PWM');</script>
+</body>
+</html>
