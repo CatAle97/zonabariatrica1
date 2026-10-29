@@ -452,7 +452,7 @@ const productos = [
     incluye:"GENO DEEP CARE ADVANCE 400 g x2 · Sabores a elección: Neutro o Chocolate",
     tags:["800 g en total","Whey Isolate","Neutro o chocolate"],
     precio:350, precioN:360, ahorro:10,
-    img: "img/oferta-2geno.jpg",
+    img: "img/oferta-2geno-mixto.jpg",
     seleccionSabor:[{label:"GENO DEEP CARE 1",sabores:["Neutro","Chocolate"]},{label:"GENO DEEP CARE 2",sabores:["Neutro","Chocolate"]}],
     uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.",
     tn: tn.geno },
