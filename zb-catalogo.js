@@ -443,15 +443,17 @@ const productos = [
     tn: tn.nf_isolate },
 
   /* Oferta por cantidad de GENO DEEP CARE ADVANCE (23-09-2026).
-     La unidad cuesta S/180; llevando 2 salen S/350 (ahorro S/10). */
+     La unidad cuesta S/180; llevando 2 salen S/350 (ahorro S/10).
+     Desde el 29-10-2026 cada frasco se elige neutro (sp1) o chocolate (sp2). */
   { id:"oferta5", tipo:"oferta", marcaTipo:"sp",
     brand:"Safie Pharma", eligibleForBnQuantityDiscount:false, cat:"oferta", destacado:true, marca:"Safie Pharma",
     nombre:"Pack x2 GENO DEEP CARE ADVANCE",
-    desc:"Llévate 2 frascos de 400 g de GENO DEEP CARE ADVANCE, proteína con Whey Isolate, colágeno hidrolizado y micronutrientes. Son 40 porciones en total.",
-    incluye:"GENO DEEP CARE ADVANCE 400 g x2",
-    tags:["800 g en total","19 g proteína","Whey Isolate","Colágeno hidrolizado"],
+    desc:"Llévate 2 frascos de 400 g de GENO DEEP CARE ADVANCE, proteína isolatada con micronutrientes. Elige cada frasco en sabor neutro o chocolate.",
+    incluye:"GENO DEEP CARE ADVANCE 400 g x2 · Sabores a elección: Neutro o Chocolate",
+    tags:["800 g en total","Whey Isolate","Neutro o chocolate"],
     precio:350, precioN:360, ahorro:10,
     img: "img/oferta-2geno.jpg",
+    seleccionSabor:[{label:"GENO DEEP CARE 1",sabores:["Neutro","Chocolate"]},{label:"GENO DEEP CARE 2",sabores:["Neutro","Chocolate"]}],
     uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.",
     tn: tn.geno },
 

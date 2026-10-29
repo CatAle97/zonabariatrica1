@@ -283,7 +283,8 @@
       consumo: 'Porción: 40 g (4 scoops).',
       faq: [
         { q: '¿Cuánto rinde un frasco de 400 g?', r: 'Trae 10 porciones de 40 g (4 scoops). Cuánto te dura depende de cuántas porciones tomes al día.' },
-        { q: '¿Tiene azúcar o lactosa?', r: 'No. Está endulzado con stevia y es sin azúcar, sin lactosa y sin gluten.' }
+        { q: '¿Tiene azúcar o lactosa?', r: 'No. Está endulzado con stevia y es sin azúcar, sin lactosa y sin gluten.' },
+        { q: '¿Hay precio especial llevando dos?', r: 'Sí. Un frasco cuesta S/ 180 y llevando 2 pagas S/ 350, en neutro, chocolate o uno de cada.' }
       ]
     },
 
