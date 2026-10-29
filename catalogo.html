@@ -743,8 +743,10 @@ const P = {
     foto:"img/cat-whey-chocolate.jpg", tabla:"img/tn-whey-vainilla.jpg", chips:["30 g proteína","Sin lactosa","Sin gluten","0% azúcar"] },
   isolate: { uso:"Vía oral. Adultos: 1 porción (25 g, 1 cuchara) al día disuelta en 200-300 ml de agua.", marca:"Nutrifath", nombre:"Whey Protein Isolate 1 kg — Sabor Neutro", precio:295, nuevo:true,
     foto:"img/nf-whey-isolate-v2.jpg", tabla:"img/tn-nutrifath.jpg", chips:["23 g proteína","Sin lactosa","Sin gluten","Sabor neutro"] },
-  geno: { uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.", marca:"Safie Pharma", nombre:"Geno Deep Care Advance — Proteína Bariátrica 400 g", precio:180, nuevo:true,
-    foto:"img/sp-geno-frente.jpg", tabla:"img/tn-geno.jpg", chips:["19 g proteína","Whey Isolate","Colágeno hidrolizado","0 g azúcar"] },
+  geno: { uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.", marca:"Safie Pharma", nombre:"Geno Deep Care Advance — Proteína Bariátrica 400 g — Sabor Neutro", precio:180, nuevo:true,
+    foto:"img/sp-geno-frente.jpg", tabla:"img/tn-geno.jpg", chips:["19 g proteína","Whey Isolate","Colágeno hidrolizado","Sabor neutro"] },
+  genoChocolate: { uso:"Porción: 40 g (4 scoops). 10 porciones por envase.", marca:"Safie Pharma", nombre:"Geno Deep Care Advance — Proteína Bariátrica 400 g — Sabor Chocolate", precio:180, nuevo:true,
+    foto:"img/sp-geno-chocolate-frente.jpg", tabla:"img/sp-geno-chocolate-posterior.jpg", chips:["39.5 g proteína","15 g arginina","Endulzado con stevia","0 g azúcar"] },
   nutranex: { uso:"Seguir el modo de preparación de la lata.", marca:"Nutranex", nombre:"Nutranex D-Protin 275 g — Sabor Neutro", precio:135, nuevo:true,
     foto:"img/nx-dprotin-frente.jpg", chips:["Doble fuente de proteínas","18 aminoácidos","Sabor neutro","Sin azúcar"] },
 
@@ -806,7 +808,7 @@ const P = {
    ========================================================= */
 const IDS_TIENDA = {
   liquidaFresa:"bi3", liquidaMaracumango:"bi4", wheyVainilla:"bi1", wheyChocolate:"bi2",
-  isolate:"nf1", geno:"sp1", nutranex:"nx1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
+  isolate:"nf1", geno:"sp1", genoChocolate:"sp2", nutranex:"nx1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
   bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9",
   lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4"
 };
@@ -839,7 +841,7 @@ function agotado(id) { return AGOTADOS.has(IDS_TIENDA[id]); }
 
 /* Qué producto va en cada sección (un mismo producto puede repetirse) */
 const CATALOGO = {
-  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","geno","nutranex","lvlVainilla","lvlChocolate"],
+  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","geno","genoChocolate","nutranex","lvlVainilla","lvlChocolate"],
   vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical"],
   fibraColageno: ["colageno","fibra","lvlColageno","lvlFibra"],
   /* Packs con precio rebajado, dibujados en la sección de Ofertas

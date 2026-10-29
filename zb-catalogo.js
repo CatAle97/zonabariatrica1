@@ -369,6 +369,22 @@ const tn = {
       ["Fibra dietética","0 g","0%"]
     ],
     nota: "Los porcentajes de valores diarios están basados en una dieta de 2000 calorías."
+  },
+  /* Sabor chocolate (29-10-2026): su etiqueta trae otra porción (40 g). */
+  geno_chocolate: {
+    srv: "40 g (4 scoops)", srvs: "10 porciones por envase",
+    filas: [
+      ["Calorías","160 kcal","8%"],
+      ["Grasa total","0 g","0%"],
+      ["Grasa saturada","0 g","0%"],
+      ["Colesterol","0 mg","0%"],
+      ["Sodio","0 mg","0%"],
+      ["Carbohidratos totales","0.5 g","0.2%"],
+      ["Fibra dietética","0 g","0%"],
+      ["Azúcares","0 g","0%"],
+      ["Proteína","39.5 g","53%"]
+    ],
+    nota: "Sabor a chocolate, endulzado con stevia. Sin azúcar, sin lactosa, sin gluten. Los porcentajes de valores diarios están basados en una dieta de 2000 calorías."
   }
 };
 const productos = [
@@ -835,14 +851,28 @@ const productos = [
      cantidad es el pack x2 (oferta5). */
   { id:"sp1", tipo:"sp", marcaTipo:"sp",
     brand:"Safie Pharma", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", destacado:true, marca:"Safie Pharma",
-    nombre:"GENO DEEP CARE ADVANCE – Proteína Bariátrica 400 g",
+    nombre:"GENO DEEP CARE ADVANCE – Proteína Bariátrica 400 g — Sabor Neutro",
     desc:"Proteína especializada con Whey Isolate, colágeno hidrolizado y micronutrientes: 19 g de proteína por porción de 20 g. Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos.",
-    tags:["19g proteína","Whey Isolate","Colágeno hidrolizado","0g azúcar","20 porciones"],
+    tags:["19g proteína","Whey Isolate","Colágeno hidrolizado","Sabor neutro","0g azúcar"],
     precio:180,
     img: SP+"geno-frente.jpg",
     galeria: [SP+"geno-frente.jpg", "img/tn-geno.jpg"],
     uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.",
     tn: tn.geno },
+
+  /* Alta del 29-10-2026: GENO DEEP CARE ADVANCE sabor chocolate. En el CRM
+     es GEN-P-CH. Su etiqueta es distinta a la del neutro (porción de 40 g,
+     10 porciones). El pack x2 (oferta5) sigue siendo solo del neutro. */
+  { id:"sp2", tipo:"sp", marcaTipo:"sp",
+    brand:"Safie Pharma", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"polvo", destacado:true, marca:"Safie Pharma",
+    nombre:"GENO DEEP CARE ADVANCE – Proteína Bariátrica 400 g — Sabor Chocolate",
+    desc:"Proteína isolatada con micronutrientes, sabor chocolate endulzado con stevia: 39.5 g de proteína por porción de 40 g. Sin azúcar, sin lactosa y sin gluten. Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos.",
+    tags:["39.5g proteína","15g arginina","Sabor chocolate","0g azúcar","Sin lactosa"],
+    precio:180,
+    img: SP+"geno-chocolate-frente.jpg",
+    galeria: [SP+"geno-chocolate-frente.jpg", SP+"geno-chocolate-posterior.jpg"],
+    uso:"Porción: 40 g (4 scoops). 10 porciones por envase.",
+    tn: tn.geno_chocolate },
 
   // NUTRANEX
   /* Alta del 26-10-2026. Marca nueva en la tienda: Nutranex.

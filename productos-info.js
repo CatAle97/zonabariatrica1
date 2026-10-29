@@ -270,6 +270,23 @@
       ]
     },
 
+    sp2: { // GENO DEEP CARE ADVANCE sabor chocolate — Safie Pharma, 400 g
+      paraQuien: 'Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos.',
+      beneficios: [
+        '39.5 g de proteína por porción de 40 g',
+        'Proteína isolatada + micronutrientes',
+        '15 g de arginina',
+        'Sabor chocolate, endulzado con stevia',
+        '0 g de azúcar, sin lactosa y sin gluten',
+        '10 porciones por envase de 400 g'
+      ],
+      consumo: 'Porción: 40 g (4 scoops).',
+      faq: [
+        { q: '¿Cuánto rinde un frasco de 400 g?', r: 'Trae 10 porciones de 40 g (4 scoops). Cuánto te dura depende de cuántas porciones tomes al día.' },
+        { q: '¿Tiene azúcar o lactosa?', r: 'No. Está endulzado con stevia y es sin azúcar, sin lactosa y sin gluten.' }
+      ]
+    },
+
     nx1: { // Nutranex D-Protin — 275 g, sabor neutro
       paraQuien: 'Suele utilizarse en pacientes bariátricos que necesitan completar su aporte diario de proteína y prefieren un polvo sin sabor que se pueda sumar a sus preparaciones.',
       beneficios: [
