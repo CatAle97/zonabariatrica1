@@ -747,6 +747,10 @@ const P = {
     foto:"img/sp-geno-frente.jpg", tabla:"img/tn-geno.jpg", chips:["19 g proteína","Whey Isolate","Colágeno hidrolizado","Sabor neutro"] },
   genoChocolate: { sabor:"Chocolate", uso:"Porción: 40 g (4 scoops). 10 porciones por envase.", marca:"Safie Pharma", nombre:"Geno Deep Care Advance — Proteína Bariátrica 400 g — Sabor Chocolate", precio:180, nuevo:true,
     foto:"img/sp-geno-chocolate-frente.jpg", tabla:"img/sp-geno-chocolate-posterior.jpg", chips:["39.5 g proteína","15 g arginina","Endulzado con stevia","0 g azúcar"] },
+  readyNaranja: { sabor:"Naranja", uso:"Porción: 30 mL (1 medida). 33 porciones por botella.", marca:"Safie Pharma", nombre:"READY-GDC Proteína Líquida 1 L — Sabor Naranja", precio:199, nuevo:true,
+    foto:"img/sp-ready-frente.jpg", tabla:"img/sp-ready-posterior.jpg", chips:["20 g proteína","4 g L-arginina","Lista para tomar","Sin azúcar"] },
+  readyNeutro: { sabor:"Neutro", uso:"Porción: 30 mL (1 medida). 33 porciones por botella.", marca:"Safie Pharma", nombre:"READY-GDC Proteína Líquida 1 L — Sabor Neutro", precio:199, nuevo:true,
+    foto:"img/sp-ready-frente.jpg", tabla:"img/sp-ready-posterior.jpg", chips:["20 g proteína","4 g L-arginina","Lista para tomar","Sin azúcar"] },
   nutranex: { uso:"Seguir el modo de preparación de la lata.", marca:"Nutranex", nombre:"Nutranex D-Protin 275 g — Sabor Neutro", precio:135, nuevo:true,
     foto:"img/nx-dprotin-frente.jpg", chips:["Doble fuente de proteínas","18 aminoácidos","Sabor neutro","Sin azúcar"] },
 
@@ -808,11 +812,11 @@ const P = {
    ========================================================= */
 const IDS_TIENDA = {
   liquidaFresa:"bi3", liquidaMaracumango:"bi4", wheyVainilla:"bi1", wheyChocolate:"bi2",
-  isolate:"nf1", geno:"sp1", genoChocolate:"sp2", nutranex:"nx1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
+  isolate:"nf1", geno:"sp1", genoChocolate:"sp2", readyNaranja:"sp3", readyNeutro:"sp4", nutranex:"nx1", multivit:"bi7", b12:"bi8", hierro:"bi6", biotina:"bi5",
   bfBayas:"bf2", bfTropical:"bf1", colageno:"bi10", fibra:"bi9",
   lvlVainilla:"li1", lvlChocolate:"li2", lvlColageno:"li3", lvlFibra:"li4"
 };
-const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4", "oferta5", "oferta6"];
+const IDS_OFERTAS = ["oferta1", "oferta2", "oferta3", "oferta4", "oferta5", "oferta6", "oferta7"];
 
 /* AGOTADOS (2026-10-22): ids de la tienda sin stock según el CRM (función
    izipay, acción disponibilidad). Se declara AQUÍ arriba a propósito: acciones()
@@ -841,7 +845,7 @@ function agotado(id) { return AGOTADOS.has(IDS_TIENDA[id]); }
 
 /* Qué producto va en cada sección (un mismo producto puede repetirse) */
 const CATALOGO = {
-  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","geno","genoChocolate","nutranex","lvlVainilla","lvlChocolate"],
+  proteinas: ["liquidaFresa","liquidaMaracumango","wheyVainilla","wheyChocolate","isolate","geno","genoChocolate","readyNaranja","readyNeutro","nutranex","lvlVainilla","lvlChocolate"],
   vitaminas: ["multivit","b12","hierro","biotina","bfBayas","bfTropical"],
   fibraColageno: ["colageno","fibra","lvlColageno","lvlFibra"],
   /* Packs con precio rebajado, dibujados en la sección de Ofertas
@@ -876,7 +880,9 @@ const OFERTAS_X2 = [
   { nombre:"2 Geno Deep Care Advance", ids:["geno","genoChocolate"], precioPar:350,
     foto:"img/oferta-2geno-mixto.jpg", incluye:"2 frascos de 400 g, neutro o chocolate" },
   { nombre:"2 Nutranex D-Protin", ids:["nutranex"], precioPar:260,
-    foto:"img/oferta-2nutranex.jpg", incluye:"2 latas de 275 g, sabor neutro" }
+    foto:"img/oferta-2nutranex.jpg", incluye:"2 latas de 275 g, sabor neutro" },
+  { nombre:"2 READY-GDC Proteína Líquida", ids:["readyNaranja","readyNeutro"], precioPar:390,
+    foto:"img/oferta-2ready.jpg", incluye:"2 botellas de 1 L, naranja o neutro" }
 ];
 
 /* Descuento por cantidad — mismos tramos que la tienda */

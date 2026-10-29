@@ -385,6 +385,29 @@ const tn = {
       ["Proteína","39.5 g","53%"]
     ],
     nota: "Sabor a chocolate, endulzado con stevia. Sin azúcar, sin lactosa, sin gluten. Los porcentajes de valores diarios están basados en una dieta de 2000 calorías."
+  },
+  /* READY-GDC proteína líquida 1 L (Safie Pharma). Transcrita de la
+     etiqueta (foto del 29-10-2026); la misma para naranja y neutro. */
+  ready: {
+    srv: "30 mL (1 medida)", srvs: "33 porciones por envase",
+    filas: [
+      ["Calorías","80 kcal","4%"],
+      ["Grasa total","0 g","0%"],
+      ["Grasa saturada","0 g","0%"],
+      ["Colesterol","0 mg","0%"],
+      ["Sodio","0 mg","0%"],
+      ["Carbohidratos totales","0 g","0%"],
+      ["Fibra dietética","0 g","0%"],
+      ["Azúcares","0 g","0%"],
+      ["Proteína","20 g","27%"],
+      ["Vitamina C","90 mg","100%"],
+      ["Vitamina D3","20 mcg","100%"],
+      ["Zinc","11 mg","100%"],
+      ["Vitamina B1","1 mg","83%"],
+      ["Vitamina B6","1.5 mg","87%"],
+      ["Magnesio","400 mg","95%"]
+    ],
+    nota: "Con colágeno hidrolizado, L-arginina (4 g por porción), L-triptófano y glutamina. Sin azúcar, sin grasa, sin gluten y sin lactosa. Los porcentajes de valores diarios están basados en una dieta de 2000 calorías."
   }
 };
 const productos = [
@@ -456,6 +479,21 @@ const productos = [
     seleccionSabor:[{label:"GENO DEEP CARE 1",sabores:["Neutro","Chocolate"]},{label:"GENO DEEP CARE 2",sabores:["Neutro","Chocolate"]}],
     uso:"Mezclar 2 cucharadas (20 g) en aproximadamente 200 ml de agua.",
     tn: tn.geno },
+
+  /* Oferta por cantidad de READY-GDC (29-10-2026).
+     La unidad cuesta S/199; llevando 2 salen a S/195 cada una (S/390).
+     Cada botella se elige naranja (sp3) o neutro (sp4). */
+  { id:"oferta7", tipo:"oferta", marcaTipo:"sp",
+    brand:"Safie Pharma", eligibleForBnQuantityDiscount:false, cat:"oferta", destacado:true, marca:"Safie Pharma",
+    nombre:"Pack x2 READY-GDC Proteína Líquida",
+    desc:"Llévate 2 botellas de 1 L de READY-GDC, proteína líquida con 20 g de proteína y 4 g de L-arginina por cada 30 mL. Elige cada botella en sabor naranja o neutro.",
+    incluye:"READY-GDC Proteína Líquida 1 L x2 · Sabores a elección: Naranja o Neutro",
+    tags:["2 L en total","20g proteína","4g L-arginina","Naranja o neutro"],
+    precio:390, precioN:398, ahorro:8,
+    img: "img/oferta-2ready.jpg",
+    seleccionSabor:[{label:"READY-GDC 1",sabores:["Naranja","Neutro"]},{label:"READY-GDC 2",sabores:["Naranja","Neutro"]}],
+    uso:"Porción: 30 mL (1 medida). 33 porciones por botella.",
+    tn: tn.ready },
 
   /* Oferta por cantidad de Nutranex D-Protin (26-10-2026).
      La unidad cuesta S/135; llevando 2 salen S/260 (ahorro S/10). */
@@ -875,6 +913,31 @@ const productos = [
     galeria: [SP+"geno-chocolate-frente.jpg", SP+"geno-chocolate-posterior.jpg"],
     uso:"Porción: 40 g (4 scoops). 10 porciones por envase.",
     tn: tn.geno_chocolate },
+
+  /* Alta del 29-10-2026: READY-GDC proteína líquida 1 L (Safie Pharma).
+     En el CRM es RG-PL-NA (naranja) y RG-PL-NE (neutro). Las dos usan la
+     misma foto (la etiqueta es igual). Pack x2 en oferta7. */
+  { id:"sp3", tipo:"sp", marcaTipo:"sp",
+    brand:"Safie Pharma", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"liquida", destacado:true, marca:"Safie Pharma",
+    nombre:"READY-GDC Proteína Líquida 1 L — Sabor Naranja",
+    desc:"Proteína líquida lista para tomar: 20 g de proteína y 4 g de L-arginina por cada 30 mL, con colágeno hidrolizado, vitaminas C, D3, B1 y B6, zinc y magnesio. Sin azúcar, sin grasa, sin gluten y sin lactosa.",
+    tags:["20g proteína","4g L-arginina","Sabor naranja","Sin azúcar","Sin lactosa"],
+    precio:199,
+    img: SP+"ready-frente.jpg",
+    galeria: [SP+"ready-frente.jpg", SP+"ready-posterior.jpg"],
+    uso:"Porción: 30 mL (1 medida). 33 porciones por botella.",
+    tn: tn.ready },
+
+  { id:"sp4", tipo:"sp", marcaTipo:"sp",
+    brand:"Safie Pharma", eligibleForBnQuantityDiscount:false, cat:"proteina", subcat:"liquida", destacado:true, marca:"Safie Pharma",
+    nombre:"READY-GDC Proteína Líquida 1 L — Sabor Neutro",
+    desc:"Proteína líquida lista para tomar: 20 g de proteína y 4 g de L-arginina por cada 30 mL, con colágeno hidrolizado, vitaminas C, D3, B1 y B6, zinc y magnesio. Sin azúcar, sin grasa, sin gluten y sin lactosa.",
+    tags:["20g proteína","4g L-arginina","Sabor neutro","Sin azúcar","Sin lactosa"],
+    precio:199,
+    img: SP+"ready-frente.jpg",
+    galeria: [SP+"ready-frente.jpg", SP+"ready-posterior.jpg"],
+    uso:"Porción: 30 mL (1 medida). 33 porciones por botella.",
+    tn: tn.ready },
 
   // NUTRANEX
   /* Alta del 26-10-2026. Marca nueva en la tienda: Nutranex.

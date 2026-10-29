@@ -288,6 +288,42 @@
       ]
     },
 
+    sp3: { // READY-GDC proteína líquida 1 L sabor naranja — Safie Pharma
+      paraQuien: 'Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos que prefieren una proteína lista para tomar.',
+      beneficios: [
+        '20 g de proteína por porción de 30 mL',
+        '4 g de L-arginina por porción',
+        'Con colágeno hidrolizado, L-triptófano y glutamina',
+        'Vitaminas C, D3, B1 y B6, zinc y magnesio',
+        'Sin azúcar, sin grasa, sin gluten y sin lactosa',
+        '33 porciones por botella de 1 L'
+      ],
+      consumo: 'Porción: 30 mL (1 medida).',
+      faq: [
+        { q: '¿Cuánto rinde una botella de 1 L?', r: 'Trae 33 porciones de 30 mL. Cuánto te dura depende de cuántas porciones tomes al día.' },
+        { q: '¿Tiene azúcar o lactosa?', r: 'No. Es sin azúcar, sin grasa, sin gluten y sin lactosa.' },
+        { q: '¿Hay precio especial llevando dos?', r: 'Sí. Una botella cuesta S/ 199 y llevando 2 pagas S/ 195 cada una (S/ 390), en naranja, neutro o una de cada.' }
+      ]
+    },
+
+    sp4: { // READY-GDC proteína líquida 1 L sabor neutro — Safie Pharma
+      paraQuien: 'Complementa la alimentación de personas con mayor requerimiento proteico, incluyendo pacientes bariátricos que prefieren una proteína lista para tomar.',
+      beneficios: [
+        '20 g de proteína por porción de 30 mL',
+        '4 g de L-arginina por porción',
+        'Con colágeno hidrolizado, L-triptófano y glutamina',
+        'Vitaminas C, D3, B1 y B6, zinc y magnesio',
+        'Sin azúcar, sin grasa, sin gluten y sin lactosa',
+        '33 porciones por botella de 1 L'
+      ],
+      consumo: 'Porción: 30 mL (1 medida).',
+      faq: [
+        { q: '¿Cuánto rinde una botella de 1 L?', r: 'Trae 33 porciones de 30 mL. Cuánto te dura depende de cuántas porciones tomes al día.' },
+        { q: '¿Tiene azúcar o lactosa?', r: 'No. Es sin azúcar, sin grasa, sin gluten y sin lactosa.' },
+        { q: '¿Hay precio especial llevando dos?', r: 'Sí. Una botella cuesta S/ 199 y llevando 2 pagas S/ 195 cada una (S/ 390), en naranja, neutro o una de cada.' }
+      ]
+    },
+
     nx1: { // Nutranex D-Protin — 275 g, sabor neutro
       paraQuien: 'Suele utilizarse en pacientes bariátricos que necesitan completar su aporte diario de proteína y prefieren un polvo sin sabor que se pueda sumar a sus preparaciones.',
       beneficios: [
