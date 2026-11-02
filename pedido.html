@@ -91,6 +91,8 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 12px 0 5p
 .centro { text-align: center; }
 .grande { font-size: 44px; margin: 6px 0; }
 .oculto { display: none !important; }
+.zb-datos-pago{margin:8px auto;padding:10px 12px;border:1px solid #ddd;border-radius:10px;background:#fafafa;color:#222;text-align:left;line-height:1.6;max-width:340px;font-size:14px;word-break:break-all}
+.zb-qr-yape{display:block;width:170px;height:auto;margin:8px auto 0;border-radius:8px}
 </style>
 </head>
 <body>
@@ -201,7 +203,9 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 12px 0 5p
           <label class="opcion" id="mTarjeta"><input type="radio" name="metodo" value="tarjeta">
             <div><div class="opcion-titulo">Tarjeta de crédito o débito (+4%)</div><div class="opcion-sub">Visa, Mastercard, American Express, Diners</div></div></label>
           <label class="opcion" id="mYape"><input type="radio" name="metodo" value="yape">
-            <div><div class="opcion-titulo" id="yapeTitulo">Yape o transferencia BCP — pagas al recibir</div><div class="opcion-sub">No aceptamos efectivo</div></div></label>
+            <div><div class="opcion-titulo" id="yapeTitulo">Yape — pagas al recibir</div><div class="opcion-sub">No aceptamos efectivo</div></div></label>
+          <label class="opcion" id="mTransf"><input type="radio" name="metodo" value="transferencia">
+            <div><div class="opcion-titulo" id="transfTitulo">Transferencia BCP — pagas al recibir</div><div class="opcion-sub">Cuenta BCP o CCI desde cualquier banco</div></div></label>
         </div>
       </div>
       <div class="card">
@@ -424,7 +428,8 @@ function actualizarZona() {
   $('ayudaShalom').classList.toggle('oculto', !prov);
   $('lblDireccion').textContent = prov ? 'Dirección de la agencia Shalom *' : 'Dirección exacta *';
   $('direccion').placeholder = prov ? 'Ej: Agencia Shalom Av. La Cultura 1020 — Cusco' : 'Ej: Av. Perú 123, dpto 201 — San Miguel';
-  $('yapeTitulo').textContent = prov ? 'Yape o transferencia BCP — pagas antes del envío' : 'Yape o transferencia BCP — pagas al recibir';
+  $('yapeTitulo').textContent = textoMetodo('yape', prov);
+  $('transfTitulo').textContent = textoMetodo('transferencia', prov);
 }
 function pareceDireccionAgencia(t) {
   t = String(t || '').trim();
@@ -479,11 +484,35 @@ function datosCliente() {
   };
 }
 
+
+/* DATOS DE PAGO (02-11-2026): Yape (con QR) y Transferencia BCP, opciones separadas.
+   Provincia paga ANTES del envío y manda su constancia; Lima paga al recibir. */
+const PAGO_TITULAR = 'Roberto Pablo Gomez Salas';
+const PAGO_YAPE = '961 841 069';
+const PAGO_BCP = '19376612863028';
+const PAGO_CCI = '00219317661286302817';
+function textoMetodo(metodo, prov) {
+  const cuando = prov ? 'pagas antes del envío' : 'pagas al recibir';
+  return metodo === 'transferencia' ? 'Transferencia BCP — ' + cuando : 'Yape — ' + cuando;
+}
+function instruccionesPago(metodo, prov, totalHtml, orderId) {
+  const enlace = '<a href="https://wa.me/' + WA + '?text=' + encodeURIComponent('Hola, envío la constancia de pago de mi pedido ' + orderId) + '" target="_blank" rel="noopener">enviar constancia por WhatsApp</a>';
+  const datos = metodo === 'transferencia'
+    ? '<div class="zb-datos-pago">Transferencia BCP Soles<br>Cuenta: <strong>' + PAGO_BCP + '</strong><br>CCI (otros bancos): <strong>' + PAGO_CCI + '</strong><br>Titular: <strong>' + PAGO_TITULAR + '</strong></div>'
+    : '<div class="zb-datos-pago">Yape: <strong>' + PAGO_YAPE + '</strong> — <strong>' + PAGO_TITULAR + '</strong>' +
+      '<br><img src="/img/yape-qr.jpg" alt="QR de Yape de ' + PAGO_TITULAR + '" class="zb-qr-yape"></div>';
+  if (prov) return 'Total a pagar: ' + totalHtml + ', <strong>antes del envío</strong> (a provincia no hay pago contra entrega).<br>' +
+    datos + 'Envíanos tu constancia (captura) al mismo WhatsApp: ' + enlace + '.<br>Despachamos a Shalom apenas confirmemos tu pago.';
+  return 'Total a pagar al recibir: ' + totalHtml + (metodo === 'transferencia' ? ' por transferencia.' : ' con Yape.') + datos +
+    'Al pagar, envíanos tu constancia: ' + enlace + '.';
+}
+
 /* ---------- Paso 3: pago ---------- */
 function pintarResumen() {
   const c = cobro(), prov = zonaElegida() === 'provincia', tarjeta = metodoElegido() === 'tarjeta';
   $('mTarjeta').classList.toggle('sel', tarjeta);
   $('mYape').classList.toggle('sel', metodoElegido() === 'yape');
+  $('mTransf').classList.toggle('sel', metodoElegido() === 'transferencia');
   $('c3Sub').textContent = soles(c.sub);
   $('c3DescFila').classList.toggle('oculto', !c.desc);
   $('c3DescLbl').textContent = reglas.descuentoBN.nombre;
@@ -517,10 +546,11 @@ async function registrarYape(datos) {
   const btn = $('btnFinalizar');
   btn.disabled = true;
   try {
-    const r = await llamarFuncion({ accion: 'pedido', items: itemsParaCobro(), ...datos });
+    const transf = metodoElegido() === 'transferencia';
+    const r = await llamarFuncion({ accion: 'pedido', items: itemsParaCobro(), ...datos, pago: transf ? 'transferencia' : '' });
     if (!r.orderId) throw new Error('');
     if (typeof gtag === 'function') gtag('event', 'pedido_yape', { transaction_id: r.orderId, value: r.total, currency: 'PEN', origen: 'link_compra' });
-    gracias({ orderId: r.orderId, total: r.total, metodo: 'yape', telefono: datos.telefono, provincia: datos.zona === 'provincia' });
+    gracias({ orderId: r.orderId, total: r.total, metodo: transf ? 'transferencia' : 'yape', telefono: datos.telefono, provincia: datos.zona === 'provincia' });
   } catch (e) {
     alert(e.message && e.message.indexOf('error ') !== 0 ? e.message : 'No pudimos registrar tu pedido. Intenta de nuevo en un momento.');
   } finally {
@@ -607,10 +637,7 @@ function gracias(r) {
   $('graciasTexto').innerHTML = 'Tu número de pedido es <strong>' + esc(r.orderId) + '</strong>.<br>' +
     (r.metodo === 'tarjeta'
       ? 'Tu pago de ' + total + ' fue aprobado. Te llega el comprobante a tu correo.'
-      : r.provincia
-        ? 'Total a pagar: ' + total + ', <strong>antes del envío</strong> (a provincia no hay pago contra entrega).<br>Para despachar tu pedido, realiza tu Yape o transferencia: Yape <strong>961 841 069</strong> — <strong>ROBERTO GOMEZ SALAS</strong> — y envíanos tu constancia (captura): ' +
-          '<a href="https://wa.me/' + WA + '?text=' + encodeURIComponent('Hola, envío la constancia de pago de mi pedido ' + r.orderId) + '" target="_blank" rel="noopener">enviar constancia por WhatsApp</a>.<br>Despachamos a Shalom apenas confirmemos tu pago.'
-        : 'Total a pagar al recibir: ' + total + ' con Yape o transferencia.') +
+      : instruccionesPago(r.metodo, r.provincia, total, r.orderId)) +
     '<br>Te contactamos al <strong>' + esc(r.telefono) + '</strong> para coordinar la entrega.';
   $('gracias').classList.remove('oculto');
   window.scrollTo(0, 0);

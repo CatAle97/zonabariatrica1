@@ -215,6 +215,8 @@ function leerCliente(body: any) {
     email: String(body.email || "").trim().slice(0, 120),
     telefono: String(body.telefono || "").replace(/[^\d+ ]/g, "").trim().slice(0, 20),
     direccion: String(body.direccion || "").trim().slice(0, 250),
+    // Forma de pago elegida en la web cuando no es tarjeta (02-11-2026): "transferencia" o "" (= Yape).
+    pago: body.pago === "transferencia" ? "transferencia" : "",
     // Enlace de Google Maps (opcional, solo Lima). Cualquier otra cosa se descarta.
     ubicacion: /^https:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|maps\.app\.goo\.gl|goo\.gl\/maps)/i.test(String(body.ubicacion || "").trim())
       ? String(body.ubicacion).trim().slice(0, 300) : "",
@@ -284,8 +286,8 @@ function textoPedido(p: any) {
     ? "🛒 Pedido " + p.order_id + " — PAGADO con tarjeta (" + monto + ")"
     : p.zona === "provincia"
       // Provincia al contado (2026-10-23): se cobra ANTES de despachar a Shalom.
-      ? "🛒 Pedido " + p.order_id + " — YAPE ANTES DEL ENVÍO (cobrar " + monto + " y recién despachar)"
-      : "🛒 Pedido " + p.order_id + " — YAPE AL RECIBIR (cobrar " + monto + ")";
+      ? "🛒 Pedido " + p.order_id + " — " + (c.pago === "transferencia" ? "TRANSFERENCIA" : "YAPE") + " ANTES DEL ENVÍO (cobrar " + monto + " y recién despachar)"
+      : "🛒 Pedido " + p.order_id + " — " + (c.pago === "transferencia" ? "TRANSFERENCIA" : "YAPE") + " AL RECIBIR (cobrar " + monto + ")";
   const cuerpo = [
     lineas,
     "",
