@@ -4364,7 +4364,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
       <span data-i18n="cart_enviar_btn">CONTINUAR</span>
     </button>
     <button onclick="vaciarCarrito()" style="width:100%;margin-top:10px;background:none;border:none;color:var(--text-muted);font-weight:500;font-size:12px;padding:4px;cursor:pointer;font-family:inherit;text-decoration:underline;">Vaciar carrito</button>
-    <div class="cart-nota">🔒 Paga con tarjeta en línea o con Yape al recibir</div>
+    <div class="cart-nota">🔒 Paga con tarjeta en línea o con Yape (al recibir en Lima · antes del envío a provincia)</div>
   </div>
 </div>
 
@@ -5303,7 +5303,7 @@ src="https://www.facebook.com/tr?id=1281144750767995&ev=PageView&noscript=1"
           </div>
           <div class="mp-confianza-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-            <span><strong>Tarjeta o Yape</strong> · paga en línea o al recibir</span>
+            <span><strong>Tarjeta o Yape</strong> · al recibir solo en Lima; provincia, antes del envío</span>
           </div>
         </div>
 
@@ -7775,8 +7775,8 @@ function mostrarGracias(r) {
       ? 'Tu pago de <strong>' + total + '</strong> fue aprobado. Te llega el comprobante a tu correo.'
       : r.provincia
         ? 'Total a pagar: <strong>' + total + '</strong>, <strong>antes del envío</strong>.<br>' +
-          'Realiza tu Yape al <strong>961 841 069</strong> — <strong>ROBERTO GOMEZ SALAS</strong> — y envía la captura al mismo número: ' +
-          '<a href="https://wa.me/51961841069?text=' + encodeURIComponent('Hola, envío la captura de mi Yape del pedido ' + r.orderId) + '" target="_blank" rel="noopener">enviar captura por WhatsApp</a>.<br>' +
+          'Para despachar tu pedido, realiza tu Yape o transferencia: Yape <strong>961 841 069</strong> — <strong>ROBERTO GOMEZ SALAS</strong> — y envíanos tu constancia (captura) al mismo número: ' +
+          '<a href="https://wa.me/51961841069?text=' + encodeURIComponent('Hola, envío la constancia de pago de mi pedido ' + r.orderId) + '" target="_blank" rel="noopener">enviar constancia por WhatsApp</a>.<br>' +
           'Despachamos a Shalom apenas confirmemos tu pago.'
         : 'Total a pagar al recibir: <strong>' + total + '</strong> con Yape o transferencia.') +
     '<br>Te contactamos al <strong>' + r.telefono + '</strong> para coordinar la entrega.';

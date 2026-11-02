@@ -608,8 +608,8 @@ function gracias(r) {
     (r.metodo === 'tarjeta'
       ? 'Tu pago de ' + total + ' fue aprobado. Te llega el comprobante a tu correo.'
       : r.provincia
-        ? 'Total a pagar: ' + total + ', <strong>antes del envío</strong>.<br>Realiza tu Yape al <strong>961 841 069</strong> — <strong>ROBERTO GOMEZ SALAS</strong> — y envía la captura: ' +
-          '<a href="https://wa.me/' + WA + '?text=' + encodeURIComponent('Hola, envío la captura de mi Yape del pedido ' + r.orderId) + '" target="_blank" rel="noopener">enviar captura por WhatsApp</a>.'
+        ? 'Total a pagar: ' + total + ', <strong>antes del envío</strong> (a provincia no hay pago contra entrega).<br>Para despachar tu pedido, realiza tu Yape o transferencia: Yape <strong>961 841 069</strong> — <strong>ROBERTO GOMEZ SALAS</strong> — y envíanos tu constancia (captura): ' +
+          '<a href="https://wa.me/' + WA + '?text=' + encodeURIComponent('Hola, envío la constancia de pago de mi pedido ' + r.orderId) + '" target="_blank" rel="noopener">enviar constancia por WhatsApp</a>.<br>Despachamos a Shalom apenas confirmemos tu pago.'
         : 'Total a pagar al recibir: ' + total + ' con Yape o transferencia.') +
     '<br>Te contactamos al <strong>' + esc(r.telefono) + '</strong> para coordinar la entrega.';
   $('gracias').classList.remove('oculto');
