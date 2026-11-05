@@ -91,8 +91,12 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 12px 0 5p
 .centro { text-align: center; }
 .grande { font-size: 44px; margin: 6px 0; }
 .oculto { display: none !important; }
-.zb-datos-pago{margin:8px auto;padding:10px 12px;border:1px solid #ddd;border-radius:10px;background:#fafafa;color:#222;text-align:left;line-height:1.6;max-width:340px;font-size:14px;word-break:break-all}
-.zb-qr-yape{display:block;width:170px;height:auto;margin:8px auto 0;border-radius:8px}
+.zb-pagar{display:block;margin-top:10px;font-size:17px;color:#222}
+.zb-datos-pago{margin:8px auto;padding:10px 12px;border:1px solid #ddd;border-radius:10px;background:#fafafa;color:#222;text-align:left;line-height:1.5;max-width:320px;font-size:14px;word-break:break-all}
+.zb-datos-pago.zb-yape{text-align:center;word-break:normal}
+.zb-qr-yape{display:block;width:150px;height:auto;margin:0 auto 6px;border-radius:8px}
+.zb-btn-constancia{display:block;max-width:320px;margin:10px auto 0;padding:12px 14px;border-radius:10px;background:#25D366;color:#fff!important;font-weight:700;font-size:15px;text-align:center;text-decoration:none}
+.zb-nota-pago{display:block;margin-top:8px;font-size:13px}
 </style>
 </head>
 <body>
@@ -495,16 +499,15 @@ function textoMetodo(metodo, prov) {
   const cuando = prov ? 'pagas antes del envío' : 'pagas al recibir';
   return metodo === 'transferencia' ? 'Transferencia BCP — ' + cuando : 'Yape — ' + cuando;
 }
+/* Pantalla final corta (05-11-2026, pedido de Roberto: en celular había demasiado texto y no se
+   veía el botón). Solo: cuánto y cuándo paga, los datos para pagar y un botón para la constancia. */
 function instruccionesPago(metodo, prov, totalHtml, orderId) {
-  const enlace = '<a href="https://wa.me/' + WA + '?text=' + encodeURIComponent('Hola, envío la constancia de pago de mi pedido ' + orderId) + '" target="_blank" rel="noopener">enviar constancia por WhatsApp</a>';
+  const boton = '<a class="zb-btn-constancia" href="https://wa.me/' + WA + '?text=' + encodeURIComponent('Hola, envío la constancia de pago de mi pedido ' + orderId) + '" target="_blank" rel="noopener">Enviar constancia por WhatsApp</a>';
   const datos = metodo === 'transferencia'
-    ? '<div class="zb-datos-pago">Transferencia BCP Soles<br>Cuenta: <strong>' + PAGO_BCP + '</strong><br>CCI (otros bancos): <strong>' + PAGO_CCI + '</strong><br>Titular: <strong>' + PAGO_TITULAR + '</strong></div>'
-    : '<div class="zb-datos-pago">Yape: <strong>' + PAGO_YAPE + '</strong> — <strong>' + PAGO_TITULAR + '</strong>' +
-      '<br><img src="/img/yape-qr.jpg" alt="QR de Yape de ' + PAGO_TITULAR + '" class="zb-qr-yape"></div>';
-  if (prov) return 'Total a pagar: ' + totalHtml + ', <strong>antes del envío</strong> (a provincia no hay pago contra entrega).<br>' +
-    datos + 'Envíanos tu constancia (captura) al mismo WhatsApp: ' + enlace + '.<br>Despachamos a Shalom apenas confirmemos tu pago.';
-  return 'Total a pagar al recibir: ' + totalHtml + (metodo === 'transferencia' ? ' por transferencia.' : ' con Yape.') + datos +
-    'Al pagar, envíanos tu constancia: ' + enlace + '.';
+    ? '<div class="zb-datos-pago">BCP Soles: <strong>' + PAGO_BCP + '</strong><br>CCI: <strong>' + PAGO_CCI + '</strong><br>' + PAGO_TITULAR + '</div>'
+    : '<div class="zb-datos-pago zb-yape"><img src="/img/yape-qr.jpg" alt="QR de Yape de ' + PAGO_TITULAR + '" class="zb-qr-yape">Yape <strong>' + PAGO_YAPE + '</strong><br>' + PAGO_TITULAR + '</div>';
+  return '<span class="zb-pagar">Paga ' + totalHtml + (prov ? ' antes del envío' : ' al recibir') + '</span>' + datos + boton +
+    (prov ? '<span class="zb-nota-pago">Despachamos apenas confirmemos tu pago.</span>' : '');
 }
 
 /* ---------- Paso 3: pago ---------- */
@@ -634,11 +637,11 @@ function gracias(r) {
   const total = '<strong>S/ ' + Number(r.total).toFixed(2) + '</strong>';
   $('app').classList.add('oculto');
   $('graciasTitulo').textContent = r.metodo === 'tarjeta' ? '¡Gracias por tu compra!' : '¡Pedido recibido!';
-  $('graciasTexto').innerHTML = 'Tu número de pedido es <strong>' + esc(r.orderId) + '</strong>.<br>' +
+  $('graciasTexto').innerHTML = 'Pedido N° <strong>' + esc(r.orderId) + '</strong>' +
     (r.metodo === 'tarjeta'
-      ? 'Tu pago de ' + total + ' fue aprobado. Te llega el comprobante a tu correo.'
+      ? '<br>Pago de ' + total + ' aprobado. El comprobante llega a tu correo.'
       : instruccionesPago(r.metodo, r.provincia, total, r.orderId)) +
-    '<br>Te contactamos al <strong>' + esc(r.telefono) + '</strong> para coordinar la entrega.';
+    '<span class="zb-nota-pago">Te escribimos al <strong>' + esc(r.telefono) + '</strong> para coordinar la entrega.</span>';
   $('gracias').classList.remove('oculto');
   window.scrollTo(0, 0);
   // El enlace ya se usó: recargar no debe volver a armar el pedido
