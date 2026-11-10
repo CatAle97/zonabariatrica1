@@ -64,31 +64,36 @@
     {
       intent: 'proteina_liquida',
       keywords: ['proteina liquida', 'liquid protein', 'proteina bebible', 'liquida', 'lista para tomar', 'no puedo con el polvo'],
-      response: 'La <b>proteína líquida</b> viene lista para tomar, sin preparar. ' +
-                'Aporta 20 g de proteína en 30 ml, es sin lactosa y 0 % azúcar.<br><br>' +
-                'Suele usarse en las primeras semanas, cuando todavía cuesta tolerar texturas.<br><br>' +
-                '<b>S/ ' + P.liquida + '</b> · Llevando 2: S/ ' + P.liquidaPack,
-      productos: ['bi3', 'bi4'],
+      response: 'La <b>proteína líquida</b> viene lista para tomar, sin preparar. Tenemos dos líneas:<br><br>' +
+                '🥛 <b>Liquid Protein — Bari &amp; Nutrition</b> · 1 L<br>' +
+                '20 g de proteína en 30 ml, sin lactosa y 0 % azúcar. Fresa o Maracumango.<br><br>' +
+                '🍊 <b>READY-GDC — Safie Pharma</b> · 1 L<br>' +
+                '20 g de proteína y 4 g de L-arginina en 30 ml, con colágeno hidrolizado y vitaminas. Naranja o Neutro.<br><br>' +
+                'Suele usarse en las primeras semanas, cuando todavía cuesta tolerar texturas. ' +
+                'Abajo tienes los precios del día, y llevando 2 hay precio de pack.',
+      familia: 'proteina_liquida',
+      productos: ['bi3', 'bi4', 'sp3', 'sp4'],
       aviso: true
     },
     {
       intent: 'proteina_polvo',
       keywords: ['proteina en polvo', 'whey', 'polvo', 'scoop', 'batido', 'proteina de polvo', 'high iso'],
-      response: 'En proteína en polvo tienes <b>tres opciones</b>, todas sin lactosa y sin azúcar añadida:<br><br>' +
+      response: 'En proteína en polvo tienes <b>cinco marcas</b>:<br><br>' +
                 '💪 <b>Whey Protein — Bari &amp; Nutrition</b> · 1.5 kg<br>' +
-                '30 g de proteína por servicio, con biotina. Vainilla o Chocolate.<br>' +
-                '<b>S/ ' + P.whey + '</b> · Llevando 2: S/ ' + P.wheyPack + '<br><br>' +
+                '30 g de proteína por servicio, con biotina. Vainilla o Chocolate.<br><br>' +
                 '💪 <b>HIGH ISO — LVL Drink</b> · 1 kg<br>' +
-                '27 g de proteína por servicio, endulzada con stevia. Vainilla o Chocolate.<br>' +
-                '<b>S/ ' + P.lvlProt + '</b><br><br>' +
+                '27 g de proteína por porción, endulzada con stevia. Vainilla o Chocolate.<br><br>' +
                 '💪 <b>Whey Protein Isolate — Nutrifath</b> · 1 kg<br>' +
-                '23 g de proteína por porción de 25 g, con vitaminas y minerales. <b>Sabor neutro</b>: se mezcla con agua o se suma a lo que ya preparas sin cambiarle el gusto.<br>' +
-                '<b>S/ ' + P.nfIsolate + '</b> · Llevando 2: S/ ' + P.nfIsolatePack + '<br><br>' +
-                'La de B&amp;N rinde más por envase, la de LVL tiene la entrada de precio más baja ' +
-                'y la de Nutrifath es la opción si los sabores dulces te cansan. ' +
-                'Las tres se usan en la misma etapa.',
-      followUp: '¿Te muestro las tres para comparar?',
-      productos: ['bi1', 'li1', 'nf1'],
+                '23 g de proteína por porción de 25 g, con vitaminas y minerales. Sabor neutro.<br><br>' +
+                '💪 <b>GENO DEEP CARE ADVANCE — Safie Pharma</b> · 400 g<br>' +
+                'Whey isolate con micronutrientes; la neutra lleva además colágeno hidrolizado. Neutro o Chocolate.<br><br>' +
+                '💪 <b>D-Protin — Nutranex</b> · 275 g<br>' +
+                'Doble fuente de proteína (caseinato de calcio y suero aislado), sin azúcar ni grasas. Sabor neutro.<br><br>' +
+                'Las de <b>sabor neutro</b> se mezclan con agua o con lo que ya preparas sin cambiarle el gusto, ' +
+                'una buena opción si los sabores dulces te cansan. Abajo tienes los precios del día.',
+      followUp: '¿Quieres que te ayude a elegir según tu etapa?',
+      familia: 'proteina_polvo',
+      productos: ['bi1', 'li1', 'nf1', 'sp1', 'nx1'],
       aviso: true
     },
     {
@@ -104,10 +109,14 @@
     {
       intent: 'vitaminas',
       keywords: ['vitaminas', 'multivitaminico', 'gomitas', 'biotina', 'hierro', 'b12', 'acido folico', 'micronutrientes'],
-      response: 'Tenemos las vitaminas en <b>gomitas</b>, más fáciles de tomar que las cápsulas:<br><br>' +
+      response: 'Tenemos vitaminas en dos formatos:<br><br>' +
+                '🍬 <b>Gomitas — Bari &amp; Nutrition</b>, más fáciles de tomar que las cápsulas:<br>' +
                 '🟢 Multivitamínico · 🟡 Biotina 10.000 mcg<br>🟠 Hierro + Vitamina C · 🔵 B12 + Ácido fólico<br><br>' +
-                '<b>S/ ' + P.gomitas + '</b> cada una.',
-      productos: ['bi7', 'bi5', 'bi6', 'bi8'],
+                '💊 <b>Multivitamínico Completo — Bariatric Fusion</b>, marca estadounidense especializada en pacientes bariátricos. ' +
+                'Tabletas masticables (120 por envase), sabor Tropical o Bayas mixtas.<br><br>' +
+                'Abajo tienes los precios del día.',
+      familia: 'vitaminas',
+      productos: ['bi7', 'bi5', 'bi6', 'bi8', 'bf1', 'bf2'],
       aviso: true
     },
     {
@@ -116,9 +125,10 @@
       response: 'La <b>fibra</b> es un apoyo habitual cuando el tránsito se vuelve lento, algo frecuente al comer menos cantidad. ' +
                 'Se disuelve en agua y no cambia el sabor de la bebida.<br><br>' +
                 'Tienes dos opciones:<br><br>' +
-                '🌿 <b>Fibra Soluble — Bari &amp; Nutrition</b> · 320 g, sabor neutro<br><b>S/ ' + P.fibraBN + '</b><br><br>' +
-                '🍏 <b>GET OUT — LVL Drink</b> · 200 g, sabor manzana verde<br><b>S/ ' + P.lvlFibra + '</b><br><br>' +
-                'Conviene acompañarla de una buena hidratación durante el día.',
+                '🌿 <b>Fibra Soluble — Bari &amp; Nutrition</b> · 320 g, sabor neutro<br><br>' +
+                '🍏 <b>GET OUT — LVL Drink</b> · 200 g, sabor manzana verde<br><br>' +
+                'Conviene acompañarla de una buena hidratación durante el día. Abajo tienes los precios del día.',
+      familia: 'fibra',
       productos: ['bi9', 'li4'],
       aviso: true
     },
@@ -127,29 +137,29 @@
       keywords: ['colageno', 'piel', 'uñas', 'articulaciones', 'skinfinity'],
       response: 'El <b>colágeno</b> se asocia habitualmente al cuidado de piel, cabello y uñas. ' +
                 'Suele incorporarse cuando la suplementación esencial —proteína y vitaminas— ya está cubierta.<br><br>' +
-                'Colágeno SKINFINITY <b>S/ ' + P.lvlColag + '</b><br><br>' +
+                'Tenemos dos:<br><br>' +
+                '🦴 <b>Colágeno Hidrolizado — Bari &amp; Nutrition</b> · 500 g, con calcio y vitamina D, sabor arándano.<br><br>' +
+                '✨ <b>SKINFINITY — LVL Drink</b> · 500 g, con camu camu, arándano y biotina.<br><br>' +
                 'Ojo: el colágeno <b>no reemplaza</b> a la proteína. Son cosas distintas.',
-      productos: ['li3'],
+      familia: 'colageno',
+      productos: ['bi10', 'li3'],
       aviso: true
     },
     {
       intent: 'precios',
       keywords: ['precio', 'precios', 'cuanto cuesta', 'cuanto vale', 'costo', 'valor', 'cuanto sale', 'lista de precios'],
-      response: '<b>Precios actuales</b><br><br>' +
-                '🥛 Proteína líquida 1L — S/ ' + P.liquida + '<br>' +
-                '💪 Whey Protein 1.5kg — S/ ' + P.whey + '<br>' +
-                '💪 Proteína LVL 1kg — S/ ' + P.lvlProt + '<br>' +
-                '🟢 Gomitas (cualquiera) — S/ ' + P.gomitas + '<br>' +
-                '🌿 Fibra B&amp;N — S/ ' + P.fibraBN + ' · Fibra LVL — S/ ' + P.lvlFibra + '<br>' +
-                '🦴 Colágeno LVL — S/ ' + P.lvlColag,
-      followUp: '¿Te muestro algún producto en concreto?'
+      /* dinamico: asistente.js arma la respuesta con los precios del catálogo
+         (zb-catalogo.js). Este texto solo se usa si el catálogo no carga. */
+      dinamico: 'precios',
+      response: 'Los precios de cada producto están en su ficha de la tienda.',
+      followUp: 'Escríbeme el producto o la marca y te digo su precio exacto.'
     },
     {
       intent: 'promociones',
       keywords: ['promocion', 'promo', 'oferta', 'descuento', 'rebaja', 'packs', 'combo'],
-      response: 'Sí, tenemos <b>packs</b> con mejor precio que comprando por separado, y ofertas por llevar 2 unidades:<br><br>' +
-                '🔥 2 Proteínas líquidas — S/ ' + P.liquidaPack + '<br>' +
-                '🔥 2 Whey Protein — S/ ' + P.wheyPack,
+      dinamico: 'promociones',
+      response: 'Sí, tenemos <b>packs</b> con mejor precio que comprando por separado, y ofertas por llevar 2 unidades. ' +
+                'Los ves todos en la sección de ofertas y packs de la tienda.',
       followUp: '¿Quieres ver los packs completos?'
     },
 
@@ -277,18 +287,21 @@
     },
     {
       intent: 'marcas',
-      keywords: ['marca', 'marcas', 'bari nutrition', 'lvl', 'lvl drink', 'que marcas'],
-      response: 'Trabajamos con dos marcas especializadas:<br><br>' +
-                '<b>Bari &amp; Nutrition</b> — formulada para pacientes bariátricos.<br>' +
-                '<b>LVL Drink</b> — proteínas, colágeno y fibra.<br><br>' +
+      keywords: ['marca', 'marcas', 'bari nutrition', 'que marcas', 'que marcas tienen', 'que marcas trabajan'],
+      dinamico: 'marcas',
+      response: 'Trabajamos con marcas especializadas en pacientes bariátricos. ' +
                 'Todos los productos tienen su tabla nutricional en la ficha.'
     },
     {
       intent: 'sabores',
       keywords: ['sabor', 'sabores', 'que sabores', 'vainilla', 'chocolate', 'fresa', 'maracumango'],
-      response: '<b>Proteína líquida</b> — Fresa y Maracumango.<br>' +
-                '<b>Whey en polvo</b> — Vainilla y Chocolate.<br>' +
-                '<b>Proteína LVL</b> — Vainilla y Chocolate.<br><br>' +
+      response: '<b>Proteína líquida B&amp;N</b> — Fresa y Maracumango.<br>' +
+                '<b>READY-GDC (líquida)</b> — Naranja y Neutro.<br>' +
+                '<b>Whey B&amp;N</b> — Vainilla y Chocolate.<br>' +
+                '<b>HIGH ISO LVL</b> — Vainilla y Chocolate.<br>' +
+                '<b>GENO DEEP CARE</b> — Neutro y Chocolate.<br>' +
+                '<b>Nutrifath</b> y <b>Nutranex D-Protin</b> — Neutro.<br>' +
+                '<b>Multivitamínico Bariatric Fusion</b> — Tropical y Bayas mixtas.<br><br>' +
                 'El sabor se elige al agregar el producto al carrito.'
     },
     {
@@ -376,7 +389,8 @@
     'me operaron mal', 'complicacion',
     /* Cantidades y dosis: Zoe nunca las indica. */
     'cuantos gramos', 'cuantas gramos', 'que dosis', 'cuanta dosis', 'cuantas capsulas',
-    'cuantos scoops debo', 'cuanto debo tomar', 'cuanta proteina debo', 'cuantas veces al dia'
+    'cuantos scoops debo', 'cuanto debo tomar', 'cuanta proteina debo', 'cuantas veces al dia',
+    'dosis', 'cuantas tabletas', 'cuantas gomitas', 'cuantas tomas'
   ];
 
   /* TONO — importante:
@@ -413,7 +427,21 @@
     colageno:         ['3m+']
   };
 
+  /* --- Descripción corta de cada marca -------------------
+     La lista de marcas la arma Zoe sola desde el catálogo; aquí
+     solo va la frase de cada una. Una marca nueva sin frase
+     aparece igual, solo con su nombre. */
+  var DESC_MARCA = {
+    'Bari&Nutrition': 'formulada para pacientes bariátricos: proteínas, vitaminas en gomitas, fibra y colágeno.',
+    'LVL Drink': 'proteína HIGH ISO, colágeno SKINFINITY y fibra GET OUT.',
+    'Bariatric Fusion': 'marca estadounidense especializada en pacientes bariátricos: multivitamínico completo en tabletas masticables.',
+    'Nutrifath': 'proteína aislada (isolate) de sabor neutro.',
+    'Safie Pharma': 'GENO DEEP CARE ADVANCE (proteína en polvo) y READY-GDC (proteína líquida).',
+    'Nutranex': 'D-Protin, proteína en polvo con doble fuente de proteína.'
+  };
+
   window.ZOE_CONOCIMIENTO = {
+    DESC_MARCA: DESC_MARCA,
     POR_ETAPA: POR_ETAPA,
     INTENCIONES: INTENCIONES,
     TEMAS_MEDICOS: TEMAS_MEDICOS,

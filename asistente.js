@@ -395,7 +395,7 @@
         '<img src="' + p.img + '" alt="" loading="lazy">' +
         '<div class="zb-prod-txt">' +
           '<div class="zb-prod-nom">' + p.nombre + '</div>' +
-          '<div class="zb-prod-precio">S/ ' + p.precio + '</div>' +
+          '<div class="zb-prod-precio">S/ ' + p.precio + (p.agotado ? ' · agotado' : '') + '</div>' +
         '</div>';
       var b = el('button', 'zb-prod-btn', 'Ver');
       b.type = 'button';
@@ -533,6 +533,182 @@
     mostrarResultadoFlujo();
   }
 
+  /* =========================================================
+     CATÁLOGO EN VIVO (09-11-2026)
+     Zoe ya no depende de una lista de productos escrita a mano:
+     lee zb-catalogo.js (la misma fuente que la tienda). En las
+     páginas que no lo cargan, lo descarga al primer mensaje.
+     Así, un producto nuevo en la tienda ya lo conoce Zoe, con su
+     precio y su marca, sin tocar este archivo.
+     ========================================================= */
+  var catalogoIntentado = false, catalogoPromesa = null;
+  function asegurarCatalogo() {
+    if (window.ZB_CATALOGO) { catalogoIntentado = true; return Promise.resolve(); }
+    if (!catalogoPromesa) {
+      catalogoPromesa = fetch('/zb-catalogo.js', { cache: 'no-cache' })
+        .then(function (r) { return r.ok ? r.text() : ''; })
+        /* Se ejecuta dentro de una función para que sus constantes
+           no choquen con las de la página; el catálogo queda en
+           window.ZB_CATALOGO, igual que en la tienda. */
+        .then(function (src) { if (src) (new Function(src))(); })
+        .catch(function () {})
+        .then(function () { catalogoIntentado = true; });
+    }
+    return catalogoPromesa;
+  }
+  function catalogo() { return window.ZB_CATALOGO || []; }
+  function esPack(p) { return p.tipo === 'pack' || p.tipo === 'oferta'; }
+  function individuales() { return catalogo().filter(function (p) { return !esPack(p); }); }
+
+  /* Palabras que no distinguen un producto de otro (familias,
+     formatos, unidades). Lo que queda —marca, línea, sabor— es lo
+     que permite encontrar "geno", "ready", "skinfinity"... */
+  var GENERICAS = ['sabor', 'con', 'para', 'und', 'pack', 'proteina', 'proteinas', 'protein', 'liquida',
+    'liquid', 'polvo', 'whey', 'gomitas', 'completo', 'tabletas', 'multivitaminico', 'multivitaminicos',
+    'colageno', 'fibra', 'vitamina', 'acido', 'bariatrica', 'hidrolizado', 'soluble', 'doble', 'mini', 'advance'];
+  /* Palabras de marca que no sirven solas ("bariatrica" empieza
+     igual que "bariatric"; "drink" o "pharma" no dicen nada). */
+  var MARCA_GENERICAS = ['bari', 'nutrition', 'drink', 'pharma', 'bariatric'];
+  var ALIAS_MARCA = {
+    'Bari&Nutrition': ['b&n', 'byn', 'bari nutrition', 'bari & nutrition', 'bari and nutrition', 'bari&nutrition', 'bari y nutrition'],
+    'Bariatric Fusion': ['fusion', 'bariatric fusion']
+  };
+  function palabras(t) {
+    return normalizar(t).split(/[^a-z0-9ñ&]+/).filter(function (w) { return w.length >= 3 && !/^\d+$/.test(w); });
+  }
+  var indice = null;
+  function indiceCatalogo() {
+    if (indice && indice.n === catalogo().length) return indice;
+    var marcas = {}, palabrasMarca = [];
+    catalogo().forEach(function (p) {
+      if (!p.marca || marcas[p.marca]) return;
+      var alias = (ALIAS_MARCA[p.marca] || []).map(normalizar);
+      palabras(p.marca).forEach(function (w) { palabrasMarca.push(w); if (MARCA_GENERICAS.indexOf(w) === -1) alias.push(w); });
+      alias.forEach(function (a) { palabrasMarca.push(a); });
+      marcas[p.marca] = alias;
+    });
+    /* Genérica = igual a una de la lista o que empieza igual
+       ("liquidas", "vitaminas"). Las palabras de marca se buscan
+       aparte, como marca. */
+    var esGenerica = function (w) {
+      return palabrasMarca.indexOf(w) > -1 || GENERICAS.some(function (g) { return w === g || (g.length >= 5 && w.indexOf(g) === 0); });
+    };
+    var df = {}, porProd = {};
+    catalogo().forEach(function (p) {
+      var set = {};
+      palabras(p.nombre).forEach(function (w) { if (!esGenerica(w)) set[w] = 1; });
+      porProd[p.id] = Object.keys(set);
+      porProd[p.id].forEach(function (w) { df[w] = (df[w] || 0) + 1; });
+    });
+    Object.keys(porProd).forEach(function (id) {
+      porProd[id] = porProd[id].filter(function (w) { return df[w] <= 8; });
+    });
+    indice = { n: catalogo().length, porProd: porProd, marcas: marcas };
+    return indice;
+  }
+  function coincide(token, ws) {
+    return ws.some(function (w) {
+      return w === token || (token.length >= 5 && w.length >= 5 && (w.indexOf(token) === 0 || token.indexOf(w) === 0));
+    });
+  }
+  /* Busca en el catálogo lo que la persona nombró. Devuelve los
+     productos que mejor coinciden y las marcas mencionadas. */
+  function buscarCatalogo(txt) {
+    var res = { productos: [], marcas: [] };
+    if (!catalogo().length) return res;
+    var I = indiceCatalogo(), ws = palabras(txt), conEspacios = ' ' + txt + ' ';
+    Object.keys(I.marcas).forEach(function (m) {
+      if (I.marcas[m].some(function (a) {
+        return a.indexOf(' ') > -1 || a.indexOf('&') > -1 ? conEspacios.indexOf(' ' + a + ' ') > -1 : coincide(a, ws);
+      })) res.marcas.push(m);
+    });
+    var quierePack = /pack|oferta|promo|combo|x2|dos unidades|llevando 2/.test(txt);
+    var puntajes = catalogo().map(function (p) {
+      var pts = I.porProd[p.id].filter(function (t) { return coincide(t, ws); }).length;
+      return { p: p, pts: pts };
+    }).filter(function (x) { return x.pts > 0; });
+    /* Individuales salvo que pida packs; y si pide packs, solo packs (si hay). */
+    if (puntajes.some(function (x) { return esPack(x.p) === quierePack; })) {
+      puntajes = puntajes.filter(function (x) { return esPack(x.p) === quierePack; });
+    }
+    var max = Math.max.apply(null, [0].concat(puntajes.map(function (x) { return x.pts; })));
+    res.productos = puntajes.filter(function (x) { return x.pts === max; }).map(function (x) { return x.p; }).slice(0, 6);
+    return res;
+  }
+  /* Familia mencionada en el texto ("colágeno de B&N" → colágeno). */
+  function familiasEnTexto(txt) {
+    var f = [];
+    if (/colageno/.test(txt)) f.push('colageno');
+    if (/fibra/.test(txt)) f.push('fibra');
+    if (/vitamina|gomita|multivit|biotina|hierro|b12/.test(txt)) f.push('vitaminas');
+    if (/liquida|liquid/.test(txt)) f.push('proteina_liquida');
+    else if (/polvo|whey|isolate|scoop/.test(txt)) f.push('proteina_polvo');
+    else if (/proteina/.test(txt)) f.push('proteina_liquida', 'proteina_polvo');
+    return f;
+  }
+  function primeraFrase(t) {
+    var m = String(t || '').match(/^[^.]*\.?/);
+    var s = m ? m[0] : '';
+    return s.length > 220 ? s.slice(0, 217) + '…' : s;
+  }
+  function precioTxt(p) { return 'S/ ' + p.precio + (p.agotado ? ' · <i>agotado por ahora</i>' : ''); }
+  function responderConProductos(lista, intro) {
+    var ids = lista.map(function (p) { return p.id; });
+    var texto;
+    if (lista.length === 1) {
+      var p = lista[0];
+      texto = (intro ? intro + '<br><br>' : '') + '<b>' + p.nombre + '</b> — ' + precioTxt(p) +
+        (p.desc ? '<br><br>' + primeraFrase(p.desc) : '');
+    } else {
+      var mismaMarca = lista.every(function (x) { return x.marca === lista[0].marca; });
+      texto = intro || (mismaMarca ? 'De <b>' + lista[0].marca + '</b> tenemos:' : 'Esto es lo que tenemos:');
+    }
+    responderZoe(texto, ids, [{ texto: '💬 Hablar por WhatsApp', envia: 'whatsapp' }]);
+  }
+  /* Respuestas que se arman con los datos del catálogo. */
+  var ETIQ_FAMILIA = {
+    proteina_polvo: '💪 Proteína en polvo', proteina_liquida: '🥛 Proteína líquida',
+    vitaminas: '🟢 Vitaminas', colageno: '🦴 Colágeno', fibra: '🌿 Fibra'
+  };
+  function respuestaDinamica(it) {
+    var K = window.ZOE_CONOCIMIENTO;
+    var ind = individuales();
+    if (!ind.length) return false;
+    if (it.dinamico === 'precios') {
+      var lineas = Object.keys(ETIQ_FAMILIA).map(function (fam) {
+        var ps = ind.filter(function (p) { return familiaDe(p) === fam; }).map(function (p) { return p.precio; });
+        return ps.length ? ETIQ_FAMILIA[fam] + ' — desde S/ ' + Math.min.apply(null, ps) : null;
+      }).filter(Boolean);
+      var packs = catalogo().filter(esPack).map(function (p) { return p.precio; });
+      if (packs.length) lineas.push('🔥 Packs y ofertas — desde S/ ' + Math.min.apply(null, packs));
+      responderZoe('<b>Precios actuales</b><br><br>' + lineas.join('<br>') + '<br><br>' + it.followUp);
+      return true;
+    }
+    if (it.dinamico === 'promociones') {
+      var ofertas = catalogo().filter(function (p) { return p.tipo === 'oferta'; });
+      if (!ofertas.length) return false;
+      responderZoe('Sí, tenemos ofertas por llevar 2 unidades:<br><br>' +
+        ofertas.map(function (p) { return '🔥 ' + p.nombre + ' — ' + precioTxt(p); }).join('<br>') +
+        '<br><br>Y también <b>packs combinados</b> con mejor precio que comprando por separado. Pregúntame por el que te interese.',
+        ofertas.map(function (p) { return p.id; }));
+      return true;
+    }
+    if (it.dinamico === 'marcas') {
+      var vistas = [];
+      ind.forEach(function (p) { if (p.marca && vistas.indexOf(p.marca) === -1) vistas.push(p.marca); });
+      var D = K.DESC_MARCA || {};
+      responderZoe('Trabajamos con <b>' + vistas.length + ' marcas</b>:<br><br>' +
+        vistas.map(function (m) { return '<b>' + m + '</b>' + (D[m] ? ' — ' + D[m] : ''); }).join('<br>') +
+        '<br><br>Todos los productos tienen su tabla nutricional en la ficha. Escríbeme una marca y te muestro sus productos.');
+      return true;
+    }
+    return false;
+  }
+  /* Intenciones que una búsqueda concreta de producto o marca
+     puede reemplazar ("precio del geno" → muestra el Geno). */
+  var REEMPLAZABLES = ['precios', 'marcas', 'sabores', 'ver_productos', 'tabla_nutricional', 'promociones',
+    'saludo', 'agradecimiento']; /* "hola, tienen geno?" o "whey" (contiene "hey") → el producto */
+
   function familiaDe(p) {
     if (p.cat === 'proteina') return /l[ií]quid/i.test(p.nombre) ? 'proteina_liquida' : 'proteina_polvo';
     if (p.cat === 'vitaminas') return 'vitaminas';
@@ -623,6 +799,8 @@
   }
 
   function responder(mensaje) {
+    /* El catálogo se carga (una vez) antes de la primera respuesta. */
+    if (!catalogoIntentado) { asegurarCatalogo().then(function () { responder(mensaje); }); return; }
     var K = window.ZOE_CONOCIMIENTO;
     var txt = normalizar(mensaje);
     capturarContexto(txt);
@@ -667,6 +845,28 @@
       return;
     }
 
+    /* 3c. Producto o marca nombrados (catálogo en vivo). */
+    var bus = buscarCatalogo(txt);
+    var puedeReemplazar = !it || REEMPLAZABLES.indexOf(it.intent) > -1 || !!it.familia;
+    if (puedeReemplazar && bus.productos.length) {
+      var lista = bus.productos;
+      if (bus.marcas.length) {
+        var deMarca = lista.filter(function (p) { return bus.marcas.indexOf(p.marca) > -1; });
+        if (deMarca.length) lista = deMarca;
+      }
+      responderConProductos(lista);
+      return;
+    }
+    if (puedeReemplazar && bus.marcas.length) {
+      var fams = familiasEnTexto(txt);
+      var quierePack = /pack|oferta|promo|combo|x2/.test(txt);
+      var base = quierePack ? catalogo().filter(esPack) : individuales();
+      var deLaMarca = base.filter(function (p) {
+        return bus.marcas.indexOf(p.marca) > -1 && (quierePack || !fams.length || fams.indexOf(familiaDe(p)) > -1);
+      });
+      if (deLaMarca.length) { responderConProductos(deLaMarca); return; }
+    }
+
     if (!it) {
       responderZoe(K.RESPUESTA_DESCONOCIDA, null,
         [{ texto: '💬 Continuar por WhatsApp', envia: 'whatsapp' }]);
@@ -688,12 +888,22 @@
       return;
     }
 
+    if (it.dinamico && respuestaDinamica(it)) return;
+
+    /* Familias: se muestran TODOS los productos de esa familia que
+       hay hoy en la tienda (con su precio), no una lista fija. */
+    var prods = it.productos;
+    if (it.familia) {
+      var fam = individuales().filter(function (p) { return familiaDe(p) === it.familia; });
+      if (fam.length) prods = fam.map(function (p) { return p.id; });
+    }
+
     /* Respuesta normal, con lo que sepamos del contexto. */
     var extra = null;
     if (it.followUp) extra = it.followUp;
     responderZoe(
       it.response + (extra ? '<br><br>' + extra : ''),
-      it.productos,
+      prods,
       null,
       it.aviso ? K.AVISO : null);
   }
